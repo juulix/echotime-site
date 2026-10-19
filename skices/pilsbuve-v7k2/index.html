@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="lv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>PILSBŪVE — būvniecība, pārbūve un restaurācija · skice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@600;700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@600;700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
+<link rel="preload" as="image" href="img/pils-800.webp" imagesrcset="img/pils-800.webp 800w, img/pils.webp 1600w" imagesizes="(min-width:960px) 56vw, 100vw">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Cpath d=%27M3 16L16 5l13 11v1H3z%27 fill=%27%23D8231F%27/%3E%3Crect x=%277%27 y=%2717%27 width=%2718%27 height=%2710%27 fill=%27%231C2126%27/%3E%3C/svg%3E">
+<style>
+:root{color-scheme:light;--red:#D8231F;--red-d:#B01916;--ink:#1C2126;--ink2:#3E464E;--muted:#6B737A;--line:#E3E1DC;--bg:#F6F5F2;--paper:#fff;--slate:#20262C;
+--h:"Archivo Narrow","Arial Narrow",system-ui,sans-serif;--b:"Manrope",system-ui,-apple-system,sans-serif;--gut:20px;--max:1200px;--hdr:64px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:var(--hdr);-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--b);overflow-x:clip;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}a{color:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
+h1,h2,h3{font-family:var(--h);font-weight:700;letter-spacing:-.005em;line-height:1.04}
+.k{display:inline-flex;align-items:center;gap:10px;font:700 12px/1 var(--b);letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
+.k::before{content:"";width:22px;height:3px;background:var(--red)}
+h2{font-size:clamp(32px,5.4vw,54px);margin:12px 0 16px}
+.lead{font-size:17px;color:var(--ink2);max-width:62ch}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 24px;font:700 15px/1 var(--b);text-decoration:none;border-radius:2px;border:0;cursor:pointer;transition:background .2s,color .2s}
+.btn svg{width:16px;height:16px}
+.btn-r{background:var(--red);color:#fff}.btn-r:hover{background:var(--red-d)}
+.btn-w{border:2px solid #fff;color:#fff;background:transparent}.btn-w:hover{background:#fff;color:var(--ink)}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .7s,transform .7s cubic-bezier(.2,.7,.2,1)}.rv.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+.sketch{position:fixed;left:10px;bottom:10px;z-index:60;background:var(--ink);color:#fff;font:600 11.5px/1.3 var(--b);padding:8px 12px;border-radius:999px;box-shadow:0 8px 20px -8px rgba(0,0,0,.5)}
+.sketch b{color:#ffb3b1}
+@media(max-width:959px){.sketch{bottom:auto;top:calc(var(--hdr) + 8px);font-size:10.5px;padding:6px 10px}}
+
+/* header */
+.hdr{position:fixed;inset:0 0 auto;z-index:50;height:var(--hdr);background:rgba(255,255,255,.96);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hdr .wrap{height:100%;display:flex;align-items:center;gap:22px}
+.logo{margin-right:auto;display:block}.logo img{height:38px;width:auto}
+.nav{display:none;gap:24px}.nav a{font-weight:600;font-size:14.5px;text-decoration:none;color:var(--ink2)}.nav a:hover{color:var(--red)}
+.tel{display:none;font-weight:700;text-decoration:none;color:var(--ink)}
+.burger{width:44px;height:44px;display:grid;place-items:center;background:none;border:0;margin-right:-10px;cursor:pointer}
+.burger svg{width:24px;height:24px}
+.drawer{position:fixed;inset:0;z-index:70;background:var(--ink);color:#fff;padding:calc(var(--hdr) + 14px) var(--gut) 28px;display:flex;flex-direction:column;transform:translateY(-100%);visibility:hidden;transition:transform .4s cubic-bezier(.7,0,.2,1),visibility .4s}
+.drawer.open{transform:none;visibility:visible}
+.drawer a{font:700 30px/1.25 var(--h);text-decoration:none;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.drawer .btn{margin-top:auto;font:700 15px/1 var(--b)}
+.drawer .x{position:absolute;top:10px;right:12px;width:44px;height:44px;background:none;border:0;color:#fff;cursor:pointer}
+.callfab{position:fixed;right:14px;bottom:14px;z-index:55;display:flex;align-items:center;gap:8px;background:var(--red);color:#fff;font:700 14px/1 var(--b);text-decoration:none;padding:14px 18px;border-radius:999px;box-shadow:0 10px 24px -10px rgba(176,25,22,.8)}
+.callfab svg{width:16px;height:16px}
+
+/* hero */
+.hero{position:relative;min-height:100svh;display:grid;align-items:end;padding:calc(var(--hdr) + 40px) 0 44px;color:#fff;background:var(--slate);overflow:hidden}
+.hero .ph{position:absolute;inset:0;display:grid;grid-template-columns:1fr}
+.hero .ph img{width:100%;height:100%;object-fit:cover}
+.hero .ph img+img{display:none}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,24,28,.1) 0%,rgba(20,24,28,.35) 30%,rgba(20,24,28,.9) 64%,rgba(20,24,28,.95) 100%)}
+.hero .wrap{position:relative;z-index:2}
+.hero h1{font-size:clamp(40px,10vw,76px);max-width:16ch;margin:14px 0 16px}
+.hero h1 em{font-style:normal;text-decoration:underline;text-decoration-color:var(--red);text-decoration-thickness:.07em;text-underline-offset:.12em}
+.hero p{font-size:17px;max-width:48ch;color:rgba(255,255,255,.88)}
+.hero .k{color:#ff8a86}.hero .k::before{background:#ff8a86}
+.ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.caps{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:24px;font-size:12px;color:rgba(255,255,255,.7)}
+.caps span::before{content:"▸ ";color:#ff8a86}
+
+/* restoration story */
+.story{position:relative;height:330vh;background:#141C24;color:#fff}
+.pin{position:sticky;top:0;height:100vh;height:100svh;display:grid;grid-template-rows:auto 1fr;padding-top:calc(var(--hdr) + 10px);overflow:hidden}
+.cap{padding:0 var(--gut);position:relative}
+.cap .k{color:#ff8a86}.cap .k::before{background:#ff8a86}
+.caps2{display:grid;margin-top:10px}
+.c2{grid-area:1/1;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .25s,transform .25s,visibility 0s .25s}
+.c2.on{opacity:1;visibility:visible;transform:none;transition:opacity .45s .15s,transform .45s .15s}
+.c2 small{display:block;font:700 11.5px/1 var(--b);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.c2 h3{font-size:clamp(28px,7vw,48px);margin:8px 0 8px}
+.c2 p{font-size:15px;color:rgba(255,255,255,.75);max-width:44ch}
+.facts{list-style:none;display:grid;gap:6px;margin-top:6px;font-size:14.5px;color:rgba(255,255,255,.85)}.facts span{display:inline-block;min-width:92px;font:700 11px/1.6 var(--b);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.bar{display:flex;gap:6px;margin-top:14px}.bar i{flex:1;height:3px;background:rgba(255,255,255,.14);position:relative;overflow:hidden}.bar i b{position:absolute;inset:0;background:var(--red);transform-origin:left;transform:scaleX(0)}
+.stagebp{position:relative;min-height:0}
+.stagebp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;z-index:2;clip-path:inset(0 100% 0 0)}
+.stagebp svg{position:absolute;inset:0;width:100%;height:100%}
+.illu{position:absolute;z-index:3;right:var(--gut);top:10px;font:600 11px/1 var(--b);letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+
+.sec{padding:76px 0}
+.alt{background:var(--paper)}
+
+/* services */
+.srv{display:grid;gap:12px;margin-top:30px}
+.srv div{background:var(--bg);border:1px solid var(--line);border-top:4px solid var(--red);padding:22px 20px}
+.srv h3{font-size:24px;margin-bottom:8px}
+.srv p{font-size:14.5px;color:var(--ink2)}
+
+/* projects */
+.proj{display:grid;gap:14px;margin-top:30px}
+.pj{background:var(--paper);border:1px solid var(--line);display:flex;flex-direction:column}
+.pj .im{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--slate);display:grid;grid-template-columns:1fr}
+.pj .im.two{grid-template-columns:1.3fr 1fr;gap:3px}
+.pj .im img{width:100%;height:100%;object-fit:cover}
+.pj .t{padding:18px 18px 20px;display:flex;flex-direction:column;gap:6px;flex:1}
+.pj small{font:700 11px/1 var(--b);letter-spacing:.12em;text-transform:uppercase;color:var(--red)}
+.pj h3{font-size:25px}
+.pj dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14px;margin-top:4px}
+.pj dt{color:var(--muted)}.pj dd{color:var(--ink2)}
+.award{display:flex;gap:8px;align-items:flex-start;margin-top:auto;padding-top:12px;font:600 13px/1.4 var(--b);color:var(--ink)}
+.award::before{content:"";flex:0 0 10px;height:10px;margin-top:4px;background:var(--red);transform:rotate(45deg)}
+.pj.txt .im{display:grid;place-items:center;background:repeating-linear-gradient(135deg,#252c33 0 14px,#20262c 14px 28px);color:rgba(255,255,255,.6);font:700 13px/1.3 var(--b);text-align:center;padding:20px}
+
+/* example list */
+.ex{display:grid;gap:0;margin-top:26px;border-top:2px solid var(--ink)}
+.ex li{list-style:none;display:grid;grid-template-columns:1fr;gap:2px;padding:15px 0;border-bottom:1px solid var(--line)}
+.ex b{font-weight:700;font-size:15.5px;line-height:1.4}
+.ex span{font-size:13.5px;color:var(--muted)}
+
+/* recognition */
+.tl{margin-top:24px;display:grid;gap:0}
+.tl div{display:grid;grid-template-columns:96px 1fr;gap:14px;padding:15px 0;border-bottom:1px solid var(--line)}
+.tl b{font:700 22px/1.1 var(--h);color:var(--red)}
+.tl p{font-size:15px;color:var(--ink2)}
+.cl{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.cl span{background:var(--paper);border:1px solid var(--line);padding:9px 12px;font-size:13.5px;font-weight:600}
+.note{font-size:12.5px;color:var(--muted);margin-top:14px}
+
+/* contact */
+.ct{background:var(--ink);color:#fff}
+.ct .k{color:#ff8a86}.ct .k::before{background:#ff8a86}
+.cg{display:grid;gap:34px}
+.cinfo{display:grid;gap:18px;margin-top:20px}
+.cinfo small{display:block;font:700 11px/1 var(--b);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:6px}
+.cinfo a{text-decoration:none;font-size:19px;font-weight:700}
+.cinfo p{color:rgba(255,255,255,.85)}
+.form{background:#fff;color:var(--ink);padding:22px;display:grid;gap:12px}
+.f2{display:grid;gap:12px}
+.form label{display:block;font:700 11.5px/1 var(--b);letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);margin-bottom:7px}
+.form input,.form textarea,.form select{width:100%;font:500 16px/1.4 var(--b);border:1px solid var(--line);background:var(--bg);padding:12px 13px;min-height:48px;border-radius:2px}
+.form textarea{min-height:100px}
+.form .fn{font-size:12.5px;color:var(--muted)}
+footer{background:#14181C;color:rgba(255,255,255,.55);font-size:13px;padding:24px 0 90px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
+
+@media(min-width:700px){
+  .srv{grid-template-columns:1fr 1fr}
+  .proj{grid-template-columns:1fr 1fr}
+  .pj.big{grid-column:1/-1}.pj.big .im{aspect-ratio:21/9}
+  .f2{grid-template-columns:1fr 1fr}
+  .ex{grid-template-columns:1fr 1fr;column-gap:40px}
+}
+@media(min-width:960px){
+  :root{--gut:40px;--hdr:76px}
+  .nav,.tel{display:flex}.burger,.callfab{display:none}
+  .hero{padding-bottom:64px}
+  .hero .ph{grid-template-columns:1.25fr 1fr;gap:4px}.hero .ph img+img{display:block}
+  .hero h1{font-size:clamp(48px,5vw,72px);max-width:20ch}
+  .hero .wrap>div{max-width:760px}
+  .pin{grid-template-rows:1fr;grid-template-columns:minmax(380px,34%) 1fr;padding-top:var(--hdr)}
+  .cap{display:flex;flex-direction:column;justify-content:center;padding:0 30px 0 max(var(--gut),calc((100vw - var(--max))/2 + var(--gut)))}
+  .c2 p{font-size:16.5px}
+  .srv{grid-template-columns:repeat(4,1fr)}
+  .proj{grid-template-columns:repeat(3,1fr)}.pj.big{grid-column:1/-1}
+  .sec{padding:110px 0}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:start}
+  .cg{grid-template-columns:1fr 1fr;gap:70px}
+  footer{padding-bottom:24px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.story{height:auto}.pin{position:relative;height:auto;min-height:100svh}}
+</style>
+</head>
+<body>
+<div class="sketch"><b>SKICE</b> · Echo Time · saturs vēl saskaņojams ar PILSBŪVI</div>
+
+<header class="hdr"><div class="wrap">
+  <a class="logo" href="#"><img src="img/logo.webp" alt="SIA PILSBŪVE" width="640" height="269"></a>
+  <nav class="nav"><a href="#restauracija">Restaurācija</a><a href="#pakalpojumi">Pakalpojumi</a><a href="#darbi">Mūsu darbi</a><a href="#atzinibas">Atzinības</a><a href="#kontakti">Kontakti</a></nav>
+  <a class="tel" href="tel:+37163622513">+371 636 22 513</a>
+  <button class="burger" id="burger" aria-label="Izvēlne" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
+</div></header>
+<div class="drawer" id="drawer" aria-hidden="true">
+  <button class="x" id="drawerX" aria-label="Aizvērt"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+  <a href="#restauracija">Restaurācija</a><a href="#pakalpojumi">Pakalpojumi</a><a href="#darbi">Mūsu darbi</a><a href="#atzinibas">Atzinības</a><a href="#kontakti">Kontakti</a>
+  <a class="btn btn-r" href="tel:+37163622513">Zvanīt +371 636 22 513</a>
+</div>
+<a class="callfab" href="tel:+37163622513"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Zvanīt</a>
+
+<section class="hero">
+  <div class="ph"><img src="img/pils-800.webp" srcset="img/pils-800.webp 800w, img/pils.webp 1600w" sizes="(min-width:960px) 56vw, 100vw" alt="Ventspils Livonijas ordeņa pils pēc restaurācijas" width="1600" height="1067" fetchpriority="high"><img src="img/biblioteka.webp" alt="Pārventas bibliotēka Ventspilī" width="1600" height="1063" loading="lazy"></div>
+  <div class="wrap"><div>
+    <span class="k rv">SIA "PILSBŪVE" · Ventspils</span>
+    <h1 class="rv d1">Būvējam jaunu. <em>Atjaunojam vēsturisko.</em></h1>
+    <p class="rv d2">Ēku būvniecība, pārbūve un restaurācija Ventspilī, Kurzemē un visā Latvijā.</p>
+    <div class="ctas rv d3">
+      <a class="btn btn-r" href="#kontakti">Pieprasīt piedāvājumu <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn btn-w" href="#darbi">Mūsu darbi</a>
+    </div>
+    <div class="caps rv d3"><span>Livonijas ordeņa pils · restaurācija</span><span>Pārventas bibliotēka · jaunbūve</span></div>
+  </div></div>
+</section>
+
+<section class="story" id="restauracija" aria-label="Kā notiek restaurācija">
+  <div class="pin">
+    <div class="cap">
+      <span class="k">Restaurācija</span>
+      <div class="caps2">
+        <div class="c2 on"><small>01 · Esošā ēka</small><h3>Vispirms izpētām esošo ēku.</h3><p>Restaurācija sākas ar ēkas stāvokļa un tās vēstures izpēti.</p></div>
+        <div class="c2"><small>02 · Detaļas</small><h3>Fiksējam vēsturiskās detaļas.</h3><p>Logu ailes, dzegas, apmetums un jumta segums: viss, kas veido ēkas raksturu.</p></div>
+        <div class="c2"><small>03 · Atjaunošana</small><h3>Saglabājam vēsturiskās ēkas raksturu.</h3><p>Fasāde, logi un jumts tiek atjaunoti, saglabājot ēkas vēsturisko raksturu.</p></div>
+        <div class="c2"><small>04 · Rezultāts</small><h3>Livonijas ordeņa pils, Ventspils.</h3><ul class="facts"><li><span>Darbi</span>rekonstrukcija, restaurācija, ekspozīcijas izveide</li><li><span>Pasūtītājs</span>Ventspils muzejs</li><li><span>Balva</span>1. vieta "Gada labākā būve" 2011, "Restaurācija" (2. kārta)</li></ul></div>
+      </div>
+      <div class="bar" id="bar"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+    </div>
+    <div class="stagebp">
+      <img src="img/pils.webp" alt="Livonijas ordeņa pils, Ventspils" id="realph" loading="lazy">
+      <svg id="rs" viewBox="110 90 640 470" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <defs>
+          <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#6f93bd" stroke-opacity=".14" stroke-width=".6"/></pattern>
+          <pattern id="tilesNew" width="14" height="9" patternUnits="userSpaceOnUse"><rect width="14" height="9" fill="#C8371F"/><path d="M0 8.5H14M7 0V8.5" stroke="#9E2A17" stroke-width=".9"/></pattern>
+          <pattern id="tilesOld" width="14" height="9" patternUnits="userSpaceOnUse"><rect width="14" height="9" fill="#6E5E52"/><path d="M0 8.5H14M7 0V8.5" stroke="#4E4239" stroke-width=".9"/></pattern>
+          <pattern id="plaster" width="40" height="40" patternUnits="userSpaceOnUse"><rect width="40" height="40" fill="#A99E83"/><circle cx="8" cy="12" r="6" fill="#968a6f" opacity=".5"/><circle cx="30" cy="30" r="9" fill="#9a8f74" opacity=".45"/></pattern>
+          <clipPath id="wipe"><rect id="wipeR" x="100" y="0" width="0" height="700"/></clipPath>
+        </defs>
+        <rect x="0" y="0" width="900" height="700" fill="#141C24"/>
+        <rect id="gridR" x="0" y="0" width="900" height="700" fill="url(#grid)"/>
+        <g id="old"></g>
+        <g id="neu" clip-path="url(#wipe)"></g>
+        <g id="scaf" opacity="0" stroke="#B8BEC4" stroke-width="2.2"></g>
+        <g id="notes" fill="none" stroke="#9cc3ef" stroke-width="1.4"></g>
+        <path d="M100 524H780" stroke="#9cc3ef" stroke-opacity=".45" stroke-width="1.2"/>
+      </svg>
+      <span class="illu" id="illu">Restaurācijas procesa ilustrācija</span>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="pakalpojumi"><div class="wrap">
+  <span class="k rv">Pakalpojumi</span>
+  <h2 class="rv d1">Būvniecība, pārbūve un restaurācija.</h2>
+  <p class="lead rv d2">Būvdarbus veicam un vadām paši: no konstrukcijām līdz inženiertīkliem un projektu vadībai.</p>
+  <div class="srv">
+    <div class="rv"><h3>Jaunbūve</h3><p>Sabiedrisko, ražošanas un dzīvojamo ēku būvniecība.</p></div>
+    <div class="rv d1"><h3>Pārbūve un renovācija</h3><p>Ēku rekonstrukcija, remonts un energoefektivitātes paaugstināšana.</p></div>
+    <div class="rv d2"><h3>Restaurācija</h3><p>Vēsturisku ēku un kultūras mantojuma objektu restaurācija.</p></div>
+    <div class="rv d3"><h3>Inženiertīkli un vadība</h3><p>Ūdensapgādes, kanalizācijas, siltumapgādes un ventilācijas sistēmu būvdarbi, būvdarbu vadīšana un projektu vadība.</p></div>
+  </div>
+</div></section>
+
+<section class="sec" id="darbi"><div class="wrap">
+  <span class="k rv">Mūsu darbi</span>
+  <h2 class="rv d1">Mūsu darbi.</h2>
+  <div class="proj">
+    <article class="pj big rv"><div class="im"><img src="img/pils.webp" alt="Livonijas ordeņa pils" loading="lazy"></div><div class="t"><small>Restaurācija · Ventspils</small><h3>Livonijas ordeņa pils komplekss</h3>
+      <dl><dt>Darbi</dt><dd>Rekonstrukcija, restaurācija un ekspozīcijas izveide</dd><dt>Pasūtītājs</dt><dd>Ventspils muzejs</dd></dl>
+      <span class="award">1. vieta "Gada labākā būve" 2011, nominācija "Restaurācija" (2. kārta)</span></div></article>
+    <article class="pj rv"><div class="im two"><img src="img/biblioteka2.webp" alt="Pārventas bibliotēka no ārpuses" loading="lazy"><img src="img/biblioteka-iek.webp" alt="Pārventas bibliotēkas interjers" loading="lazy"></div><div class="t"><small>Jaunbūve · Ventspils</small><h3>Pārventas bibliotēka</h3>
+      <dl><dt>Darbi</dt><dd>Jaunbūve, Tārgales iela 4</dd><dt>Arhitekti</dt><dd>Birojs "INDIA"</dd></dl>
+      <span class="award">1. vieta "Gada labākā būve Latvijā 2009", nominācija "Jaunbūve"; 1. vieta "Best Office Awards 2011", labākais ārzemju projekts</span></div></article>
+    <article class="pj rv d1"><div class="im"><img src="img/liepajas-muzejs.webp" alt="Liepājas muzejs" loading="lazy"></div><div class="t"><small>Renovācija · Liepāja</small><h3>Liepājas muzeja ēku komplekss</h3>
+      <dl><dt>Darbi</dt><dd>Vispārceltnieciskie un restaurācijas darbi kā vienīgais darbuzņēmējs, Kūrmājas prospekts 16</dd><dt>Pasūtītājs</dt><dd>SIA "VEGA 1"</dd></dl>
+      <span class="award">2. vieta "Gada labākā būve Latvijā 2012", nominācija "Renovācija"</span></div></article>
+    <article class="pj rv"><div class="im"><img src="img/jaunrades.webp" alt="Skolēnu jaunrades nams" loading="lazy" style="object-position:center 30%"></div><div class="t"><small>Rekonstrukcija · Ventspils</small><h3>Skolēnu jaunrades nams</h3>
+      <dl><dt>Darbi</dt><dd>Izbūve, Maiznieku iela 11</dd></dl>
+      <span class="award">3. vieta "Gada labākā būve Latvijā 2010", nominācija "Rekonstrukcija"</span></div></article>
+  </div>
+</div></section>
+
+<section class="sec alt"><div class="wrap split">
+  <div>
+    <span class="k rv">Projektu piemēri</span>
+    <h2 class="rv d1">Mūsu projektu piemēri.</h2>
+    <p class="lead rv d2">Pašvaldībām, slimnīcām, izglītības iestādēm, ostai un uzņēmumiem.</p>
+  </div>
+  <ul class="ex rv d1">
+    <li><b>Veikala "JYSK" ēkas pārbūve, Celtnieku iela 20, Ventspils</b><span>SIA "JD Properties"</span></li>
+    <li><b>Ventspils Augstskolas "A" korpusa pielāgošana cilvēkiem ar kustību traucējumiem</b><span>Ventspils Augstskola</span></li>
+    <li><b>Slimnīcas 9. korpusa rekonstrukcija, Inženieru iela 60, Ventspils</b><span>SIA "Ziemeļkurzemes reģionālā slimnīca"</span></li>
+    <li><b>Elektronikas centra ražošanas ēka, Ventspils Augsto tehnoloģiju parks</b><span>SIA "Abora"</span></li>
+    <li><b>Ventspils Profesionālās vidusskolas korpusu rekonstrukcija un dienesta viesnīcas jaunbūve</b><span>SIA "UPB Nams"</span></li>
+    <li><b>Graudu pārkraušanas termināļa darbnīcu un garāžu rekonstrukcija, Ventspils brīvosta</b><span>AS "Ventspils tirdzniecības osta-G"</span></li>
+  </ul>
+</div></section>
+
+<section class="sec" id="atzinibas"><div class="wrap split">
+  <div>
+    <span class="k rv">Atzinības</span>
+    <h2 class="rv d1">Atzinības un kvalitāte.</h2>
+    <h3 class="rv d2" style="font-size:20px;margin-top:24px">Pasūtītāji mūsu īstenotajos projektos</h3>
+    <div class="cl rv d2"><span>Ventspils pilsētas pašvaldība</span><span>Ventspils novada pašvaldība</span><span>Liepājas pilsētas pašvaldība</span><span>Ventspils muzejs</span><span>Ziemeļkurzemes reģionālā slimnīca</span><span>Ventspils Augstskola</span><span>Swedbank</span><span>Rīgas ūdens</span></div>
+  </div>
+  <div>
+    <div class="tl rv d1">
+      <div><b>1999–2008</b><p>Labākais būvuzņēmums Ventspils pilsētas domes arhitektūras skatēs (8 gadi)</p></div>
+      <div><b>2003–2005</b><p>Ventspils pilsētas domes atzinības raksti par lielāko nodokļu nomaksu būvniecības uzņēmumu grupā</p></div>
+      <div><b>2012</b><p>LDDK atzinība: labākais darba devējs Kurzemē</p></div>
+      <div><b>ISO 9001:2015</b><p>Kvalitātes vadības sistēma</p></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec ct" id="kontakti"><div class="wrap cg">
+  <div>
+    <span class="k rv">Kontakti</span>
+    <h2 class="rv d1">Pastāstiet par savu objektu.</h2>
+    <div class="cinfo rv d2">
+      <div><small>Birojs</small><a href="tel:+37163622513">+371 636 22 513</a><p><a href="mailto:pilsbuve@pilsbuve.lv" style="font-size:16px;font-weight:600">pilsbuve@pilsbuve.lv</a></p></div>
+      <div><small>Sagāde, būvtehnikas noma</small><a href="tel:+37126743680">+371 267 43 680</a><p>martins@pilsbuve.lv</p></div>
+      <div><small>Adrese</small><p>Kuldīgas iela 9, Ventspils, LV-3601</p></div>
+    </div>
+  </div>
+  <form class="form rv d1" id="form" novalidate>
+    <div class="f2"><div><label for="fn">Vārds, uzvārds</label><input id="fn" name="name" autocomplete="name"></div><div><label for="fc">Uzņēmums</label><input id="fc" name="company" autocomplete="organization"></div></div>
+    <div class="f2"><div><label for="ft">Tālrunis</label><input id="ft" name="tel" type="tel" autocomplete="tel"></div><div><label for="fe">E-pasts</label><input id="fe" name="email" type="email" autocomplete="email"></div></div>
+    <div><label for="fo">Objekta veids</label><select id="fo" name="obj"><option>Jaunbūve</option><option>Pārbūve / renovācija</option><option>Restaurācija</option><option>Inženiertīkli</option><option>Cits</option></select></div>
+    <div><label for="fm">Īsi par darbiem</label><textarea id="fm" name="msg"></textarea></div>
+    <button class="btn btn-r" type="submit">Nosūtīt pieprasījumu</button>
+    <p class="fn">Demonstrācijas forma — poga atver e-pasta programmu.</p>
+  </form>
+</div></section>
+<footer><div class="wrap"><span>© 2026 SIA "PILSBŪVE" · Kuldīgas iela 9, Ventspils</span><span>Gala versijā arī EN un RU · Skici sagatavoja Echo Time</span></div></footer>
+
+<script>
+const $=s=>document.querySelector(s);
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(e=>io.observe(e));
+function drawer(o){$('#drawer').classList.toggle('open',o);$('#drawer').setAttribute('aria-hidden',!o);$('#burger').setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';
+  if(o)setTimeout(()=>$('#drawer a').focus(),50);else if(document.activeElement&&$('#drawer').contains(document.activeElement))$('#burger').focus()}
+addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#drawer').classList.contains('open'))drawer(false)});
+$('#burger').onclick=()=>drawer(true);$('#drawerX').onclick=()=>drawer(false);document.querySelectorAll('#drawer a').forEach(a=>a.addEventListener('click',()=>drawer(false)));
+window.buildMail=form=>{const d=new FormData(form),v=k=>(d.get(k)||'').toString().trim();
+  const body=[`Vārds: ${v('name')}`,`Uzņēmums: ${v('company')}`,`Tālrunis: ${v('tel')}`,`E-pasts: ${v('email')}`,`Objekts: ${v('obj')}`,'',v('msg')].join('\n');
+  return 'mailto:pilsbuve@pilsbuve.lv?subject='+encodeURIComponent('Pieprasījums: '+v('obj'))+'&body='+encodeURIComponent(body)};
+$('#form').addEventListener('submit',e=>{e.preventDefault();location.href=buildMail(e.target)});
+
+/* ---------- restoration story ---------- */
+(()=>{const NS='http://www.w3.org/2000/svg';
+const mk=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p&&p.appendChild(e);return e};
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),seg=(p,a,b)=>clamp((p-a)/(b-a)),ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const G=520, M={x:170,w:420,top:330}, T={x:590,w:96,top:196};
+const winCols=[196,250,304,412,466,520], rows=[[364,44],[436,44]];
+const towerWins=[[624,232,28,40],[624,300,28,40],[624,368,28,40],[624,438,28,40]];
+function arched(x,y,w,h){const r=w/2;return `M${x} ${y+h}V${y+r}A${r} ${r} 0 0 1 ${x+w} ${y+r}V${y+h}Z`}
+function building(p,state){
+  const nw=state==='new';
+  const wall=nw?'#E9C766':'url(#plaster)', trim=nw?'#F6F0E2':'#8f866f', roof=nw?'url(#tilesNew)':'url(#tilesOld)', glass=nw?'#5B7385':'#2E3338';
+  mk('rect',{x:M.x,y:M.top,width:M.w,height:G-M.top,fill:wall},p);
+  mk('rect',{x:T.x,y:T.top,width:T.w,height:G-T.top,fill:wall},p);
+  mk('rect',{x:M.x-6,y:G-24,width:M.w+T.w+12,height:24,fill:nw?'#9C9583':'#6d675b'},p);
+  mk('rect',{x:M.x-10,y:M.top-6,width:M.w+12,height:10,fill:trim},p);
+  mk('rect',{x:M.x,y:420,width:M.w,height:5,fill:trim,opacity:.9},p);
+  mk('rect',{x:T.x-6,y:T.top-6,width:T.w+12,height:10,fill:trim},p);
+  let k=0;for(let y=M.top+8;y<G-30;y+=22){const w=k++%2?10:14;[M.x,T.x,T.x+T.w-w].forEach(x=>mk('rect',{x,y,width:w,height:10,fill:trim,opacity:nw?1:.6},p))}
+  mk('path',{d:`M${M.x-14} ${M.top-4}L${M.x+48} ${M.top-86}H${M.x+M.w-40}L${M.x+M.w+4} ${M.top-4}Z`,fill:roof},p);
+  mk('path',{d:`M${M.x-14} ${M.top-4}L${M.x+48} ${M.top-86}H${M.x+M.w-40}L${M.x+M.w+4} ${M.top-4}`,fill:'none',stroke:nw?'#8C2414':'#3d342d','stroke-width':2},p);
+  mk('rect',{x:262,y:M.top-112,width:16,height:34,fill:nw?'#B7432C':'#5d5048'},p);mk('rect',{x:470,y:M.top-112,width:16,height:34,fill:nw?'#B7432C':'#5d5048'},p);
+  mk('path',{d:`M${T.x-10} ${T.top-4}L${T.x+T.w/2} ${T.top-84}L${T.x+T.w+10} ${T.top-4}Z`,fill:roof},p);
+  mk('path',{d:`M${T.x+T.w/2} ${T.top-84}V${T.top-112}`,stroke:'#2b2f33','stroke-width':2.5},p);
+  mk('circle',{cx:T.x+T.w/2,cy:T.top-112,r:4,fill:nw?'#C9A43A':'#5b5b5b'},p);
+  const win=(x,y,w,h)=>{mk('path',{d:arched(x-3,y-3,w+6,h+6),fill:trim},p);mk('path',{d:arched(x,y,w,h),fill:glass},p);
+    if(nw){mk('path',{d:`M${x+w/2} ${y+2}V${y+h}M${x} ${y+h*0.55}H${x+w}`,stroke:'#F6F0E2','stroke-width':2},p)}
+    else{mk('path',{d:`M${x+4} ${y+h-6}L${x+w-6} ${y+h*0.5}`,stroke:'#6a6f73','stroke-width':1},p)}};
+  rows.forEach(([y,h])=>winCols.forEach(x=>win(x,y,28,h)));
+  towerWins.forEach(([x,y,w,h])=>win(x,y,w,h));
+  mk('path',{d:arched(350,446,48,74),fill:trim},p);mk('path',{d:arched(356,452,36,68),fill:nw?'#6B3A24':'#3b2f28'},p);
+  if(!nw){
+    [[210,470,40,18],[480,360,52,22],[620,260,30,40],[300,350,30,14]].forEach(([cx,cy,rx,ry])=>mk('ellipse',{cx,cy,rx,ry,fill:'#5d5544',opacity:.28},p));
+    ['M232 336l10 22-6 14 9 18','M548 430l-8 18 6 12-10 20','M652 210l-6 26 8 18'].forEach(d=>mk('path',{d,stroke:'#4b4337','stroke-width':1.3,fill:'none'},p));
+    [[300,276,30,10],[430,262,24,9],[520,290,28,10]].forEach(([x,y,w,h])=>mk('rect',{x,y,width:w,height:h,fill:'#2b2621'},p));
+  }
+}
+building(document.getElementById('old'),'old');building(document.getElementById('neu'),'new');
+const S=document.getElementById('scaf');
+for(let x=160;x<=700;x+=45)mk('path',{d:`M${x} ${G}V${T.top-10}`},S);
+for(let y=G-14;y>=M.top-60;y-=48){mk('path',{d:`M152 ${y}H708`},S);mk('rect',{x:152,y:y-4,width:556,height:5,fill:'#8C6A44',stroke:'none'},S)}
+const N=document.getElementById('notes');const notes=[];
+const note=(x,y,w,h,lx,ly,text,anchor)=>{const g=mk('g',{opacity:0},N);mk('rect',{x,y,width:w,height:h,'stroke-dasharray':'5 4'},g);
+  mk('path',{d:anchor==='start'?`M${x+w} ${y+h/2}L${lx-4} ${ly-6}`:anchor==='end'?`M${x} ${y+h/2}L${lx+4} ${ly-6}`:`M${x+w/2} ${y}L${lx} ${ly+6}`},g);mk('circle',{cx:lx,cy:ly+6,r:2.5,fill:'#9cc3ef',stroke:'none'},g);
+  const t=mk('text',{x:lx,y:ly,'text-anchor':anchor,'font-family':'Manrope,sans-serif','font-size':innerWidth<700?24:17,'font-weight':700,fill:'#9cc3ef',stroke:'none'},g);t.textContent=text;notes.push(g)};
+note(298,358,40,56,230,156,'Logu ailes','middle');
+note(158,318,140,20,150,236,'Dzega','start');
+note(380,250,150,70,430,140,'Jumta segums','middle');
+if(innerWidth<700)note(600,104,76,96,580,172,'Tornis','end');else note(600,104,76,96,694,232,'Tornis','start');
+const caps=[...document.querySelectorAll('.c2')],bars=[...document.querySelectorAll('#bar b')];let last=-1;
+const story=document.getElementById('restauracija'),wipe=document.getElementById('wipeR'),real=document.getElementById('realph'),rs=document.getElementById('rs'),illu=document.getElementById('illu');
+function render(p){
+  document.getElementById('old').setAttribute('opacity',(.25+.75*ease(seg(p,0,.12))).toFixed(2));
+  notes.forEach((g,i)=>g.setAttribute('opacity',(seg(p,.24+i*.04,.3+i*.04)*(1-seg(p,.5,.56))).toFixed(2)));
+  const sc=seg(p,.5,.56)*(1-seg(p,.8,.86));S.setAttribute('opacity',sc.toFixed(2));
+  wipe.setAttribute('width',(620*ease(seg(p,.56,.8))).toFixed(1));
+  document.getElementById('gridR').setAttribute('opacity',(1-seg(p,.6,.8)*.7).toFixed(2));
+  const ph=ease(seg(p,.86,.95));real.style.opacity=ph>0?1:0;real.style.clipPath=`inset(0 ${(100-ph*100).toFixed(1)}% 0 0)`;illu.style.opacity=1-ph;
+  const st=p<.22?0:p<.5?1:p<.86?2:3;if(st!==last){caps.forEach((c,i)=>c.classList.toggle('on',i===st));last=st}
+  const bd=[0,.22,.5,.86,1];bars.forEach((x,i)=>x.style.transform=`scaleX(${seg(p,bd[i],bd[i+1]).toFixed(3)})`);
+}
+function prog(){const r=story.getBoundingClientRect(),H=story.offsetHeight-innerHeight;return H>0?clamp(-r.top/H):0}
+let tick=false;addEventListener('scroll',()=>{if(tick)return;tick=true;requestAnimationFrame(()=>{tick=false;const r=story.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)render(prog())})},{passive:true});
+render(RM?.82:prog());if(RM)caps.forEach((c,i)=>c.classList.toggle('on',i===2));
+})();
+</script>
+</body>
+</html>
