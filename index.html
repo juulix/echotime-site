@@ -125,6 +125,13 @@ h1 em,h2 em{font-style:italic;font-weight:300;color:var(--acorn7)}
 .price b{font:400 44px/1 var(--serif);color:var(--pine)}
 .price span{color:var(--ink2);font-size:15px}
 
+.tiers{margin-top:20px;display:grid;gap:8px}
+.tiers div{display:grid;grid-template-columns:1fr auto;gap:2px 14px;align-items:baseline;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.tiers b{font:500 17px/1.2 var(--serif)}
+.tiers span{grid-column:1;font-size:13.5px;color:var(--muted)}
+.tiers em{grid-column:2;grid-row:1/span 2;align-self:center;font:500 17px/1 var(--sans);font-style:normal;color:var(--pine);white-space:nowrap}
+.tiers p{font-size:12.5px;color:var(--muted);margin-top:4px}
+
 /* work */
 .work{display:grid;gap:16px}
 .case{display:block;text-decoration:none;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:transform .25s,box-shadow .25s}
@@ -274,6 +281,12 @@ footer a:hover{color:#fff}
       <h2 class="rv d1">Jauna mājaslapa <em>bez sākuma maksājuma.</em></h2>
       <p class="lead rv d2">Daudzas uzņēmumu lapas ir taisītas, pirms telefons kļuva par galveno ierīci: tur jātuvina, statistika nekrājas, un klients aiziet pie konkurenta. Es vispirms uztaisu skici, kā jūsu lapa varētu izskatīties, un jūs izlemjat, kad redzat gatavu rezultātu, nevis tāmi.</p>
       <div class="price rv d3"><b>no 20 €</b><span>mēnesī · izstrāde, hostings, drošība un labojumi kopā</span></div>
+      <div class="tiers rv d3">
+        <div><b>S · Vizītkarte</b><span>līdz 5 lapām, 1–2 valodas</span><em>29 € / 20 €</em></div>
+        <div><b>M · Uzņēmuma lapa</b><span>6–20 lapas, līdz 3 valodām, katalogs</span><em>59 € / 39 €</em></div>
+        <div><b>L · Pēc pasūtījuma</b><span>e-veikals, rezervācijas, lielas lapas</span><em>individuāli</em></div>
+        <p>Mēneša maksa ar 12 / 36 mēnešu līgumu. Cenas bez PVN (Echo Time nav PVN maksātājs). Pirmajos 2 mēnešos var atteikties bez soda.</p>
+      </div>
     </div>
     <div>
       <div class="steps">
@@ -385,8 +398,8 @@ footer a:hover{color:#fff}
   <div class="wrap faq">
     <div class="head"><span class="kicker rv">Jautājumi</span><h2 class="rv d1">Ko parasti <em>jautā.</em></h2></div>
     <details class="rv"><summary>Cik tiešām maksā skice?</summary><p>Neko. Apskatu jūsu esošo lapu, uztaisu jaunas sākumlapas skici un atsūtu saiti. Ja nepatīk, uz to arī beidzam.</p></details>
-    <details class="rv"><summary>Kas ir iekļauts mēneša maksā?</summary><p>Lapas izstrāde, hostings, HTTPS, drošības atjauninājumi, statistika un nelieli satura labojumi. Lielāki papildinājumi (jaunas sadaļas, e-veikals, integrācijas) pēc atsevišķas vienošanās.</p></details>
-    <details class="rv"><summary>Kam pieder lapa un domēns?</summary><p>Domēns paliek jūsu, un saturs (teksti, bildes) arī ir jūsu. Pārējos nosacījumus skaidri atrunājam līgumā pirms darba sākuma.</p></details>
+    <details class="rv"><summary>Kas ir iekļauts mēneša maksā?</summary><p>Lapas izstrāde, hostings, HTTPS, drošības atjauninājumi, rezerves kopijas, statistika un nelieli satura labojumi (S līdz 30 min, M līdz 1 h mēnesī). Lielāki papildinājumi (jaunas sadaļas, e-veikals, integrācijas) — 35 €/h vai par fiksētu cenu.</p></details>
+    <details class="rv"><summary>Kam pieder lapa un domēns?</summary><p>Domēns paliek jūsu, un saturs (teksti, bildes) arī ir jūsu. Pēc minimālā termiņa lapu var izpirkt par 6 mēnešu maksu, un tad viss kods pāriet jums. Līgumu slēdzam rakstiski, maksājat ar pārskaitījumu pēc rēķina.</p></details>
     <details class="rv"><summary>Cik ātri lapa ir gatava?</summary><p>Skice parasti dažu dienu laikā. Pilna lapa atkarīga no tā, cik ātri saņemam jūsu tekstus un bildes.</p></details>
     <details class="rv"><summary>Vai varat palīdzēt arī ar ko citu, ne tikai mājaslapu?</summary><p>Jā. Darba laika un dokumentu uzskaite TimePro, rēķinu apstrāde no e-pasta un citas automatizācijas. Pastāstiet, kur jūsu darbā zūd laiks.</p></details>
   </div>
