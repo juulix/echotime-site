@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="lv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Echo Time — mājaslapas, TimePro un AI automatizācijas</title>
+<meta name="description" content="SIA Echo Time: modernas mājaslapas bez sākuma maksājuma, TimePro darba laika un dokumentu uzskaite, AI automatizācijas un Echo Time balss asistents. Ojārs Jūliks, Ainaži.">
+<meta name="robots" content="noindex, nofollow"><!-- PREVIEW: remove at launch -->
+<meta name="theme-color" content="#1F3A36">
+<meta property="og:title" content="Echo Time — digitālie rīki, ko būvē uzņēmējs">
+<meta property="og:description" content="Mājaslapas, TimePro un AI automatizācijas Latvijas uzņēmumiem.">
+<meta property="og:image" content="img/jmklux-d.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%231F3A36%27/%3E%3Cpath d=%27M9 11h14M9 16h10M9 21h14%27 stroke=%27%23E2B891%27 stroke-width=%272.6%27 stroke-linecap=%27round%27/%3E%3C/svg%3E">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"SIA Echo Time","url":"https://www.echotime.app","email":"info@echotime.app","telephone":"+371 27700710","taxID":"50103723391","foundingDate":"2013","founder":{"@type":"Person","name":"Ojārs Jūliks"},
+ "address":{"@type":"PostalAddress","streetAddress":"Zāles iela 8","addressLocality":"Ainaži","postalCode":"LV-4035","addressCountry":"LV"}}
+</script>
+<style>
+:root{
+  color-scheme:light;
+  --bg:#FAFAF8;--bg2:#F2F2EE;--paper:#fff;--ink:#161513;--ink2:#42413D;--muted:#5A5953;--line:#E5E4DE;
+  --pine:#1F3A36;--pine6:#2C4842;--pine8:#152823;--pine1:#DDE6E3;--acorn:#C97B4A;--acorn3:#E2B891;--acorn1:#F5E8DC;--acorn7:#8E552F;
+  --serif:"Newsreader",Georgia,serif;--sans:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --gut:20px;--max:1180px;--hdr:64px;--r:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:calc(var(--hdr) + 8px);scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--sans);overflow-x:clip;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
+h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-.015em;line-height:1.08}
+h2{font-size:clamp(32px,5.6vw,54px);margin:12px 0 16px}
+h1 em,h2 em{font-style:italic;font-weight:300;color:var(--acorn7)}
+.kicker{display:inline-flex;align-items:center;gap:10px;font:700 11.5px/1 var(--sans);letter-spacing:.15em;text-transform:uppercase;color:var(--acorn7)}
+.kicker::before{content:"";width:20px;height:1.5px;background:currentColor}
+.lead{font-size:17px;color:var(--ink2);max-width:60ch}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:50px;padding:0 22px;border-radius:999px;font:600 15px/1 var(--sans);text-decoration:none;border:0;cursor:pointer;transition:background .2s,color .2s,transform .2s}
+.btn svg{width:16px;height:16px}
+.btn-p{background:var(--pine);color:#fff}.btn-p:hover{background:var(--pine6)}
+.btn-o{border:1px solid var(--pine);color:var(--pine);background:transparent}.btn-o:hover{background:var(--pine);color:#fff}
+.btn-a{background:var(--acorn3);color:var(--pine8)}.btn-a:hover{background:#ebc7a5}
+.ph{display:inline-block;font:600 11px/1.35 var(--sans);letter-spacing:.05em;text-transform:uppercase;color:var(--acorn7);border:1px dashed rgba(142,85,47,.55);border-radius:5px;padding:5px 9px;background:repeating-linear-gradient(-45deg,rgba(201,123,74,.08) 0 6px,transparent 6px 12px)}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+
+/* header */
+.hdr{position:fixed;inset:0 0 auto;z-index:40;height:var(--hdr);background:rgba(250,250,248,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .3s}
+.hdr.sc{border-color:var(--line)}
+.hdr .wrap{height:100%;display:flex;align-items:center;gap:20px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto}
+.logo i{width:30px;height:30px;border-radius:8px;background:var(--pine);display:grid;place-items:center}
+.logo i svg{width:18px;height:18px}
+.logo b{font:600 20px/1 var(--serif);letter-spacing:.01em}
+.nav{display:none;gap:24px}
+.nav a{font-size:14.5px;font-weight:500;text-decoration:none;color:var(--ink2)}
+.nav a:hover{color:var(--ink)}
+.hdr .btn{min-height:40px;padding:0 16px;font-size:14px;display:none}
+.burger{width:42px;height:42px;display:grid;place-items:center;background:none;border:0;margin-right:-8px;cursor:pointer}
+.burger svg{width:22px;height:22px}
+.drawer{position:fixed;inset:0;z-index:50;background:var(--pine);color:#fff;padding:calc(var(--hdr) + 12px) var(--gut) 28px;display:flex;flex-direction:column;transform:translateY(-100%);visibility:hidden;transition:transform .4s cubic-bezier(.7,0,.2,1),visibility .4s}
+.drawer.open{transform:none;visibility:visible}
+.drawer a{font:400 32px/1.3 var(--serif);text-decoration:none;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.drawer .btn{margin-top:auto;font:600 15px/1 var(--sans);border:0}
+.drawer .x{position:absolute;top:10px;right:12px;width:44px;height:44px;background:none;border:0;color:#fff;cursor:pointer}
+
+/* hero */
+.hero{padding:calc(var(--hdr) + 36px) 0 56px}
+.hero-g{display:grid;gap:40px;align-items:center}
+.hero h1{font-size:clamp(40px,9.6vw,78px);margin:16px 0 18px}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.hero-facts{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:28px;padding-top:18px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted)}
+.hero-facts b{color:var(--ink);font-weight:600}
+
+/* before/after visual */
+.ba{position:relative;display:flex;justify-content:center;align-items:flex-end;gap:16px;min-height:380px}
+.phone{position:relative;width:170px;height:350px;border-radius:30px;background:var(--pine8);padding:9px;box-shadow:0 30px 60px -30px rgba(21,40,35,.55)}
+.phone .scr{width:100%;height:100%;border-radius:22px;overflow:hidden;background:#fff;position:relative}
+.phone small{position:absolute;bottom:-30px;left:0;right:0;text-align:center;font:700 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.old{transform:rotate(-4deg) translateY(10px);filter:saturate(.6)}
+.old .scr{background:#e9e9e9;padding:6px}
+.old .o-bar{height:14px;background:#7a8fa6;margin-bottom:4px}
+.old .o-row{display:flex;gap:3px;margin-bottom:4px}
+.old .o-row i{flex:1;height:5px;background:#9aa}
+.old .o-grid{display:grid;grid-template-columns:28px 1fr;gap:4px}
+.old .o-side i{display:block;height:5px;background:#c55;margin-bottom:3px}
+.old .o-main i{display:block;height:3px;background:#999;margin-bottom:3px}
+.old .o-img{height:46px;background:#b9c2a8;margin-bottom:4px}
+.new{transform:rotate(3deg)}
+.new .scr{background:var(--pine)}
+.new .n-hero{padding:22px 14px 14px;color:#fff}
+.new .n-hero b{display:block;font:400 22px/1.05 var(--serif)}
+.new .n-hero span{display:block;width:70%;height:5px;border-radius:3px;background:rgba(255,255,255,.35);margin-top:10px}
+.new .n-btn{margin:14px 14px 0;height:26px;border-radius:999px;background:var(--acorn3)}
+.new .n-img{margin:16px 14px 0;height:92px;border-radius:10px;background:linear-gradient(135deg,#5C8479,#3D5F56)}
+.new .n-cards{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 14px}
+.new .n-cards i{height:46px;border-radius:8px;background:rgba(255,255,255,.12)}
+.arrow{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:var(--acorn);color:#fff;display:grid;place-items:center;z-index:2;box-shadow:0 10px 24px -10px rgba(142,85,47,.8)}
+.arrow svg{width:20px;height:20px}
+
+/* sections */
+.sec{padding:76px 0}
+.alt{background:var(--bg2)}
+.dark{background:var(--pine);color:#fff}
+.dark .kicker{color:var(--acorn3)}
+.dark h2 em{color:var(--acorn3)}
+.dark .lead{color:rgba(255,255,255,.75)}
+.head{margin-bottom:36px;max-width:780px}
+
+/* offer */
+.steps{display:grid;gap:12px;counter-reset:s}
+.step{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:22px 20px 22px 66px;position:relative}
+.step::before{counter-increment:s;content:counter(s);position:absolute;left:20px;top:20px;width:30px;height:30px;border-radius:50%;background:var(--pine);color:#fff;display:grid;place-items:center;font:600 14px/1 var(--sans)}
+.step b{display:block;font:500 20px/1.25 var(--serif);margin-bottom:4px}
+.step span{font-size:14.5px;color:var(--ink2)}
+.incl{display:grid;gap:10px 22px;margin:30px 0 0;padding:24px 22px;border-radius:var(--r);background:var(--pine1)}
+.incl li{list-style:none;display:flex;gap:10px;font-size:15px}
+.incl li::before{content:"";flex:0 0 18px;height:18px;margin-top:3px;border-radius:50%;background:var(--pine) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E2B891' stroke-width='3'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center/12px no-repeat}
+.price{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-top:26px}
+.price b{font:400 44px/1 var(--serif);color:var(--pine)}
+.price span{color:var(--ink2);font-size:15px}
+
+/* work */
+.work{display:grid;gap:16px}
+.case{display:block;text-decoration:none;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:transform .25s,box-shadow .25s}
+.case:hover{transform:translateY(-3px);box-shadow:0 20px 40px -26px rgba(21,40,35,.5)}
+.case .shots{position:relative;aspect-ratio:16/10;background:var(--bg2);overflow:hidden}
+.case .shots img.d{width:100%;height:100%;object-fit:cover;object-position:top}
+.case .shots img.m{position:absolute;right:14px;bottom:-40px;width:26%;border-radius:12px;border:4px solid var(--pine8);box-shadow:0 14px 28px -12px rgba(0,0,0,.45)}
+.case .t{padding:16px 18px 18px}
+.case .t small{font:700 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--acorn7)}
+.case .t b{display:block;font:500 21px/1.2 var(--serif);margin:8px 0 4px}
+.case .t span{font-size:14px;color:var(--ink2)}
+
+/* products */
+.prods{display:grid;gap:16px}
+.prod{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:var(--r);padding:26px 22px;display:flex;flex-direction:column}
+.prod small{font:700 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--acorn3)}
+.prod h3{font-size:28px;margin:10px 0 10px}
+.prod p{color:rgba(255,255,255,.78);font-size:15px}
+.prod ul{margin:14px 0 18px;display:grid;gap:7px}
+.prod li{list-style:none;font-size:14.5px;color:rgba(255,255,255,.85);padding-left:18px;position:relative}
+.prod li::before{content:"—";position:absolute;left:0;color:var(--acorn3)}
+.prod .lnk{margin-top:auto;font-weight:600;color:var(--acorn3);text-decoration:none}
+.prod .lnk:hover{text-decoration:underline}
+
+/* about */
+.about{display:grid;gap:30px;align-items:start}
+.portrait{aspect-ratio:4/5;border-radius:var(--r);display:grid;place-items:center;text-align:center;padding:20px;background:repeating-linear-gradient(-45deg,#ece9e1 0 10px,#e4e1d8 10px 20px);border:1px dashed rgba(142,85,47,.45)}
+.about p{color:var(--ink2);margin-bottom:14px;max-width:62ch}
+.about blockquote{font:300 24px/1.35 var(--serif);font-style:italic;color:var(--pine);border-left:3px solid var(--acorn);padding-left:18px;margin:22px 0}
+
+/* faq */
+.faq details{border-bottom:1px solid var(--line);padding:18px 0}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;font:500 19px/1.3 var(--serif)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font:300 26px/1 var(--sans);color:var(--acorn7);transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq p{margin-top:10px;color:var(--ink2);max-width:70ch}
+
+/* contact */
+.cg{display:grid;gap:34px}
+.form{display:grid;gap:12px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.form label{font:700 11.5px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);display:block;margin-bottom:7px}
+.form input,.form textarea{width:100%;font:500 16px/1.4 var(--sans);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px 13px;min-height:48px}
+.form textarea{min-height:96px;resize:vertical}
+.form input:focus,.form textarea:focus{outline:none;border-color:var(--pine6);background:#fff}
+.form .btn{justify-self:start}
+.fnote{font-size:12.5px;color:var(--muted)}
+.fst{font-size:14px;font-weight:600;color:var(--pine6);min-height:1em}
+.fst.err{color:#A04D3D}
+.cl{display:grid;gap:14px;font-size:15.5px}
+.cl a{text-decoration:none;border-bottom:1px solid var(--acorn3)}
+.cl small{display:block;font:700 11px/1 var(--sans);letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+
+footer{background:var(--pine8);color:rgba(255,255,255,.65);padding:30px 0 34px;font-size:13px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:10px 22px;justify-content:space-between}
+footer a{text-decoration:none}
+footer a:hover{color:#fff}
+
+@media (min-width:640px){
+  .work{grid-template-columns:1fr 1fr}
+  .incl{grid-template-columns:1fr 1fr}
+}
+@media (min-width:900px){
+  :root{--gut:40px;--hdr:72px}
+  .nav,.hdr .btn{display:flex}
+  .burger{display:none}
+  .hero{padding:calc(var(--hdr) + 60px) 0 80px}
+  .hero-g{grid-template-columns:1.15fr 1fr}
+  .ba{min-height:460px}
+  .phone{width:200px;height:410px}
+  .sec{padding:110px 0}
+  .offer-g{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+  .prods{grid-template-columns:repeat(3,1fr)}
+  .about{grid-template-columns:.8fr 1.2fr;gap:60px}
+  .cg{grid-template-columns:1fr 1fr;gap:60px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms!important;animation:none!important;scroll-behavior:auto!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr" id="hdr">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Echo Time"><i><svg viewBox="0 0 24 24" fill="none" stroke="#E2B891" stroke-width="2.4" stroke-linecap="round"><path d="M5 7h14M5 12h10M5 17h14"/></svg></i><b>Echo Time</b></a>
+    <nav class="nav" aria-label="Galvenā">
+      <a href="#majaslapas">Mājaslapas</a>
+      <a href="#produkti">TimePro un AI</a>
+      <a href="#par-mani">Par mani</a>
+      <a href="#kontakti">Kontakti</a>
+    </nav>
+    <a class="btn btn-p" href="#kontakti">Pieteikt skici</a>
+    <button class="burger" id="burger" aria-label="Izvēlne" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h18M3 12h18M3 17h12"/></svg></button>
+  </div>
+</header>
+<div class="drawer" id="drawer" aria-hidden="true">
+  <button class="x" id="drawerX" aria-label="Aizvērt"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+  <a href="#majaslapas">Mājaslapas</a>
+  <a href="#piemeri">Piemēri</a>
+  <a href="#produkti">TimePro un AI</a>
+  <a href="#par-mani">Par mani</a>
+  <a href="#jautajumi">Jautājumi</a>
+  <a href="#kontakti">Kontakti</a>
+  <a class="btn btn-a" href="#kontakti">Pieteikt bezmaksas skici</a>
+</div>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap hero-g">
+    <div>
+      <span class="kicker rv">SIA Echo Time · Ainaži</span>
+      <h1 class="rv d1">Digitālie rīki, ko būvē uzņēmējs. <em>Uzņēmējiem.</em></h1>
+      <p class="lead rv d2">Esmu Ojārs Jūliks. 17 gadus vadu Kapteiņu Ostu Salacgrīvā un pats būvēju rīkus saviem uzņēmumiem. Tagad tos pašus piedāvāju arī citiem: modernas mājaslapas bez sākuma maksājuma, darba laika un dokumentu uzskaiti TimePro un AI automatizācijas.</p>
+      <div class="hero-ctas rv d3">
+        <a class="btn btn-p" href="#kontakti">Pieteikt bezmaksas skici <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-o" href="#piemeri">Skatīt piemērus</a>
+      </div>
+      <div class="hero-facts rv d3">
+        <span><b>0 €</b> sākumā</span>
+        <span><b>Skice</b> bez maksas un saistībām</span>
+        <span><b>Latviski</b>, tieši ar izpildītāju</span>
+      </div>
+    </div>
+    <div class="ba rv d2" aria-hidden="true">
+      <div class="phone old"><div class="scr">
+        <div class="o-bar"></div>
+        <div class="o-row"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="o-grid"><div class="o-side"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="o-main"><div class="o-img"></div><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      </div><small>Šodien</small></div>
+      <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      <div class="phone new"><div class="scr">
+        <div class="n-hero"><b>Jūsu uzņēmums,<br>telefonā skaidrs.</b><span></span></div>
+        <div class="n-btn"></div><div class="n-img"></div>
+        <div class="n-cards"><i></i><i></i><i></i><i></i></div>
+      </div><small>Pēc</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="majaslapas">
+  <div class="wrap offer-g">
+    <div>
+      <span class="kicker rv">Mājaslapas abonementā</span>
+      <h2 class="rv d1">Jauna mājaslapa <em>bez sākuma maksājuma.</em></h2>
+      <p class="lead rv d2">Daudzas uzņēmumu lapas ir taisītas, pirms telefons kļuva par galveno ierīci: tur jātuvina, statistika nekrājas, un klients aiziet pie konkurenta. Es vispirms uztaisu skici, kā jūsu lapa varētu izskatīties, un jūs izlemjat, kad redzat gatavu rezultātu, nevis tāmi.</p>
+      <div class="price rv d3"><b>no 20 €</b><span>mēnesī · izstrāde, hostings, drošība un labojumi kopā</span></div>
+    </div>
+    <div>
+      <div class="steps">
+        <div class="step rv"><b>Skice bez maksas</b><span>Apskatu jūsu esošo lapu un uzzīmēju jaunu sākumlapu ar jūsu saturu.</span></div>
+        <div class="step rv d1"><b>Pabeidzam kopā</b><span>Ja patīk, salieku visas lapas, tekstus, bildes un valodas. Jūs tikai pārbaudāt.</span></div>
+        <div class="step rv d2"><b>Lapa strādā, es par to rūpējos</b><span>Hostings, drošības atjauninājumi, statistika un nelieli labojumi ir mēneša maksā.</span></div>
+      </div>
+      <ul class="incl rv d2">
+        <li>Pielāgota telefoniem</li><li>Ātra ielāde</li><li>Droša (HTTPS)</li><li>Google Analytics 4</li><li>Pieprasījumu forma</li><li>Vairākas valodas</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="piemeri">
+  <div class="wrap">
+    <div class="head">
+      <span class="kicker rv">Piemēri</span>
+      <h2 class="rv d1">Kā tas izskatās <em>īstenībā.</em></h2>
+      <p class="lead rv d2">Divi koncepti, kas uztaisīti no uzņēmumu esošajām lapām, ar jaunu dizainu, valodām un kustīgu grafiku. Atveriet telefonā.</p>
+    </div>
+    <div class="work">
+      <a class="case rv" href="https://juulix.github.io/jmklux-demo/" target="_blank" rel="noopener">
+        <div class="shots"><img class="d" src="img/jmklux-d.webp" alt="Koka dārza produkcijas ražotāja lapas koncepts" loading="lazy" width="960" height="600"><img class="m" src="img/jmklux-m.webp" alt="" loading="lazy" width="390" height="844"></div>
+        <div class="t"><small>Koncepts · ražotājs</small><b>Koka dārza produkcija, Salacgrīva</b><span>Ritinot baļķis kļūst par rotaļu laukumu, iekraujas fūrē un aizbrauc pa Eiropu. LV / EN / DE.</span></div>
+      </a>
+      <a class="case rv d1" href="https://juulix.github.io/aquilcaccia-demo/" target="_blank" rel="noopener">
+        <div class="shots"><img class="d" src="img/aquilcaccia-d.webp" alt="Itālijas medību tūrisma uzņēmuma lapas koncepts" loading="lazy" width="960" height="600"><img class="m" src="img/aquilcaccia-m.webp" alt="" loading="lazy" width="390" height="844"></div>
+        <div class="t"><small>Koncepts · tūrisms</small><b>Medību tūrisms, Itālija</b><span>Galamērķi, sezonas, rezervācijas pieprasījums un trīs valodas vienā ātrā lapā.</span></div>
+      </a>
+    </div>
+    <p style="margin-top:16px"><span class="ph">Portfolio: jāapstiprina, vai drīkstam rādīt abus konceptus publiski</span></p>
+  </div>
+</section>
+
+<section class="sec dark" id="produkti">
+  <div class="wrap">
+    <div class="head">
+      <span class="kicker rv">Ko vēl daru</span>
+      <h2 class="rv d1">Rīki, kurus <em>pats lietoju katru dienu.</em></h2>
+      <p class="lead rv d2">Viss sākās ar vajadzībām Kapteiņu Ostā. Ko uzbūvēju sev, to pārbaudu sezonā un tikai tad piedāvāju citiem.</p>
+    </div>
+    <div class="prods">
+      <div class="prod rv">
+        <small>Produkts</small>
+        <h3>TimePro</h3>
+        <p>Darba laika un dokumentu uzskaite uzņēmumiem, kur darbs notiek objektos un maiņās.</p>
+        <ul>
+          <li>Darbinieki atzīmē darba laiku telefonā</li>
+          <li>Čeki un pavadzīmes nofotografēti un nolasīti ar diviem AI modeļiem un summu pārbaudi</li>
+          <li>Atskaites un Excel eksports grāmatvedībai</li>
+          <li>Lieto būvuzņēmums un Kapteiņu Osta</li>
+        </ul>
+        <a class="lnk" href="https://timepro.me" target="_blank" rel="noopener">timepro.me →</a>
+      </div>
+      <div class="prod rv d1">
+        <small>Pakalpojums</small>
+        <h3>AI automatizācijas</h3>
+        <p>Rutīna, kas šodien notiek starp e-pastu, Excel un grāmatvedību, var notikt pati.</p>
+        <ul>
+          <li>Piegādātāju rēķini no e-pasta nonāk uzskaitē bez pārrakstīšanas</li>
+          <li>Atbilžu melnraksti klientiem jūsu stilā</li>
+          <li>Rīki tieši jūsu procesam, nevis gatavs produkts, kam jāpielāgojas</li>
+        </ul>
+        <a class="lnk" href="#kontakti">Pastāstiet par savu procesu →</a>
+      </div>
+      <div class="prod rv d2">
+        <small>Aplikācija</small>
+        <h3>Echo Time asistents</h3>
+        <p>Balss asistents mazajām Eiropas valodām: pasakiet latviski, un tas kļūst par atgādinājumu, kalendāra ierakstu vai iepirkumu sarakstu Apple ierīcēs.</p>
+        <ul>
+          <li>Runājiet dabiski, savā valodā</li>
+          <li>Sinhronizējas iPhone, iPad un Mac</li>
+        </ul>
+        <span class="ph" style="margin-top:auto;align-self:flex-start">App Store saite</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="par-mani">
+  <div class="wrap about">
+    <div class="portrait rv"><span class="ph">Ojāra foto</span></div>
+    <div>
+      <span class="kicker rv">Par mani</span>
+      <h2 class="rv d1">Es pats vadu <em>uzņēmumus.</em></h2>
+      <p class="rv d2">Salacgrīvā vadu Kapteiņu Ostu, atpūtas kompleksu ar viesnīcu, restorānu, banketu zāli un jahtu ostu, kur vasarā strādā 40–50 cilvēku. Sāku tur kā bārmenis, šodien esmu valdes loceklis. Dzīvoju Ainažos ar sievu un trim bērniem.</p>
+      <p class="rv d2">Kad vajadzēja sistēmu Kapteiņu Ostai, lielās bija par dārgām un sarežģītām, bet mazās par vienkāršām. Tāpēc sāku būvēt pats: rezervāciju lapu, rēķinu apstrādi no e-pasta, darba laika uzskaiti TimePro. Ar mākslīgā intelekta palīdzību viens cilvēks šodien var uzbūvēt to, kam agrāk vajadzēja komandu.</p>
+      <blockquote class="rv d3">Jūs runājat ar to, kurš dara darbu. Bez starpniekiem un projektu vadītājiem.</blockquote>
+    </div>
+  </div>
+</section>
+
+<section class="sec alt" id="jautajumi">
+  <div class="wrap faq">
+    <div class="head"><span class="kicker rv">Jautājumi</span><h2 class="rv d1">Ko parasti <em>jautā.</em></h2></div>
+    <details class="rv"><summary>Cik tiešām maksā skice?</summary><p>Neko. Apskatu jūsu esošo lapu, uztaisu jaunas sākumlapas skici un atsūtu saiti. Ja nepatīk, uz to arī beidzam.</p></details>
+    <details class="rv"><summary>Kas ir iekļauts mēneša maksā?</summary><p>Lapas izstrāde, hostings, HTTPS, drošības atjauninājumi, statistika un nelieli satura labojumi. Lielāki papildinājumi (jaunas sadaļas, e-veikals, integrācijas) pēc atsevišķas vienošanās.</p></details>
+    <details class="rv"><summary>Kam pieder lapa un domēns?</summary><p>Domēns paliek jūsu, un saturs (teksti, bildes) ir jūsu. <span class="ph">Noteikumi par lapas izpirkšanu un minimālo termiņu jāapstiprina</span></p></details>
+    <details class="rv"><summary>Cik ātri lapa ir gatava?</summary><p>Skice parasti dažu dienu laikā. Pilna lapa atkarīga no tā, cik ātri saņemam jūsu tekstus un bildes.</p></details>
+    <details class="rv"><summary>Vai varat palīdzēt arī ar ko citu, ne tikai mājaslapu?</summary><p>Jā. Darba laika un dokumentu uzskaite TimePro, rēķinu apstrāde no e-pasta un citas automatizācijas. Pastāstiet, kur jūsu darbā zūd laiks.</p></details>
+  </div>
+</section>
+
+<section class="sec" id="kontakti">
+  <div class="wrap cg">
+    <div>
+      <span class="kicker rv">Kontakti</span>
+      <h2 class="rv d1">Pieteikt <em>bezmaksas skici.</em></h2>
+      <p class="lead rv d2">Uzrakstiet savu mājaslapas adresi, un es atsūtīšu, kā tā varētu izskatīties. Vai vienkārši zvaniet.</p>
+      <div class="cl rv d3" style="margin-top:26px">
+        <div><small>E-pasts</small><a href="mailto:info@echotime.app">info@echotime.app</a></div>
+        <div><small>Tālrunis</small><a href="tel:+37127700710">+371 27700710</a></div>
+        <div><small>Uzņēmums</small>SIA "Echo Time" · reģ. nr. 50103723391<br>Zāles iela 8, Ainaži, Limbažu nov., LV-4035</div>
+      </div>
+    </div>
+    <form class="form rv d1" id="form" novalidate>
+      <div><label for="f-site">Jūsu mājaslapa</label><input id="f-site" name="site" placeholder="piemers.lv" autocomplete="url"></div>
+      <div><label for="f-co">Uzņēmums</label><input id="f-co" name="company" autocomplete="organization"></div>
+      <div><label for="f-mail">E-pasts vai tālrunis *</label><input id="f-mail" name="contact" required></div>
+      <div><label for="f-msg">Ziņa</label><textarea id="f-msg" name="message" placeholder="Ko gribētu uzlabot?"></textarea></div>
+      <button class="btn btn-p" type="submit">Nosūtīt <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      <p class="fst" id="fst" role="status"></p>
+      <p class="fnote">Forma atver jūsu e-pasta programmu ar sagatavotu vēstuli uz info@echotime.app. Datus izmantoju tikai, lai atbildētu.</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 SIA "Echo Time"</span>
+    <span><a href="privacy-policy/">Privacy policy</a> · <a href="terms-and-conditions/">Terms and conditions</a></span>
+  </div>
+</footer>
+
+<script>
+const $=s=>document.querySelector(s);
+const hdr=$('#hdr');addEventListener('scroll',()=>hdr.classList.toggle('sc',scrollY>10),{passive:true});
+function drawer(o){const d=$('#drawer');d.classList.toggle('open',o);d.setAttribute('aria-hidden',!o);$('#burger').setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':''}
+$('#burger').onclick=()=>drawer(true);$('#drawerX').onclick=()=>drawer(false);
+document.querySelectorAll('#drawer a').forEach(a=>a.addEventListener('click',()=>drawer(false)));
+addEventListener('keydown',e=>{if(e.key==='Escape')drawer(false)});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(e=>io.observe(e));
+$('#form').addEventListener('submit',e=>{
+  e.preventDefault();const f=e.target,st=$('#fst');
+  const contact=f.contact.value.trim();
+  if(!contact){st.textContent='Lūdzu, norādiet e-pastu vai tālruni.';st.className='fst err';return}
+  const body=[`Mājaslapa: ${f.site.value.trim()||'—'}`,`Uzņēmums: ${f.company.value.trim()||'—'}`,`Kontakts: ${contact}`,'',f.message.value.trim()].join('\n');
+  location.href=`mailto:info@echotime.app?subject=${encodeURIComponent('Skices pieteikums — '+(f.site.value.trim()||f.company.value.trim()||contact))}&body=${encodeURIComponent(body)}`;
+  st.textContent='E-pasta programma atvērta. Atliek nospiest “Sūtīt”.';st.className='fst';
+});
+</script>
+</body>
+</html>
