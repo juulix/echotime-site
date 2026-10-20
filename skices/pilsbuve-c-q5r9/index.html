@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="lv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>PILSBŪVE — no pils līdz piestātnei · skice C</title>
+<meta name="description" content="SIA PILSBŪVE — būvuzņēmējs Ventspilī: jaunbūve, pārbūve, restaurācija un inženiertīkli.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Cpath d=%27M3 16L16 5l13 11v1H3z%27 fill=%27%23D8231F%27/%3E%3Crect x=%277%27 y=%2717%27 width=%2718%27 height=%2710%27 fill=%27%23172331%27/%3E%3C/svg%3E">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{
+  color-scheme:light;
+  --paper:#EEF1F2;--paper2:#E2E7E9;--ink:#172331;--ink2:#3E4C59;--pencil:#3C5A78;--concrete:#B9BEC2;--red:#D8231F;--white:#fff;
+  --disp:"Big Shoulders Display","Arial Narrow",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --gut:18px;--max:1240px;--hdr:62px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:var(--hdr)}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.6 var(--body);overflow-x:clip;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}a{color:inherit}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
+.mono{font:500 11.5px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase}
+h1,h2,h3{font-family:var(--disp);font-weight:800;line-height:.95;letter-spacing:.005em}
+h2{font-size:clamp(40px,8vw,84px);margin:10px 0 18px}
+.lead{font-size:17px;color:var(--ink2);max-width:58ch}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:50px;padding:0 22px;font:600 15px/1 var(--body);text-decoration:none;border:2px solid var(--ink);color:var(--ink);background:transparent;cursor:pointer}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.red{background:var(--red);border-color:var(--red);color:#fff}.btn.red:hover{background:#B51A17;border-color:#B51A17}
+.sketch{position:fixed;left:10px;bottom:10px;z-index:80;background:var(--ink);color:#fff;font:500 10.5px/1.3 var(--mono);letter-spacing:.04em;padding:7px 11px}
+.sketch b{color:#ffb3b1;font-weight:500}
+.sketch span{display:none}
+
+/* header */
+.hdr{position:fixed;inset:0 0 auto;z-index:60;height:var(--hdr);background:var(--white);border-bottom:1px solid var(--paper2)}
+.hdr .wrap{height:100%;display:flex;align-items:center;gap:24px}
+.logo{margin-right:auto}.logo img{height:36px;width:auto}
+.nav{display:none;gap:26px}.nav a{font:500 14px/1 var(--body);text-decoration:none;color:var(--ink2)}.nav a:hover{color:var(--red)}
+.tel{display:none;font:500 13px/1 var(--mono);text-decoration:none}
+.burger{width:44px;height:44px;display:grid;place-items:center;background:none;border:0;margin-right:-10px;cursor:pointer}.burger svg{width:24px;height:24px}
+.drawer{position:fixed;inset:0;z-index:90;background:var(--ink);color:#fff;padding:calc(var(--hdr) + 16px) var(--gut) 28px;display:flex;flex-direction:column;transform:translateY(-100%);visibility:hidden;transition:transform .4s cubic-bezier(.7,0,.2,1),visibility .4s}
+.drawer.open{transform:none;visibility:visible}
+.drawer a{font:800 38px/1.15 var(--disp);text-decoration:none;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.drawer .x{position:absolute;top:10px;right:12px;width:44px;height:44px;background:none;border:0;color:#fff;cursor:pointer}
+.drawer .btn{margin-top:auto;border-color:var(--red);background:var(--red);color:#fff;font-family:var(--body);font-size:15px}
+.callfab{position:fixed;right:12px;bottom:12px;z-index:70;display:flex;align-items:center;gap:8px;background:var(--red);color:#fff;font:600 14px/1 var(--body);text-decoration:none;padding:14px 18px}
+.callfab svg{width:16px;height:16px}
+
+/* story */
+.pano{position:relative;height:1000vh;background:var(--paper)}
+.pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;
+  background-image:linear-gradient(rgba(60,90,120,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(60,90,120,.07) 1px,transparent 1px);background-size:24px 24px}
+#sky{position:absolute;left:0;right:0;top:var(--hdr);bottom:0;width:100%;height:calc(100% - var(--hdr));z-index:1}
+#sky .ln{fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+#sky .cl{stroke:var(--ink);stroke-width:2;stroke-linejoin:round}
+#sky .gh{fill:none;stroke:var(--pencil);stroke-width:1.3;opacity:.26}
+#sky .gr{fill:#D5D6D1;stroke:#8E959B;stroke-width:1.6;stroke-linejoin:round}
+#sky .ck{fill:none;stroke:#4E565E;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+#sky .fr{fill:none;stroke:var(--pencil);stroke-width:1.5;stroke-linecap:round}
+#sky .fr.sl{stroke:var(--ink);stroke-width:2.6}
+#sky .sc{fill:none;stroke:#6E7C88;stroke-width:1.1}
+#sky .cr{fill:none;stroke:var(--red);stroke-width:1.7;stroke-linejoin:round;stroke-linecap:round}
+#sky .lab{font:500 12px var(--mono);fill:var(--pencil);letter-spacing:.06em}
+#sky .stb{font:800 23px var(--disp);fill:var(--red);letter-spacing:.02em}
+#sky .sts{font:500 7.6px var(--mono);fill:var(--red);letter-spacing:.05em}
+#sky .wave{animation:wave 3.2s linear infinite}
+@keyframes wave{to{transform:translateX(-32px)}}
+.anno{position:absolute;left:0;right:0;top:calc(var(--hdr) + 10px);z-index:4;display:flex;justify-content:space-between;gap:12px;padding:0 var(--gut);color:var(--pencil)}
+.anno a{text-decoration:none;border-bottom:1px solid currentColor}
+.anno .dk{display:none}
+.intro,.finale{position:absolute;z-index:3;left:var(--gut);right:var(--gut);top:calc(var(--hdr) + 44px)}
+.intro h1{font-size:clamp(56px,15.5vw,150px);color:var(--ink);max-width:9ch}
+.intro h1 span,.finale h2 span{display:block}
+.intro h1 .r,.finale h2 .r{color:var(--red)}
+.intro p,.finale p{margin-top:16px;font-size:16.5px;color:var(--ink2);max-width:40ch}
+.ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.cue{display:flex;align-items:center;gap:10px;margin-top:22px;color:var(--ink2)}
+.cue svg{width:14px;height:14px;flex:none;animation:cue 1.8s ease-in-out infinite}
+@keyframes cue{0%,100%{transform:translateY(-2px)}50%{transform:translateY(3px)}}
+.finale{opacity:0;visibility:hidden}
+.finale h2{font-size:clamp(50px,13vw,120px);margin:8px 0 0}
+.finale .mono{color:var(--pencil)}
+
+/* year ruler / title block */
+.ruler{position:absolute;z-index:4;left:var(--gut);right:var(--gut);top:calc(var(--hdr) + 34px);display:flex;align-items:center;gap:14px;opacity:0;transition:opacity .3s}
+.ruler.on{opacity:1}
+.rtop{display:flex;align-items:baseline;gap:10px;flex:none}
+.rtop .mono{color:var(--pencil)}
+.odo{display:block;height:1em;overflow:hidden;font:800 26px/1 var(--disp);color:var(--ink)}
+.odo span{display:block}
+.rl{position:relative;flex:1;height:26px}
+.rl::before{content:"";position:absolute;left:0;right:0;top:9px;height:2px;background:var(--ink)}
+.rl i{position:absolute;top:5px;width:2px;height:10px;margin-left:-1px;background:var(--ink)}
+.rl .y{position:absolute;top:14px;font-size:9.5px;color:var(--pencil)}.rl .y1{right:0}
+.rl b{position:absolute;top:1px;left:0;width:0;height:0;margin-left:-6px;border:6px solid transparent;border-top:9px solid var(--red);transition:left .55s cubic-bezier(.6,0,.2,1)}
+
+/* construction board */
+.board{position:absolute;z-index:5;left:12px;right:12px;bottom:66px;background:var(--white);border:2px solid var(--ink);box-shadow:6px 6px 0 rgba(23,35,49,.12);opacity:0;transform:translateY(12px);transition:opacity .35s,transform .35s;pointer-events:none}
+.board.on{opacity:1;transform:none}
+.board .bh{display:flex;justify-content:space-between;align-items:center;background:var(--red);color:#fff;padding:7px 12px}
+.board .bb{padding:11px 14px 13px}
+.board h3{font-size:27px;color:var(--ink)}
+.facts{display:none;grid-template-columns:96px 1fr;gap:4px 10px;font-size:13.5px;line-height:1.45;margin-top:10px}
+.facts dt{font:500 10.5px/1.6 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--pencil)}
+.steps{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:11px 0 7px}
+.steps li{display:flex;flex-direction:column;justify-content:flex-end;min-width:0;font:500 9.5px/1.2 var(--mono);letter-spacing:.03em;text-transform:uppercase;color:var(--pencil);transition:color .2s}
+.steps li.on{color:var(--ink)}
+.steps li i{display:block;height:4px;background:var(--paper2);margin-top:5px;overflow:hidden}
+.steps li b{display:block;height:100%;width:0;background:var(--red)}
+.cap{font-size:13.5px;color:var(--ink2);min-height:1.45em}
+.award{display:flex;gap:8px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--concrete);font-size:13px;line-height:1.4;opacity:0;transform:translateY(6px);transition:opacity .35s,transform .35s}
+.award.on{opacity:1;transform:none}
+.award svg{flex:none;width:16px;height:16px;color:var(--red);margin-top:1px}
+
+.sec{padding:84px 0}
+.white{background:var(--white)}
+.kinds{display:grid;gap:0;margin-top:34px;border-top:2px solid var(--ink)}
+.kind{padding:22px 0;border-bottom:1px solid var(--concrete);display:grid;gap:10px}
+.kind h3{font-size:34px}
+.kind ul{list-style:none;display:grid;gap:6px}
+.kind li{font-size:15px;color:var(--ink2);padding-left:16px;position:relative}
+.kind li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:2px;background:var(--red)}
+.mosaic{display:grid;gap:10px;margin-top:30px;grid-template-columns:1fr 1fr}
+.mosaic figure{position:relative;overflow:hidden;background:var(--paper2)}
+.mosaic img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3}
+.mosaic .big{grid-column:1/-1}.mosaic .big img{aspect-ratio:16/9}
+.mosaic figcaption{position:absolute;left:0;bottom:0;padding:6px 10px;background:var(--ink);color:#fff;font-size:10.5px;letter-spacing:.03em;max-width:calc(100% - 20px)}
+.mosaic figure:not(.big):not(:last-child) figcaption span{display:none}
+.mosaic figure:last-child{grid-column:1/-1}.mosaic figure:last-child img{aspect-ratio:16/9}
+.trust{display:grid;gap:40px}
+.clients{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.clients span{border:1px solid var(--concrete);background:var(--white);padding:9px 12px;font-size:14px}
+.rec{margin-top:18px;display:grid;border-top:2px solid var(--ink)}
+.rec div{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--concrete)}
+.rec b{font:800 22px/1.1 var(--disp);color:var(--red)}
+.rec p{font-size:15px;color:var(--ink2)}
+.contact{background:var(--ink);color:#fff}
+.contact h2{color:#fff}
+.cg{display:grid;gap:30px;margin-top:10px}
+.cboard{background:var(--white);color:var(--ink);border:2px solid #fff}
+.cboard .bh{background:var(--red);color:#fff;padding:9px 14px}
+.cboard dl{display:grid;grid-template-columns:120px 1fr;gap:10px 14px;padding:18px 16px}
+.cboard dt{font:500 11px/1.6 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--pencil)}
+.cboard dd{font-size:15.5px}
+.cboard dd a{font-weight:600;text-decoration:none;border-bottom:2px solid var(--red)}
+.form{display:grid;gap:12px}
+.f2{display:grid;gap:12px}
+.form label{display:block;margin-bottom:6px;color:rgba(255,255,255,.7)}
+.form input,.form select,.form textarea{width:100%;font:400 16px/1.4 var(--body);color:var(--ink);background:#fff;border:2px solid #fff;padding:12px;min-height:48px}
+.form textarea{min-height:96px}
+.form input:focus,.form select:focus,.form textarea:focus{outline:none;border-color:var(--red)}
+.form .note{color:rgba(255,255,255,.55)}
+footer{background:#0F1822;color:rgba(255,255,255,.55);padding:22px 0 90px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
+
+/* reveals below the story */
+@media(prefers-reduced-motion:no-preference){
+  .js .rv{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  .js .rv.in{opacity:1;transform:none}
+  .js .mosaic figure.rv{opacity:1;transform:none;clip-path:inset(0 0 100% 0);transition:clip-path .9s cubic-bezier(.7,0,.2,1)}
+  .js .mosaic figure.rv.in{clip-path:inset(0)}
+}
+
+@media(min-width:700px){
+  .sketch span{display:inline}
+  .mosaic figure figcaption span{display:inline!important}
+  .mosaic figure:last-child{grid-column:auto}.mosaic figure:last-child img{aspect-ratio:4/3}
+  .mosaic{grid-template-columns:repeat(3,1fr)}.mosaic .big{grid-column:span 2;grid-row:span 2}.mosaic .big img{aspect-ratio:auto;height:100%}
+  .f2{grid-template-columns:1fr 1fr}
+  .anno .dk{display:inline}
+}
+@media(min-width:960px){
+  :root{--gut:40px;--hdr:72px}
+  .nav,.tel{display:flex}.burger,.callfab{display:none}
+  .intro,.finale{right:auto;max-width:760px;top:calc(var(--hdr) + 60px)}
+  .finale{max-width:1100px}.finale h2{font-size:clamp(64px,6.6vw,108px)}.finale p{max-width:62ch}
+  .intro h1{font-size:clamp(90px,9vw,150px)}
+  .board{left:var(--gut);right:auto;bottom:50px;width:390px}
+  .board h3{font-size:32px}
+  .facts{display:grid}
+  .ruler{left:auto;right:var(--gut);top:auto;bottom:22px;width:360px;flex-direction:column;align-items:stretch;gap:4px;background:rgba(255,255,255,.92);border:2px solid var(--ink);padding:10px 14px 4px}
+  .rtop{justify-content:space-between}
+  .rl{flex:none}
+  .odo{font-size:52px}
+  .kinds{grid-template-columns:repeat(4,1fr);border-top:0;gap:28px}
+  .kind{border-top:2px solid var(--ink);border-bottom:0;align-content:start}
+  .trust{grid-template-columns:1fr 1fr;gap:70px}
+  .cg{grid-template-columns:1fr 1fr;gap:60px}
+  .sec{padding:120px 0}
+  footer{padding-bottom:22px}
+}
+@media(prefers-reduced-motion:reduce){.cue svg,#sky .wave{animation:none}.board,.award,.ruler,.rl b{transition:none}.drawer{transition:none}}
+</style>
+</head>
+<body>
+<div class="sketch"><b>SKICE C</b> · Echo Time<span> · saturs vēl saskaņojams ar PILSBŪVI</span></div>
+
+<header class="hdr"><div class="wrap">
+  <a class="logo" href="#"><img src="img/logo.webp" alt="SIA PILSBŪVE" width="640" height="269"></a>
+  <nav class="nav" aria-label="Galvenā"><a href="#panorama">Objekti</a><a href="#darbi">Darbu veidi</a><a href="#foto">Fotogrāfijas</a><a href="#uzticiba">Pasūtītāji</a><a href="#kontakti">Kontakti</a></nav>
+  <a class="tel" href="tel:+37163622513">+371 636 22 513</a>
+  <button class="burger" id="burger" aria-label="Atvērt izvēlni" aria-expanded="false" aria-controls="drawer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
+</div></header>
+<div class="drawer" id="drawer" aria-hidden="true">
+  <button class="x" id="drawerX" aria-label="Aizvērt izvēlni"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+  <a href="#panorama">Objekti</a><a href="#darbi">Darbu veidi</a><a href="#foto">Fotogrāfijas</a><a href="#uzticiba">Pasūtītāji</a><a href="#kontakti">Kontakti</a>
+  <a class="btn" href="tel:+37163622513">Zvanīt +371 636 22 513</a>
+</div>
+<a class="callfab" href="tel:+37163622513"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Zvanīt</a>
+
+<main>
+<section class="pano" id="panorama" aria-label="Mūsu objekti">
+  <div class="pin">
+    <div class="anno mono"><span>Ventspils<span class="dk"> · 57°23′ N 21°34′ E</span></span><span>Ilustrācija · <a href="#darbi">Izlaist stāstu ↓</a></span></div>
+    <div class="intro" id="intro">
+      <h1><span>No pils</span><span>līdz</span><span class="r">piestātnei.</span></h1>
+      <p>Jaunbūve, pārbūve, restaurācija un inženiertīkli. Objekti Ventspilī, Liepājā, Talsu novadā un Rīgā.</p>
+      <div class="ctas">
+        <a class="btn red" href="#kontakti">Pieprasīt piedāvājumu</a>
+        <a class="btn" href="#darbi">Darbu veidi</a>
+      </div>
+      <div class="cue mono"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 1v11M2.5 7.5 7 12l4.5-4.5"/></svg>Ritiniet un iepazīstiet mūsu darbus</div>
+    </div>
+    <div class="finale" id="finale">
+      <span class="mono">2007–2016 · Ventspils</span>
+      <h2><span>8 objekti.</span><span class="r">Katram — atzinība.</span></h2>
+      <p>Jaunbūves, pārbūves, restaurācija un inženierbūves. Ārpus Ventspils arī Liepājā, Talsu novadā un Rīgā.</p>
+      <div class="ctas"><a class="btn red" href="#kontakti" tabindex="-1">Pieprasīt piedāvājumu</a><a class="btn" href="#darbi" tabindex="-1">Visi darbu veidi ↓</a></div>
+    </div>
+    <svg id="sky" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V10" stroke="#3C5A78" stroke-opacity=".18" stroke-width="2"/></pattern>
+        <linearGradient id="heat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C8161D"/><stop offset=".45" stop-color="#F0662A"/><stop offset="1" stop-color="#F6C445"/></linearGradient>
+        <linearGradient id="cool" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B5F96"/><stop offset="1" stop-color="#7DB4DD"/></linearGradient>
+        <clipPath id="waterclip"><rect x="1835" y="380" width="240" height="600"/></clipPath>
+      </defs>
+      <rect x="-3000" y="500" width="9000" height="500" fill="url(#hatch)"/>
+      <g id="water"><rect x="1835" y="500" width="240" height="500" fill="#C9D7E2"/>
+        <g clip-path="url(#waterclip)"><path class="wave" d="M1835 518q8-6 16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0M1835 540q8-6 16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0" fill="none" stroke="#3C5A78" stroke-opacity=".45" stroke-width="1.4"/></g></g>
+      <path id="ground" d="M-3000 500H1835M2075 500H6000" fill="none" stroke="#172331" stroke-width="2.4"/>
+      <g id="lGhost"></g><g id="lBld"></g><g id="lTop"></g><g id="lCrane"></g>
+    </svg>
+    <div class="ruler" id="ruler" aria-hidden="true">
+      <div class="rtop"><span class="mono" id="rSheet">Objekts 01 / 08</span><span class="odo" id="odo"></span></div>
+      <div class="rl" id="rl"><span class="y mono">2007</span><span class="y y1 mono">2016</span><b id="rMark"></b></div>
+    </div>
+    <article class="board" id="board" aria-hidden="true">
+      <div class="bh mono"><span>Būvtāfele</span><span id="bKind"></span></div>
+      <div class="bb">
+        <h3 id="bName"></h3>
+        <dl class="facts" id="bFacts"></dl>
+        <ol class="steps" id="bSteps"></ol>
+        <p class="cap" id="bCap"></p>
+        <p class="award" id="bAward"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="6" r="4.5"/><path d="M5.2 9.8 4 15l4-2 4 2-1.2-5.2"/></svg><span id="bAwardT"></span></p>
+      </div>
+    </article>
+    <ol class="sr">
+      <li>2007 — Amatu māja, Skolas iela 3, Ventspils. Restaurācija. 2. vieta "Gada labākā būve" 2007, nominācija "Restaurācija".</li>
+      <li>2009 — Pārventas bibliotēka, Tārgales iela 4, Ventspils. Jaunbūve. 1. vieta "Gada labākā būve Latvijā 2009", nominācija "Jaunbūve".</li>
+      <li>2010 — Skolēnu jaunrades nams, Maiznieku iela 11, Ventspils. Rekonstrukcija. 3. vieta "Gada labākā būve Latvijā 2010".</li>
+      <li>2011 — Livonijas ordeņa pils, Ventspils. Rekonstrukcija, restaurācija, ekspozīcijas izveide. 1. vieta "Gada labākā būve" 2011, nominācija "Restaurācija".</li>
+      <li>2013 — Ventspils pilsētas dome, Jūras iela 36. Fasāžu renovācija, energoefektivitātes paaugstināšana. 2. vieta "Energoefektīvākā ēka Latvijā 2013".</li>
+      <li>2015 — Brīvostas piestātne Nr. 25B, Ventspils. Piestātnes atjaunošana un teritorijas labiekārtojums. Žūrijas atzinība "Gada labākā būve Latvijā 2015".</li>
+      <li>2015 — Ventspils Elektronikas centrs. Ražošanas ēkas būvniecība. 3. vieta nominācijā "Ražotnes un loģistikas centri".</li>
+      <li>2016 — "Kurzemes Democentrs", Ventspils. Jauna sabiedriskā ēka. 3. vieta Latvijas Būvniecības gada balvā 2016.</li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec white" id="darbi"><div class="wrap">
+  <span class="mono rv" style="color:var(--pencil)">Darbu veidi</span>
+  <h2 class="rv">Ko mēs būvējam.</h2>
+  <p class="lead rv">Sabiedrisko, ražošanas un dzīvojamo ēku būvniecība, pārbūve un restaurācija, inženiertīkli, būvdarbu un projektu vadība.</p>
+  <div class="kinds">
+    <div class="kind rv"><h3>Jaunbūve</h3><ul>
+      <li>Pārventas bibliotēka</li>
+      <li>"Kurzemes Democentrs"</li>
+      <li>Elektronikas centra ražošanas ēka</li>
+      <li>Profesionālās vidusskolas dienesta viesnīca</li></ul></div>
+    <div class="kind rv"><h3>Pārbūve un renovācija</h3><ul>
+      <li>Ventspils pilsētas dome, Jūras iela 36</li>
+      <li>Skolēnu jaunrades nams</li>
+      <li>Slimnīcas 9. korpuss</li>
+      <li>Ventspils Augstskolas "A" korpuss</li>
+      <li>Veikala "JYSK" ēka</li></ul></div>
+    <div class="kind rv"><h3>Restaurācija</h3><ul>
+      <li>Livonijas ordeņa pils</li>
+      <li>Amatu māja, Skolas iela 3</li>
+      <li>Liepājas muzeja ēku komplekss</li></ul></div>
+    <div class="kind rv"><h3>Inženierbūves un tīkli</h3><ul>
+      <li>Brīvostas piestātne Nr. 25B un teritorija</li>
+      <li>Graudu termināļa darbnīcas, Ventspils brīvosta</li>
+      <li>Kanalizācijas tīklu atjaunošana, Rīga</li></ul></div>
+  </div>
+</div></section>
+
+<section class="sec" id="foto"><div class="wrap">
+  <span class="mono rv" style="color:var(--pencil)">Fotogrāfijas</span>
+  <h2 class="rv">Paveiktie darbi.</h2>
+  <div class="mosaic">
+    <figure class="big rv"><img src="img/pils.webp" alt="Livonijas ordeņa pils pēc restaurācijas" loading="lazy" width="1600" height="1067"><figcaption class="mono">Livonijas ordeņa pils<span> · restaurācija</span></figcaption></figure>
+    <figure class="rv"><img src="img/biblioteka2.webp" alt="Pārventas bibliotēka" loading="lazy"><figcaption class="mono">Pārventas bibliotēka<span> · jaunbūve</span></figcaption></figure>
+    <figure class="rv"><img src="img/biblioteka-iek.webp" alt="Pārventas bibliotēkas interjers" loading="lazy"><figcaption class="mono">Bibliotēkas interjers<span> · Pārventa</span></figcaption></figure>
+    <figure class="rv"><img src="img/jaunrades.webp" alt="Skolēnu jaunrades nams" loading="lazy" style="object-position:center 30%"><figcaption class="mono">Skolēnu jaunrades nams<span> · rekonstrukcija</span></figcaption></figure>
+    <figure class="rv"><img src="img/liepajas-muzejs.webp" alt="Liepājas muzejs" loading="lazy"><figcaption class="mono">Liepājas muzejs<span> · renovācija</span></figcaption></figure>
+    <figure class="rv"><img src="img/pils-zale.webp" alt="Livonijas ordeņa pils zāle" loading="lazy"><figcaption class="mono">Livonijas ordeņa pils<span> · zāle</span></figcaption></figure>
+  </div>
+</div></section>
+
+<section class="sec white" id="uzticiba"><div class="wrap trust">
+  <div>
+    <span class="mono rv" style="color:var(--pencil)">Pasūtītāji</span>
+    <h2 class="rv">Kam esam būvējuši.</h2>
+    <p class="lead rv">Pasūtītāji mūsu īstenotajos projektos.</p>
+    <div class="clients rv"><span>Ventspils pilsētas pašvaldība</span><span>Ventspils novada pašvaldība</span><span>Liepājas pilsētas pašvaldība</span><span>Ventspils muzejs</span><span>Ziemeļkurzemes reģionālā slimnīca</span><span>Ventspils Augstskola</span><span>Ventspils brīvosta</span><span>Swedbank</span><span>Rīgas ūdens</span><span>SIA "Abora"</span></div>
+  </div>
+  <div>
+    <span class="mono rv" style="color:var(--pencil)">Uzņēmums</span>
+    <div class="rec">
+      <div class="rv"><b>1999–2008</b><p>Labākais būvuzņēmums Ventspils pilsētas domes arhitektūras skatēs (8 gadi)</p></div>
+      <div class="rv"><b>2012</b><p>LDDK atzinība: labākais darba devējs Kurzemē</p></div>
+      <div class="rv"><b>ISO 9001</b><p>Kvalitātes vadības sistēma</p></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec contact" id="kontakti"><div class="wrap">
+  <span class="mono" style="color:#ff9a96">Kontakti</span>
+  <h2>Pastāstiet par savu objektu.</h2>
+  <div class="cg">
+    <div class="cboard">
+      <div class="bh mono">Būvuzņēmējs</div>
+      <dl>
+        <dt>Uzņēmums</dt><dd>SIA "PILSBŪVE"</dd>
+        <dt>Adrese</dt><dd>Kuldīgas iela 9, Ventspils, LV-3601</dd>
+        <dt>Birojs</dt><dd><a href="tel:+37163622513">+371 636 22 513</a><br><a href="mailto:pilsbuve@pilsbuve.lv">pilsbuve@pilsbuve.lv</a></dd>
+        <dt>Sagāde, tehnika</dt><dd><a href="tel:+37126743680">+371 267 43 680</a><br>martins@pilsbuve.lv</dd>
+      </dl>
+    </div>
+    <form class="form" id="form" novalidate>
+      <div class="f2"><div><label class="mono" for="fn">Vārds, uzvārds</label><input id="fn" name="name" autocomplete="name"></div><div><label class="mono" for="fc">Uzņēmums / iestāde</label><input id="fc" name="company" autocomplete="organization"></div></div>
+      <div class="f2"><div><label class="mono" for="ft">Tālrunis</label><input id="ft" name="tel" type="tel" autocomplete="tel"></div><div><label class="mono" for="fe">E-pasts</label><input id="fe" name="email" type="email" autocomplete="email"></div></div>
+      <div><label class="mono" for="fo">Darbu veids</label><select id="fo" name="obj"><option>Jaunbūve</option><option>Pārbūve / renovācija</option><option>Restaurācija</option><option>Inženierbūve / tīkli</option><option>Cits</option></select></div>
+      <div><label class="mono" for="fm">Īsi par objektu</label><textarea id="fm" name="msg"></textarea></div>
+      <div><button class="btn red" type="submit">Nosūtīt pieprasījumu</button></div>
+      <p class="mono note">Demonstrācijas forma — poga atver e-pasta programmu.</p>
+    </form>
+  </div>
+</div></section>
+</main>
+<footer><div class="wrap mono"><span>© 2026 SIA "PILSBŪVE" · Kuldīgas iela 9, Ventspils</span><span>Gala versijā arī EN un RU · Skici sagatavoja Echo Time</span></div></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+<script>
+const $=s=>document.querySelector(s);
+/* menu */
+function drawer(o){$('#drawer').classList.toggle('open',o);$('#drawer').setAttribute('aria-hidden',!o);$('#burger').setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';
+  if(o)setTimeout(()=>$('#drawer a').focus(),60);else if($('#drawer').contains(document.activeElement))$('#burger').focus()}
+$('#burger').onclick=()=>drawer(true);$('#drawerX').onclick=()=>drawer(false);
+document.querySelectorAll('#drawer a').forEach(a=>a.addEventListener('click',()=>drawer(false)));
+addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#drawer').classList.contains('open'))drawer(false)});
+/* form */
+window.buildMail=form=>{const d=new FormData(form),v=k=>(d.get(k)||'').toString().trim();
+  const body=[`Vārds: ${v('name')}`,`Uzņēmums / iestāde: ${v('company')}`,`Tālrunis: ${v('tel')}`,`E-pasts: ${v('email')}`,`Darbu veids: ${v('obj')}`,'',v('msg')].join('\n');
+  return 'mailto:pilsbuve@pilsbuve.lv?subject='+encodeURIComponent('Pieprasījums: '+v('obj'))+'&body='+encodeURIComponent(body)};
+$('#form').addEventListener('submit',e=>{e.preventDefault();location.href=buildMail(e.target)});
+/* reveals below the story */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -12% 0px'});
+document.querySelectorAll('.rv').forEach((el,i)=>{el.style.transitionDelay=(el.parentElement.querySelectorAll(':scope > .rv').length>2?[...el.parentElement.children].indexOf(el)%4*.08:0)+'s';io.observe(el)});
+
+/* ================= the story ================= */
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const NS='http://www.w3.org/2000/svg';
+const mk=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p&&p.appendChild(e);return e};
+const R=(x,y,w,h)=>`M${x} ${y}h${w}v${h}h${-w}Z`;
+const P=pts=>'M'+pts.map(p=>p.join(' ')).join('L')+'Z';
+const L=(x1,y1,x2,y2)=>`M${x1} ${y1}L${x2} ${y2}`;
+const A=(x,y,w,h)=>{const r=w/2;return `M${x} ${y+h}V${y+r}A${r} ${r} 0 0 1 ${x+w} ${y+r}V${y+h}Z`};
+const DARK='#33414F',GLASS='#BFD0DA',RED='#C8371F',DOOR='#4A3326',BRAND='#D8231F',PAPER='#EEF1F2';
+const grid=(x0,y0,cols,rows,w,h,gx,gy,fill,skip=()=>false,arch=false,role)=>{const o=[];for(let j=0;j<rows;j++)for(let i=0;i<cols;i++){if(skip(i,j))continue;const x=x0+i*gx,y=y0+j*gy;o.push([arch?A(x,y,w,h):R(x,y,w,h),fill,role])}return o};
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),seg=(p,a,b)=>clamp((p-a)/(b-a)),lerp=(a,b,k)=>a+(b-a)*k;
+const E=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2,EO=x=>1-Math.pow(1-x,3),BK=x=>{const c=1.9;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+
+const STEPS={
+ new:{l:['Pamati','Karkass','Fasāde','Nodots'],c:['Pamatu izbūve','Nesošās konstrukcijas stāvu pa stāvam','Fasāde, logi un jumts','Ēka nodota pasūtītājam']},
+ resto:{l:['Izpēte','Sastatnes','Restaurācija','Nodots'],c:['Esošās ēkas izpēte: plaisas un bojājumi','Sastatnes ap fasādi','Fasāde un jumts atjaunoti no augšas uz leju','Sastatnes noņemtas']},
+ recon:{l:['Esošā ēka','Demontāža','Pārbūve','Nodots'],c:['Esošās ēkas apsekošana','Nolietoto elementu demontāža','Jaunas konstrukcijas un fasāde','Ēka nodota pasūtītājam']},
+ reno:{l:['Siltuma zudumi','Siltināšana','Fasāde','Nodots'],c:['Ilustrācija: kur ēka zaudē siltumu','Fasāžu siltināšana','Jauna fasādes apdare','Energoefektīvāka ēka']},
+ quay:{l:['Esošā piestātne','Atjaunošana','Teritorija','Nodots'],c:['Nolietotās piestātnes apsekošana','Piestātnes atjaunošana','Teritorijas labiekārtojums','Piestātne nodota']}
+};
+
+const B=[
+ {x:48,w:254,top:338,type:'resto',kind:'Restaurācija',year:2007,name:'Amatu māja',
+  rows:[['Darbi','Restaurācija'],['Adrese','Skolas iela 3, Ventspils']],
+  award:'2. vieta "Gada labākā būve" 2007, nominācija "Restaurācija"',st:['2. VIETA','GADA LABĀKĀ BŪVE 2007'],sp:[175,288,-6],
+  body:[[60,415,230,85]],scaf:[[52,404,246,96]],
+  shapes:()=>[[R(60,415,230,85),'#E7DCC6'],[P([[48,415],[175,338],[302,415]]),RED],[R(214,352,14,34),'#9C8F7C'],[`M166 385a9 9 0 1 0 18 0a9 9 0 1 0 -18 0Z`,DARK],
+    ...grid(78,428,5,2,20,22,44,36,DARK,(i,j)=>j===1&&i===2),[A(161,455,28,45),DOOR]]},
+ {x:330,w:310,top:334,type:'new',kind:'Jaunbūve',year:2009,name:'Pārventas bibliotēka',
+  rows:[['Darbi','Jaunbūve'],['Adrese','Tārgales iela 4, Ventspils'],['Arhitekti','Birojs "INDIA"']],
+  award:'1. vieta "Gada labākā būve Latvijā 2009", nominācija "Jaunbūve"; 1. vieta "Best Office Awards 2011"',st:['1. VIETA','GADA LABĀKĀ BŪVE 2009'],sp:[548,300,-5],
+  frame:[338,334,294,166],photo:{src:'img/t-biblioteka.webp',x:346,y:214,r:-4},
+  shapes:()=>[[R(330,432,310,68),GLASS],...Array.from({length:11},(_,k)=>[L(356+k*26,432,356+k*26,500),null]),
+    ['M362 432V362Q362 334 392 334H588Q616 334 616 362V432Z','#8E4A2A'],...[352,372,392,412].map(y=>[L(362,y,616,y),null]),[R(470,468,40,32),DARK]]},
+ {x:690,w:200,top:294,type:'recon',kind:'Rekonstrukcija',year:2010,name:'Skolēnu jaunrades nams',
+  rows:[['Darbi','Rekonstrukcija'],['Adrese','Maiznieku iela 11, Ventspils']],
+  award:'3. vieta "Gada labākā būve Latvijā 2010", nominācija "Rekonstrukcija"',st:['3. VIETA','GADA LABĀKĀ BŪVE 2010'],sp:[862,262,-6],
+  photo:{src:'img/t-jaunrades.webp',x:690,y:188,r:3},
+  shapes:()=>[[R(690,348,200,152),'#E3C4AE'],[R(686,341,208,8),'#CDBBAA','cornice'],...grid(706,364,4,4,26,20,46,32,DARK,(i,j)=>j===3&&(i===1||i===2),false,'win'),[R(774,466,32,34),DARK],
+    [R(808,322,56,19),'#F1F2F2'],['M808 322A28 28 0 0 1 864 322Z','#F8F9F9']]},
+ {x:918,w:307,top:218,type:'resto',kind:'Restaurācija',year:2011,name:'Livonijas ordeņa pils',
+  rows:[['Darbi','Rekonstrukcija, restaurācija, ekspozīcijas izveide'],['Pasūtītājs','Ventspils muzejs']],
+  award:'1. vieta "Gada labākā būve" 2011, nominācija "Restaurācija" (2. kārta)',st:['1. VIETA','GADA LABĀKĀ BŪVE 2011'],sp:[1052,312,-7],
+  photo:{src:'img/t-pils.webp',x:934,y:206,r:-3},
+  body:[[930,390,215,110],[1145,300,72,200]],scaf:[[922,380,231,120],[1137,290,88,210]],
+  shapes:()=>[[R(930,390,215,110),'#E9C766'],[P([[918,392],[958,338],[1105,338],[1157,392]]),RED],[R(1145,300,72,200),'#E3BF5E'],[P([[1137,302],[1181,238],[1225,302]]),RED],[L(1181,238,1181,218),null],
+    ...grid(946,406,5,2,18,28,40,44,DARK,(i,j)=>j===1&&i===2,true),...grid(1172,316,1,4,18,28,0,44,DARK,()=>false,true),[A(1021,452,30,48),DOOR]]},
+ {x:1266,w:268,top:356,type:'reno',kind:'Renovācija',year:2013,name:'Ventspils pilsētas dome',
+  rows:[['Darbi','Fasāžu renovācija, energoefektivitātes paaugstināšana'],['Adrese','Jūras iela 36, Ventspils']],
+  award:'2. vieta "Energoefektīvākā ēka Latvijā 2013"',st:['2. VIETA','ENERGOEFEKTĪVĀKĀ ĒKA 2013'],sp:[1400,312,-5],
+  body:[[1270,362,260,138]],
+  shapes:()=>[[R(1270,362,260,138),'#D9DDDF'],[R(1266,356,268,8),'#C3C8CB'],...[0,1,2,3].map(j=>[R(1284,376+j*28,232,13),'#7F95A6','win']),...Array.from({length:9},(_,k)=>[L(1284+k*29,370,1284+k*29,488),null]),[R(1372,472,56,28),DARK]]},
+ {x:1580,w:255,top:422,type:'quay',kind:'Inženierbūve',year:2015,name:'Brīvostas piestātne Nr. 25B',
+  rows:[['Darbi','Piestātnes atjaunošana un teritorijas labiekārtojuma pārbūve, galvenais darbuzņēmējs'],['Adrese','Kr. Valdemāra iela 6, Ventspils']],
+  award:'Žūrijas atzinība "Gada labākā būve Latvijā 2015", nominācija "Inženierbūve"',cam:{dx:105,mw:560,lift:120},st:['ATZINĪBA','GADA LABĀKĀ BŪVE 2015'],sp:[1712,372,-5],
+  shapes:()=>[[R(1580,486,255,14),'#9AA3A8'],[R(1825,500,10,58),'#7D868C'],...[0,1,2,3,4].map(k=>[R(1598+k*50,477,10,9),DARK]),[R(1650,478,30,4),'#8E4A2A'],[R(1740,478,30,4),'#8E4A2A']]},
+ {x:1925,dx:170,w:250,top:372,type:'new',kind:'Jaunbūve, ražotne',year:2015,name:'Ventspils Elektronikas centrs',
+  rows:[['Darbi','Ražošanas ēkas būvniecība, galvenais darbuzņēmējs'],['Vieta','Ventspils Augsto tehnoloģiju parks'],['Pasūtītājs','SIA "Abora"']],
+  award:'3. vieta nominācijā "Ražotnes un loģistikas centri" (apbalvota 2016)',st:['3. VIETA','RAŽOTŅU NOMINĀCIJA 2016'],sp:[2052,322,-6],
+  frame:[1925,372,250,128],
+  shapes:()=>[[R(1925,410,250,90),'#C9CED2'],[P([[1995,410],[1995,382],[2040,410],[2040,382],[2085,410],[2085,382],[2130,410],[2130,382],[2175,410]]),'#AEB5BA'],...[430,450,470].map(y=>[L(1995,y,2175,y),null]),[R(1925,372,70,128),'#E4E7E9'],[R(1935,386,50,98),GLASS],[R(2092,462,40,38),DARK]]},
+ {x:2215,dx:170,w:220,top:338,type:'new',kind:'Jaunbūve',year:2016,name:'"Kurzemes Democentrs"',
+  rows:[['Darbi','Jauna sabiedriskā ēka'],['Objekts','Zinātnes un tehnoloģiju muzejs, Ventspils']],
+  award:'3. vieta Latvijas Būvniecības gada balvā 2016, nominācija "Jauna sabiedriskā ēka"',st:['3. VIETA','BŪVNIECĪBAS GADA BALVA 2016'],sp:[2330,290,-6],
+  frame:[2215,338,220,162],
+  shapes:()=>[[R(2225,428,200,72),GLASS],[P([[2215,428],[2215,360],[2435,338],[2435,428]]),'#2F4A5E'],[P([[2235,388],[2415,370],[2415,384],[2235,402]]),GLASS],[L(2245,428,2245,500),null],[L(2405,428,2405,500),null],[R(2305,468,40,32),DARK]]}
+];
+const N=B.length,I0=.045,I1=.905,S=(I1-I0)/N,CRANE0=1556;
+
+const sky=$('#sky'),lGhost=$('#lGhost'),lBld=$('#lBld'),lTop=$('#lTop'),lCrane=$('#lCrane'),defs=sky.querySelector('defs');
+const dashify=(p)=>{const l=p.getTotalLength();p.style.strokeDasharray=l+' '+(l+1);p.style.strokeDashoffset=l;return l};
+const draw=(arr,k)=>arr.forEach(o=>o.p.style.strokeDashoffset=(o.l*(1-k)).toFixed(1));
+const shape=(g,d,cls,fill)=>{const p=mk('path',{d,class:cls},g);if(fill)p.style.fill=fill;return p};
+function cracks(rects,n){const out=[];rects.forEach(([x,y,w,h],ri)=>{for(let k=0;k<n;k++){let cx=x+w*(.15+.7*rnd()),cy=y+6+h*.25*rnd();const pts=[[cx,cy]];for(let s=0;s<5;s++){cx+=(rnd()-.5)*12;cy+=6+rnd()*7;if(cy>y+h-4)break;pts.push([cx,cy])}out.push(pts)}});return out}
+
+B.forEach((b,i)=>{
+  b.dx=b.dx||0;b.cx=b.x+b.dx+b.w/2;b.mast=b.x+b.dx-14;b.tx=clamp(b.cx-b.mast,40,318);
+  b.cTop=b.top-28;b.cBot=b.type==='quay'?566:504;
+  const ss=b.shapes(),T=`translate(${b.dx} 0)`;
+  /* ghost: the plan of the city */
+  b.gh=mk('g',{transform:T},lGhost);
+  ss.forEach(([d])=>mk('path',{d,class:'gh'},b.gh));
+  if(b.type==='quay')[1626,1716,1806].forEach(x=>mk('path',{d:L(x,486,x,428),class:'gh'},b.gh));
+  const root=mk('g',{transform:T},lBld);
+  /* existing building (grey) */
+  if(b.type!=='new'){
+    b.grey=mk('g',{opacity:0},root);
+    if(b.type==='quay'){
+      shape(b.grey,R(1580,486,222,14),'gr');
+      b.chunk=shape(b.grey,P([[1802,486],[1835,486],[1831,500],[1814,506],[1802,497]]),'gr');
+      shape(b.grey,L(1640,486,1650,440),'gr');shape(b.grey,L(1760,486,1752,446),'gr');
+      b.ck=[[[1655,487],[1659,492],[1655,499]],[[1700,487],[1697,493],[1702,499]],[[1770,487],[1774,494],[1770,499]]];
+    }else{
+      b.greyParts=ss.map(([d,f,role])=>{const p=shape(b.grey,d,'gr');if(!f)p.style.fill='none';p.dataset.role=role||'';return p});
+      if(b.type==='resto')b.ck=cracks(b.body,b.body.length>1?2:3);
+    }
+    if(b.ck)b.ckP=b.ck.map(pts=>{const p=mk('path',{d:'M'+pts.map(q=>q.map(v=>v.toFixed(1)).join(' ')).join('L'),class:'ck'},b.grey);return {p,l:dashify(p)}});
+  }
+  /* new build: foundation + frame */
+  if(b.frame){
+    const [fx,fy,fw,fh]=b.frame;
+    b.fnd=mk('rect',{x:fx-6,y:500,width:fw+12,height:0,fill:'#5B6670'},root);b.fndY=500;
+    b.frG=mk('g',{},root);b.fr=[];
+    const nc=Math.max(3,Math.round(fw/46)),cols=Array.from({length:nc+1},(_,k)=>fx+k*fw/nc);
+    let y0=500;const lv=[];for(let y=468;y>fy+8;y-=32)lv.push(y);lv.push(fy);
+    lv.forEach(y=>{cols.forEach(x=>b.fr.push(mk('path',{d:L(x,y0,x,y),class:'fr'},b.frG)));b.fr.push(mk('path',{d:L(fx-4,y,fx+fw+4,y),class:'fr sl'},b.frG));y0=y});
+    b.fr=b.fr.map(p=>({p,l:dashify(p)}));
+  }
+  /* energy renovation: heat and insulation overlays */
+  if(b.type==='reno'){
+    const [x,y,w,h]=b.body[0];
+    b.heat=mk('g',{opacity:0},root);
+    mk('rect',{x,y,width:w,height:h,fill:'url(#heat)'},b.heat);
+    ss.filter(s=>s[2]==='win').forEach(([d])=>mk('path',{d,fill:'#9E0F16'},b.heat));
+    const lg=mk('text',{x,y:y-16,class:'lab',fill:BRAND},b.heat);lg.style.fill=BRAND;lg.textContent='TERMOGRĀFIJA · ILUSTRĀCIJA';
+    const cp=mk('clipPath',{id:'ins'+i},defs);b.insR=mk('rect',{x:x-4,y:500,width:w+8,height:0},cp);
+    b.cool=mk('g',{'clip-path':`url(#ins${i})`},root);
+    mk('rect',{x,y,width:w,height:h,fill:'url(#cool)'},b.cool);
+    let gl='';for(let gx=x+26;gx<x+w;gx+=26)gl+=L(gx,y,gx,y+h);for(let gy=y+23;gy<y+h;gy+=23)gl+=L(x,gy,x+w,gy);
+    mk('path',{d:gl,stroke:'rgba(255,255,255,.6)','stroke-width':1,fill:'none'},b.cool);
+  }
+  /* new outlines (drawn) */
+  b.lnG=mk('g',{},root);
+  b.ln=ss.map(([d])=>({p:shape(b.lnG,d,'ln')}));b.ln.forEach(o=>o.l=dashify(o.p));
+  /* final colours, revealed by a wipe */
+  const cc=mk('clipPath',{id:'cc'+i},defs);b.cr=mk('rect',{x:b.x-30,y:b.cBot,width:b.w+60,height:0},cc);
+  b.col=mk('g',{'clip-path':`url(#cc${i})`},root);
+  ss.forEach(([d,f])=>{const p=shape(b.col,d,'cl',f);if(!f)p.style.fill='none'});
+  /* reconstruction: openings marked for demolition */
+  if(b.type==='recon'){
+    b.dem=mk('g',{opacity:0},root);
+    ss.filter(s=>s[2]==='win'||s[2]==='cornice').forEach(([d])=>mk('path',{d,fill:'none',stroke:BRAND,'stroke-width':1.6,'stroke-dasharray':'4 3'},b.dem));
+    b.holes=mk('g',{opacity:0},root);
+    ss.filter(s=>s[2]==='win').forEach(([d])=>mk('path',{d,fill:PAPER,stroke:'#8E959B','stroke-width':1.2,'stroke-dasharray':'3 3'},b.holes));
+    b.corn=b.greyParts.find(p=>p.dataset.role==='cornice');
+  }
+  /* quay: lamps, paving, ship */
+  if(b.type==='quay'){
+    const cp=mk('clipPath',{id:'pav'},defs);b.pavR=mk('rect',{x:1580,y:480,width:0,height:20},cp);
+    mk('path',{d:'M1586 493H1822',stroke:'#7D868C','stroke-width':2,'stroke-dasharray':'7 5',fill:'none','clip-path':'url(#pav)'},root);
+    b.lamps=[1626,1716,1806].map(x=>{const g=mk('g',{transform:'translate(0 486) scale(1 0)'},root);mk('path',{d:L(x,486,x,428),class:'ln'},g);mk('rect',{x:x-9,y:422,width:18,height:6,fill:DARK},g);return g});
+    b.ship=mk('g',{transform:'translate(320 0)'},mk('g',{'clip-path':'url(#waterclip)'},root));
+    mk('path',{d:P([[1858,497],[2034,497],[2018,518],[1874,518]]),fill:'#fff',stroke:'#172331','stroke-width':2},b.ship);
+    mk('rect',{x:1874,y:505,width:146,height:4,fill:BRAND},b.ship);
+    mk('rect',{x:1902,y:475,width:66,height:22,fill:'#fff',stroke:'#172331','stroke-width':2},b.ship);
+    [1910,1928,1946].forEach(x=>mk('rect',{x,y:481,width:10,height:7,fill:DARK},b.ship));
+    mk('path',{d:L(1958,475,1958,446),stroke:'#172331','stroke-width':2},b.ship);
+  }
+  /* restoration: survey markers + scaffolding (in front of the facade) */
+  if(b.ck&&b.type!=='recon'){
+    b.mks=b.ck.map((pts,k)=>{const g=mk('g',{opacity:0},root);const [x,y]=pts[0];
+      mk('circle',{cx:x,cy:y-12,r:9,fill:'#fff',stroke:BRAND,'stroke-width':1.6},g);mk('path',{d:L(x,y-3,x,y),stroke:BRAND,'stroke-width':1.4},g);
+      const t=mk('text',{x,y:y-8.5,'text-anchor':'middle',class:'lab'},g);t.style.fill=BRAND;t.style.fontSize='10px';t.textContent=k+1;return {g,x,y:y-12}});
+  }
+  if(b.scaf){
+    const top=Math.min(...b.scaf.map(r=>r[1]));b.sTop=top;
+    const cp=mk('clipPath',{id:'sc'+i},defs);b.scR=mk('rect',{x:b.x-30,y:500,width:b.w+60,height:0},cp);
+    b.scG=mk('g',{'clip-path':`url(#sc${i})`},root);b.scIn=mk('g',{},b.scG);
+    let d='';b.scaf.forEach(([x,y,w,h])=>{const n=Math.max(2,Math.round(w/26)),st=w/n;
+      for(let k=0;k<=n;k++)d+=L(x+k*st,y,x+k*st,500);
+      for(let yy=500;yy>=y;yy-=25){d+=L(x,yy,x+w,yy)}
+      for(let k=0;k<n;k++)for(let yy=500;yy-25>=y;yy-=25)if((k+Math.round(yy/25))%2)d+=L(x+k*st,yy,x+(k+1)*st,yy-25)});
+    mk('path',{d,class:'sc'},b.scIn);
+    b.plat=mk('path',{d:'',stroke:'#172331','stroke-width':3.2,'stroke-linecap':'round',fill:'none'},b.scIn);
+  }
+  /* photo + award stamp */
+  const top=mk('g',{transform:T},lTop);
+  if(b.photo){const {src,x,y,r}=b.photo;
+    const o=mk('g',{transform:`translate(${x} ${y}) rotate(${r})`},top);b.phG=mk('g',{opacity:0},o);
+    mk('rect',{x:4,y:5,width:132,height:102,fill:'rgba(23,35,49,.14)'},b.phG);
+    mk('rect',{x:0,y:0,width:132,height:102,fill:'#fff',stroke:'#C9CFD3'},b.phG);
+    mk('image',{href:src,x:6,y:6,width:120,height:90,preserveAspectRatio:'xMidYMid slice'},b.phG);
+    mk('rect',{x:46,y:-7,width:40,height:14,fill:'rgba(240,226,170,.8)',transform:'rotate(-4 66 0)'},b.phG)}
+  const [sx,sy,sr]=b.sp;const so=mk('g',{transform:`translate(${sx} ${sy}) rotate(${sr})`},top);
+  b.stG=mk('g',{opacity:0,style:'mix-blend-mode:multiply'},so);
+  mk('rect',{x:-76,y:-24,width:152,height:48,fill:'rgba(255,255,255,.55)',stroke:BRAND,'stroke-width':2.4},b.stG);
+  mk('rect',{x:-71,y:-19,width:142,height:38,fill:'none',stroke:BRAND,'stroke-width':1},b.stG);
+  const t1=mk('text',{x:0,y:3,'text-anchor':'middle',class:'stb'},b.stG);t1.textContent=b.st[0];
+  const t2=mk('text',{x:0,y:14,'text-anchor':'middle',class:'sts'},b.stG);t2.textContent=b.st[1];
+});
+
+/* the crane */
+const crane=mk('g',{},lCrane),cp=[];
+{let z='M-8 500';for(let y=500,s=1;y>176;y-=16,s=-s)z+=`L${s*8} ${y-16}`;
+ [L(-8,500,-8,172),L(8,500,8,172),z,'M-8 172L0 132L8 172','M8 160H330M8 172H330M330 160V172','M-8 162H-96M-8 172H-96','M0 132L330 160M0 132L-96 162'].forEach(d=>cp.push(mk('path',{d,class:'cr'},crane)));
+ {let zz='M8 172';for(let x=8,s=0;x<330;x+=16,s^=1)zz+=`L${x+16} ${s?172:160}`;cp.push(mk('path',{d:zz,class:'cr'},crane))}
+ mk('rect',{x:-96,y:172,width:26,height:18,fill:'#172331'},crane);mk('rect',{x:-26,y:496,width:52,height:6,fill:'#172331'},crane);
+ mk('rect',{x:8,y:172,width:16,height:14,fill:'#fff',stroke:BRAND,'stroke-width':1.6},crane);}
+const trolley=mk('rect',{x:0,y:172,width:14,height:6,fill:'#172331'},crane);
+const cable=mk('path',{d:'',stroke:'#172331','stroke-width':1.2},crane);
+const hook=mk('path',{d:'',fill:'none',stroke:'#172331','stroke-width':2,'stroke-linecap':'round'},crane);
+const ground=$('#ground');
+
+/* HUD */
+const board=$('#board'),intro=$('#intro'),finale=$('#finale'),ruler=$('#ruler');
+const odo=$('#odo');let odoY=0;
+const setYear=y=>{if(y===odoY)return;const up=y>odoY;odoY=y;odo.innerHTML=`<span>${y}</span>`;
+  if(!RM&&odo.firstChild.animate)odo.firstChild.animate([{transform:`translateY(${up?70:-70}%)`,opacity:0},{transform:'none',opacity:1}],{duration:420,easing:'cubic-bezier(.2,.7,.2,1)'})};
+const rl=$('#rl'),rMark=$('#rMark'),yPos=y=>((y-2007)/9*100).toFixed(2)+'%';
+[...new Set(B.map(b=>b.year))].forEach(y=>{const t=document.createElement('i');t.style.left=yPos(y);rl.appendChild(t)});
+let cur=-2,curStage=-1;const stepEls=[];
+function setBoard(i){
+  if(i===cur)return;cur=i;curStage=-1;
+  if(i<0||i>=N){board.classList.remove('on');ruler.classList.toggle('on',false);return}
+  const b=B[i],st=STEPS[b.type];
+  $('#bKind').textContent=b.kind;$('#bName').textContent=b.name;
+  $('#bFacts').innerHTML=b.rows.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('');
+  $('#bSteps').innerHTML=st.l.map(l=>`<li>${l}<i><b></b></i></li>`).join('');
+  stepEls.length=0;$('#bSteps').querySelectorAll('li').forEach(li=>stepEls.push({li,bar:li.querySelector('b')}));
+  $('#bAwardT').textContent=b.award;
+  $('#rSheet').textContent=`Objekts ${String(i+1).padStart(2,'0')} / 08`;setYear(b.year);rMark.style.left=yPos(b.year);
+  board.classList.add('on');ruler.classList.add('on');
+}
+
+/* camera */
+let W=0,H=0,mobile=false,mW=430,mGr=.6,dW=980,dGr=.72;
+function measure(){const r=sky.getBoundingClientRect();W=r.width;H=r.height;mobile=W<960;
+  if(mobile){const bt=board.getBoundingClientRect().top-r.top;const above=Math.max(160,bt-10);const s=Math.max(.35,(above-48)/372);mW=W/s;mGr=above/H}
+  else{dW=Math.max(980,W/1.55);const s=W/dW;dGr=clamp((372*s+58)/H,.6,.88)}}
+function focus(i){const b=B[i],c=b.cam||{};return mobile?{cx:b.cx+(c.dx||0),w:Math.max(mW,b.w*1.3+50,c.mw||0),gr:mGr-(c.lift||0)/H}:{cx:b.cx+(c.dx||0)*.6-dW*.16,w:dW,gr:dGr}}
+const wide=()=>({cx:1320,w:mobile?1250:Math.max(2750,W*1.7),gr:mobile?.9:.86});
+const over=()=>({cx:1320,w:mobile?2760:Math.max(2780,W*1.7),gr:mobile?.86:.86});
+function cam(p){
+  let a,b,k;
+  if(p<I0){a=wide();b=focus(0);k=E(seg(p,.012,I0))}
+  else if(p>=I1){a=focus(N-1);b=over();k=E(seg(p,I1,I1+.045))}
+  else{const i=Math.min(N-1,Math.floor((p-I0)/S)),t=(p-I0-i*S)/S;a=focus(Math.max(0,i-1));b=focus(i);k=i===0?1:E(seg(t,0,.16))}
+  const cx=lerp(a.cx,b.cx,k),w=lerp(a.w,b.w,k),gr=lerp(a.gr,b.gr,k),h=w*H/W;
+  sky.setAttribute('viewBox',`${(cx-w/2).toFixed(1)} ${(500-gr*h).toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}`);
+}
+
+/* one building at local time t (0..1 = its chapter) */
+function upd(b,t){
+  const tc=clamp(t,-.01,1.01);if(tc===b.last)return;b.last=tc;
+  const arr=E(seg(t,0,.16)),u1=E(seg(t,.16,.34)),u2=E(seg(t,.34,.52)),u3=E(seg(t,.52,.7)),u4=E(seg(t,.7,.84));
+  const wipeUp=k=>{const h=(b.cBot-b.cTop)*k;b.cr.setAttribute('y',(b.cBot-h).toFixed(1));b.cr.setAttribute('height',h.toFixed(1))};
+  const wipeDown=k=>{b.cr.setAttribute('y',b.cTop);b.cr.setAttribute('height',((b.cBot-b.cTop)*k).toFixed(1))};
+  const marks=(k,out)=>b.mks&&b.mks.forEach((m,j)=>{const q=BK(seg(k,j*.22,j*.22+.4));m.g.setAttribute('opacity',(clamp(q)*(1-out)).toFixed(3));m.g.setAttribute('transform',`translate(${m.x} ${m.y}) scale(${Math.max(.01,q).toFixed(3)}) translate(${-m.x} ${-m.y})`)});
+  if(b.type==='new'){
+    b.gh.setAttribute('opacity',(1-u3).toFixed(3));
+    b.fnd.setAttribute('y',(500-10*u1).toFixed(2));b.fnd.setAttribute('height',(10*u1).toFixed(2));
+    const n=b.fr.length,f=seg(t,.34,.52);b.fr.forEach((o,k)=>o.p.style.strokeDashoffset=(o.l*(1-clamp(f*n-k))).toFixed(1));
+    b.frG.setAttribute('opacity',(1-u4).toFixed(3));
+    draw(b.ln,u3);wipeUp(u4);
+  }else if(b.type==='resto'){
+    b.gh.setAttribute('opacity',(1-arr).toFixed(3));
+    b.grey.setAttribute('opacity',(arr*(1-u4)).toFixed(3));
+    draw(b.ckP,u1);marks(seg(t,.16,.34),u3);
+    const sh=500-b.sTop+6;b.scR.setAttribute('y',(500-sh*u2).toFixed(1));b.scR.setAttribute('height',(sh*u2+4).toFixed(1));
+    b.scIn.setAttribute('transform',`translate(0 ${(60*u4).toFixed(1)})`);b.scG.setAttribute('opacity',(1-u4).toFixed(3));
+    wipeDown(u3);
+    const yw=b.cTop+(b.cBot-b.cTop)*u3;let d='';if(u3>0&&u3<1)b.scaf.forEach(([x,y,w,h])=>{if(yw>=y&&yw<=500)d+=L(x-3,yw,x+w+3,yw)});b.plat.setAttribute('d',d);
+    draw(b.ln,1);b.lnG.setAttribute('opacity',0);
+  }else if(b.type==='recon'){
+    b.gh.setAttribute('opacity',(1-arr).toFixed(3));
+    b.grey.setAttribute('opacity',(arr*(1-u4)).toFixed(3));
+    b.dem.setAttribute('opacity',(u1*(1-u2)).toFixed(3));b.holes.setAttribute('opacity',u2.toFixed(3));
+    b.corn.setAttribute('transform',`translate(0 ${(-110*u2).toFixed(1)})`);b.corn.style.opacity=(1-seg(t,.44,.52)).toFixed(3);
+    draw(b.ln,u3);wipeUp(u4);
+  }else if(b.type==='reno'){
+    b.gh.setAttribute('opacity',(1-arr).toFixed(3));
+    b.grey.setAttribute('opacity',(arr*(1-u4)).toFixed(3));
+    b.heat.setAttribute('opacity',(u1*(1-u3)).toFixed(3));
+    const [,y,,h]=b.body[0];b.insR.setAttribute('y',(500-(h+6)*u2).toFixed(1));b.insR.setAttribute('height',((h+6)*u2).toFixed(1));
+    b.cool.setAttribute('opacity',(1-u3).toFixed(3));
+    draw(b.ln,u3);wipeUp(u4);
+  }else{ /* quay */
+    b.gh.setAttribute('opacity',(1-arr).toFixed(3));
+    b.grey.setAttribute('opacity',(arr*(1-u3)).toFixed(3));
+    draw(b.ckP,u1);marks(seg(t,.16,.34),u2);
+    b.chunk.setAttribute('transform',`translate(0 ${(80*u2).toFixed(1)}) rotate(${(24*u2).toFixed(1)} 1818 492)`);b.chunk.style.opacity=(1-seg(t,.44,.52)).toFixed(3);
+    draw(b.ln,u2);
+    b.lamps.forEach((g,k)=>{const s=EO(seg(t,.52+k*.04,.62+k*.04));g.setAttribute('transform',`translate(0 ${(486*(1-s)).toFixed(1)}) scale(1 ${Math.max(.001,s).toFixed(3)})`)});
+    b.pavR.setAttribute('width',(260*u3).toFixed(1));
+    wipeUp(u4);b.ship.setAttribute('transform',`translate(${(320*(1-u4)).toFixed(1)} 0)`);
+  }
+  if(b.phG){const k=EO(seg(t,.76,.86));b.phG.setAttribute('opacity',k.toFixed(3));b.phG.setAttribute('transform',`translate(0 ${(-26*(1-k)).toFixed(1)}) rotate(${(-9*(1-k)).toFixed(2)} 66 51)`)}
+  const ks=seg(t,.82,.9);b.stG.setAttribute('opacity',clamp(ks*3).toFixed(3));b.stG.setAttribute('transform',`scale(${(1.9-.9*BK(ks)).toFixed(3)})`);
+}
+
+function craneAt(p){
+  let x=CRANE0,tx=200,hy=236;
+  if(p>=I0&&p<I1){const i=Math.min(N-1,Math.floor((p-I0)/S)),t=(p-I0-i*S)/S,b=B[i],k=E(seg(t,0,.16));
+    const px=i?B[i-1].mast:CRANE0,ptx=i?B[i-1].tx:200;x=lerp(px,b.mast,k);tx=lerp(ptx,b.tx,k);
+    const act=seg(t,.14,.22)*(1-seg(t,.74,.82));hy=lerp(236,b.top-34,act)+Math.sin(t*46)*13*act}
+  else if(p>=I1){const b=B[N-1];x=lerp(b.mast,2700,E(seg(p,I1,I1+.05)));tx=b.tx}
+  crane.setAttribute('transform',`translate(${x.toFixed(1)} 0)`);
+  trolley.setAttribute('x',(tx-7).toFixed(1));cable.setAttribute('d',L(tx,178,tx,hy));
+  hook.setAttribute('d',`M${tx-5} ${hy}h10M${tx} ${hy}v6a5 5 0 1 0 -6 5`);
+}
+
+function render(p){
+  cam(p);craneAt(p);
+  const io=1-E(seg(p,.008,.036));intro.style.opacity=io;intro.style.transform=`translateY(${(-(1-io)*30).toFixed(1)}px)`;intro.style.visibility=io<.02?'hidden':'visible';
+  const fo=E(seg(p,I1+.03,I1+.055));finale.style.opacity=fo;finale.style.transform=`translateY(${((1-fo)*24).toFixed(1)}px)`;finale.style.visibility=fo<.02?'hidden':'visible';
+  finale.querySelectorAll('a').forEach(a=>a.tabIndex=fo>.5?0:-1);
+  B.forEach((b,i)=>upd(b,(p-I0-i*S)/S));
+  const ci=p<I0+S*.04?-1:p>=I1?N:Math.min(N-1,Math.floor((p-I0)/S));setBoard(ci);
+  if(ci>=0&&ci<N){const t=(p-I0-ci*S)/S,us=[seg(t,.16,.34),seg(t,.34,.52),seg(t,.52,.7),seg(t,.7,.84)];
+    const s=t<.34?0:t<.52?1:t<.7?2:3;
+    stepEls.forEach((e,k)=>{e.bar.style.width=(us[k]*100).toFixed(1)+'%';e.li.classList.toggle('on',k<=s)});
+    if(s!==curStage){curStage=s;$('#bCap').textContent=STEPS[B[ci].type].c[s]}
+    $('#bAward').classList.toggle('on',t>.84)}
+}
+
+function start(){
+  setBoard(0);setBoard(-1);measure();
+  if(RM||!window.gsap||!window.ScrollTrigger){ /* static: the finished city */
+    $('.pano').style.height='100svh';render(.999);
+    finale.style.opacity=0;finale.style.visibility='hidden';intro.style.opacity=1;intro.style.visibility='visible';intro.style.transform='none';
+    $('.cue').style.display='none';B.forEach(b=>b.phG&&b.phG.setAttribute('opacity',0));return}
+  gsap.registerPlugin(ScrollTrigger);
+  const proxy={p:0};
+  gsap.timeline({scrollTrigger:{trigger:'#panorama',start:'top top',end:'bottom bottom',scrub:.7,invalidateOnRefresh:true,onRefresh:measure}})
+      .to(proxy,{p:1,ease:'none',duration:1,onUpdate:()=>render(proxy.p)});
+  render(0);
+  /* prologue: the sheet gets drawn */
+  const gl=dashify(ground);const ghosts=[...lGhost.querySelectorAll('path')];ghosts.forEach(dashify);cp.forEach(dashify);
+  const off=(i,el)=>parseFloat(el.style.strokeDasharray);
+  gsap.timeline({defaults:{ease:'power2.inOut'}})
+    .fromTo(ground,{strokeDashoffset:gl},{strokeDashoffset:0,duration:1.2})
+    .fromTo(ghosts,{strokeDashoffset:off},{strokeDashoffset:0,duration:.9,stagger:.004},'-=.75')
+    .fromTo(cp,{strokeDashoffset:off},{strokeDashoffset:0,duration:.8,stagger:.05},'-=.9')
+    .from([trolley,cable,hook],{opacity:0,duration:.4},'-=.2');
+  gsap.from('#intro h1 span',{yPercent:60,opacity:0,duration:.8,stagger:.09,ease:'power3.out'});
+  gsap.from('#intro p, #intro .ctas, #intro .cue',{y:16,opacity:0,duration:.7,delay:.45,stagger:.08,ease:'power2.out'});
+}
+addEventListener('resize',()=>{measure();B.forEach(b=>b.last=null);if(window.ScrollTrigger)ScrollTrigger.refresh()},{passive:true});
+addEventListener('DOMContentLoaded',start);
+</script>
+</body>
+</html>
