@@ -69,6 +69,8 @@ h2{font-size:clamp(40px,8vw,84px);margin:10px 0 18px}
 #sky .stb{font:800 23px var(--disp);fill:var(--red);letter-spacing:.02em}
 #sky .sts{font:500 7.6px var(--mono);fill:var(--red);letter-spacing:.05em}
 #sky .wave{animation:wave 3.2s linear infinite}
+#sky .blink{animation:blink 1.4s steps(1) infinite}
+@keyframes blink{55%{opacity:.18}}
 @keyframes wave{to{transform:translateX(-32px)}}
 .anno{position:absolute;left:0;right:0;top:calc(var(--hdr) + 10px);z-index:4;display:flex;justify-content:space-between;gap:12px;padding:0 var(--gut);color:var(--pencil)}
 .anno a{text-decoration:none;border-bottom:1px solid currentColor}
@@ -194,7 +196,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
   .sec{padding:120px 0}
   footer{padding-bottom:22px}
 }
-@media(prefers-reduced-motion:reduce){.cue svg,#sky .wave{animation:none}.board,.award,.ruler,.rl b{transition:none}.drawer{transition:none}}
+@media(prefers-reduced-motion:reduce){.cue svg,#sky .wave,#sky .blink{animation:none}.board,.award,.ruler,.rl b{transition:none}.drawer{transition:none}}
 </style>
 </head>
 <body>
@@ -400,7 +402,7 @@ const B=[
  {x:48,w:254,top:338,type:'resto',kind:'Restaurācija',year:2007,name:'Amatu māja',
   rows:[['Darbi','Restaurācija'],['Adrese','Skolas iela 3, Ventspils']],
   award:'2. vieta "Gada labākā būve" 2007, nominācija "Restaurācija"',st:['2. VIETA','GADA LABĀKĀ BŪVE 2007'],sp:[175,288,-6],
-  body:[[60,415,230,85]],scaf:[[52,404,246,96]],
+  body:[[60,415,230,85]],scaf:[[52,404,246,96]],roof:[120,371],
   shapes:()=>[[R(60,415,230,85),'#E7DCC6'],[P([[48,415],[175,338],[302,415]]),RED],[R(214,352,14,34),'#9C8F7C'],[`M166 385a9 9 0 1 0 18 0a9 9 0 1 0 -18 0Z`,DARK],
     ...grid(78,428,5,2,20,22,44,36,DARK,(i,j)=>j===1&&i===2),[A(161,455,28,45),DOOR]]},
  {x:330,w:310,top:334,type:'new',kind:'Jaunbūve',year:2009,name:'Pārventas bibliotēka',
@@ -419,7 +421,7 @@ const B=[
   rows:[['Darbi','Rekonstrukcija, restaurācija, ekspozīcijas izveide'],['Pasūtītājs','Ventspils muzejs']],
   award:'1. vieta "Gada labākā būve" 2011, nominācija "Restaurācija" (2. kārta)',st:['1. VIETA','GADA LABĀKĀ BŪVE 2011'],sp:[1052,312,-7],
   photo:{src:'img/t-pils.webp',x:934,y:206,r:-3},
-  body:[[930,390,215,110],[1145,300,72,200]],scaf:[[922,380,231,120],[1137,290,88,210]],
+  body:[[930,390,215,110],[1145,300,72,200]],scaf:[[922,380,231,120],[1137,290,88,210]],roof:[1030,338],
   shapes:()=>[[R(930,390,215,110),'#E9C766'],[P([[918,392],[958,338],[1105,338],[1157,392]]),RED],[R(1145,300,72,200),'#E3BF5E'],[P([[1137,302],[1181,238],[1225,302]]),RED],[L(1181,238,1181,218),null],
     ...grid(946,406,5,2,18,28,40,44,DARK,(i,j)=>j===1&&i===2,true),...grid(1172,316,1,4,18,28,0,44,DARK,()=>false,true),[A(1021,452,30,48),DOOR]]},
  {x:1266,w:268,top:356,type:'reno',kind:'Renovācija',year:2013,name:'Ventspils pilsētas dome',
@@ -479,7 +481,7 @@ B.forEach((b,i)=>{
     b.fnd=mk('rect',{x:fx-6,y:500,width:fw+12,height:0,fill:'#5B6670'},root);b.fndY=500;
     b.frG=mk('g',{},root);b.fr=[];
     const nc=Math.max(3,Math.round(fw/46)),cols=Array.from({length:nc+1},(_,k)=>fx+k*fw/nc);
-    let y0=500;const lv=[];for(let y=468;y>fy+8;y-=32)lv.push(y);lv.push(fy);
+    let y0=500;const lv=[];for(let y=468;y>fy+8;y-=32)lv.push(y);lv.push(fy);b.lv=lv;
     lv.forEach(y=>{cols.forEach(x=>b.fr.push(mk('path',{d:L(x,y0,x,y),class:'fr'},b.frG)));b.fr.push(mk('path',{d:L(fx-4,y,fx+fw+4,y),class:'fr sl'},b.frG));y0=y});
     b.fr=b.fr.map(p=>({p,l:dashify(p)}));
   }
@@ -515,7 +517,7 @@ B.forEach((b,i)=>{
   if(b.type==='quay'){
     const cp=mk('clipPath',{id:'pav'},defs);b.pavR=mk('rect',{x:1580,y:480,width:0,height:20},cp);
     mk('path',{d:'M1586 493H1822',stroke:'#7D868C','stroke-width':2,'stroke-dasharray':'7 5',fill:'none','clip-path':'url(#pav)'},root);
-    b.lamps=[1626,1716,1806].map(x=>{const g=mk('g',{transform:'translate(0 486) scale(1 0)'},root);mk('path',{d:L(x,486,x,428),class:'ln'},g);mk('rect',{x:x-9,y:422,width:18,height:6,fill:DARK},g);return g});
+    b.lamps=[1626,1716,1806].map(x=>{const g=mk('g',{opacity:0},root);mk('path',{d:L(x,486,x,428),class:'ln'},g);mk('rect',{x:x-9,y:422,width:18,height:6,fill:DARK},g);return g});
     b.ship=mk('g',{transform:'translate(320 0)'},mk('g',{'clip-path':'url(#waterclip)'},root));
     mk('path',{d:P([[1858,497],[2034,497],[2018,518],[1874,518]]),fill:'#fff',stroke:'#172331','stroke-width':2},b.ship);
     mk('rect',{x:1874,y:505,width:146,height:4,fill:BRAND},b.ship);
@@ -556,16 +558,144 @@ B.forEach((b,i)=>{
   const t2=mk('text',{x:0,y:14,'text-anchor':'middle',class:'sts'},b.stG);t2.textContent=b.st[1];
 });
 
-/* the crane */
-const crane=mk('g',{},lCrane),cp=[];
-{let z='M-8 500';for(let y=500,s=1;y>176;y-=16,s=-s)z+=`L${s*8} ${y-16}`;
- [L(-8,500,-8,172),L(8,500,8,172),z,'M-8 172L0 132L8 172','M8 160H330M8 172H330M330 160V172','M-8 162H-96M-8 172H-96','M0 132L330 160M0 132L-96 162'].forEach(d=>cp.push(mk('path',{d,class:'cr'},crane)));
- {let zz='M8 172';for(let x=8,s=0;x<330;x+=16,s^=1)zz+=`L${x+16} ${s?172:160}`;cp.push(mk('path',{d:zz,class:'cr'},crane))}
- mk('rect',{x:-96,y:172,width:26,height:18,fill:'#172331'},crane);mk('rect',{x:-26,y:496,width:52,height:6,fill:'#172331'},crane);
- mk('rect',{x:8,y:172,width:16,height:14,fill:'#fff',stroke:BRAND,'stroke-width':1.6},crane);}
-const trolley=mk('rect',{x:0,y:172,width:14,height:6,fill:'#172331'},crane);
-const cable=mk('path',{d:'',stroke:'#172331','stroke-width':1.2},crane);
-const hook=mk('path',{d:'',fill:'none',stroke:'#172331','stroke-width':2,'stroke-linecap':'round'},crane);
+/* the crane: rail-mounted tower crane, lattice drawn */
+const CR={secs:[],cw:[],wh:[],loads:{}};
+{
+ const g=mk('g',{},lCrane);CR.g=g;
+ const pth=(p,d,stroke,w,fill='none')=>mk('path',{d,fill,stroke,'stroke-width':w,'stroke-linejoin':'round','stroke-linecap':'round'},p);
+ const INK='#172331',LACE='#B51A17';
+ /* base: two bogies on the rail, footing beam, ballast blocks */
+ CR.base=mk('g',{},g);
+ [-1,1].forEach(s=>{mk('rect',{x:s>0?20:-42,y:488,width:22,height:5,fill:INK},CR.base);
+   [s*36,s*26].forEach(cx=>{const w=mk('g',{},CR.base);mk('circle',{cx,cy:495.4,r:4.6,fill:'#fff',stroke:INK,'stroke-width':1.6},w);
+     pth(w,`M${cx-3.2} 495.4H${cx+3.2}M${cx} 492.2V498.6`,INK,1.1);mk('circle',{cx,cy:495.4,r:1.2,fill:INK},w);CR.wh.push({g:w,cx})})});
+ mk('rect',{x:-40,y:482,width:80,height:6,fill:INK},CR.base);
+ [[-34,-12],[12,34]].forEach(([a,c])=>{mk('rect',{x:a,y:466,width:c-a,height:16,fill:'#B9BEC2',stroke:INK,'stroke-width':1.2},CR.base);pth(CR.base,`M${a} 474H${c}`,INK,.8)});
+ /* mast: nine lattice sections */
+ for(let k=0;k<9;k++){const y0=482-k*32,y1=y0-32,sec=mk('g',{},g);
+   pth(sec,`M-9 ${y0}V${y1}M9 ${y0}V${y1}M-9 ${y1}H9`,BRAND,2.1);
+   pth(sec,`M-9 ${y0}L9 ${y0-16}L-9 ${y1}M9 ${y0-16}H-9`,LACE,1);
+   CR.secs.push(sec)}
+ /* slewing ring, operator cab, tower head */
+ CR.top=mk('g',{},g);
+ mk('rect',{x:-14,y:188,width:28,height:8,fill:INK},CR.top);
+ mk('rect',{x:12,y:182,width:18,height:20,rx:1.5,fill:'#fff',stroke:BRAND,'stroke-width':1.6},CR.top);
+ mk('rect',{x:15.5,y:185.5,width:11,height:8,fill:GLASS,stroke:INK,'stroke-width':.9},CR.top);
+ pth(CR.top,'M-9 178L0 112L9 178',BRAND,2.1);
+ pth(CR.top,'M-7.6 168H7.6M-5.6 152H5.6M-3.4 136H3.4M-7.6 168L5.6 152L-3.4 136',LACE,1);
+ mk('circle',{cx:0,cy:110,r:2.6,fill:BRAND,class:'blink'},CR.top);
+ /* jib: tapered lattice */
+ CR.jib=mk('g',{},g);
+ {let z='M9 178';for(let x=9,s=0;x<330;x+=14,s^=1){const nx=Math.min(330,x+14);z+=`L${nx} ${s?178:(164+4*nx/330).toFixed(1)}`}
+  pth(CR.jib,'M9 164L330 168M9 178H330M330 168V178',BRAND,2.1);pth(CR.jib,z,LACE,1);
+  mk('circle',{cx:330,cy:165,r:2.4,fill:BRAND,class:'blink'},CR.jib)}
+ /* counter-jib with company plate */
+ CR.cjib=mk('g',{},g);
+ {let z='';for(let x=-9;x>-104;x-=16)z+=`M${x} 168V178`;pth(CR.cjib,'M-9 168H-104M-9 178H-104',BRAND,2.1);pth(CR.cjib,z,LACE,1);
+  mk('rect',{x:-74,y:168.5,width:58,height:9,fill:'#fff',stroke:INK,'stroke-width':.8},CR.cjib);
+  const t=mk('text',{x:-45,y:175.6,'text-anchor':'middle',fill:BRAND,style:'font:700 7px var(--mono);letter-spacing:.08em'},CR.cjib);t.textContent='PILSBŪVE'}
+ for(let k=0;k<3;k++)CR.cw.push(mk('rect',{x:-104,y:178+k*8,width:26,height:8,fill:'#9AA3A8',stroke:INK,'stroke-width':1.1},g));
+ /* pendant ties */
+ CR.pend=[pth(g,'M0 112L216 165.6',INK,1.1),pth(g,'M0 112L-102 168',INK,1.1)];
+ /* trolley, hoist ropes, hook block and the loads it can carry */
+ CR.tr=mk('g',{},g);mk('rect',{x:-9,y:179,width:18,height:6,rx:1,fill:INK},CR.tr);[-5,5].forEach(x=>mk('circle',{cx:x,cy:178.6,r:2,fill:'#fff',stroke:INK,'stroke-width':1},CR.tr));
+ CR.rope=pth(g,'',INK,1);
+ CR.hk=mk('g',{},g);
+ mk('rect',{x:-6.5,y:0,width:13,height:14,rx:2.5,fill:BRAND,stroke:INK,'stroke-width':1.3},CR.hk);mk('circle',{cx:0,cy:5.5,r:2.6,fill:'#fff'},CR.hk);
+ pth(CR.hk,'M0 14V20.5a5.5 5.5 0 1 1 -5.5 5.5',INK,2.2);
+ const sl=(p,a,c,y)=>pth(p,`M0 21L${a} ${y}M0 21L${c} ${y}`,INK,.9),LD=CR.loads;
+ LD.beam=mk('g',{},CR.hk);sl(LD.beam,-30,30,36);mk('rect',{x:-36,y:36,width:72,height:7,fill:'#5B6670',stroke:INK,'stroke-width':1},LD.beam);pth(LD.beam,'M-36 39.5H36',INK,.6);
+ LD.panel=mk('g',{},CR.hk);sl(LD.panel,-18,18,34);mk('rect',{x:-22,y:34,width:44,height:28,fill:'#E6EAEC',stroke:INK,'stroke-width':1.3},LD.panel);mk('rect',{x:-12,y:40,width:24,height:14,fill:GLASS,stroke:INK,'stroke-width':.9},LD.panel);
+ LD.ins=mk('g',{},CR.hk);sl(LD.ins,-18,18,34);[0,1,2,3].forEach(k=>mk('rect',{x:-22,y:34+k*7,width:44,height:7,fill:k%2?'#F2D36B':'#EBC651',stroke:INK,'stroke-width':.8},LD.ins));
+ LD.bundle=mk('g',{},CR.hk);sl(LD.bundle,-26,26,35);pth(LD.bundle,'M-32 37H32M-32 40.5H32M-32 44H32',INK,2.2);pth(LD.bundle,'M-18 35V46M18 35V46',BRAND,1.4);
+ LD.pallet=mk('g',{},CR.hk);sl(LD.pallet,-14,14,34);mk('rect',{x:-15,y:34,width:30,height:12,fill:RED,stroke:INK,'stroke-width':1},LD.pallet);pth(LD.pallet,'M-15 38H15M-15 42H15',INK,.6);mk('rect',{x:-17,y:46,width:34,height:4,fill:'#8E4A2A'},LD.pallet);
+ LD.bucket=mk('g',{},CR.hk);pth(LD.bucket,'M0 21V30M-8 30H8',INK,1);mk('path',{d:'M-11 30H11L7 48H-7Z',fill:'#9AA3A8',stroke:INK,'stroke-width':1.3},LD.bucket);
+ LD.lamp=mk('g',{},CR.hk);pth(LD.lamp,'M0 21V26',INK,1);mk('rect',{x:-9,y:26,width:18,height:6,fill:DARK},LD.lamp);pth(LD.lamp,'M0 32V90',INK,2);
+ Object.values(LD).forEach(l=>l.style.display='none');
+}
+const LOADH={beam:43,panel:62,ins:62,bundle:46,pallet:50,bucket:48};
+const REST=120,HY=236;
+const C={x:CRANE0,tx:150,hy:HY,load:null,txE:150,hyE:HY,th:0,om:0,ax:0,ppx:null,pvx:0,introT:1,introH:1,shown:null};
+let physics=false,onStage=true;
+function placeCrane(){CR.g.setAttribute('transform',`translate(${C.x.toFixed(2)} 0)`);
+  const deg=(C.x/4.6*57.2958)%360;CR.wh.forEach(w=>w.g.setAttribute('transform',`rotate(${deg.toFixed(1)} ${w.cx} 495.4)`))}
+function drawHook(){
+  const tx=C.txE,L=Math.max(10,C.hyE-185),hx=tx+L*Math.sin(C.th),hy=185+L*Math.cos(C.th),f=v=>v.toFixed(2);
+  CR.tr.setAttribute('transform',`translate(${f(tx)} 0)`);
+  CR.rope.setAttribute('d',`M${f(tx-2)} 185L${f(hx-2)} ${f(hy)}M${f(tx+2)} 185L${f(hx+2)} ${f(hy)}`);
+  CR.hk.setAttribute('transform',`translate(${f(hx)} ${f(hy)}) rotate(${(-C.th*57.2958).toFixed(2)})`);
+  if(C.load!==C.shown){if(C.shown)CR.loads[C.shown].style.display='none';if(C.load)CR.loads[C.load].style.display='';C.shown=C.load}
+}
+/* the hook hangs on a pendulum: it lags behind when the trolley or the crane accelerates */
+let lastNow=0;
+function tick(){
+  if(!onStage){lastNow=0;return}
+  const now=performance.now()/1000;let dt=lastNow?now-lastNow:1/60;lastNow=now;dt=clamp(dt,.001,.05);
+  C.txE=lerp(16,C.tx,C.introT);C.hyE=lerp(192,C.hy,C.introH);
+  const px=C.x+C.txE;if(C.ppx===null){C.ppx=px;C.pvx=0}
+  const vx=(px-C.ppx)/dt,ax=clamp((vx-C.pvx)/dt,-6000,6000);C.ppx=px;C.pvx=vx;C.ax+=(ax*.22-C.ax)*(1-Math.exp(-dt/.12));
+  const L=Math.max(24,C.hyE-185),G=1600,D=3,n=4,h=dt/n;
+  for(let k=0;k<n;k++){const a=-(G/L)*Math.sin(C.th)-(C.ax/L)*Math.cos(C.th)-D*C.om;C.om+=a*h;C.th+=C.om*h}
+  if(Math.abs(C.th)>.24){C.th=Math.sign(C.th)*.24;C.om*=.4}
+  drawHook();
+}
+/* what the hook does in each work stage */
+const lampX=[1626,1716,1806];
+const lampPh=t=>{const m=seg(t,.52,.7)*3,k=Math.min(2,Math.floor(m));return {m,k,q:m-k}};
+const tripQ=(q,x0,x1,yLow,load,ph=[.25,.6,.72])=>{const [a,b,c]=ph,x=lerp(x0,x1,E(clamp(q/a)));
+  if(q<a)return [x,HY,load];if(q<b)return [x1,lerp(HY,yLow,E((q-a)/(b-a))),load];if(q<c)return [x1,yLow,load];
+  return [x1,lerp(yLow,HY,E((q-c)/(1-c))),null]};
+function plan(b,t,cx){
+  const rx=cx+REST,X=v=>v+b.dx,back=(x0,k)=>[lerp(x0,rx,E(k)),HY,null];
+  if(t<.16)return [rx,HY,null];
+  if(b.type==='new'){
+    if(t<.34)return tripQ(seg(t,.16,.34),rx,X(b.cx),500-LOADH.bucket-6,'bucket');
+    const nf=b.lv.length,xs=k=>X(b.cx+((k%2)?-1:1)*b.w*.2);
+    if(t<.52){const f=seg(t,.34,.52)*nf,k=Math.min(nf-1,Math.floor(f));return tripQ(f-k,k?xs(k-1):X(b.cx),xs(k),b.lv[k]-LOADH.beam,'beam',[.2,.55,.85])}
+    const xp=[X(b.x+b.w*.3),X(b.x+b.w*.7)],mid=b.top+(500-b.top)*.5-LOADH.panel;
+    if(t<.7){const m=seg(t,.52,.7)*2,k=Math.min(1,Math.floor(m));return tripQ(m-k,k?xp[0]:xs(nf-1),xp[k],mid,'panel')}
+    return back(xp[1],seg(t,.7,.8));
+  }
+  if(b.type==='resto'){
+    const sc=b.scaf[0],sx=[X(sc[0]+sc[2]*.3),X(sc[0]+sc[2]*.7)],sh=500-b.sTop+6;
+    if(t<.34)return [lerp(rx,X(b.cx),E(seg(t,.16,.3))),HY,null];
+    if(t<.52){const scTop=Math.max(sc[1],500-sh*E(seg(t,.34,.52))),m=seg(t,.34,.52)*2,k=Math.min(1,Math.floor(m));
+      return tripQ(m-k,k?sx[0]:X(b.cx),sx[k],scTop-LOADH.bundle-2,'bundle')}
+    const [rX,rY]=b.roof;
+    if(t<.7)return tripQ(seg(t,.52,.7),sx[1],X(rX),rY-LOADH.pallet,'pallet',[.25,.55,.75]);
+    if(t<.84){const q=seg(t,.7,.84),x=X(sc[0]+sc[2]*.5),yl=sc[1]-LOADH.bundle-2;
+      if(q<.2)return [lerp(X(rX),x,E(q/.2)),HY,null];
+      if(q<.45)return [x,lerp(HY,yl,E((q-.2)/.25)),null];
+      if(q<.8)return [x,lerp(yl,HY,E((q-.45)/.35)),'bundle'];
+      return [lerp(x,rx,E((q-.8)/.2)),HY,null]}
+    return [rx,HY,null];
+  }
+  if(b.type==='recon'){
+    const xc=X(790),yc=341-26;
+    if(t<.34){const q=seg(t,.16,.34);return q<.5?[lerp(rx,xc,E(q/.5)),HY,null]:[xc,lerp(HY,yc,E((q-.5)/.5)),null]}
+    if(t<.52)return [xc,yc-79*E(seg(t,.34,.52)),null];
+    const xp=[X(b.x+b.w*.3),X(b.x+b.w*.7)],mid=b.top+(500-b.top)*.55-LOADH.panel;
+    if(t<.7){const m=seg(t,.52,.7)*2,k=Math.min(1,Math.floor(m));return tripQ(m-k,k?xp[0]:xc,xp[k],mid,'panel')}
+    return back(xp[1],seg(t,.7,.8));
+  }
+  if(b.type==='reno'){
+    const [x,y,w,h]=b.body[0];
+    if(t<.34)return [lerp(rx,X(x+w*.25),E(seg(t,.16,.3))),HY,null];
+    if(t<.52){const q=seg(t,.34,.52),target=Math.max(HY,500-(h+6)*E(q)-LOADH.ins-4);
+      return [X(lerp(x+w*.25,x+w*.75,q)),q<.15?lerp(HY,target,E(q/.15)):target,'ins']}
+    if(t<.7)return [X(x+w*.75),lerp(Math.max(HY,y-LOADH.ins-10),HY,E(seg(t,.52,.6))),null];
+    return back(X(x+w*.75),seg(t,.7,.8));
+  }
+  /* quay */
+  if(t<.34)return [rx,HY,null];
+  if(t<.52)return tripQ(seg(t,.34,.52),rx,1800,486-LOADH.beam,'beam');
+  if(t<.7){const {k,q}=lampPh(t),x0=k?lampX[k-1]:1800,x1=lampX[k];
+    if(q<.25)return [lerp(x0,x1,E(q/.25)),HY,'lamp'];
+    if(q<.65)return [x1,lerp(HY,396,E((q-.25)/.4)),'lamp'];
+    if(q<.75)return [x1,396,null];
+    return [x1,lerp(396,HY,E((q-.75)/.25)),null]}
+  return back(lampX[2],seg(t,.7,.8));
+}
 const ground=$('#ground');
 
 /* HUD */
@@ -632,7 +762,7 @@ function upd(b,t){
     b.gh.setAttribute('opacity',(1-arr).toFixed(3));
     b.grey.setAttribute('opacity',(arr*(1-u4)).toFixed(3));
     b.dem.setAttribute('opacity',(u1*(1-u2)).toFixed(3));b.holes.setAttribute('opacity',u2.toFixed(3));
-    b.corn.setAttribute('transform',`translate(0 ${(-110*u2).toFixed(1)})`);b.corn.style.opacity=(1-seg(t,.44,.52)).toFixed(3);
+    b.corn.setAttribute('transform',`translate(0 ${(-79*u2).toFixed(1)})`);b.corn.style.opacity=(1-seg(t,.44,.52)).toFixed(3);
     draw(b.ln,u3);wipeUp(u4);
   }else if(b.type==='reno'){
     b.gh.setAttribute('opacity',(1-arr).toFixed(3));
@@ -647,7 +777,7 @@ function upd(b,t){
     draw(b.ckP,u1);marks(seg(t,.16,.34),u2);
     b.chunk.setAttribute('transform',`translate(0 ${(80*u2).toFixed(1)}) rotate(${(24*u2).toFixed(1)} 1818 492)`);b.chunk.style.opacity=(1-seg(t,.44,.52)).toFixed(3);
     draw(b.ln,u2);
-    b.lamps.forEach((g,k)=>{const s=EO(seg(t,.52+k*.04,.62+k*.04));g.setAttribute('transform',`translate(0 ${(486*(1-s)).toFixed(1)}) scale(1 ${Math.max(.001,s).toFixed(3)})`)});
+    const lp=lampPh(t);b.lamps.forEach((g,k)=>g.setAttribute('opacity',(lp.m>=3||k<lp.k||(k===lp.k&&lp.m>0&&lp.q>=.65))?1:0));
     b.pavR.setAttribute('width',(260*u3).toFixed(1));
     wipeUp(u4);b.ship.setAttribute('transform',`translate(${(320*(1-u4)).toFixed(1)} 0)`);
   }
@@ -656,14 +786,12 @@ function upd(b,t){
 }
 
 function craneAt(p){
-  let x=CRANE0,tx=200,hy=236;
-  if(p>=I0&&p<I1){const i=Math.min(N-1,Math.floor((p-I0)/S)),t=(p-I0-i*S)/S,b=B[i],k=E(seg(t,0,.16));
-    const px=i?B[i-1].mast:CRANE0,ptx=i?B[i-1].tx:200;x=lerp(px,b.mast,k);tx=lerp(ptx,b.tx,k);
-    const act=seg(t,.14,.22)*(1-seg(t,.74,.82));hy=lerp(236,b.top-34,act)+Math.sin(t*46)*13*act}
-  else if(p>=I1){const b=B[N-1];x=lerp(b.mast,2700,E(seg(p,I1,I1+.05)));tx=b.tx}
-  crane.setAttribute('transform',`translate(${x.toFixed(1)} 0)`);
-  trolley.setAttribute('x',(tx-7).toFixed(1));cable.setAttribute('d',L(tx,178,tx,hy));
-  hook.setAttribute('d',`M${tx-5} ${hy}h10M${tx} ${hy}v6a5 5 0 1 0 -6 5`);
+  let x=CRANE0,tx=CRANE0+150,hy=HY,load=null;
+  if(p>=I0&&p<I1){const i=Math.min(N-1,Math.floor((p-I0)/S)),t=(p-I0-i*S)/S,b=B[i];
+    x=lerp(i?B[i-1].mast:CRANE0,b.mast,E(seg(t,0,.16)));[tx,hy,load]=plan(b,t,x)}
+  else if(p>=I1){const b=B[N-1];x=lerp(b.mast,2700,E(seg(p,I1,I1+.05)));tx=x+REST}
+  C.x=x;C.tx=clamp(tx-x,30,322);C.hy=hy;C.load=load;placeCrane();
+  if(!physics){C.txE=lerp(16,C.tx,C.introT);C.hyE=lerp(192,C.hy,C.introH);drawHook()}
 }
 
 function render(p){
@@ -688,17 +816,29 @@ function start(){
     $('.cue').style.display='none';B.forEach(b=>b.phG&&b.phG.setAttribute('opacity',0));return}
   gsap.registerPlugin(ScrollTrigger);
   const proxy={p:0};
-  gsap.timeline({scrollTrigger:{trigger:'#panorama',start:'top top',end:'bottom bottom',scrub:.7,invalidateOnRefresh:true,onRefresh:measure}})
+  gsap.timeline({scrollTrigger:{trigger:'#panorama',start:'top top',end:'bottom bottom',scrub:.7,invalidateOnRefresh:true,onRefresh:measure,onToggle:st=>onStage=st.isActive}})
       .to(proxy,{p:1,ease:'none',duration:1,onUpdate:()=>render(proxy.p)});
   render(0);
   /* prologue: the sheet gets drawn */
-  const gl=dashify(ground);const ghosts=[...lGhost.querySelectorAll('path')];ghosts.forEach(dashify);cp.forEach(dashify);
+  const gl=dashify(ground);const ghosts=[...lGhost.querySelectorAll('path')];ghosts.forEach(dashify);CR.pend.forEach(dashify);
   const off=(i,el)=>parseFloat(el.style.strokeDasharray);
   gsap.timeline({defaults:{ease:'power2.inOut'}})
     .fromTo(ground,{strokeDashoffset:gl},{strokeDashoffset:0,duration:1.2})
     .fromTo(ghosts,{strokeDashoffset:off},{strokeDashoffset:0,duration:.9,stagger:.004},'-=.75')
-    .fromTo(cp,{strokeDashoffset:off},{strokeDashoffset:0,duration:.8,stagger:.05},'-=.9')
-    .from([trolley,cable,hook],{opacity:0,duration:.4},'-=.2');
+    ;
+  C.introT=0;C.introH=0;
+  gsap.timeline({delay:.45})
+    .from(CR.base,{y:-34,opacity:0,duration:.45,ease:'bounce.out'})
+    .from(CR.secs,{y:20,opacity:0,duration:.22,stagger:.07,ease:'power2.out'},'-=.1')
+    .from(CR.top,{y:-48,opacity:0,duration:.4,ease:'back.out(1.7)'},'-=.05')
+    .from(CR.jib,{scaleX:0,transformOrigin:'left center',duration:.75,ease:'power3.out'})
+    .from(CR.cjib,{scaleX:0,transformOrigin:'right center',duration:.5,ease:'power3.out'},'<')
+    .from(CR.cw,{y:-64,opacity:0,duration:.5,stagger:.12,ease:'bounce.out'},'-=.3')
+    .fromTo(CR.pend,{strokeDashoffset:off},{strokeDashoffset:0,duration:.4,ease:'none'},'-=.45')
+    .fromTo([CR.tr,CR.rope,CR.hk],{opacity:0},{opacity:1,duration:.2},'-=.2')
+    .to(C,{introT:1,duration:.9,ease:'power2.inOut'})
+    .to(C,{introH:1,duration:1,ease:'power2.out'},'-=.4');
+  physics=true;gsap.ticker.add(tick);
   gsap.from('#intro h1 span',{yPercent:60,opacity:0,duration:.8,stagger:.09,ease:'power3.out'});
   gsap.from('#intro p, #intro .ctas, #intro .cue',{y:16,opacity:0,duration:.7,delay:.45,stagger:.08,ease:'power2.out'});
 }
