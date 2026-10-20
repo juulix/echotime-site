@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="lv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>PILSBŪVE — Ventspils, ko esam būvējuši · skice B</title>
+<meta name="description" content="SIA PILSBŪVE — būvuzņēmējs Ventspilī: jaunbūve, pārbūve, restaurācija un inženiertīkli.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Cpath d=%27M3 16L16 5l13 11v1H3z%27 fill=%27%23D8231F%27/%3E%3Crect x=%277%27 y=%2717%27 width=%2718%27 height=%2710%27 fill=%27%23172331%27/%3E%3C/svg%3E">
+<style>
+:root{
+  color-scheme:light;
+  --paper:#EEF1F2;--paper2:#E2E7E9;--ink:#172331;--ink2:#3E4C59;--pencil:#3C5A78;--concrete:#B9BEC2;--red:#D8231F;--white:#fff;
+  --disp:"Big Shoulders Display","Arial Narrow",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+  --gut:18px;--max:1240px;--hdr:62px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:var(--hdr)}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.6 var(--body);overflow-x:clip;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}a{color:inherit}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
+.mono{font:500 11.5px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase}
+h1,h2,h3{font-family:var(--disp);font-weight:800;line-height:.95;letter-spacing:.005em}
+h2{font-size:clamp(40px,8vw,84px);margin:10px 0 18px}
+.lead{font-size:17px;color:var(--ink2);max-width:58ch}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:50px;padding:0 22px;font:600 15px/1 var(--body);text-decoration:none;border:2px solid var(--ink);color:var(--ink);background:transparent;cursor:pointer}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.red{background:var(--red);border-color:var(--red);color:#fff}.btn.red:hover{background:#B51A17;border-color:#B51A17}
+.btn svg{width:16px;height:16px}
+.sketch{position:fixed;left:10px;bottom:10px;z-index:80;background:var(--ink);color:#fff;font:500 10.5px/1.3 var(--mono);letter-spacing:.04em;padding:7px 11px}
+.sketch b{color:#ffb3b1;font-weight:500}
+.sketch span{display:none}
+
+/* header */
+.hdr{position:fixed;inset:0 0 auto;z-index:60;height:var(--hdr);background:var(--white);border-bottom:1px solid var(--paper2)}
+.hdr .wrap{height:100%;display:flex;align-items:center;gap:24px}
+.logo{margin-right:auto}.logo img{height:36px;width:auto}
+.nav{display:none;gap:26px}.nav a{font:500 14px/1 var(--body);text-decoration:none;color:var(--ink2)}.nav a:hover{color:var(--red)}
+.tel{display:none;font:500 13px/1 var(--mono);text-decoration:none}
+.burger{width:44px;height:44px;display:grid;place-items:center;background:none;border:0;margin-right:-10px;cursor:pointer}.burger svg{width:24px;height:24px}
+.drawer{position:fixed;inset:0;z-index:90;background:var(--ink);color:#fff;padding:calc(var(--hdr) + 16px) var(--gut) 28px;display:flex;flex-direction:column;transform:translateY(-100%);visibility:hidden;transition:transform .4s cubic-bezier(.7,0,.2,1),visibility .4s}
+.drawer.open{transform:none;visibility:visible}
+.drawer a{font:800 38px/1.15 var(--disp);text-decoration:none;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.drawer .x{position:absolute;top:10px;right:12px;width:44px;height:44px;background:none;border:0;color:#fff;cursor:pointer}
+.drawer .btn{margin-top:auto;border-color:var(--red);background:var(--red);color:#fff;font-family:var(--body);font-size:15px}
+.callfab{position:fixed;right:12px;bottom:12px;z-index:70;display:flex;align-items:center;gap:8px;background:var(--red);color:#fff;font:600 14px/1 var(--body);text-decoration:none;padding:14px 18px}
+.callfab svg{width:16px;height:16px}
+
+/* panorama hero */
+.pano{position:relative;height:440vh;background:var(--paper)}
+.pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;
+  background-image:linear-gradient(rgba(60,90,120,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(60,90,120,.07) 1px,transparent 1px);background-size:24px 24px}
+.anno{position:absolute;left:0;right:0;top:calc(var(--hdr) + 10px);z-index:3;display:flex;justify-content:space-between;gap:12px;padding:0 var(--gut);color:var(--pencil)}
+.intro{position:absolute;z-index:3;left:var(--gut);right:var(--gut);top:calc(var(--hdr) + 44px)}
+.intro h1{font-size:clamp(56px,15.5vw,150px);color:var(--ink);max-width:9ch}
+.intro h1 span{display:block}
+.intro h1 .r{color:var(--red)}
+.intro p{margin-top:16px;font-size:16.5px;color:var(--ink2);max-width:40ch}
+.intro .ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+#sky{position:absolute;left:0;right:0;top:0;bottom:0;width:100%;height:100%;z-index:1}
+#sky .ln{fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+#sky .gh{fill:none;stroke:var(--pencil);stroke-width:1.4;opacity:.22}
+#sky .lab{font:500 13px var(--mono);fill:var(--pencil);letter-spacing:.06em}
+.board{position:absolute;z-index:4;left:12px;right:12px;bottom:66px;background:var(--white);border:2px solid var(--ink);box-shadow:6px 6px 0 rgba(23,35,49,.12);opacity:0;transform:translateY(12px);transition:opacity .35s,transform .35s}
+.board.on{opacity:1;transform:none}
+.board .bh{display:flex;justify-content:space-between;align-items:center;background:var(--red);color:#fff;padding:7px 12px}
+.board .bb{padding:12px 14px 14px}
+.board h3{font-size:30px;color:var(--ink);margin-bottom:8px}
+.board dl{display:grid;grid-template-columns:96px 1fr;gap:5px 10px;font-size:13.5px;line-height:1.45}
+.board dt{font:500 10.5px/1.6 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--pencil)}
+.board dd{color:var(--ink)}
+.board .sum{font-size:14.5px;color:var(--ink2)}
+.board .sum a{font-weight:600}
+
+.sec{padding:84px 0}
+.white{background:var(--white)}
+
+/* kinds of work */
+.kinds{display:grid;gap:0;margin-top:34px;border-top:2px solid var(--ink)}
+.kind{padding:22px 0;border-bottom:1px solid var(--concrete);display:grid;gap:10px}
+.kind h3{font-size:34px}
+.kind ul{list-style:none;display:grid;gap:6px}
+.kind li{font-size:15px;color:var(--ink2);padding-left:16px;position:relative}
+.kind li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:2px;background:var(--red)}
+.kind li small{font:500 11px/1 var(--mono);color:var(--pencil);letter-spacing:.04em;margin-left:6px}
+
+/* photos */
+.mosaic{display:grid;gap:10px;margin-top:30px;grid-template-columns:1fr 1fr}
+.mosaic figure{position:relative;overflow:hidden;background:var(--paper2)}
+.mosaic img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3}
+.mosaic .big{grid-column:1/-1}.mosaic .big img{aspect-ratio:16/9}
+.mosaic figcaption{position:absolute;left:0;bottom:0;padding:6px 10px;background:var(--ink);color:#fff;font-size:10.5px;letter-spacing:.03em;max-width:calc(100% - 20px)}
+.mosaic figure:not(.big):not(:last-child) figcaption span{display:none}
+.mosaic figure:last-child{grid-column:1/-1}.mosaic figure:last-child img{aspect-ratio:16/9}
+
+/* trust */
+.trust{display:grid;gap:40px}
+.clients{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.clients span{border:1px solid var(--concrete);background:var(--white);padding:9px 12px;font-size:14px}
+.rec{margin-top:18px;display:grid;border-top:2px solid var(--ink)}
+.rec div{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--concrete)}
+.rec b{font:800 22px/1.1 var(--disp);color:var(--red)}
+.rec p{font-size:15px;color:var(--ink2)}
+
+/* contact board */
+.contact{background:var(--ink);color:#fff}
+.contact h2{color:#fff}
+.cg{display:grid;gap:30px;margin-top:10px}
+.cboard{background:var(--white);color:var(--ink);border:2px solid #fff}
+.cboard .bh{background:var(--red);color:#fff;padding:9px 14px}
+.cboard dl{display:grid;grid-template-columns:120px 1fr;gap:10px 14px;padding:18px 16px}
+.cboard dt{font:500 11px/1.6 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--pencil)}
+.cboard dd{font-size:15.5px}
+.cboard dd a{font-weight:600;text-decoration:none;border-bottom:2px solid var(--red)}
+.form{display:grid;gap:12px}
+.f2{display:grid;gap:12px}
+.form label{display:block;margin-bottom:6px;color:rgba(255,255,255,.7)}
+.form input,.form select,.form textarea{width:100%;font:400 16px/1.4 var(--body);color:var(--ink);background:#fff;border:2px solid #fff;padding:12px;min-height:48px}
+.form textarea{min-height:96px}
+.form input:focus,.form select:focus,.form textarea:focus{outline:none;border-color:var(--red)}
+.form .note{color:rgba(255,255,255,.55)}
+footer{background:#0F1822;color:rgba(255,255,255,.55);padding:22px 0 90px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
+
+@media(min-width:700px){
+  .sketch span{display:inline}
+  .mosaic figure figcaption span{display:inline!important}
+  .mosaic figure:last-child{grid-column:auto}.mosaic figure:last-child img{aspect-ratio:4/3}
+  .mosaic{grid-template-columns:repeat(3,1fr)}.mosaic .big{grid-column:span 2;grid-row:span 2}.mosaic .big img{aspect-ratio:auto;height:100%}
+  .f2{grid-template-columns:1fr 1fr}
+}
+@media(min-width:960px){
+  :root{--gut:40px;--hdr:72px}
+  .nav,.tel{display:flex}.burger,.callfab{display:none}
+  .intro{right:auto;max-width:760px;top:calc(var(--hdr) + 60px)}
+  .intro h1{font-size:clamp(90px,9vw,150px)}
+  .board{left:var(--gut);right:auto;bottom:40px;width:380px}
+  .kinds{grid-template-columns:repeat(4,1fr);border-top:0;gap:28px}
+  .kind{border-top:2px solid var(--ink);border-bottom:0;align-content:start}
+  .trust{grid-template-columns:1fr 1fr;gap:70px}
+  .cg{grid-template-columns:1fr 1fr;gap:60px}
+  .sec{padding:120px 0}
+  footer{padding-bottom:22px}
+}
+@media(prefers-reduced-motion:reduce){.board{transition:none}.drawer{transition:none}}
+</style>
+</head>
+<body>
+<div class="sketch"><b>SKICE B</b> · Echo Time<span> · saturs vēl saskaņojams ar PILSBŪVI</span></div>
+
+<header class="hdr"><div class="wrap">
+  <a class="logo" href="#"><img src="img/logo.webp" alt="SIA PILSBŪVE" width="640" height="269"></a>
+  <nav class="nav" aria-label="Galvenā"><a href="#panorama">Objekti</a><a href="#darbi">Darbu veidi</a><a href="#foto">Fotogrāfijas</a><a href="#uzticiba">Pasūtītāji</a><a href="#kontakti">Kontakti</a></nav>
+  <a class="tel" href="tel:+37163622513">+371 636 22 513</a>
+  <button class="burger" id="burger" aria-label="Atvērt izvēlni" aria-expanded="false" aria-controls="drawer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
+</div></header>
+<div class="drawer" id="drawer" aria-hidden="true">
+  <button class="x" id="drawerX" aria-label="Aizvērt izvēlni"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+  <a href="#panorama">Objekti</a><a href="#darbi">Darbu veidi</a><a href="#foto">Fotogrāfijas</a><a href="#uzticiba">Pasūtītāji</a><a href="#kontakti">Kontakti</a>
+  <a class="btn" href="tel:+37163622513">Zvanīt +371 636 22 513</a>
+</div>
+<a class="callfab" href="tel:+37163622513"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Zvanīt</a>
+
+<main>
+<section class="pano" id="panorama" aria-label="Ventspils objekti, ko esam būvējuši">
+  <div class="pin">
+    <div class="anno mono" aria-hidden="true"><span>Ventspils · 57°23′ N 21°34′ E</span><span>Fasāžu panorāma · ilustrācija</span></div>
+    <div class="intro" id="intro">
+      <h1><span>Ventspils,</span><span>ko esam</span><span class="r">būvējuši.</span></h1>
+      <p>SIA PILSBŪVE būvē, pārbūvē un restaurē sabiedriskās un ražošanas ēkas Ventspilī un Kurzemē.</p>
+      <div class="ctas">
+        <a class="btn red" href="#kontakti">Pieprasīt piedāvājumu</a>
+        <a class="btn" href="#darbi">Darbu veidi</a>
+      </div>
+    </div>
+    <svg id="sky" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V10" stroke="#3C5A78" stroke-opacity=".18" stroke-width="2"/></pattern>
+      </defs>
+      <rect x="-3000" y="500" width="9000" height="400" fill="url(#hatch)"/>
+      <g id="water"><rect x="1835" y="500" width="70" height="400" fill="#C9D7E2"/><path d="M1840 516q8-6 16 0t16 0t16 0t16 0M1840 536q8-6 16 0t16 0t16 0t16 0" fill="none" stroke="#3C5A78" stroke-opacity=".5" stroke-width="1.4"/></g>
+      <path d="M-3000 500H1835M1905 500H6000" stroke="#172331" stroke-width="2.4"/>
+      <g id="ghost"></g>
+      <g id="bldg"></g>
+    </svg>
+    <article class="board" id="board" aria-live="polite">
+      <div class="bh mono"><span>Būvtāfele</span><span id="bYear"></span></div>
+      <div class="bb" id="bBody"></div>
+    </article>
+  </div>
+</section>
+
+<section class="sec white" id="darbi"><div class="wrap">
+  <span class="mono" style="color:var(--pencil)">Darbu veidi</span>
+  <h2>Ko mēs būvējam.</h2>
+  <p class="lead">Sabiedrisko, ražošanas un dzīvojamo ēku būvniecība, pārbūve un restaurācija, inženiertīkli, būvdarbu un projektu vadība.</p>
+  <div class="kinds">
+    <div class="kind"><h3>Jaunbūve</h3><ul>
+      <li>Pārventas bibliotēka <small>2009</small></li>
+      <li>"Kurzemes Democentrs"</li>
+      <li>Elektronikas centra ražošanas ēka</li>
+      <li>Profesionālās vidusskolas dienesta viesnīca</li></ul></div>
+    <div class="kind"><h3>Pārbūve un renovācija</h3><ul>
+      <li>Ventspils pilsētas dome, Jūras iela 36</li>
+      <li>Skolēnu jaunrades nams</li>
+      <li>Slimnīcas 9. korpuss</li>
+      <li>Ventspils Augstskolas "A" korpuss</li>
+      <li>Veikala "JYSK" ēka</li></ul></div>
+    <div class="kind"><h3>Restaurācija</h3><ul>
+      <li>Livonijas ordeņa pils</li>
+      <li>Amatu māja, Skolas iela 3</li>
+      <li>Liepājas muzeja ēku komplekss</li></ul></div>
+    <div class="kind"><h3>Inženierbūves un tīkli</h3><ul>
+      <li>Brīvostas piestātne Nr. 25B un teritorija</li>
+      <li>Graudu termināļa darbnīcas, Ventspils brīvosta</li>
+      <li>Kanalizācijas tīklu atjaunošana, Rīga</li></ul></div>
+  </div>
+</div></section>
+
+<section class="sec" id="foto"><div class="wrap">
+  <span class="mono" style="color:var(--pencil)">Fotogrāfijas</span>
+  <h2>Uzbūvēts.</h2>
+  <div class="mosaic">
+    <figure class="big"><img src="img/pils.webp" alt="Livonijas ordeņa pils pēc restaurācijas" loading="lazy" width="1600" height="1067"><figcaption class="mono">Livonijas ordeņa pils<span> · restaurācija</span></figcaption></figure>
+    <figure><img src="img/biblioteka2.webp" alt="Pārventas bibliotēka" loading="lazy"><figcaption class="mono">Pārventas bibliotēka<span> · jaunbūve</span></figcaption></figure>
+    <figure><img src="img/biblioteka-iek.webp" alt="Pārventas bibliotēkas interjers" loading="lazy"><figcaption class="mono">Bibliotēkas interjers<span> · Pārventa</span></figcaption></figure>
+    <figure><img src="img/jaunrades.webp" alt="Skolēnu jaunrades nams" loading="lazy" style="object-position:center 30%"><figcaption class="mono">Skolēnu jaunrades nams<span> · rekonstrukcija</span></figcaption></figure>
+    <figure><img src="img/liepajas-muzejs.webp" alt="Liepājas muzejs" loading="lazy"><figcaption class="mono">Liepājas muzejs<span> · renovācija</span></figcaption></figure>
+    <figure><img src="img/pils-zale.webp" alt="Livonijas ordeņa pils zāle" loading="lazy"><figcaption class="mono">Livonijas ordeņa pils<span> · zāle</span></figcaption></figure>
+  </div>
+</div></section>
+
+<section class="sec white" id="uzticiba"><div class="wrap trust">
+  <div>
+    <span class="mono" style="color:var(--pencil)">Pasūtītāji</span>
+    <h2>Kam būvējam.</h2>
+    <p class="lead">Pasūtītāji mūsu īstenotajos projektos.</p>
+    <div class="clients"><span>Ventspils pilsētas pašvaldība</span><span>Ventspils novada pašvaldība</span><span>Liepājas pilsētas pašvaldība</span><span>Ventspils muzejs</span><span>Ziemeļkurzemes reģionālā slimnīca</span><span>Ventspils Augstskola</span><span>Ventspils brīvosta</span><span>Swedbank</span><span>Rīgas ūdens</span><span>SIA "Abora"</span></div>
+  </div>
+  <div>
+    <span class="mono" style="color:var(--pencil)">Uzņēmums</span>
+    <div class="rec">
+      <div><b>1999–2008</b><p>Labākais būvuzņēmums Ventspils pilsētas domes arhitektūras skatēs (8 gadi)</p></div>
+      <div><b>2012</b><p>LDDK atzinība: labākais darba devējs Kurzemē</p></div>
+      <div><b>ISO 9001</b><p>Kvalitātes vadības sistēma</p></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec contact" id="kontakti"><div class="wrap">
+  <span class="mono" style="color:#ff9a96">Kontakti</span>
+  <h2>Pastāstiet par savu objektu.</h2>
+  <div class="cg">
+    <div class="cboard">
+      <div class="bh mono">Būvuzņēmējs</div>
+      <dl>
+        <dt>Uzņēmums</dt><dd>SIA "PILSBŪVE"</dd>
+        <dt>Adrese</dt><dd>Kuldīgas iela 9, Ventspils, LV-3601</dd>
+        <dt>Birojs</dt><dd><a href="tel:+37163622513">+371 636 22 513</a><br><a href="mailto:pilsbuve@pilsbuve.lv">pilsbuve@pilsbuve.lv</a></dd>
+        <dt>Sagāde, tehnika</dt><dd><a href="tel:+37126743680">+371 267 43 680</a><br>martins@pilsbuve.lv</dd>
+      </dl>
+    </div>
+    <form class="form" id="form" novalidate>
+      <div class="f2"><div><label class="mono" for="fn">Vārds, uzvārds</label><input id="fn" name="name" autocomplete="name"></div><div><label class="mono" for="fc">Uzņēmums / iestāde</label><input id="fc" name="company" autocomplete="organization"></div></div>
+      <div class="f2"><div><label class="mono" for="ft">Tālrunis</label><input id="ft" name="tel" type="tel" autocomplete="tel"></div><div><label class="mono" for="fe">E-pasts</label><input id="fe" name="email" type="email" autocomplete="email"></div></div>
+      <div><label class="mono" for="fo">Darbu veids</label><select id="fo" name="obj"><option>Jaunbūve</option><option>Pārbūve / renovācija</option><option>Restaurācija</option><option>Inženierbūve / tīkli</option><option>Cits</option></select></div>
+      <div><label class="mono" for="fm">Īsi par objektu</label><textarea id="fm" name="msg"></textarea></div>
+      <div><button class="btn red" type="submit">Nosūtīt pieprasījumu</button></div>
+      <p class="mono note">Demonstrācijas forma — poga atver e-pasta programmu.</p>
+    </form>
+  </div>
+</div></section>
+</main>
+<footer><div class="wrap mono"><span>© 2026 SIA "PILSBŪVE" · Kuldīgas iela 9, Ventspils</span><span>Gala versijā arī EN un RU · Skici sagatavoja Echo Time</span></div></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+<script>
+const $=s=>document.querySelector(s);
+/* menu */
+function drawer(o){$('#drawer').classList.toggle('open',o);$('#drawer').setAttribute('aria-hidden',!o);$('#burger').setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';
+  if(o)setTimeout(()=>$('#drawer a').focus(),60);else if($('#drawer').contains(document.activeElement))$('#burger').focus()}
+$('#burger').onclick=()=>drawer(true);$('#drawerX').onclick=()=>drawer(false);
+document.querySelectorAll('#drawer a').forEach(a=>a.addEventListener('click',()=>drawer(false)));
+addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#drawer').classList.contains('open'))drawer(false)});
+/* form */
+window.buildMail=form=>{const d=new FormData(form),v=k=>(d.get(k)||'').toString().trim();
+  const body=[`Vārds: ${v('name')}`,`Uzņēmums / iestāde: ${v('company')}`,`Tālrunis: ${v('tel')}`,`E-pasts: ${v('email')}`,`Darbu veids: ${v('obj')}`,'',v('msg')].join('\n');
+  return 'mailto:pilsbuve@pilsbuve.lv?subject='+encodeURIComponent('Pieprasījums: '+v('obj'))+'&body='+encodeURIComponent(body)};
+$('#form').addEventListener('submit',e=>{e.preventDefault();location.href=buildMail(e.target)});
+
+/* ---------------- panorama ---------------- */
+const NS='http://www.w3.org/2000/svg';
+const mk=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p&&p.appendChild(e);return e};
+const R=(x,y,w,h)=>`M${x} ${y}h${w}v${h}h${-w}Z`;
+const P=pts=>'M'+pts.map(p=>p.join(' ')).join('L')+'Z';
+const L=(x1,y1,x2,y2)=>`M${x1} ${y1}L${x2} ${y2}`;
+const A=(x,y,w,h)=>{const r=w/2;return `M${x} ${y+h}V${y+r}A${r} ${r} 0 0 1 ${x+w} ${y+r}V${y+h}Z`};
+const DARK='#33414F',GLASS='#BFD0DA',RED='#C8371F',DOOR='#4A3326';
+const grid=(x0,y0,cols,rows,w,h,gx,gy,fill,skip=()=>false,arch=false)=>{const o=[];for(let j=0;j<rows;j++)for(let i=0;i<cols;i++){if(skip(i,j))continue;const x=x0+i*gx,y=y0+j*gy;o.push([arch?A(x,y,w,h):R(x,y,w,h),fill])}return o};
+const B=[
+ {x:48,w:254,year:2007,type:'Restaurācija',name:'Amatu māja',rows:[['Darbi','Restaurācija'],['Adrese','Skolas iela 3, Ventspils'],['Atzinība','2. vieta "Gada labākā būve" 2007, nominācija "Restaurācija"']],
+  shapes:()=>[[R(60,415,230,85),'#E7DCC6'],[P([[48,415],[175,338],[302,415]]),RED],[R(214,352,14,34),'#9C8F7C'],[`M166 385a9 9 0 1 0 18 0a9 9 0 1 0 -18 0Z`,DARK],
+    ...grid(78,428,5,2,20,22,44,36,DARK,(i,j)=>j===1&&i===2),[A(161,455,28,45),DOOR]]},
+ {x:330,w:310,year:2009,type:'Jaunbūve',name:'Pārventas bibliotēka',rows:[['Darbi','Jaunbūve'],['Adrese','Tārgales iela 4, Ventspils'],['Arhitekti','Birojs "INDIA"'],['Atzinība','1. vieta "Gada labākā būve Latvijā 2009", nominācija "Jaunbūve"; 1. vieta "Best Office Awards 2011"']],
+  shapes:()=>[[R(330,432,310,68),GLASS],...Array.from({length:11},(_,k)=>[L(356+k*26,432,356+k*26,500),null]),
+    ['M362 432V362Q362 334 392 334H588Q616 334 616 362V432Z','#8E4A2A'],...[352,372,392,412].map(y=>[L(362,y,616,y),null]),[R(470,468,40,32),DARK]]},
+ {x:690,w:200,year:2010,type:'Rekonstrukcija',name:'Skolēnu jaunrades nams',rows:[['Darbi','Rekonstrukcija'],['Adrese','Maiznieku iela 11, Ventspils'],['Atzinība','3. vieta "Gada labākā būve Latvijā 2010", nominācija "Rekonstrukcija"']],
+  shapes:()=>[[R(690,348,200,152),'#E3C4AE'],[R(686,341,208,8),'#CDBBAA'],...grid(706,364,4,4,26,20,46,32,DARK,(i,j)=>j===3&&(i===1||i===2)),[R(774,466,32,34),DARK],
+    [R(808,322,56,19),'#F1F2F2'],['M808 322A28 28 0 0 1 864 322Z','#F8F9F9']]},
+ {x:918,w:307,year:2011,type:'Restaurācija',name:'Livonijas ordeņa pils',rows:[['Darbi','Rekonstrukcija, restaurācija, ekspozīcijas izveide'],['Pasūtītājs','Ventspils muzejs'],['Atzinība','1. vieta "Gada labākā būve" 2011, nominācija "Restaurācija" (2. kārta)']],
+  shapes:()=>[[R(930,390,215,110),'#E9C766'],[P([[918,392],[958,338],[1105,338],[1157,392]]),RED],[R(1145,300,72,200),'#E3BF5E'],[P([[1137,302],[1181,238],[1225,302]]),RED],[L(1181,238,1181,218),null],
+    ...grid(946,406,5,2,18,28,40,44,DARK,(i,j)=>j===1&&i===2,true),...grid(1172,316,1,4,18,28,0,44,DARK,()=>false,true),[A(1021,452,30,48),DOOR]]},
+ {x:1266,w:268,year:2013,type:'Renovācija',name:'Ventspils pilsētas dome',rows:[['Darbi','Fasāžu renovācija, energoefektivitātes paaugstināšana'],['Adrese','Jūras iela 36, Ventspils'],['Pasūtītājs','Ventspils pilsētas dome, SIA "Ventspils nekustamie īpašumi"'],['Atzinība','2. vieta "Energoefektīvākā ēka Latvijā 2013"']],
+  shapes:()=>[[R(1270,362,260,138),'#D9DDDF'],[R(1266,356,268,8),'#C3C8CB'],...[0,1,2,3].map(j=>[R(1284,376+j*28,232,13),'#7F95A6']),...Array.from({length:9},(_,k)=>[L(1284+k*29,370,1284+k*29,488),null]),[R(1372,472,56,28),DARK]]},
+ {x:1580,w:255,year:2015,type:'Inženierbūve',name:'Brīvostas piestātne Nr. 25B',rows:[['Darbi','Teritorijas labiekārtojuma pārbūve un piestātnes atjaunošana, galvenais darbuzņēmējs'],['Adrese','Kr. Valdemāra iela 6, Ventspils'],['Atzinība','Žūrijas atzinība "Gada labākā būve Latvijā 2015", nominācija "Inženierbūve"']],
+  shapes:()=>[[R(1580,486,255,14),'#9AA3A8'],...[0,1,2,3,4].map(k=>[R(1598+k*50,477,10,9),DARK]),...[1626,1716,1806].map(x=>[L(x,486,x,428),null]),...[1626,1716,1806].map(x=>[R(x-9,422,18,6),DARK]),[R(1650,478,30,4),'#8E4A2A'],[R(1740,478,30,4),'#8E4A2A']]},
+ {x:1925,w:250,year:2015,type:'Jaunbūve, ražotne',name:'Ventspils Elektronikas centrs',rows:[['Darbi','Ražošanas ēkas būvniecība, galvenais darbuzņēmējs'],['Adrese','Ventspils Augsto tehnoloģiju parks'],['Pasūtītājs','SIA "Abora"'],['Atzinība','3. vieta nominācijā "Ražotnes un loģistikas centri" (apbalvota 2016)']],
+  shapes:()=>[[R(1925,410,250,90),'#C9CED2'],[P([[1995,410],[1995,382],[2040,410],[2040,382],[2085,410],[2085,382],[2130,410],[2130,382],[2175,410]]),'#AEB5BA'],...[430,450,470].map(y=>[L(1995,y,2175,y),null]),[R(1925,372,70,128),'#E4E7E9'],[R(1935,386,50,98),GLASS],[R(2092,462,40,38),DARK]]},
+ {x:2215,w:220,year:2016,type:'Jaunbūve',name:'"Kurzemes Democentrs"',rows:[['Darbi','Jauna sabiedriskā ēka'],['Objekts','Zinātnes un tehnoloģiju muzejs, Ventspils'],['Atzinība','3. vieta Latvijas Būvniecības gada balvā 2016, nominācija "Jauna sabiedriskā ēka"']],
+  shapes:()=>[[R(2225,428,200,72),GLASS],[P([[2215,428],[2215,360],[2435,338],[2435,428]]),'#2F4A5E'],[P([[2235,388],[2415,370],[2415,384],[2235,402]]),GLASS],[L(2245,428,2245,500),null],[L(2405,428,2405,500),null],[R(2305,468,40,32),DARK]]},
+];
+const sky=$('#sky'),G1=$('#ghost'),G2=$('#bldg');
+B.forEach(b=>{
+  const ss=b.shapes();
+  const gg=mk('g',{},G1);ss.forEach(([d])=>mk('path',{d,class:'gh'},gg));
+  b.g=mk('g',{'fill-opacity':0},G2);
+  b.paths=ss.map(([d,f])=>{const p=mk('path',{d,class:'ln'},b.g);if(f)p.style.fill=f;return p});
+  const cx=b.x+b.w/2;
+  b.lab=mk('g',{opacity:0},G2);
+  mk('path',{d:`M${b.x} 514V526M${b.x} 520H${b.x+b.w}M${b.x+b.w} 514V526`,stroke:'#3C5A78','stroke-width':1.4,fill:'none'},b.lab);
+  const t=mk('text',{x:cx,y:548,'text-anchor':'middle',class:'lab'},b.lab);t.textContent=`${b.year} · ${b.type.toUpperCase()}`;
+});
+B.forEach(b=>{b.len=b.paths.map(p=>{const l=p.getTotalLength();p.style.strokeDasharray=l;p.style.strokeDashoffset=l;return l})});
+
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),seg=(p,a,b)=>clamp((p-a)/(b-a)),ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2,lerp=(a,b,k)=>a+(b-a)*k;
+const N=B.length,I0=.07,I1=.88,S=(I1-I0)/N;
+const board=$('#board'),bYear=$('#bYear'),bBody=$('#bBody'),intro=$('#intro');
+let shown=-2;
+function showBoard(i){
+  if(i===shown)return;shown=i;
+  if(i<0){board.classList.remove('on');return}
+  if(i>=N){bYear.textContent='2007–2016';bBody.innerHTML='<h3>8 objekti Ventspilī</h3><p class="sum">Jaunbūves, pārbūves, restaurācija un inženierbūves. Kurzemē arī Liepājā un Talsu novadā. <a href="#darbi">Visi darbu veidi ↓</a></p>'}
+  else{const b=B[i];bYear.textContent='Atzinība '+b.year;bBody.innerHTML=`<h3>${b.name}</h3><dl>${b.rows.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>`}
+  board.classList.add('on');
+}
+let W=0,H=0,mobile=false;
+function measure(){const r=sky.getBoundingClientRect();W=r.width;H=r.height;mobile=W<700}
+function cam(p){
+  const full={cx:1240,w:mobile?1150:2600,gr:mobile?.86:.8};
+  const focus=i=>{const b=B[i];return {cx:b.x+b.w/2+(mobile?0:-170),w:mobile?Math.max(b.w*1.45,430):980,gr:mobile?.6:.72}};
+  let a,b,k;
+  if(p<I0){a=full;b=focus(0);k=ease(seg(p,.02,I0))}
+  else if(p>=I1){a=focus(N-1);b={cx:1240,w:mobile?2600:2650,gr:mobile?.6:.74};k=ease(seg(p,I1,.97))}
+  else{const i=Math.min(N-1,Math.floor((p-I0)/S)),t=(p-I0-i*S)/S;a=focus(Math.max(0,i-1));b=focus(i);k=i===0?1:ease(clamp(t/.35))}
+  const cx=lerp(a.cx,b.cx,k),w=lerp(a.w,b.w,k),gr=lerp(a.gr,b.gr,k),h=w*H/W;
+  sky.setAttribute('viewBox',`${(cx-w/2).toFixed(1)} ${(500-gr*h).toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}`);
+}
+function render(p){
+  cam(p);
+  const io=1-ease(seg(p,.015,.06));intro.style.opacity=io;intro.style.transform=`translateY(${(-(1-io)*30).toFixed(1)}px)`;intro.style.visibility=io<.02?'hidden':'visible';
+  B.forEach((b,i)=>{
+    const s0=I0+i*S,kd=ease(seg(p,s0+S*.2,s0+S*.7)),kf=seg(p,s0+S*.55,s0+S*.85);
+    b.paths.forEach((path,j)=>{path.style.strokeDashoffset=(b.len[j]*(1-kd)).toFixed(1)});
+    b.g.setAttribute('fill-opacity',kf.toFixed(3));b.lab.setAttribute('opacity',kf.toFixed(3));
+  });
+  showBoard(p<I0+S*.15?-1:p>=I1?N:Math.max(0,Math.min(N-1,Math.floor((p-I0-S*.3)/S))));
+}
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function start(){
+  measure();
+  if(RM||!window.gsap||!window.ScrollTrigger){ // static, fully built skyline
+    document.querySelector('.pano').style.height='100svh';render(.995);return}
+  gsap.registerPlugin(ScrollTrigger);
+  const proxy={p:0};
+  gsap.timeline({scrollTrigger:{trigger:'#panorama',start:'top top',end:'bottom bottom',scrub:.7,invalidateOnRefresh:true}})
+      .to(proxy,{p:1,ease:'none',duration:1,onUpdate:()=>render(proxy.p)});
+  render(0);
+  gsap.from('#intro h1 span',{yPercent:60,opacity:0,duration:.8,stagger:.09,ease:'power3.out'});
+  gsap.from('#intro p, #intro .ctas',{y:16,opacity:0,duration:.7,delay:.35,stagger:.08,ease:'power2.out'});
+}
+addEventListener('resize',()=>{measure();if(window.ScrollTrigger)ScrollTrigger.refresh()},{passive:true});
+addEventListener('DOMContentLoaded',start);
+</script>
+</body>
+</html>
