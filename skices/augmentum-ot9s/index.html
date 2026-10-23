@@ -1,0 +1,960 @@
+<!doctype html>
+<html lang="lv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Augmentum — grāmatvedības birojs · koncepcija</title>
+<meta name="description" content="Grāmatvedības birojs Augmentum: grāmatvedība, algas, deklarācijas un gada pārskati uzņēmumiem visā Latvijā. Sākumlapas koncepcija.">
+<meta property="og:title" content="Augmentum — jūs atsūtāt dokumentus, mēs atdodam kārtību">
+<meta property="og:description" content="Grāmatvedības biroja sākumlapas koncepcija. Skici sagatavoja Echo Time.">
+<meta property="og:image" content="https://www.echotime.app/skices/augmentum-ot9s/img/og.jpg">
+<meta property="og:url" content="https://www.echotime.app/skices/augmentum-ot9s/">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="img/mark-sm.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=IBM+Plex+Mono:wght@400;500;600;700&family=Instrument+Sans:wght@400..700&display=swap">
+<style>
+/* Layout: a pinned "document journey" stage (right) on millimetre paper carries the story while
+   copy scrolls (left). Then quiet ledger-like sections, a price calculator from the real price list,
+   and a navy "desk" for the request form. One loud place (the stage), everything else calm. */
+:root {
+  color-scheme: light;
+  --paper: #eef0f2;          /* cool millimetre paper */
+  --paper-2: #e4e8ee;
+  --sheet: #fbfbfa;          /* a sheet of paper */
+  --grid: rgba(40, 48, 136, .055);
+  --grid-10: rgba(40, 48, 136, .10);
+  --ink: #141a3f;
+  --ink-soft: #4f5677;
+  --navy: #283088;           /* logo blue */
+  --navy-deep: #12174a;
+  --gold: #cea144;           /* logo gold */
+  --gold-deep: #9c7426;      /* gold for text on light (contrast) */
+  --stamp: #b3402e;
+  --line: rgba(20, 26, 63, .14);
+  --line-dark: rgba(238, 240, 242, .16);
+
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", Arial, sans-serif;
+  --body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --step--1: clamp(.8rem, .77rem + .12vw, .875rem);
+  --step-0: clamp(1rem, .96rem + .2vw, 1.125rem);
+  --step-1: clamp(1.2rem, 1.1rem + .45vw, 1.45rem);
+  --step-2: clamp(1.5rem, 1.3rem + 1vw, 2.1rem);
+  --step-3: clamp(2rem, 1.5rem + 2.3vw, 3.4rem);
+  --step-4: clamp(2.3rem, 1.5rem + 2.9vw, 4.1rem);
+
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --gutter-l: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+  --maxw: 1240px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: 68px; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 var(--step-0)/1.6 var(--body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--paper); }
+h1, h2, h3 { font-family: var(--display); font-weight: 500; line-height: 1.04; letter-spacing: -.02em; text-wrap: balance; margin: 0; font-variation-settings: "opsz" 72; }
+p { margin: 0; text-wrap: pretty; }
+a { color: inherit; }
+img { display: block; max-width: 100%; height: auto; }
+:focus-visible { outline: 2px solid var(--navy); outline-offset: 3px; border-radius: 4px; }
+.wrap { width: 100%; max-width: calc(var(--maxw) + 2 * 16px); margin-inline: auto; padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
+.eyebrow { font: 500 .78rem/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--navy); }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.mmgrid {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid-10) 1px, transparent 1px), linear-gradient(90deg, var(--grid-10) 1px, transparent 1px),
+    linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 60px 60px, 60px 60px, 12px 12px, 12px 12px;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  --b-bg: var(--navy); --b-fg: #fff;
+  display: inline-flex; align-items: center; justify-content: center; gap: .7em;
+  padding: 1em 1.4em; border-radius: 6px; border: 1px solid transparent;
+  background: var(--b-bg); color: var(--b-fg);
+  font: 600 var(--step--1)/1 var(--body); letter-spacing: .02em; text-decoration: none; white-space: nowrap;
+  cursor: pointer; transition: transform .5s var(--ease-out), background-color .3s, color .3s, border-color .3s, box-shadow .3s;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -14px rgba(18, 23, 74, .6); }
+.btn .arr { transition: transform .5s var(--ease-out); }
+.btn:hover .arr { transform: translateX(4px); }
+.btn-gold { --b-bg: var(--gold); --b-fg: var(--navy-deep); }
+.btn-gold:hover { --b-bg: #d9b05a; }
+.btn-ghost { --b-bg: transparent; --b-fg: var(--ink); border-color: var(--line); }
+.btn-ghost:hover { border-color: var(--ink); }
+
+/* ---------- Header ---------- */
+.top {
+  position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 50;
+  background: color-mix(in srgb, var(--paper) 84%, transparent);
+  backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  transition: box-shadow .4s;
+}
+.top.solid { box-shadow: 0 1px 0 var(--line); }
+.top.dark { background: color-mix(in srgb, var(--navy-deep) 88%, transparent); box-shadow: 0 1px 0 var(--line-dark); }
+.top.dark .logo, .top.dark .tel { color: #fff; }
+.top.dark nav a.lnk { color: rgba(233, 235, 245, .78); }
+.top.dark nav a.lnk:hover { color: #fff; }
+.top.dark .btn { --b-bg: var(--gold); --b-fg: var(--navy-deep); }
+.desk :focus-visible, footer.site :focus-visible, .top.dark :focus-visible, .factors :focus-visible { outline-color: var(--gold); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 68px; }
+.logo { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--navy); }
+.logo img { width: 44px; height: auto; }
+.logo span { font: 600 1.02rem/1 var(--display); letter-spacing: .2em; }
+.top nav { display: flex; align-items: center; gap: clamp(12px, 2.2vw, 30px); font-size: var(--step--1); }
+.top nav a.lnk { text-decoration: none; color: var(--ink-soft); }
+.top nav a.lnk:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+.top .tel { font-family: var(--mono); font-size: .85rem; color: var(--ink); text-decoration: none; }
+.top .btn { padding: .8em 1.1em; }
+.top .btn .short { display: none; }
+
+/* ---------- Story (pinned stage) ---------- */
+.story { position: relative; }
+.story-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+.copy { grid-area: 1 / 1; position: relative; z-index: 2; padding-left: max(var(--gutter-l), calc((100vw - var(--maxw)) / 2)); padding-right: clamp(16px, 3vw, 48px); }
+.stage-wrap { grid-area: 1 / 2; align-self: start; position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+.stage { position: absolute; inset: 0; }
+.stage-fallback { position: absolute; inset: 68px 0 0; display: grid; place-items: center; }
+.stage-fallback img { width: min(60%, 420px); }
+.stage.mounted + .stage-fallback { display: none; }
+.stage-wrap::after { /* soft blend into copy column */
+  content: ""; position: absolute; inset: 0 auto 0 -1px; width: 14%;
+  background: linear-gradient(90deg, var(--paper), transparent); pointer-events: none;
+}
+
+.beat { --h: 100; min-height: calc(var(--h) * 1vh); min-height: calc(var(--h) * 1svh); display: flex; flex-direction: column; justify-content: center; gap: 22px; padding-block: 120px 80px; max-width: 34rem; transition: opacity .8s var(--ease-out); }
+.beat:not(.on) { opacity: .45; }
+.beat h2 { font-size: var(--step-3); }
+.beat p.lead { font-size: var(--step-1); line-height: 1.45; color: var(--ink-soft); max-width: 31rem; }
+.beat .stick { position: sticky; top: 20vh; display: grid; gap: 20px; }
+.beat:not(.hero) { padding-block: 32px; }
+.beat:has(.stick) { justify-content: flex-start; }
+.beat .step { display: flex; align-items: center; gap: 14px; }
+.beat .step::after { content: ""; flex: 0 0 56px; height: 1px; background: currentColor; opacity: .4; }
+
+.hero { justify-content: flex-start; padding-top: clamp(100px, 14vh, 150px); }
+.hero .stick { top: clamp(100px, 14vh, 150px); gap: 22px; }
+.hero h1 { font-size: var(--step-4); }
+.hero h1 em { font-style: normal; color: var(--navy); background: linear-gradient(transparent 62%, color-mix(in srgb, var(--gold) 45%, transparent) 62%, color-mix(in srgb, var(--gold) 45%, transparent) 92%, transparent 92%); }
+.hero .lead { font-size: var(--step-1); line-height: 1.45; color: var(--ink-soft); max-width: 30rem; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+.specs { display: flex; flex-wrap: wrap; margin: 6px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); max-width: 31rem; }
+.specs li { flex: 1 1 0; min-width: 7.5rem; padding: 14px 16px 0 0; display: grid; gap: 4px; }
+.specs b { font: 500 var(--step-2)/1 var(--mono); font-variant-numeric: tabular-nums; letter-spacing: -.02em; color: var(--ink); }
+.specs span { font-size: var(--step--1); color: var(--ink-soft); line-height: 1.35; }
+.scroll-hint { display: inline-flex; align-items: center; gap: 10px; font-size: var(--step--1); color: var(--ink-soft); }
+.scroll-hint i { width: 1px; height: 34px; background: linear-gradient(var(--navy), transparent); animation: drip 2.4s var(--ease-out) infinite; transform-origin: top; }
+@keyframes drip { 0% { transform: scaleY(0); opacity: 1 } 70% { transform: scaleY(1); opacity: 1 } 100% { transform: scaleY(1); opacity: 0 } }
+
+.fact { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; padding-top: 16px; border-top: 1px solid var(--line); font-size: var(--step--1); color: var(--ink-soft); max-width: 31rem; }
+.fact b { font: 500 var(--step-1)/1.1 var(--mono); color: var(--ink); white-space: nowrap; }
+.fact a { color: var(--navy); font-weight: 600; }
+
+.illus { position: absolute; z-index: 3; top: 84px; left: calc(14% + 8px); margin: 0; padding: 5px 9px; border-radius: 4px; background: color-mix(in srgb, var(--paper) 88%, transparent); border: 1px solid var(--line); font: 500 .68rem/1.2 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+/* progress rail on the stage */
+.rail { position: absolute; right: max(24px, env(safe-area-inset-right, 0px)); bottom: 6px; z-index: 3; display: grid; grid-auto-flow: column; gap: 18px; list-style: none; margin: 0; padding: 0; }
+.rail li { display: grid; gap: 6px; font: 500 .66rem/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink); opacity: .7; transition: opacity .5s; }
+.rail li::before { content: ""; width: 100%; height: 1px; background: currentColor; transition: height .3s; }
+.rail li.on { opacity: 1; color: var(--navy); }
+.rail li.on::before { height: 2px; }
+
+/* ---------- Sections ---------- */
+section.block { padding-block: clamp(80px, 10vw, 150px); }
+.sec-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px 48px; align-items: end; margin-bottom: clamp(36px, 5vw, 64px); }
+.sec-head h2 { font-size: var(--step-3); }
+.sec-head p { color: var(--ink-soft); max-width: 34rem; }
+.sec-head .eyebrow { grid-column: 1 / -1; }
+
+/* services: ledger tabs */
+.services { background: var(--sheet); border-top: 1px solid var(--line); }
+.seg { display: inline-grid; grid-auto-flow: column; padding: 4px; background: var(--paper-2); border-radius: 8px; margin-bottom: 32px; max-width: 100%; }
+.seg button { appearance: none; border: 0; background: transparent; padding: .8em 1.1em; border-radius: 6px; font: 600 var(--step--1)/1.15 var(--body); color: var(--ink-soft); cursor: pointer; transition: background-color .3s, color .3s, box-shadow .3s; }
+.seg button[aria-selected="true"] { background: var(--sheet); color: var(--ink); box-shadow: 0 2px 10px -4px rgba(20, 26, 63, .3); }
+.ledger { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(24px, 4vw, 64px); }
+.ledger li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 12px; padding: 16px 0; border-top: 1px solid var(--line); align-items: baseline; }
+.ledger li::before { content: ""; width: 9px; height: 9px; border: 1.5px solid var(--gold-deep); transform: rotate(45deg) translateY(-1px); }
+.ledger li b { font-weight: 600; }
+.svc-note { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; color: var(--ink-soft); font-size: var(--step--1); }
+
+/* prices: calculator */
+.prices { border-top: 1px solid var(--line); }
+.calc { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(24px, 4vw, 56px); align-items: stretch; }
+.calc-card { background: var(--sheet); border: 1px solid var(--line); border-radius: 10px; padding: clamp(20px, 3vw, 36px); display: grid; gap: 22px; align-content: start; }
+.calc-card label { font: 500 .78rem/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+.calc-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; }
+.calc-row input[type="range"] { width: 100%; accent-color: var(--navy); }
+.calc-row output { font: 500 var(--step-2)/1 var(--mono); min-width: 4ch; text-align: right; }
+.tiers { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px; }
+.tiers span { height: 6px; border-radius: 3px; background: var(--paper-2); transition: background-color .3s; }
+.tiers span.on { background: var(--navy); }
+.price-out { display: grid; gap: 6px; padding-top: 18px; border-top: 1px dashed var(--line); }
+.price-out .big { font: 500 var(--step-3)/1 var(--mono); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.price-out .big small { font: 400 var(--step-0)/1 var(--body); color: var(--ink-soft); letter-spacing: 0; }
+.price-out p { color: var(--ink-soft); }
+.factors { background: var(--navy-deep); color: #e9ebf5; border-radius: 10px; padding: clamp(20px, 3vw, 36px); display: grid; gap: 18px; align-content: start; }
+.factors h3 { font-size: var(--step-1); font-weight: 500; }
+.factors ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.factors li { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 10px; color: rgba(233, 235, 245, .82); font-size: var(--step--1); }
+.factors li::before { content: ""; width: 10px; height: 10px; margin-top: .45em; border: 1.5px solid var(--gold); transform: rotate(45deg); }
+.addons { margin-top: clamp(36px, 5vw, 56px); }
+.addons h3 { font-size: var(--step-1); font-weight: 500; margin-bottom: 14px; }
+table.tbl { width: 100%; border-collapse: collapse; font-size: var(--step--1); }
+.tbl th, .tbl td { text-align: left; padding: 14px 12px 14px 0; border-top: 1px solid var(--line); vertical-align: baseline; }
+.tbl td.r { text-align: right; padding-right: 0; font-family: var(--mono); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.tbl tr:last-child td { border-bottom: 1px solid var(--line); }
+.tbl-note { margin-top: 12px; font-size: .8rem; color: var(--ink-soft); }
+
+/* remote */
+.remote { background: var(--sheet); border-top: 1px solid var(--line); }
+.remote-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+.remote-photo { margin: 0; position: relative; border-radius: 10px; overflow: hidden; aspect-ratio: 16 / 11; background: var(--paper-2); }
+.remote-photo img { width: 100%; height: 100%; object-fit: cover; }
+.remote-photo figcaption { position: absolute; left: 14px; bottom: 12px; font: 500 .7rem/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: #fff; background: rgba(18, 23, 74, .7); padding: 6px 8px; border-radius: 4px; }
+.ways { list-style: none; margin: 0; padding: 0; display: grid; }
+.ways li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 4px 18px; padding: 22px 0; border-top: 1px solid var(--line); }
+.ways li:last-child { border-bottom: 1px solid var(--line); }
+.ways svg { width: 32px; height: 32px; color: var(--navy); grid-row: span 2; }
+.ways h3 { font: 600 var(--step-0)/1.3 var(--body); letter-spacing: 0; }
+.ways p { color: var(--ink-soft); font-size: var(--step--1); }
+
+/* trust */
+.trust { border-top: 1px solid var(--line); }
+.trust-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 72px); align-items: start; }
+.seal { display: grid; gap: 18px; align-content: start; }
+.badge { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 18px; align-items: center; padding: 22px; background: var(--sheet); border: 1px solid var(--line); border-radius: 10px; }
+.badge .grade { width: 76px; height: 76px; border-radius: 50%; display: grid; place-items: center; font: 500 2.4rem/1 var(--display); color: var(--navy-deep); background: radial-gradient(circle at 35% 30%, #e6c47a, var(--gold) 60%, #a77d2c); box-shadow: inset 0 -3px 6px rgba(0,0,0,.18), 0 0 0 4px var(--sheet), 0 0 0 5px var(--gold); }
+.badge b { display: block; font-weight: 600; }
+.badge span { font-size: var(--step--1); color: var(--ink-soft); }
+.letter { margin: 0; background: var(--sheet); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.letter img { width: 100%; height: auto; }
+.letter figcaption { padding: 14px 18px; font-size: var(--step--1); color: var(--ink-soft); border-top: 1px solid var(--line); }
+.sectors { margin-top: clamp(40px, 5vw, 64px); display: grid; gap: 14px; }
+.sectors ul { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.sectors li { padding: .5em .9em; border: 1px solid var(--line); border-radius: 999px; font-size: var(--step--1); background: var(--sheet); }
+
+/* more */
+.more { background: var(--sheet); border-top: 1px solid var(--line); }
+.more-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--line); }
+.more-grid article { padding: 28px 28px 28px 0; display: grid; gap: 12px; align-content: start; }
+.more-grid article + article { border-left: 1px solid var(--line); padding-left: 28px; }
+.more-grid h3 { font-size: var(--step-2); }
+.more-grid ul { margin: 0; padding-left: 1.1em; color: var(--ink-soft); font-size: var(--step--1); display: grid; gap: 6px; }
+.more-grid .tag { font: 500 .72rem/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--gold-deep); }
+
+/* ---------- Request desk ---------- */
+.desk { background: var(--navy-deep); color: #e9ebf5; position: relative; overflow: hidden; }
+.desk::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(206,161,68,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(206,161,68,.07) 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; }
+.desk-grid { position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(40px, 6vw, 96px); align-items: start; }
+.desk h2 { font-size: var(--step-3); }
+.desk .eyebrow { color: var(--gold); }
+.desk .intro { display: grid; gap: 24px; }
+.desk .intro p { color: rgba(233, 235, 245, .78); max-width: 30rem; }
+.steps { list-style: none; margin: 8px 0 0; padding: 0; display: grid; counter-reset: s; }
+.steps li { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: 4px 12px; padding-block: 16px; border-top: 1px solid var(--line-dark); counter-increment: s; }
+.steps li::before { content: counter(s, decimal-leading-zero); font: 400 .85rem/1.6 var(--mono); color: var(--gold); grid-row: span 2; }
+.steps b { font-weight: 600; }
+.steps span { color: rgba(233, 235, 245, .68); font-size: var(--step--1); }
+.contact { display: grid; gap: 10px; margin: 0; padding: 18px 0 0; border-top: 1px solid var(--line-dark); }
+.contact div { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 12px; }
+.contact dt { font: 500 .72rem/1.6 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: rgba(233, 235, 245, .55); }
+.contact dd { margin: 0; overflow-wrap: anywhere; }
+.contact a { color: #fff; }
+
+.panel { background: var(--sheet); color: var(--ink); border-radius: 12px; padding: clamp(20px, 3.4vw, 40px); box-shadow: 0 40px 100px -40px rgba(0, 0, 0, .7); }
+.tabs { display: grid; grid-template-columns: 1fr 1fr; padding: 4px; background: var(--paper-2); border-radius: 8px; margin-bottom: 28px; }
+.tabs button { appearance: none; border: 0; background: transparent; padding: .85em 1em; border-radius: 6px; font: 600 var(--step--1)/1.15 var(--body); color: var(--ink-soft); cursor: pointer; transition: background-color .3s, color .3s, box-shadow .3s; }
+.tabs button[aria-selected="true"] { background: var(--sheet); color: var(--ink); box-shadow: 0 2px 10px -4px rgba(20, 26, 63, .3); }
+form { display: grid; gap: 18px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field label, .legend { font: 500 .74rem/1.3 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+.field input, .field select, .field textarea {
+  width: 100%; font: 400 var(--step-0)/1.3 var(--body); color: var(--ink);
+  background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: .85em .95em;
+  transition: border-color .2s, box-shadow .2s;
+}
+.field textarea { min-height: 96px; resize: vertical; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 4px rgba(40, 48, 136, .14); }
+.field .err { font-size: .8rem; color: var(--stamp); }
+.field.bad input { border-color: var(--stamp); }
+fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 10px; min-width: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { position: relative; }
+.chip input { position: absolute; opacity: 0; inset: 0; cursor: pointer; margin: 0; }
+.chip span { display: inline-flex; align-items: center; gap: 8px; padding: .55em 1em; border: 1px solid var(--line); border-radius: 999px; font-size: var(--step--1); background: #fff; transition: background-color .2s, color .2s, border-color .2s; }
+.chip input:checked + span { background: var(--navy); color: #fff; border-color: var(--navy); }
+.chip input:focus-visible + span { outline: 2px solid var(--gold); outline-offset: 2px; }
+.qty { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; }
+.qty input[type="range"] { width: 100%; accent-color: var(--navy); padding: 0; border: 0; background: none; }
+.qty output { font: 500 var(--step-1)/1 var(--mono); min-width: 4ch; text-align: right; }
+.form-foot { display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: center; justify-content: space-between; margin-top: 4px; }
+.form-foot small { color: var(--ink-soft); font-size: .8rem; max-width: 22rem; }
+.quick-line { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; }
+.quick-note { color: var(--ink-soft); font-size: var(--step--1); }
+.field label.check { display: inline-flex; align-items: flex-start; gap: 10px; font: 400 var(--step--1)/1.4 var(--body); color: var(--ink-soft); text-transform: none; letter-spacing: 0; cursor: pointer; }
+.check input { width: 18px; height: 18px; margin: 1px 0 0; accent-color: var(--navy); flex: none; }
+.check a { color: var(--navy); }
+.consent.bad .check { color: var(--stamp); }
+.done { display: grid; gap: 14px; padding-block: 12px; }
+.done h3 { font-size: var(--step-2); }
+.done p { color: var(--ink-soft); }
+.done .stampmark { justify-self: start; padding: .4em .8em; border: 2.5px solid var(--stamp); color: var(--stamp); border-radius: 6px; font: 600 1rem/1 var(--mono); letter-spacing: .14em; transform: rotate(-6deg); animation: stamp .8s var(--ease-out) both; }
+@keyframes stamp { 0% { transform: scale(1.8) rotate(-14deg); opacity: 0 } 60% { transform: scale(.94) rotate(-4deg); opacity: 1 } 100% { transform: scale(1) rotate(-6deg) } }
+
+footer.site { background: var(--navy-deep); color: rgba(233, 235, 245, .62); border-top: 1px solid var(--line-dark); font-size: var(--step--1); }
+footer.site .wrap { display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; padding-block: 28px calc(28px + env(safe-area-inset-bottom, 0px)); }
+footer.site a { color: #fff; }
+
+/* mobile sticky CTA */
+.mcta { display: none; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px) { .top .tel { display: none; } }
+@media (max-width: 900px) {
+  .top nav a.lnk { display: none; }
+  .story-grid { grid-template-columns: minmax(0, 1fr); }
+  .stage-wrap { grid-area: 1 / 1; top: 68px; height: calc(58vh - 68px); height: calc(58svh - 68px); z-index: 3; background: var(--paper); }
+  .stage-fallback { inset: 0; }
+  .stage-wrap::after { inset: auto 0 0 0; width: auto; height: 16%; background: linear-gradient(0deg, var(--paper), transparent); }
+  .copy { grid-area: 1 / 1; padding-left: var(--gutter-l); padding-right: var(--gutter-r); padding-top: 58svh; }
+  .beat { padding-block: 20px 40px; justify-content: flex-start; max-width: none; }
+  .hero { padding-top: 20px; }
+  .hero .stick { position: static; }
+  .beat .stick { top: 60svh; }
+  .beat h2 { font-size: var(--step-2); }
+  .beat p.lead, .hero .lead { font-size: var(--step-0); }
+  .rail { bottom: 12px; right: var(--gutter-r); gap: 6px; }
+  .illus { top: auto; bottom: 6px; left: var(--gutter-l); font-size: .6rem; padding: 3px 7px; }
+  .rail li { font-size: 0; gap: 0; width: 14px; transition: width .6s var(--ease-out), opacity .5s; }
+  .rail li.on { width: 28px; }
+  .sec-head, .calc, .remote-grid, .trust-grid, .desk-grid { grid-template-columns: minmax(0, 1fr); }
+  .ledger { grid-template-columns: minmax(0, 1fr); }
+  /* phone: the form comes right after the heading, steps and contacts after it */
+  .desk-grid { gap: 24px; }
+  .desk .intro { display: contents; }
+  .desk .panel { order: 1; }
+  .desk .steps { order: 2; margin-top: 16px; }
+  .desk .contact { order: 3; }
+  .more-grid { grid-template-columns: minmax(0, 1fr); }
+  .more-grid article, .more-grid article + article { border-left: 0; padding: 24px 0; }
+  .more-grid article + article { border-top: 1px solid var(--line); }
+  .mcta {
+    display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; position: fixed; z-index: 40; left: 0; right: 0; bottom: 0;
+    padding: 10px var(--gutter-r) calc(10px + env(safe-area-inset-bottom, 0px)) var(--gutter-l);
+    background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 -1px 0 var(--line); transform: translateY(110%); transition: transform .5s var(--ease-out);
+  }
+  .mcta.show { transform: none; }
+}
+@media (max-width: 560px) {
+  .row { grid-template-columns: minmax(0, 1fr); }
+  .quick-line { grid-template-columns: minmax(0, 1fr); }
+  .top .btn .long { display: none; }
+  .top .btn .short { display: inline; }
+  .logo span { letter-spacing: .14em; font-size: .92rem; }
+  .seg { display: grid; grid-auto-flow: row; width: 100%; }
+  .tbl th, .tbl td { padding-right: 8px; }
+  .contact div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}
+</style>
+</head>
+<body>
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="logo" href="#story" aria-label="Augmentum — uz sākumu"><img src="img/mark-sm.png" alt="" width="240" height="149"><span>AUGMENTUM</span></a>
+    <nav aria-label="Galvenā navigācija">
+      <a class="lnk" href="#pakalpojumi">Pakalpojumi</a>
+      <a class="lnk" href="#cenas">Cenas</a>
+      <a class="lnk" href="#par-mums">Par mums</a>
+      <a class="tel" href="tel:+37120167820">+371 20167820</a>
+      <a class="btn" href="#pieteikums"><span class="long">Pieteikt sadarbību</span><span class="short">Pieteikties</span></a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- ===== STORY: pinned document journey ===== -->
+  <section class="story mmgrid" id="story" aria-label="Kā jūsu dokumenti kļūst par sakārtotu grāmatvedību">
+    <div class="story-grid">
+      <div class="stage-wrap" aria-hidden="true">
+        <div class="stage" id="stage"></div>
+        <div class="stage-fallback"><img src="img/mark.png" alt="" width="862" height="536"></div>
+        <p class="illus">Ilustrācija · skaitļi ir piemērs</p>
+        <ol class="rail" id="rail">
+          <li>Grāmatošana</li><li>Algas</li><li>Deklarācijas</li><li>Gada pārskats</li><li>Pārskatāmība</li>
+        </ol>
+      </div>
+
+      <div class="copy">
+        <div class="beat hero on" id="b0" style="--h:128">
+          <div class="stick">
+          <p class="eyebrow">Grāmatvedības birojs · Sigulda · visā Latvijā</p>
+          <h1>Jūs atsūtāt dokumentus. <em>Mēs atdodam kārtību.</em></h1>
+          <p class="lead">AUGMENTUM kopš 2011. gada kārto grāmatvedību uzņēmumiem un saimnieciskās darbības veicējiem. Attālināti: dokumentus varat atsūtīt caur Omniva pakomātu no jebkuras vietas Latvijā.</p>
+          <div class="ctas">
+            <a class="btn" href="#pieteikums">Pieteikt sadarbību <span class="arr" aria-hidden="true">→</span></a>
+            <a class="btn btn-ghost" href="tel:+37120167820">Zvanīt +371 20167820</a>
+          </div>
+          <ul class="specs" aria-label="Svarīgākie fakti">
+            <li><b>kopš 2011</b><span>grāmatvedības birojs</span></li>
+            <li><b>A</b><span>VID nodokļu maksātāju reitings</span></li>
+            <li><b>no 52&nbsp;€</b><span>mēnesī par pamatpakalpojumiem, bez PVN</span></li>
+          </ul>
+          <span class="scroll-hint"><i></i>Ritiniet un sekojiet dokumentu ceļam</span>
+          </div>
+        </div>
+
+        <div class="beat" id="b1" style="--h:122">
+          <div class="stick">
+            <p class="step eyebrow">01 · Grāmatošana</p>
+            <h2>Katrs čeks atrod savu rindu.</h2>
+            <p class="lead">Apstrādājam pirmdokumentus un grāmatojam tos licencētajā biznesa vadības programmā MONEO atbilstoši Latvijas normatīvo aktu prasībām.</p>
+            <p class="fact">Cena atkarīga no grāmatojumu skaita mēnesī. <a href="#cenas">Aprēķināt orientējošo cenu →</a></p>
+          </div>
+        </div>
+
+        <div class="beat" id="b2" style="--h:98">
+          <div class="stick">
+            <p class="step eyebrow">02 · Algas</p>
+            <h2>Algas, atvaļinājumi, slimības nauda.</h2>
+            <p class="lead">Aprēķinām darba algas, atvaļinājuma un slimības naudu. Par papildu samaksu sagatavojam arī darba līgumus un rīkojumus.</p>
+          </div>
+        </div>
+
+        <div class="beat" id="b3" style="--h:108">
+          <div class="stick">
+            <p class="step eyebrow">03 · Deklarācijas</p>
+            <h2>Deklarācijas sagatavotas un iesniegtas.</h2>
+            <p class="lead">Sagatavojam un iesniedzam VID visas nepieciešamās nodokļu deklarācijas un atskaites, bet Centrālajai statistikas pārvaldei — statistikas atskaites. Vajadzības gadījumā pārstāvam uzņēmumu VID.</p>
+            <p class="fact">Konsultējam arī par <b>PVN · UIN · IIN · VSAOI · MUN</b></p>
+          </div>
+        </div>
+
+        <div class="beat" id="b4" style="--h:102">
+          <div class="stick">
+            <p class="step eyebrow">04 · Gada pārskats</p>
+            <h2>Gada pārskats un skaidri pārskati vadībai.</h2>
+            <p class="lead">Sastādām gada pārskatu un operatīvo bilanci, analizējam uzņēmuma finanšu stāvokli un sagatavojam pārskatus direktoram, valdei vai īpašniekiem.</p>
+          </div>
+        </div>
+
+        <div class="beat" id="b5" style="--h:142">
+          <div class="stick">
+            <p class="step eyebrow">05 · Pārskatāmība</p>
+            <h2>Savus skaitļus redzat jebkurā brīdī.</h2>
+            <p class="lead">MONEO ļauj reāllaikā sekot līdzi izmaksām, debitoriem un naudas plūsmai. Jautājumus var ātri precizēt WhatsApp videozvanā.</p>
+            <div class="ctas">
+              <a class="btn" href="#pieteikums">Pieteikt sadarbību <span class="arr" aria-hidden="true">→</span></a>
+              <a class="btn btn-ghost" href="#cenas">Skatīt cenas</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICES ===== -->
+  <section class="block services" id="pakalpojumi">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Pakalpojumi</p>
+        <h2>Pilna grāmatvedība vienā vietā.</h2>
+        <p>Grāmatvedību kārtojam atbilstoši Latvijas Republikas normatīvajiem aktiem: no pirmā čeka līdz gada pārskatam un pārstāvībai VID.</p>
+      </div>
+      <div class="seg" role="tablist" aria-label="Kam pakalpojums">
+        <button type="button" role="tab" id="s-jur" aria-selected="true" aria-controls="p-jur">Juridiskām personām</button>
+        <button type="button" role="tab" id="s-fiz" aria-selected="false" aria-controls="p-fiz">Fiziskām personām un SDV</button>
+      </div>
+      <ol class="ledger" id="p-jur" role="tabpanel" aria-labelledby="s-jur">
+        <li><span><b>Grāmatvedības kārtošana</b> atbilstoši LR normatīvo aktu prasībām</span></li>
+        <li><span><b>Pirmdokumentu apstrāde</b></span></li>
+        <li><span><b>Algu, atvaļinājumu, slimības naudas</b> aprēķināšana</span></li>
+        <li><span><b>Nodokļu deklarācijas un atskaites</b>: sagatavošana un iesniegšana VID</span></li>
+        <li><span><b>Gada pārskats</b> un operatīvā bilance</span></li>
+        <li><span><b>Statistikas atskaites</b> Centrālajai statistikas pārvaldei</span></li>
+        <li><span><b>Ikgadējās nodokļu deklarācijas</b></span></li>
+        <li><span><b>Finansiālā stāvokļa analīze</b></span></li>
+        <li><span><b>Pārskati vadībai</b>: direktoram, valdei, īpašniekiem</span></li>
+        <li><span><b>Uzskaite MONEO</b>: licencētā biznesa vadības programmā</span></li>
+        <li><span><b>Uzskaites metodikas</b> izstrāde</span></li>
+        <li><span><b>Pārstāvība</b> Valsts ieņēmumu dienestā</span></li>
+      </ol>
+      <ol class="ledger" id="p-fiz" role="tabpanel" aria-labelledby="s-fiz" hidden>
+        <li><span><b>Grāmatvedības kārtošana</b> vienkāršā un divkāršā ieraksta sistēmā</span></li>
+        <li><span><b>Nodokļu pārskatu</b> sagatavošana</span></li>
+        <li><span><b>Gada ienākumu deklarācija</b></span></li>
+        <li><span><b>Pārmaksātā IIN atmaksa</b> par attaisnotajiem izdevumiem</span></li>
+        <li><span><b>Kapitāla pieauguma deklarācijas</b></span></li>
+        <li><span><b>Pārstāvība</b> Valsts ieņēmumu dienestā</span></li>
+      </ol>
+      <div class="svc-note">
+        <span>Par papildu samaksu: darba līgumi, rīkojumi, maksājumu sagatavošana, rēķini klienta vārdā.</span>
+        <a class="btn btn-ghost" href="#pieteikums">Pajautāt par savu situāciju</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRICES ===== -->
+  <section class="block prices mmgrid" id="cenas">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Orientējošās cenas</p>
+        <h2>Cena atkarīga no grāmatojumu skaita.</h2>
+        <p>Pamatpakalpojumu cenu nosaka darba apjoms: cik darījumu uzņēmumam ir mēnesī. Pārvelciet slīdni un redzēsiet orientējošo cenu grupu.</p>
+      </div>
+      <div class="calc">
+        <div class="calc-card">
+          <label for="c-ops">Grāmatojumi mēnesī</label>
+          <div class="calc-row">
+            <input id="c-ops" type="range" min="1" max="220" step="1" value="30" aria-describedby="c-out-text">
+            <output id="c-ops-out" for="c-ops" class="num">30</output>
+          </div>
+          <div class="tiers" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="price-out" aria-live="polite">
+            <div class="big" id="c-price">95–175&nbsp;€ <small>mēnesī, bez PVN</small></div>
+            <p id="c-out-text">11–50 grāmatojumi: maziem un vidējiem uzņēmumiem ar mērenu darbību.</p>
+          </div>
+          <a class="btn" href="#pieteikums" id="c-cta">Saņemt precīzu piedāvājumu <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+        <div class="factors">
+          <h3>Precīzu cenu nosakām pēc saimnieciskās darbības izvērtēšanas. Ietekmē:</h3>
+          <ul>
+            <li>darbinieku skaits</li>
+            <li>ienākošo un izejošo attaisnojuma dokumentu apjoms</li>
+            <li>kases aparātu un skaidras naudas darījumu apjoms</li>
+            <li>norēķinu kontu skaits</li>
+            <li>vai uzņēmums ir PVN maksātājs</li>
+            <li>darījumi ar ES dalībvalstīm un trešajām valstīm</li>
+            <li>kredītu, līzingu un līdzīgu darījumu apjoms</li>
+          </ul>
+        </div>
+      </div>
+      <div class="addons">
+        <h3>Papildpakalpojumi</h3>
+        <table class="tbl">
+          <tbody>
+            <tr><td>Rēķina sagatavošana</td><td class="r">8,50–10,00&nbsp;€</td></tr>
+            <tr><td>Strukturēta rēķina sagatavošana</td><td class="r">12,00–15,00&nbsp;€</td></tr>
+            <tr><td>Darba algu aprēķins (standarta normālais darba laiks)</td><td class="r">25,00–30,00&nbsp;€</td></tr>
+            <tr><td>Darba algu aprēķins (summētais, koriģētais, pielāgotais darba laiks)</td><td class="r">40,00–55,00&nbsp;€</td></tr>
+            <tr><td>Konsultācija</td><td class="r">50,00&nbsp;€/h</td></tr>
+            <tr><td>Darbs brīvdienā vai svētku dienā (minimālā summa 30&nbsp;€)</td><td class="r">80,00&nbsp;€/h</td></tr>
+          </tbody>
+        </table>
+        <p class="tbl-note">Visas cenas norādītas bez PVN. Precīzu cenu nosaka darba apjoms un sarežģītība.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== REMOTE ===== -->
+  <section class="block remote" id="attalinati">
+    <div class="wrap remote-grid">
+      <figure class="remote-photo">
+        <img src="img/pen.jpg" alt="Pildspalva ar uzrakstu SIA CENSUVA un Augmentum zīmi" loading="lazy" width="1400" height="788">
+        <figcaption>SIA CENSUVA · Sigulda</figcaption>
+      </figure>
+      <div>
+        <div class="sec-head" style="grid-template-columns:minmax(0,1fr);margin-bottom:28px">
+          <p class="eyebrow">Attālināti</p>
+          <h2>Atrodamies Siguldā, klientus apkalpojam visā Latvijā.</h2>
+        </div>
+        <ul class="ways">
+          <li>
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="5" width="24" height="22" rx="2"/><path d="M4 12h24M4 19h24M16 5v22"/><circle cx="12.5" cy="15.5" r=".9" fill="currentColor"/></svg>
+            <h3>Dokumenti caur Omniva pakomātiem</h3>
+            <p>Liepājā, Rīgā vai Daugavpilī: dokumentus var nosūtīt ērti un droši no jebkura pakomāta.</p>
+          </li>
+          <li>
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="8" width="18" height="16" rx="2"/><path d="M21 14l8-4v12l-8-4"/></svg>
+            <h3>WhatsApp videozvani</h3>
+            <p>Konsultācijām un jautājumu precizēšanai, lai nav jābrauc uz biroju.</p>
+          </li>
+          <li>
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 26h24"/><path d="M7 22v-6M13 22V11M19 22v-8M25 22V7"/></svg>
+            <h3>MONEO biznesa vadības programma</h3>
+            <p>Izmaksas, debitori un naudas plūsma reāllaikā, lai finanšu kontrole ir pārskatāma.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TRUST ===== -->
+  <section class="block trust mmgrid" id="par-mums">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Par mums</p>
+        <h2>Kopīga sadarbība izaugsmei.</h2>
+        <p>Grāmatvedības birojs AUGMENTUM darbojas kopš 2011. gada. Iedziļināmies katra uzņēmuma darbības specifikā un sadarbību pielāgojam tā vajadzībām: no pamata pakalpojumiem līdz sarežģītiem projektiem.</p>
+      </div>
+      <div class="trust-grid">
+        <div class="seal">
+          <div class="badge">
+            <span class="grade" aria-hidden="true">A</span>
+            <div><b>VID nodokļu maksātāju reitings A</b><span>Laba saistību izpilde, nav būtisku nodokļu pārkāpumu risku.</span></div>
+          </div>
+          <p style="color:var(--ink-soft);font-size:var(--step--1)">Valsts ieņēmumu dienests mūs ir novērtējis kā uzņēmumu ar caurspīdīgu, atbildīgu un uzticamu darbības praksi.</p>
+        </div>
+        <figure class="letter">
+          <img src="img/vid-letter.jpg" alt="VID ģenerāldirektores pateicības vēstule Augmentum par godprātīgu saistību izpildi" loading="lazy" width="1197" height="514">
+          <figcaption>VID pateicība par godprātīgu saistību izpildi</figcaption>
+        </figure>
+      </div>
+      <div class="sectors">
+        <p class="eyebrow">Mūsu klientu nozares</p>
+        <ul>
+          <li>Būvniecība</li><li>Lauksaimniecība</li><li>Namdaru un galdniecības izstrādājumi</li><li>Skaistumkopšana</li><li>Īpašumu apsaimniekošana</li><li>Sabiedriskā ēdināšana</li><li>Notāru biroji</li><li>Ārstu privātprakses</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MORE ===== -->
+  <section class="block more" id="vel">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Vēl palīdzam</p>
+        <h2>Ne tikai grāmatvedība.</h2>
+        <p>Atbalsts uzņēmuma vadītājam arī tad, kad jāpieņem nodokļu lēmums, jāreģistrē uzņēmums vai jāpiesaista finansējums.</p>
+      </div>
+      <div class="more-grid">
+        <article>
+          <span class="tag">Nodokļi</span>
+          <h3>Nodokļu konsultācijas</h3>
+          <ul>
+            <li>Nodokļu piemērošana veiktiem un plānotiem darījumiem</li>
+            <li>Atbilstošākā risinājuma izvēle</li>
+            <li>Uzziņu pieprasījumi VID klienta vārdā</li>
+            <li>Pārstāvība VID strīdīgos jautājumos</li>
+          </ul>
+        </article>
+        <article>
+          <span class="tag">Uzņēmējdarbības sākums</span>
+          <h3>Uzņēmuma reģistrācija</h3>
+          <ul>
+            <li>Uzņēmējdarbības formas izvēle</li>
+            <li>Reģistrācijas dokumentu sagatavošana</li>
+            <li>Reģistrācija PVN apliekamo personu reģistrā</li>
+            <li>Izmaiņas: nosaukums, valde, adrese, statūti</li>
+          </ul>
+        </article>
+        <article>
+          <span class="tag">Finansējums</span>
+          <h3>Projektu pieteikumi</h3>
+          <ul>
+            <li>LAD administrētie valsts un ES fondu atbalsta pasākumi</li>
+            <li>ALTUM atbalsta programmas</li>
+            <li>Iepirkuma dokumentācija</li>
+            <li>Projekta atskaites</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== REQUEST DESK ===== -->
+  <section class="block desk" id="pieteikums">
+    <div class="wrap desk-grid">
+      <div class="intro">
+        <p class="eyebrow">Pieteikums</p>
+        <h2>Pastāstiet par savu uzņēmumu. Piedāvājumu sagatavosim mēs.</h2>
+        <p>Pietiek ar tālruni vai e-pastu. Ja gribat, pastāstiet arī, cik darījumu jums ir mēnesī: tā piedāvājums būs precīzāks.</p>
+        <ol class="steps">
+          <li><b>Pieteikums</b><span>Atstājiet kontaktu vai aizpildiet detalizēto formu.</span></li>
+          <li><b>Izvērtēšana</b><span>Iepazīstamies ar uzņēmuma darbību un vajadzībām.</span></li>
+          <li><b>Sadarbības piedāvājums</b><span>Pamatpakalpojumi un vajadzīgie papildpakalpojumi ar cenu.</span></li>
+        </ol>
+        <dl class="contact">
+          <div><dt>Tālrunis</dt><dd><a href="tel:+37120167820">+371 20167820</a></dd></div>
+          <div><dt>E-pasts</dt><dd><a href="mailto:info@augmentum.lv">info@augmentum.lv</a></dd></div>
+          <div><dt>Birojs</dt><dd>L. Paegles iela 3, Sigulda, LV-2150</dd></div>
+          <div><dt>Rekvizīti</dt><dd>SIA "CENSUVA", reģ. nr. 40001002121</dd></div>
+        </dl>
+      </div>
+
+      <div class="panel" id="panel">
+        <div class="tabs" role="tablist" aria-label="Pieteikuma veids">
+          <button type="button" role="tab" id="t-quick" aria-selected="true" aria-controls="f-quick">Ātri: sazinieties ar mani</button>
+          <button type="button" role="tab" id="t-full" aria-selected="false" aria-controls="f-full">Detalizēti</button>
+        </div>
+
+        <form id="f-quick" role="tabpanel" aria-labelledby="t-quick" novalidate>
+          <div class="field">
+            <label for="q-contact">Tālrunis vai e-pasts</label>
+            <div class="quick-line">
+              <input id="q-contact" name="contact" type="text" autocomplete="off" placeholder="+371 2… vai vards@uznemums.lv" required aria-describedby="q-err">
+              <button class="btn" type="submit">Pieteikties <span class="arr" aria-hidden="true">→</span></button>
+            </div>
+            <span class="err" id="q-err" role="alert"></span>
+          </div>
+          <div class="consent field">
+            <label class="check"><input type="checkbox" id="q-ok" required aria-describedby="q-ok-err"><span>Piekrītu <a href="https://www.augmentum.lv/privatuma-politika" target="_blank" rel="noopener">datu apstrādes noteikumiem</a></span></label>
+            <span class="err" id="q-ok-err" role="alert"></span>
+          </div>
+          <p class="quick-note">Sazināsimies un pārējo pajautāsim paši.</p>
+        </form>
+
+        <form id="f-full" role="tabpanel" aria-labelledby="t-full" novalidate hidden>
+          <div class="row">
+            <div class="field"><label for="d-name">Vārds</label><input id="d-name" name="name" autocomplete="name" required aria-describedby="d-name-err"><span class="err" id="d-name-err" role="alert"></span></div>
+            <div class="field"><label for="d-company">Uzņēmums</label><input id="d-company" name="company" autocomplete="organization"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="d-email">E-pasts</label><input id="d-email" name="email" type="email" autocomplete="email" required aria-describedby="d-email-err"><span class="err" id="d-email-err" role="alert"></span></div>
+            <div class="field"><label for="d-phone">Tālrunis</label><input id="d-phone" name="phone" type="tel" autocomplete="tel" placeholder="+371"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="d-form">Uzņēmuma forma</label>
+              <select id="d-form" name="form"><option>SIA</option><option>IK</option><option>AS</option><option>Saimnieciskās darbības veicējs</option><option>Biedrība vai nodibinājums</option><option>Vēl tikai plānoju uzņēmumu</option></select></div>
+            <div class="field"><label for="d-staff">Darbinieku skaits</label>
+              <select id="d-staff" name="staff"><option>Nav darbinieku</option><option>1–5</option><option>6–20</option><option>21–50</option><option>Vairāk nekā 50</option></select></div>
+          </div>
+          <div class="field">
+            <label for="d-ops">Aptuveni grāmatojumi mēnesī</label>
+            <div class="qty"><input id="d-ops" name="ops" type="range" min="1" max="220" step="1" value="30"><output id="d-ops-out" for="d-ops">30</output></div>
+          </div>
+          <fieldset>
+            <legend class="legend">PVN maksātājs</legend>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="vat" value="ja"><span>Jā</span></label>
+              <label class="chip"><input type="radio" name="vat" value="ne"><span>Nē</span></label>
+              <label class="chip"><input type="radio" name="vat" value="nezinu" checked><span>Nezinu</span></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend class="legend">Interesē</legend>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="need" value="gramatvediba" checked><span>Grāmatvedība</span></label>
+              <label class="chip"><input type="checkbox" name="need" value="algas"><span>Algas</span></label>
+              <label class="chip"><input type="checkbox" name="need" value="es"><span>Darījumi ar ES / trešajām valstīm</span></label>
+              <label class="chip"><input type="checkbox" name="need" value="nodokli"><span>Nodokļu konsultācija</span></label>
+              <label class="chip"><input type="checkbox" name="need" value="registracija"><span>Uzņēmuma reģistrācija</span></label>
+              <label class="chip"><input type="checkbox" name="need" value="projekts"><span>LAD / ALTUM projekts</span></label>
+            </div>
+          </fieldset>
+          <div class="field"><label for="d-msg">Komentārs</label><textarea id="d-msg" name="msg" placeholder="Piemēram: SIA ar 3 darbiniekiem, gribam mainīt grāmatvedi no nākamā mēneša."></textarea></div>
+          <div class="consent field">
+            <label class="check"><input type="checkbox" id="d-ok" required aria-describedby="d-ok-err"><span>Piekrītu <a href="https://www.augmentum.lv/privatuma-politika" target="_blank" rel="noopener">datu apstrādes noteikumiem</a></span></label>
+            <span class="err" id="d-ok-err" role="alert"></span>
+          </div>
+          <div class="form-foot">
+            <small>Atbildēsim ar sadarbības piedāvājumu.</small>
+            <button class="btn" type="submit">Nosūtīt pieteikumu <span class="arr" aria-hidden="true">→</span></button>
+          </div>
+        </form>
+
+        <div class="done" id="done" hidden tabindex="-1">
+          <span class="stampmark" aria-hidden="true">SAŅEMTS</span>
+          <h3>Paldies, pieteikums saņemts.</h3>
+          <p id="done-text">Sazināsimies ar jums.</p>
+          <p style="font-size:.8rem">Prototips: šajā versijā pieteikums vēl netiek nosūtīts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>AUGMENTUM · SIA "CENSUVA" · Koncepciju sagatavoja Echo Time, saturs vēl saskaņojams</span>
+    <a href="https://www.facebook.com/Augmentum.gramatvediba" target="_blank" rel="noopener">Facebook ↗</a>
+  </div>
+</footer>
+
+<div class="mcta" id="mcta"><a class="btn btn-ghost" href="tel:+37120167820">Zvanīt</a><a class="btn" href="#pieteikums">Pieteikt sadarbību <span class="arr" aria-hidden="true">→</span></a></div>
+
+<script src="stage.js"></script>
+<script>
+(function () {
+  var story = document.getElementById('story');
+  var stageEl = document.getElementById('stage');
+  var top = document.getElementById('top');
+  var mcta = document.getElementById('mcta');
+  var beats = Array.prototype.slice.call(document.querySelectorAll('.beat'));
+  var railItems = Array.prototype.slice.call(document.querySelectorAll('#rail li'));
+  var stage = null;
+
+  try {
+    if (window.AUGStage) { stage = window.AUGStage.mount(stageEl); stageEl.classList.add('mounted'); window.__augStage = stage; }
+  } catch (e) { console.error(e); }
+
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+
+  // active beat follows the stage timeline (ledger .15, payroll .35, declarations .51, annual .69, overview .86)
+  var cuts = [0.15, 0.35, 0.51, 0.69, 0.86];
+
+  // Size the beats from the stage cuts: when p reaches cuts[k], beat k+1's heading has just
+  // arrived at ARRIVE (55 % of the viewport; on phones just below the stage), then it sticks.
+  // The story keeps a fixed total length (STORY_VH), so every scroll pixel maps to the same p.
+  var STORY_VH = 7;
+  var sized = { w: 0, h: 0 };
+  function sizeBeats() {
+    var vh = window.innerHeight, w = window.innerWidth;
+    if (w === sized.w && Math.abs(vh - sized.h) < 120) return; // ignore mobile URL-bar jitter
+    sized.w = w; sized.h = vh;
+    beats.forEach(function (b) { b.style.minHeight = '0px'; });
+    var phone = window.matchMedia('(max-width: 900px)').matches;
+    var stageBottom = document.querySelector('.stage-wrap').offsetHeight + (phone ? 68 : 0);
+    var storyTop = story.getBoundingClientRect().top;
+    var top0 = beats[0].getBoundingClientRect().top - storyTop;   // copy padding above the first beat
+    var storyH = top0 + STORY_VH * vh;
+    var range = storyH - vh;
+    var y = top0, heights = [];
+    for (var k = 0; k < beats.length - 1; k++) {
+      var b = beats[k], st = b.querySelector('.stick') || b, bs = getComputedStyle(b);
+      var nextLead = parseFloat(getComputedStyle(beats[k + 1]).paddingTop);
+      // desktop: arrive low enough that beat k's heading is still on screen at the cut
+      var arrive = phone ? stageBottom + 24
+        : Math.min(vh * 0.86, Math.max(vh * 0.5, st.offsetHeight + parseFloat(bs.paddingBottom) + nextLead + 60));
+      var nextTop = cuts[k] * range + arrive - nextLead;
+      var h = Math.max(nextTop - y, st.offsetHeight + parseFloat(bs.paddingTop) + parseFloat(bs.paddingBottom));
+      heights.push(h); y += h;
+    }
+    heights.push(Math.max(storyH - y, vh * 0.9));
+    beats.forEach(function (b, i) { b.style.minHeight = Math.round(heights[i]) + 'px'; });
+  }
+  sizeBeats();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { sized.w = 0; sizeBeats(); onScroll(); });
+
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var vh = window.innerHeight;
+    var r = story.getBoundingClientRect();
+    var range = Math.max(1, r.height - vh);
+    var p = clamp(-r.top / range, 0, 1);
+    if (stage) stage.setProgress(p);
+
+    var active = 0;
+    cuts.forEach(function (c, i) { if (p >= c) active = i + 1; });
+    beats.forEach(function (b, i) { b.classList.toggle('on', i === active); });
+    railItems.forEach(function (li, i) { li.classList.toggle('on', i + 1 === active); });
+
+    top.classList.toggle('solid', r.bottom < 70);
+    var desk = document.getElementById('pieteikums').getBoundingClientRect();
+    top.classList.toggle('dark', desk.top < 68 && desk.bottom > 68);
+    mcta.classList.toggle('show', r.bottom < vh * 0.6 && desk.top > vh * 0.6);
+
+    if (stage && stage.setPaused) stage.setPaused(r.bottom < 0 || r.top > vh);
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function () { sizeBeats(); onScroll(); });
+  update();
+
+  // ---------- Tabs (services + form) ----------
+  function tabset(tabs, panels, onSelect) {
+    function select(i) {
+      tabs.forEach(function (t, j) { t.setAttribute('aria-selected', String(i === j)); t.tabIndex = i === j ? 0 : -1; });
+      panels.forEach(function (p, j) { p.hidden = i !== j; });
+      if (onSelect) onSelect(i);
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { select(i); });
+      t.addEventListener('keydown', function (e) {
+        var next = (i + 1) % tabs.length, prev = (i + tabs.length - 1) % tabs.length;
+        var n = { ArrowRight: next, ArrowDown: next, ArrowLeft: prev, ArrowUp: prev, Home: 0, End: tabs.length - 1 }[e.key];
+        if (n !== undefined) { e.preventDefault(); select(n); tabs[n].focus(); }
+      });
+    });
+    select(0);
+    return select;
+  }
+  tabset([document.getElementById('s-jur'), document.getElementById('s-fiz')], [document.getElementById('p-jur'), document.getElementById('p-fiz')]);
+  var formTabs = [document.getElementById('t-quick'), document.getElementById('t-full')];
+  var forms = [document.getElementById('f-quick'), document.getElementById('f-full')];
+  var selectForm = tabset(formTabs, forms);
+
+  // ---------- Price calculator (orientējošās cenas no augmentum.lv) ----------
+  var TIERS = [
+    { max: 10, price: '52–92', text: '1–10 grāmatojumi: ļoti maziem uzņēmumiem ar maz darbībām.' },
+    { max: 50, price: '95–175', text: '11–50 grāmatojumi: maziem un vidējiem uzņēmumiem ar mērenu darbību.' },
+    { max: 100, price: '180–295', text: '51–100 grāmatojumi: uzņēmumiem ar augstāku apgrozījumu un darbību daudzumu.' },
+    { max: 150, price: '300–425', text: '101–150 grāmatojumi: uzņēmumiem ar intensīvām grāmatvedības darbībām.' },
+    { max: 200, price: '445–887', text: '151–200 grāmatojumi: ļoti aktīviem uzņēmumiem ar sarežģītu darbību uzskaiti.' },
+    { max: Infinity, price: null, text: 'Vairāk nekā 200 grāmatojumi: lieliem uzņēmumiem cenu nosakām individuāli.' }
+  ];
+  var ops = document.getElementById('c-ops'), opsOut = document.getElementById('c-ops-out');
+  var priceEl = document.getElementById('c-price'), textEl = document.getElementById('c-out-text');
+  var bars = Array.prototype.slice.call(document.querySelectorAll('.tiers span'));
+  var dOps = document.getElementById('d-ops'), dOpsOut = document.getElementById('d-ops-out');
+  function fmtOps(v) { return +v > 200 ? '200+' : String(v); }
+  function showCalc() {
+    var v = +ops.value, k = 0;
+    while (v > TIERS[k].max) k++;
+    opsOut.textContent = fmtOps(v);
+    priceEl.innerHTML = TIERS[k].price ? TIERS[k].price + '&nbsp;€ <small>mēnesī, bez PVN</small>' : 'Individuāli <small>pēc izvērtēšanas</small>';
+    textEl.textContent = TIERS[k].text;
+    bars.forEach(function (b, i) { b.classList.toggle('on', i <= k); });
+  }
+  ops.addEventListener('input', showCalc); showCalc();
+  function showD() { dOpsOut.textContent = fmtOps(dOps.value); }
+  dOps.addEventListener('input', showD); showD();
+  document.getElementById('c-cta').addEventListener('click', function () { dOps.value = ops.value; showD(); selectForm(1); });
+
+  // ---------- Form ----------
+  var done = document.getElementById('done');
+  var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  function isPhone(v) { return /^\+?[\d\s()-]+$/.test(v) && v.replace(/\D/g, '').length >= 8; }
+  function consentOk(id) {
+    var box = document.getElementById(id), ok = box.checked;
+    box.closest('.consent').classList.toggle('bad', !ok);
+    box.setAttribute('aria-invalid', String(!ok));
+    document.getElementById(id + '-err').textContent = ok ? '' : 'Lai nosūtītu pieteikumu, apstipriniet piekrišanu.';
+    if (!ok) box.focus();
+    return ok;
+  }
+  function setErr(input, errEl, msg) {
+    input.closest('.field').classList.toggle('bad', !!msg);
+    input.setAttribute('aria-invalid', String(!!msg));
+    errEl.textContent = msg || '';
+  }
+  function finish(text) {
+    forms.forEach(function (f) { f.hidden = true; });
+    document.querySelector('.tabs').hidden = true;
+    document.getElementById('done-text').textContent = text;
+    done.hidden = false; done.focus();
+  }
+  forms[0].addEventListener('submit', function (e) {
+    e.preventDefault();
+    var input = document.getElementById('q-contact'), v = input.value.trim();
+    var ok = emailRe.test(v) || isPhone(v);
+    setErr(input, document.getElementById('q-err'), ok ? '' : 'Ierakstiet tālruni (vismaz 8 cipari) vai e-pastu (vards@uznemums.lv).');
+    if (!ok) { input.focus(); return; }
+    if (!consentOk('q-ok')) return;
+    finish((emailRe.test(v) ? 'Rakstīsim uz ' : 'Zvanīsim uz ') + v + '.');
+  });
+  forms[1].addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('d-name'), email = document.getElementById('d-email');
+    var okN = !!name.value.trim(), okE = emailRe.test(email.value.trim());
+    setErr(name, document.getElementById('d-name-err'), okN ? '' : 'Ierakstiet vārdu.');
+    setErr(email, document.getElementById('d-email-err'), okE ? '' : 'Ierakstiet e-pastu, uz kuru sūtīt piedāvājumu.');
+    if (!okN) { name.focus(); return; }
+    if (!okE) { email.focus(); return; }
+    if (!consentOk('d-ok')) return;
+    finish('Sadarbības piedāvājumu sūtīsim uz ' + email.value.trim() + '.');
+  });
+})();
+</script>
+
+</body>
+</html>
