@@ -173,6 +173,15 @@ section.block { padding-block: clamp(80px, 11vw, 160px); }
 .sec-head p { color: var(--ink-soft); max-width: 32rem; }
 .sec-head .eyebrow { color: var(--wine); grid-column: 1 / -1; }
 
+/* about: the founder's own words */
+.about { background: var(--paper); }
+.about-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+.about .eyebrow { color: var(--wine); margin-bottom: 20px; }
+.about blockquote { margin: 0; font: italic 400 var(--step-3)/1.12 var(--display); color: var(--ink); text-wrap: balance; position: sticky; top: 110px; }
+.about .story-text { display: grid; gap: 1.1em; font-size: var(--step-1); line-height: 1.55; color: var(--ink-soft); max-width: 36rem; }
+.about .story-text p:first-child { color: var(--ink); }
+.about .sign { margin-top: .6em; font: 500 .9rem/1 var(--display); letter-spacing: .16em; color: var(--wine); }
+
 /* why: photo + reasons */
 .why { background: var(--paper); }
 .why-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
@@ -304,7 +313,8 @@ footer.site a { color: #f7ece2; }
   .rail li { font-size: 0; gap: 0; }
   .rail li::after { width: 14px; }
   .rail li.on::after { width: 28px; }
-  .sec-head, .why-grid, .unbox-grid, .desk-grid { grid-template-columns: minmax(0, 1fr); }
+  .sec-head, .why-grid, .unbox-grid, .desk-grid, .about-grid { grid-template-columns: minmax(0, 1fr); }
+  .about blockquote { position: static; }
   .why-photo { position: relative; top: 0; aspect-ratio: 4 / 3; }
   .cards { grid-template-columns: minmax(0, 1fr); gap: 40px; }
   .addons { grid-template-columns: minmax(0, 1fr); }
@@ -338,6 +348,7 @@ footer.site a { color: #f7ece2; }
   <div class="wrap">
     <a class="logo" href="#story" aria-label="Mind Your Light — uz sākumu">MIND YOUR LIGHT</a>
     <nav aria-label="Galvenā navigācija">
+      <a class="lnk" href="#par">Par zīmolu</a>
       <a class="lnk" href="#kapec">Kāpēc dāvināt</a>
       <a class="lnk" href="#kolekcijas">Kolekcijas</a>
       <a class="lnk" href="https://mindyourlight.shop/?utm_source=corporate-landing&amp;utm_medium=nav" target="_blank" rel="noopener">Veikals ↗</a>
@@ -412,6 +423,26 @@ footer.site a { color: #f7ece2; }
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section class="block about" id="par">
+    <div class="wrap about-grid">
+      <div>
+        <p class="eyebrow">Par Mind Your Light</p>
+        <blockquote>Lietas, kuras neapnīk. Kuras iemīlam, paturam un turpinām izmantot.</blockquote>
+      </div>
+      <div class="story-text">
+        <p>Es ticu, ka skaistums nav jāatstāj tikai īpašiem dzīves mirkļiem. To varam radīt paši: savās mājās, savā ikdienā.</p>
+        <p>Ar siltu sveces gaismu. Ar svaigiem ziediem uz galda. Ar mazām detaļām, kas rada mājīgumu, noskaņu un prieku būt mājās.</p>
+        <p>No šīs pārliecības radās MIND YOUR LIGHT: mana mīlestība pret skaistu ikdienu, pārdomātu dizainu un lietām, kurām ir paliekoša vērtība.</p>
+        <p>Es produktu radu ar sirdi, bet arī ar augstām prasībām pret kvalitāti. Man ir svarīga katra detaļa: materiāli, dizains, funkcionalitāte un ilgmūžība. Jo es ticu, ka skaistām lietām ir ne tikai jāizskatās īpaši, bet arī jākalpo ilgi.</p>
+        <p>Es vēlos radīt produktus, kas pamazām kļūst par daļu no mūsu ikdienas. Ko pieņemam kā savus. Ar kuriem veidojam savus mazos rituālus, radām noskaņu un piešķiram īpašu sajūtu pavisam parastiem mirkļiem.</p>
+        <p>Lietas, kuras neapnīk. Kuras iemīlam, paturam un turpinām izmantot.</p>
+        <p>Jo dzīves romantizēšana man nav par perfektu ikdienu. Tā ir par prieku pašiem radīt skaisto savā dzīvē.</p>
+        <p class="sign">MIND YOUR LIGHT</p>
       </div>
     </div>
   </section>
