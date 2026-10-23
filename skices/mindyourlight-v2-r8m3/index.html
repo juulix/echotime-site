@@ -1,0 +1,858 @@
+<!doctype html>
+<html lang="lv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Mind Your Light — korporatīvās dāvanas · koncepcija V2</title>
+<meta property="og:title" content="Mind Your Light — Gaisma. Iedvesma. Ilgtspēja.">
+<meta property="og:description" content="Svece un ziedu vāze vienā. Korporatīvo dāvanu lapas koncepcija, sagatavoja Echo Time.">
+<meta property="og:image" content="https://www.echotime.app/skices/mindyourlight-v2-r8m3/img/final-photo.jpg">
+<meta property="og:url" content="https://www.echotime.app/skices/mindyourlight-v2-r8m3/">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Cpath d=%27M16 4c3 4 5 6 5 9a5 5 0 0 1-10 0c0-3 2-5 5-9z%27 fill=%27%23f4b26a%27/%3E%3Crect x=%279%27 y=%2716%27 width=%2714%27 height=%2713%27 rx=%272%27 fill=%27%235c1a20%27/%3E%3C/svg%3E">
+<meta name="description" content="Korporatīvās Ziemassvētku dāvanas: svece, kas pēc tam kļūst par vāzi. Mind Your Light.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400;1,6..96,500&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+<style>
+/* Layout: a pinned candle→vase stage (right) carries the story while copy scrolls (left);
+   the whole story band moves from night to morning with the scroll. Then quiet porcelain
+   sections, and a wine-dark request desk at the end. Single deliberate look (brand palette). */
+:root {
+  color-scheme: light;
+  --night: #140b0c;          /* candle-lit room */
+  --wine: #5c1a20;           /* brand burgundy (packaging paper) */
+  --wine-deep: #2a0d10;
+  --porcelain: #f1e9df;      /* morning table */
+  --paper: #faf6f1;
+  --ink: #23161a;
+  --ink-soft: #6e5a57;
+  --amber: #d27c36;          /* ROMANCE glass */
+  --ember: #f4b26a;
+  --rose: #8e0f1a;
+  --line: rgba(35, 22, 26, .14);
+  --line-dark: rgba(250, 236, 222, .16);
+
+  --display: "Bodoni Moda", "Didot", "Bodoni 72", "Times New Roman", serif;
+  --body: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+
+  --step--1: clamp(.8rem, .77rem + .12vw, .875rem);
+  --step-0: clamp(1rem, .96rem + .2vw, 1.125rem);
+  --step-1: clamp(1.25rem, 1.15rem + .45vw, 1.5rem);
+  --step-2: clamp(1.6rem, 1.35rem + 1.1vw, 2.25rem);
+  --step-3: clamp(2.2rem, 1.6rem + 2.6vw, 3.75rem);
+  --step-4: clamp(2.6rem, 1.7rem + 3.4vw, 4.6rem);
+
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --gutter-l: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+  --maxw: 1240px;
+
+  --wall: #625145;           /* wall of the final brand photo, so page and photo meet without a seam */
+
+  /* driven by scroll: 0 = night, 1 = morning; --fin brings in the photo's wall */
+  --day: 0;
+  --fin: 0;
+}
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 var(--step-0)/1.6 var(--body);
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: "opsz" 28; /* Bodoni hairlines at display opsz drop Latvian macrons */
+  text-rendering: optimizeLegibility;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--story-bg, var(--night)); }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: 1.04; letter-spacing: -.01em; text-wrap: balance; margin: 0; }
+p { margin: 0; text-wrap: pretty; }
+a { color: inherit; }
+img { display: block; max-width: 100%; }
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
+.wrap { width: 100%; max-width: calc(var(--maxw) + 2 * 16px); margin-inline: auto; padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
+.eyebrow { font: 600 var(--step--1)/1.2 var(--body); letter-spacing: .16em; text-transform: uppercase; }
+.it { font-style: italic; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  --b-bg: var(--paper); --b-fg: var(--ink);
+  display: inline-flex; align-items: center; gap: .7em;
+  padding: 1em 1.5em; border-radius: 999px; border: 1px solid transparent;
+  background: var(--b-bg); color: var(--b-fg);
+  font: 600 var(--step--1)/1 var(--body); letter-spacing: .06em; text-transform: uppercase; text-decoration: none;
+  cursor: pointer; transition: transform .5s var(--ease-out), background-color .3s, color .3s, border-color .3s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn .arr { transition: transform .5s var(--ease-out); }
+.btn:hover .arr { transform: translateX(4px); }
+.btn-glow { --b-bg: var(--ember); --b-fg: var(--wine-deep); box-shadow: 0 10px 40px -12px rgba(244, 178, 106, .7); }
+.btn-ghost { --b-bg: transparent; --b-fg: currentColor; border-color: currentColor; }
+.btn-wine { --b-bg: var(--wine); --b-fg: var(--paper); }
+.btn-wine:hover { --b-bg: #6f2128; }
+
+/* ---------- Header ---------- */
+.top {
+  position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 50;
+  color: var(--story-fg, var(--paper));
+  transition: background-color .4s, color .4s, box-shadow .4s;
+}
+.top:not(.solid) { background: color-mix(in srgb, var(--story-bg) 78%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.top.solid { background: color-mix(in oklab, var(--paper) 88%, transparent); color: var(--ink); backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); box-shadow: 0 1px 0 var(--line); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 68px; }
+.logo { font: 500 1.05rem/1 var(--display); letter-spacing: .14em; text-decoration: none; white-space: nowrap; }
+.top nav { display: flex; align-items: center; gap: clamp(12px, 2.4vw, 32px); font-size: var(--step--1); }
+.top nav a.lnk { text-decoration: none; opacity: .82; }
+.top nav a.lnk:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+.top .btn { padding: .8em 1.15em; }
+.top:not(.solid) .btn { --b-bg: transparent; --b-fg: currentColor; border-color: currentColor; }
+
+/* ---------- Story (pinned stage) ---------- */
+.story {
+  --story-bg: color-mix(in oklab, color-mix(in oklab, var(--night), var(--porcelain) calc(var(--day) * 100%)), var(--wall) calc(var(--fin) * 100%));
+  background: var(--story-bg);
+  color: var(--story-fg);
+  position: relative;
+}
+.story-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+.copy { grid-area: 1 / 1; position: relative; z-index: 2; padding-left: max(var(--gutter-l), calc((100vw - var(--maxw)) / 2)); padding-right: clamp(16px, 3vw, 48px); }
+.stage-wrap { grid-area: 1 / 2; align-self: start; position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+.stage { position: absolute; inset: 0; }
+.stage-fallback { position: absolute; inset: 0; background: url(img/roses-amber.jpg) center/cover; }
+.stage.mounted + .stage-fallback { display: none; }
+.stage-wrap::after { /* soft blend into copy column */
+  content: ""; position: absolute; inset: 0 auto 0 -1px; width: 26%;
+  background: linear-gradient(90deg, var(--story-bg), transparent); pointer-events: none;
+}
+
+.beat { --h: 100; min-height: calc(var(--h) * 1vh); min-height: calc(var(--h) * 1svh); display: flex; flex-direction: column; justify-content: center; gap: 22px; padding-block: 120px 80px; max-width: 34rem; transition: opacity .8s var(--ease-out); }
+.beat:not(.on) { opacity: .45; }
+.beat h2 { font-size: var(--step-3); }
+.beat p.lead { font-size: var(--step-1); line-height: 1.45; color: var(--story-soft); max-width: 30rem; }
+.beat .stick { position: sticky; top: 26vh; display: grid; gap: 22px; }
+.beat:has(.stick) { justify-content: flex-start; }
+.beat .num { display: flex; align-items: center; gap: 14px; color: var(--story-accent); }
+.beat .num::after { content: ""; flex: 0 0 56px; height: 1px; background: currentColor; opacity: .5; }
+
+.hero h1 { font-size: var(--step-4); }
+.hero h1 em { font-style: italic; color: var(--story-accent); }
+.hero .lead { font-size: var(--step-1); line-height: 1.45; color: var(--story-soft); max-width: 32rem; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+.specs { display: flex; flex-wrap: wrap; gap: 0; margin: 10px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--story-line); max-width: 30rem; }
+.specs li { flex: 1 1 0; min-width: 6.5rem; padding: 14px 16px 0 0; display: grid; gap: 2px; }
+.specs b { font: 400 var(--step-2)/1 var(--display); font-variant-numeric: lining-nums tabular-nums; }
+.specs span { font-size: var(--step--1); color: var(--story-soft); }
+.scroll-hint { display: inline-flex; align-items: center; gap: 10px; font-size: var(--step--1); color: var(--story-soft); }
+.scroll-hint i { width: 1px; height: 34px; background: linear-gradient(var(--story-accent), transparent); animation: drip 2.4s var(--ease-out) infinite; transform-origin: top; }
+@keyframes drip { 0% { transform: scaleY(0); opacity: 1 } 70% { transform: scaleY(1); opacity: 1 } 100% { transform: scaleY(1); opacity: 0 } }
+
+.fact { display: flex; gap: 14px; align-items: baseline; padding-top: 16px; border-top: 1px solid var(--story-line); font-size: var(--step--1); color: var(--story-soft); max-width: 30rem; }
+.fact b { font: 400 var(--step-2)/1 var(--display); color: var(--story-fg); white-space: nowrap; }
+
+/* progress rail on the stage */
+.rail { position: absolute; right: max(20px, env(safe-area-inset-right, 0px)); top: 50%; transform: translateY(-50%); z-index: 3; display: grid; gap: 14px; list-style: none; margin: 0; padding: 0; }
+.rail li { display: flex; align-items: center; justify-content: flex-end; gap: 10px; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--story-fg); opacity: .4; transition: opacity .5s; }
+.rail li::after { content: ""; width: 18px; height: 1px; background: currentColor; transition: width .6s var(--ease-out); }
+.rail li.on { opacity: 1; }
+.rail li.on::after { width: 36px; }
+
+/* story colours follow --day; switch text ink once morning wins */
+.story { --story-fg: #f7ece2; --story-soft: rgba(247, 236, 226, .72); --story-accent: var(--ember); --story-line: var(--line-dark); }
+.story.is-day { --story-fg: var(--ink); --story-soft: var(--ink-soft); --story-accent: var(--wine); --story-line: var(--line); }
+.story.is-day .btn-glow { --b-bg: var(--wine); --b-fg: var(--paper); box-shadow: none; }
+.story.is-fin { --story-fg: #f7ece2; --story-soft: rgba(247, 236, 226, .78); --story-accent: var(--ember); --story-line: var(--line-dark); }
+.story.is-fin .btn-glow { --b-bg: var(--ember); --b-fg: var(--wine-deep); }
+
+/* ---------- Sections ---------- */
+section.block { padding-block: clamp(80px, 11vw, 160px); }
+.sec-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px 48px; align-items: end; margin-bottom: clamp(40px, 6vw, 72px); }
+.sec-head h2 { font-size: var(--step-3); }
+.sec-head p { color: var(--ink-soft); max-width: 32rem; }
+.sec-head .eyebrow { color: var(--wine); grid-column: 1 / -1; }
+
+/* about: the founder's own words */
+.about { background: var(--paper); }
+.about-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+.about .eyebrow { color: var(--wine); margin-bottom: 20px; }
+.about blockquote { margin: 0; font: italic 400 var(--step-2)/1.25 var(--display); color: var(--ink); text-wrap: balance; position: sticky; top: 110px; }
+.about .story-text { display: grid; gap: 1.1em; font-size: var(--step-1); line-height: 1.55; color: var(--ink-soft); max-width: 36rem; }
+.about .story-text p:first-child { color: var(--ink); }
+.about .sign { margin-top: .6em; font: 500 .9rem/1 var(--display); letter-spacing: .16em; color: var(--wine); }
+
+/* why: photo + reasons */
+.why { background: var(--paper); }
+.why-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+.why-photo { position: sticky; top: 100px; border-radius: 2px; overflow: hidden; aspect-ratio: 4 / 5; background: var(--porcelain); }
+.why-photo img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.04); transition: transform 1.6s var(--ease-out); }
+.why-photo:hover img { transform: scale(1); }
+.why-photo figcaption { position: absolute; left: 16px; bottom: 14px; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,.4); }
+.reasons { list-style: none; margin: 0; padding: 0; display: grid; }
+.reasons li { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: 8px 24px; padding-block: 28px; border-top: 1px solid var(--line); }
+.reasons li:last-child { border-bottom: 1px solid var(--line); }
+.reasons .k { font: italic 400 var(--step-1)/1.2 var(--display); color: var(--wine); }
+.reasons h3 { font: 600 var(--step-0)/1.3 var(--body); margin-bottom: 6px; letter-spacing: 0; }
+.reasons p { color: var(--ink-soft); }
+
+/* collections */
+.collections { background: var(--porcelain); }
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 32px); }
+.card { display: grid; grid-template-rows: auto 1fr; text-decoration: none; color: inherit; }
+.card .ph { position: relative; aspect-ratio: 3 / 4; overflow: hidden; background: #e7ddd2; }
+.card .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity .9s var(--ease-out), transform 1.4s var(--ease-out); }
+.card .ph img + img { opacity: 0; }
+.card:hover .ph img + img, .card:focus-visible .ph img + img { opacity: 1; }
+.card:hover .ph img { transform: scale(1.03); }
+.card .meta { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; padding-top: 18px; align-items: baseline; }
+.card h3 { font-size: var(--step-2); }
+.card .price { font: 400 var(--step-1)/1 var(--display); font-variant-numeric: lining-nums; }
+.card .sub { grid-column: 1 / -1; color: var(--ink-soft); font-size: var(--step--1); }
+.card .go { grid-column: 1 / -1; margin-top: 10px; font-size: var(--step--1); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; display: inline-flex; gap: .6em; }
+.card .go .arr { transition: transform .5s var(--ease-out); }
+.card:hover .go .arr { transform: translateX(4px); }
+.swatch { width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-right: 8px; vertical-align: -1px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); }
+
+.addons { margin-top: clamp(48px, 6vw, 80px); display: grid; grid-template-columns: auto repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.addons > * { padding: 22px 24px 22px 0; }
+.addons .lbl { font: italic 400 var(--step-1)/1.2 var(--display); color: var(--wine); padding-right: 40px; }
+.addon { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; text-decoration: none; border-left: 1px solid var(--line); padding-left: 24px; }
+.addon b { font-weight: 600; }
+.addon span { color: var(--ink-soft); font-size: var(--step--1); grid-column: 1; }
+.addon em { font: 400 var(--step-1)/1 var(--display); font-style: normal; grid-row: 1 / span 2; grid-column: 2; align-self: center; }
+.addon:hover b { text-decoration: underline; text-underline-offset: 4px; }
+
+/* unboxing */
+.unbox { background: var(--wine); color: #f7ece2; overflow: hidden; }
+.unbox-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+.unbox h2 { font-size: var(--step-3); }
+.unbox p { color: rgba(247, 236, 226, .78); max-width: 30rem; }
+.unbox .eyebrow { color: var(--ember); }
+.unbox .txt { display: grid; gap: 24px; }
+/* seal: the stamping film in an arch, a real logo seal laid over it like a print */
+.seal-media { position: relative; justify-self: center; width: min(100%, 420px); padding: 0 0 56px 0; }
+.seal-film { position: relative; width: min(82%, 340px); aspect-ratio: 464 / 832; border-radius: 999px 999px 18px 18px; overflow: hidden; background: #2b1416 url(img/seal-poster.jpg) center/cover; box-shadow: 0 40px 80px -40px rgba(0, 0, 0, .7), inset 0 0 0 1px rgba(247, 236, 226, .12); }
+.seal-film video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.seal-film::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(247, 236, 226, .14); pointer-events: none; }
+.seal-toggle { position: absolute; left: 14px; bottom: 14px; z-index: 2; display: inline-flex; align-items: center; gap: 8px; padding: .55em .9em; border-radius: 999px; border: 0; background: rgba(20, 11, 12, .55); color: #f7ece2; font: 600 .72rem/1 var(--body); letter-spacing: .1em; text-transform: uppercase; cursor: pointer; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.seal-toggle i { width: 8px; height: 10px; border-left: 3px solid currentColor; border-right: 3px solid currentColor; }
+.seal-toggle[aria-pressed="true"] i { border: 0; width: 0; height: 0; border-left: 9px solid currentColor; border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+.seal-print { position: absolute; right: 0; bottom: 0; width: 52%; margin: 0; padding: 8px 8px 0; background: #f7ece2; box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .75); transform: rotate(2.5deg); transition: transform .9s var(--ease-out); }
+.seal-media:hover .seal-print { transform: rotate(0deg) translateY(-6px); }
+.seal-print img { width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; object-position: 50% 62%; }
+.seal-print figcaption { padding: 8px 2px 10px; font: 500 .72rem/1.3 var(--body); letter-spacing: .04em; color: var(--ink-soft); }
+.tones { display: flex; align-items: center; gap: 14px; font-size: var(--step--1); color: rgba(247, 236, 226, .7); }
+.tones img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; object-position: 50% 32%; box-shadow: 0 0 0 1px rgba(247, 236, 226, .2); }
+blockquote.q { margin: 12px 0 0; padding: 22px 0 0; border-top: 1px solid rgba(247, 236, 226, .2); font: italic 400 var(--step-1)/1.4 var(--display); }
+blockquote.q footer { margin-top: 10px; font: 400 var(--step--1)/1.4 var(--body); font-style: normal; color: rgba(247, 236, 226, .6); }
+
+/* ---------- Request desk ---------- */
+.desk { background: var(--wine-deep); color: #f7ece2; position: relative; overflow: hidden; }
+.desk::before { content: ""; position: absolute; width: 80vmax; height: 80vmax; left: -30vmax; top: -40vmax; background: radial-gradient(closest-side, rgba(244, 178, 106, .16), transparent 70%); pointer-events: none; }
+.desk-grid { position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(40px, 6vw, 96px); align-items: start; }
+.desk h2 { font-size: var(--step-3); }
+.desk .eyebrow { color: var(--ember); }
+.desk .intro { display: grid; gap: 24px; }
+.desk .intro p { color: rgba(247, 236, 226, .75); max-width: 30rem; }
+.steps { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 0; counter-reset: s; }
+.steps li { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: 4px 12px; padding-block: 16px; border-top: 1px solid var(--line-dark); counter-increment: s; }
+.steps li::before { content: counter(s, decimal-leading-zero); font: italic 400 var(--step-0)/1.4 var(--display); color: var(--ember); grid-row: span 2; }
+.steps b { font-weight: 600; }
+.steps span { color: rgba(247, 236, 226, .65); font-size: var(--step--1); }
+.contact { display: grid; gap: 10px; margin: 0; padding: 18px 0 0; border-top: 1px solid var(--line-dark); }
+.contact div { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 12px; }
+.contact dt { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(247, 236, 226, .55); padding-top: .2em; }
+.contact dd { margin: 0; user-select: all; overflow-wrap: anywhere; }
+.small-path { font-size: var(--step--1); color: rgba(247, 236, 226, .7); }
+.small-path a { color: var(--ember); }
+
+.panel { background: var(--paper); color: var(--ink); border-radius: 20px; padding: clamp(20px, 3.4vw, 40px); box-shadow: 0 40px 100px -40px rgba(0, 0, 0, .7); }
+.tabs { display: grid; grid-template-columns: 1fr 1fr; padding: 4px; background: var(--porcelain); border-radius: 999px; margin-bottom: 28px; }
+.tabs button { appearance: none; border: 0; background: transparent; padding: .85em 1em; border-radius: 999px; font: 600 var(--step--1)/1.1 var(--body); color: var(--ink-soft); cursor: pointer; transition: background-color .3s, color .3s, box-shadow .3s; }
+.tabs button[aria-selected="true"] { background: var(--paper); color: var(--ink); box-shadow: 0 2px 10px -4px rgba(35, 22, 26, .3); }
+form { display: grid; gap: 18px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field label, .legend { font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+.field input, .field select, .field textarea {
+  width: 100%; font: 400 var(--step-0)/1.3 var(--body); color: var(--ink);
+  background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: .85em .95em;
+  transition: border-color .2s, box-shadow .2s;
+}
+.field textarea { min-height: 96px; resize: vertical; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--wine); box-shadow: 0 0 0 4px rgba(92, 26, 32, .12); }
+.field .err { font-size: .8rem; color: #a3212c; min-height: 0; }
+.field.bad input { border-color: #a3212c; }
+fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 10px; min-width: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { position: relative; }
+.chip input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.chip span { display: inline-flex; align-items: center; gap: 8px; padding: .55em 1em; border: 1px solid var(--line); border-radius: 999px; font-size: var(--step--1); background: #fff; transition: background-color .2s, color .2s, border-color .2s; }
+.chip input:checked + span { background: var(--wine); color: var(--paper); border-color: var(--wine); }
+.chip input:focus-visible + span { outline: 2px solid var(--amber); outline-offset: 2px; }
+.qty { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; }
+.qty input[type="range"] { width: 100%; accent-color: var(--wine); }
+.qty output { font: 400 var(--step-2)/1 var(--display); font-variant-numeric: lining-nums tabular-nums; min-width: 4ch; text-align: right; }
+.form-foot { display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: center; justify-content: space-between; margin-top: 4px; }
+.form-foot small { color: var(--ink-soft); font-size: .8rem; max-width: 22rem; }
+.quick-line { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; }
+.quick-note { color: var(--ink-soft); font-size: var(--step--1); }
+.done { text-align: left; display: grid; gap: 14px; padding-block: 12px; }
+.done h3 { font-size: var(--step-2); }
+.done p { color: var(--ink-soft); }
+.done .seal { width: 64px; height: 64px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #a43a44, var(--wine) 60%, #3a0f13); display: grid; place-items: center; color: #f3d9c9; font: italic 500 1.4rem/1 var(--display); box-shadow: inset 0 -3px 6px rgba(0,0,0,.35), 0 6px 18px -6px rgba(92,26,32,.6); animation: stamp .9s var(--ease-out) both; }
+@keyframes stamp { 0% { transform: scale(1.6) rotate(-20deg); opacity: 0 } 60% { transform: scale(.94) rotate(4deg); opacity: 1 } 100% { transform: scale(1) rotate(0) } }
+
+footer.site { background: var(--wine-deep); color: rgba(247, 236, 226, .6); border-top: 1px solid var(--line-dark); font-size: var(--step--1); }
+footer.site .wrap { display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; padding-block: 28px; }
+footer.site a { color: #f7ece2; }
+
+/* mobile sticky CTA */
+.mcta { display: none; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .top nav a.lnk { display: none; }
+  .story-grid { grid-template-columns: minmax(0, 1fr); }
+  .stage-wrap { grid-area: 1 / 1; height: 58vh; height: 58svh; z-index: 3; }
+  .stage-wrap::after { inset: auto 0 0 0; width: auto; height: 22%; background: linear-gradient(0deg, var(--story-bg), transparent); }
+  .copy { grid-area: 1 / 1; padding-left: var(--gutter-l); padding-right: var(--gutter-r); padding-top: 55svh; }
+  .beat { padding-block: 24px 48px; justify-content: flex-start; }
+  .beat .stick { top: 60svh; }
+  .rail { top: auto; bottom: 18px; transform: none; right: var(--gutter-r); grid-auto-flow: column; gap: 6px; }
+  .rail li { font-size: 0; gap: 0; }
+  .rail li::after { width: 14px; }
+  .rail li.on::after { width: 28px; }
+  .sec-head, .why-grid, .unbox-grid, .desk-grid, .about-grid { grid-template-columns: minmax(0, 1fr); }
+  .about blockquote { position: static; }
+  .why-photo { position: relative; top: 0; aspect-ratio: 4 / 3; }
+  .cards { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .addons { grid-template-columns: minmax(0, 1fr); }
+  .addons > * { padding: 18px 0; }
+  .addon { border-left: 0; border-top: 1px solid var(--line); padding-left: 0; }
+  .reasons li { grid-template-columns: minmax(0, 1fr); }
+  .seal-media { width: min(100%, 360px); }
+  .mcta {
+    display: flex; position: fixed; z-index: 40; left: 0; right: 0; bottom: 0;
+    padding: 10px var(--gutter-r) calc(10px + env(safe-area-inset-bottom, 0px)) var(--gutter-l);
+    background: color-mix(in oklab, var(--paper) 90%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 -1px 0 var(--line); transform: translateY(110%); transition: transform .5s var(--ease-out);
+  }
+  .mcta.show { transform: none; }
+  .mcta .btn { flex: 1; justify-content: center; }
+}
+@media (max-width: 560px) {
+  .row { grid-template-columns: minmax(0, 1fr); }
+  .quick-line { grid-template-columns: minmax(0, 1fr); }
+  .top .btn .long { display: none; }
+}
+
+/* ---------- V2 intro gate: dark room, one candle, light it to begin ---------- */
+.gate-ui { display: none; }
+.gating .gate-ui {
+  display: grid; justify-items: center; gap: 18px; position: fixed; z-index: 30;
+  left: 0; right: 0; bottom: calc(max(7vh, 40px) + env(safe-area-inset-bottom, 0px));
+  padding-left: var(--gutter-l); padding-right: var(--gutter-r); text-align: center; color: #f7ece2;
+  transition: opacity .7s var(--ease-out), transform .9s var(--ease-out);
+}
+.gating .gate-top { bottom: auto; top: calc(max(8vh, 48px) + env(safe-area-inset-top, 0px)); gap: 12px; }
+.gate-ui .brand { font: 500 .95rem/1 var(--display); letter-spacing: .32em; opacity: .85; }
+.gate-ui .sub { font-size: var(--step--1); letter-spacing: .14em; text-transform: uppercase; color: rgba(247, 236, 226, .55); }
+.light-btn {
+  position: relative; display: inline-flex; align-items: center; gap: 12px; margin-top: 6px;
+  padding: 1.05em 1.7em; border-radius: 999px; border: 1px solid rgba(244, 178, 106, .55);
+  background: rgba(20, 11, 12, .35); color: #f7ece2; cursor: pointer;
+  font: 600 var(--step--1)/1 var(--body); letter-spacing: .14em; text-transform: uppercase;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  transition: background-color .4s, border-color .4s, transform .5s var(--ease-out), box-shadow .6s;
+  box-shadow: 0 0 0 0 rgba(244, 178, 106, .0);
+  animation: breathe 3.2s ease-in-out infinite;
+}
+.light-btn:hover { background: rgba(244, 178, 106, .14); border-color: var(--ember); transform: translateY(-2px); }
+.light-btn svg { width: 14px; height: 20px; fill: var(--ember); filter: drop-shadow(0 0 6px rgba(244, 178, 106, .8)); }
+@keyframes breathe { 0%, 100% { box-shadow: 0 0 0 0 rgba(244, 178, 106, 0); } 50% { box-shadow: 0 0 34px 2px rgba(244, 178, 106, .22); } }
+.gate-ui .hint { font-size: .75rem; color: rgba(247, 236, 226, .4); }
+.gating.igniting .gate-ui { opacity: 0; transform: translateY(14px); pointer-events: none; }
+
+/* while gated: only the stage, full viewport; everything else waits */
+html.gating, html.gating body { overflow: hidden; }
+.gating .top, .gating .copy, .gating .rail, .gating .mcta, .gating .stage-wrap::after { opacity: 0; pointer-events: none; }
+.gate-anim .top, .gate-anim .copy, .gate-anim .rail, .gate-anim .stage-wrap::after { transition: opacity 1.2s var(--ease-out); }
+.gating .stage { cursor: pointer; inset: calc(max(8vh, 48px) + 64px) 0 calc(max(7vh, 40px) + 96px) 0; }
+.gate-anim .stage { transition: inset 1.6s cubic-bezier(.65, 0, .35, 1); }
+.gating .stage-wrap { background: #221a1b; }
+.gate-anim .stage-wrap { background-color: var(--story-bg); }
+.gating.igniting .stage-wrap { background: #140b0c; transition: background-color 1.4s var(--ease-out); }
+.gating .stage { -webkit-mask-image: linear-gradient(transparent, #000 14%, #000 86%, transparent); mask-image: linear-gradient(transparent, #000 14%, #000 86%, transparent); }
+.gate-anim .stage-wrap { transition: margin-left 1.6s cubic-bezier(.65, 0, .35, 1), width 1.6s cubic-bezier(.65, 0, .35, 1), height 1.6s cubic-bezier(.65, 0, .35, 1); }
+.gating .stage-wrap { margin-left: calc(-100% * 5 / 7); width: calc(100% * 12 / 7); }
+.gate-anim .copy .hero > * { transition: opacity 1s var(--ease-out), transform 1.2s var(--ease-out); }
+.gating .copy .hero > * { opacity: 0; transform: translateY(18px); }
+.gate-anim .copy .hero > *:nth-child(1) { transition-delay: 0.25s; }
+.gate-anim .copy .hero > *:nth-child(2) { transition-delay: 0.37s; }
+.gate-anim .copy .hero > *:nth-child(3) { transition-delay: 0.49s; }
+.gate-anim .copy .hero > *:nth-child(4) { transition-delay: 0.61s; }
+.gate-anim .copy .hero > *:nth-child(5) { transition-delay: 0.73s; }
+.gate-anim .copy .hero > *:nth-child(6) { transition-delay: 0.85s; }
+.gate-anim .copy .hero > *:nth-child(7) { transition-delay: 0.97s; }
+
+@media (max-width: 900px) {
+  .gating .stage-wrap { margin-left: 0; width: auto; height: 100vh; height: 100svh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .light-btn { animation: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('gating')</script>
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="logo" href="#story" aria-label="Mind Your Light — uz sākumu">MIND YOUR LIGHT</a>
+    <nav aria-label="Galvenā navigācija">
+      <a class="lnk" href="#par">Par zīmolu</a>
+      <a class="lnk" href="#kapec">Kāpēc dāvināt</a>
+      <a class="lnk" href="#kolekcijas">Kolekcijas</a>
+      <a class="lnk" href="#zimogs">Jūsu logo</a>
+      <a class="lnk" href="https://mindyourlight.shop/?utm_source=corporate-landing&amp;utm_medium=nav" target="_blank" rel="noopener">Veikals ↗</a>
+      <a class="btn btn-wine" href="#piedavajums"><span class="long">Korporatīvais&nbsp;</span>piedāvājums</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- ===== STORY: pinned candle → vase ===== -->
+  <section class="story" id="story" aria-label="Svece, kas kļūst par vāzi">
+    <div class="story-grid">
+      <div class="stage-wrap" aria-hidden="true">
+        <div class="stage" id="stage"></div>
+        <div class="stage-fallback"></div>
+        <ol class="rail" id="rail">
+          <li data-for="b1">Deg</li><li data-for="b2">Nodziest</li><li data-for="b3">Nomaini</li><li data-for="b4">Uzzied</li>
+        </ol>
+      </div>
+
+      <div class="copy">
+        <div class="beat hero hero-beat on" id="b0" style="--h:93">
+          <p class="eyebrow" style="color:var(--story-accent)">Korporatīvās dāvanas · Ziemassvētki 2026</p>
+          <h1>Gaisma.<br><em>Iedvesma.</em><br>Ilgtspēja.</h1>
+          <p class="lead">Svece un ziedu vāze vienā – pārdomāts, ilgmūžīgs dizaina priekšmets skaistākiem ikdienas mirkļiem. Ar gatavu uzpildes sveci un īpaši izstrādātu ziedu organizatoru, lai vienu un to pašu trauku varētu izmantot atkal un atkal.</p>
+          <div class="ctas">
+            <a class="btn btn-glow" href="#piedavajums">Saņemt piedāvājumu <span class="arr" aria-hidden="true">→</span></a>
+            <a class="btn btn-ghost" href="https://mindyourlight.shop/?utm_source=corporate-landing&amp;utm_medium=hero" target="_blank" rel="noopener">Uz veikalu ↗</a>
+          </div>
+          <ul class="specs" aria-label="Svarīgākie fakti">
+            <li><b>550&nbsp;ml</b><span>trauka tilpums</span></li>
+            <li><b>~80&nbsp;h</b><span>degšanas laiks</span></li>
+            <li><b>3</b><span>degļi</span></li>
+          </ul>
+          <span class="scroll-hint"><i></i>Ritiniet, lai redzētu, kā svece kļūst par vāzi</span>
+        </div>
+
+        <div class="beat" id="b1" style="--h:144">
+          <div class="stick">
+            <p class="num eyebrow">01 · Deg</p>
+            <h2>Trīs degļi, viens vienmērīgs gaismas loks.</h2>
+            <p class="lead">Sojas vaska svece ar trim degļiem. Reljefais stikls izkliedē liesmu sīkos, siltos atspīdumos pa visu galdu.</p>
+            <p class="fact"><b>~80 stundas</b> degšanas laiks vienai svecei</p>
+          </div>
+        </div>
+
+        <div class="beat" id="b2" style="--h:58">
+          <div class="stick">
+            <p class="num eyebrow">02 · Nodziest</p>
+            <h2>Svece izdeg. <span class="it">Trauks paliek.</span></h2>
+            <p class="lead">Kad vasks sacietējis, to viegli izņemt no trauka. Stikls nav jāizmet, tas kalpo tālāk.</p>
+          </div>
+        </div>
+
+        <div class="beat" id="b3" style="--h:86">
+          <div class="stick">
+            <p class="num eyebrow">03 · Nomaini</p>
+            <h2>Izņemiet vasku, un trauks ir brīvs.</h2>
+            <p class="lead">Ielieciet jaunu uzpildes sveci, kas der visām trim kolekcijām. Vai pārvērtiet trauku par vāzi. Svecei nav jāizdeg līdz galam, lai to izdarītu.</p>
+            <p class="fact"><b>15,95&nbsp;€</b> uzpildes svece · 3 gab. komplekts 39,95&nbsp;€</p>
+          </div>
+        </div>
+
+        <div class="beat" id="b4" style="--h:199">
+          <div class="stick">
+            <p class="num eyebrow">04 · Uzzied</p>
+            <h2>Uzlieciet ieliktni, un tā jau ir vāze.</h2>
+            <p class="lead">Caurspīdīgā ziedu ieliktņa caurumi tur katru kātu savā vietā. Ziemā svece, vasarā vāze, un dāvana ir uz galda arī jūlijā.</p>
+            <div class="ctas">
+              <a class="btn btn-glow" href="#piedavajums">Pieteikt komandai <span class="arr" aria-hidden="true">→</span></a>
+              <a class="btn btn-ghost" href="#kolekcijas">Skatīt kolekcijas</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section class="block about" id="par">
+    <div class="wrap about-grid">
+      <div>
+        <p class="eyebrow">Par Mind Your Light</p>
+        <blockquote>MIND YOUR LIGHT ir premium interjera dizaina zīmols ar dvēseli. Radīts ar mīlestību pret skaistu ikdienu, pārdomātu dizainu un ilgmūžīgām lietām, kuras kļūst par daļu no mūsu mājām un personiskajiem rituāliem.</blockquote>
+      </div>
+      <div class="story-text">
+        <p>Es ticu, ka skaistums nav jāatstāj tikai īpašiem dzīves mirkļiem. To varam radīt paši: savās mājās, savā ikdienā.</p>
+        <p>Ar siltu sveces gaismu. Ar svaigiem ziediem uz galda. Ar mazām detaļām, kas rada mājīgumu, noskaņu un prieku būt mājās.</p>
+        <p>No šīs pārliecības radās MIND YOUR LIGHT: mana mīlestība pret skaistu ikdienu, pārdomātu dizainu un lietām, kurām ir paliekoša vērtība.</p>
+        <p>Es produktu radu ar sirdi, bet arī ar augstām prasībām pret kvalitāti. Man ir svarīga katra detaļa: materiāli, dizains, funkcionalitāte un ilgmūžība. Jo es ticu, ka skaistām lietām ir ne tikai jāizskatās īpaši, bet arī jākalpo ilgi.</p>
+        <p>Es vēlos radīt produktus, kas pamazām kļūst par daļu no mūsu ikdienas. Ko pieņemam kā savus. Ar kuriem veidojam savus mazos rituālus, radām noskaņu un piešķiram īpašu sajūtu pavisam parastiem mirkļiem.</p>
+        <p>Lietas, kuras neapnīk. Kuras iemīlam, paturam un turpinām izmantot.</p>
+        <p>Jo dzīves romantizēšana man nav par perfektu ikdienu. Tā ir par prieku pašiem radīt skaisto savā dzīvē.</p>
+        <p class="sign">MIND YOUR LIGHT</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WHY ===== -->
+  <section class="block why" id="kapec">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Kāpēc tieši šī dāvana</p>
+        <h2>Dāvana, kas paliek atmiņā un <span class="it">kalpo gadiem.</span></h2>
+        <p>Rūpīgi radīta svece, kas pārtop ziedu vāzē un ir atkārtoti uzpildāma. Īpašu un personisku akcentu dāvanai piešķir vaska zīmogs ar Jūsu uzņēmuma logotipu.</p>
+      </div>
+      <div class="why-grid">
+        <figure class="why-photo" style="margin:0">
+          <img src="img/roses-hand.jpg" alt="Roka ieliek sveci oranžā reljefa stikla traukā, blakus tāds pats trauks ar sarkanām rozēm" loading="lazy" width="1400" height="2100">
+          <figcaption>Kolekcija ROMANCE</figcaption>
+        </figure>
+        <ul class="reasons">
+          <li><span class="k">Visu gadu</span><div><h3>Divi produkti vienā traukā</h3><p>Ziemas mēnešos svece, pavasarī un vasarā vāze. Dāvana nenonāk plauktā pēc svētkiem.</p></div></li>
+          <li><span class="k">Ilgtspējīgi</span><div><h3>Trauks kalpo gadiem</h3><p>Mainās tikai svece. Uzpildes svece maksā mazāk par jaunu sveci traukā, un stikls netiek izmests.</p></div></li>
+          <li><span class="k">Rituāls</span><div><h3>Atvēršana ir daļa no dāvanas</h3><p>Burgundijas papīrs, vaska zīmogs ar jūsu uzņēmuma logotipu un garie sērkociņi ar vēstījumu uz kastītes.</p></div></li>
+          <li><span class="k">Ikvienam</span><div><h3>Iepriecina arī vīriešus</h3><p>Kāds pircējs to uzdāvināja draugam vīrietim, un tas pēc atvēršanas zvanīja pateikties.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== COLLECTIONS ===== -->
+  <section class="block collections" id="kolekcijas">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Trīs kolekcijas</p>
+        <h2>Izvēlieties stiklu, kas atbilst jūsu zīmolam.</h2>
+        <p>Katrā komplektā: trauks, ziedu ieliktnis un uzpildes svece. Var pasūtīt vienā tonī visai komandai vai jaukt kolekcijas.</p>
+      </div>
+      <div class="cards">
+        <a class="card" href="https://mindyourlight.shop/products/komplekts-romance-lielais-trauks-ziedu-ieliktnis-uzpildes-svece?utm_source=corporate-landing&amp;utm_medium=collection" target="_blank" rel="noopener">
+          <div class="ph"><img src="img/romance.jpg" alt="Oranžs reljefa stikla trauks ROMANCE ar iesaiņotu sveci" loading="lazy" width="1000" height="1500"><img src="img/roses-amber.jpg" alt="" loading="lazy" width="1400" height="2100"></div>
+          <div class="meta"><h3>Romance</h3><span class="price">54,95&nbsp;€</span><span class="sub"><i class="swatch" style="background:#d27c36"></i>Oranžs stikls · siltākā gaisma</span><span class="go">Skatīt veikalā <span class="arr" aria-hidden="true">→</span></span></div>
+        </a>
+        <a class="card" href="https://mindyourlight.shop/products/komplekts-authentic-lielais-trauks-ziedu-ieliktnis-uzpildes-svece?utm_source=corporate-landing&amp;utm_medium=collection" target="_blank" rel="noopener">
+          <div class="ph"><img src="img/authentic.jpg" alt="Caurspīdīgs reljefa stikla trauks AUTHENTIC ar sveci un ziedu ieliktni" loading="lazy" width="1000" height="1533"><img src="img/authentic-disc.jpg" alt="" loading="lazy" width="1000" height="1483"></div>
+          <div class="meta"><h3>Authentic</h3><span class="price">54,95&nbsp;€</span><span class="sub"><i class="swatch" style="background:#e9eef0"></i>Caurspīdīgs stikls · der jebkuram interjeram</span><span class="go">Skatīt veikalā <span class="arr" aria-hidden="true">→</span></span></div>
+        </a>
+        <a class="card" href="https://mindyourlight.shop/products/komplekts-self-belief-lielais-trauks-ziedu-ieliktnis-uzpildes-svece-copy?utm_source=corporate-landing&amp;utm_medium=collection" target="_blank" rel="noopener">
+          <div class="ph"><img src="img/selfbelief.jpg" alt="Pelēks reljefa stikla trauks SELF-BELIEF ON REPEAT ar sveci un ziedu ieliktni" loading="lazy" width="1000" height="1500"><img src="img/pack-black.jpg" alt="" loading="lazy" width="1000" height="1500"></div>
+          <div class="meta"><h3>Self-belief on repeat</h3><span class="price">54,95&nbsp;€</span><span class="sub"><i class="swatch" style="background:#5d6066"></i>Dūmakaini pelēks stikls · biroja klasika</span><span class="go">Skatīt veikalā <span class="arr" aria-hidden="true">→</span></span></div>
+        </a>
+      </div>
+
+      <div class="addons">
+        <span class="lbl">Papildiniet dāvanu</span>
+        <a class="addon" href="https://mindyourlight.shop/products/uzpildes-svece-large-romance?utm_source=corporate-landing&amp;utm_medium=addon" target="_blank" rel="noopener"><b>Uzpildes svece</b><span>550 ml, 3 degļi</span><em>15,95&nbsp;€</em></a>
+        <a class="addon" href="https://mindyourlight.shop/products/3-uzpildes-svecu-komplekts-large-romance?utm_source=corporate-landing&amp;utm_medium=addon" target="_blank" rel="noopener"><b>3 uzpildes sveces</b><span>izdevīgāk nekā pa vienai</span><em>39,95&nbsp;€</em></a>
+        <a class="addon" href="https://mindyourlight.shop/products/untitled-may16_17-58-52?utm_source=corporate-landing&amp;utm_medium=addon" target="_blank" rel="noopener"><b>Garie sērkociņi</b><span>17 cm, 40 gab., ar vēstījumu</span><em>9,95&nbsp;€</em></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SEAL / PERSONALISATION ===== -->
+  <section class="block unbox" id="zimogs">
+    <div class="wrap unbox-grid">
+      <div class="seal-media">
+        <div class="seal-film">
+          <video id="seal-video" src="img/seal.mp4" poster="img/seal-poster.jpg" muted loop playsinline preload="metadata" aria-label="Vaska zīmoga uzspiešana uz iesaiņotas sveces"></video>
+          <button class="seal-toggle" id="seal-toggle" type="button" aria-pressed="false" aria-label="Apturēt video"><i aria-hidden="true"></i>Zīmogs</button>
+        </div>
+        <figure class="seal-print">
+          <img src="img/seal-logo.jpg" alt="Sarkans vaska zīmogs ar uzņēmuma logotipu uz iesaiņotas sveces" loading="lazy" width="900" height="1347">
+          <figcaption>Piemērs: zīmogs ar uzņēmuma logo</figcaption>
+        </figure>
+      </div>
+      <div class="txt">
+        <p class="eyebrow">Personalizācija</p>
+        <h2>Jūsu logo <span class="it">vaska zīmogā.</span></h2>
+        <p>Īpašu un personisku akcentu dāvanai piešķir vaska zīmogs ar Jūsu uzņēmuma logotipu.</p>
+        <p>Katra svece ir ietīta papīrā un aizzīmogota, tāpēc dāvana ir gatava pasniegšanai, tiklīdz to saņemat.</p>
+        <p class="tones"><img src="img/seal-variant.jpg" alt="Melnā papīrā ietīta svece ar baltu vaska zīmogu" loading="lazy" width="900" height="1350">Iesaiņojums un zīmogs ir vairākos toņos.</p>
+        <div class="ctas"><a class="btn btn-glow" href="#piedavajums">Pieteikt dāvanas ar savu logo <span class="arr" aria-hidden="true">→</span></a></div>
+        <blockquote class="q">"Uzdāvinājām draugam, jā, vīrietim! Viņš pēc atvēršanas zvanīja un teica: kas tā par lux sveci!"<footer>Atsauksme no mindyourlight.shop</footer></blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== REQUEST DESK ===== -->
+  <section class="block desk" id="piedavajums">
+    <div class="wrap desk-grid">
+      <div class="intro">
+        <p class="eyebrow">Korporatīvais pasūtījums</p>
+        <h2>Dāvanas visai komandai, <span class="it">bez liekas kņadas.</span></h2>
+        <p>Pastāstiet, cik dāvanu vajag un līdz kuram datumam. Sagatavosim piedāvājumu ar cenu, termiņu un iespējamo personalizāciju.</p>
+        <ol class="steps">
+          <li><b>Pieteikums</b><span>E-pasts vai tālrunis ir pietiekami. Detaļas var precizēt vēlāk.</span></li>
+          <li><b>Piedāvājums</b><span>Cena atbilstoši daudzumam, kolekciju izvēle, piegādes termiņš.</span></li>
+          <li><b>Piegāde</b><span>Piegādes veidu un termiņu saskaņojam piedāvājumā.</span></li>
+        </ol>
+        <p class="small-path">Vajag tikai dažas? <a href="https://mindyourlight.shop/?utm_source=corporate-landing&amp;utm_medium=desk" target="_blank" rel="noopener">Pasūtiet uzreiz veikalā ↗</a></p>
+      </div>
+
+      <div class="panel" id="panel">
+        <div class="tabs" role="tablist" aria-label="Pieteikuma veids">
+          <button type="button" role="tab" id="t-quick" aria-selected="true" aria-controls="f-quick">Ātri: sazinieties ar mani</button>
+          <button type="button" role="tab" id="t-full" aria-selected="false" aria-controls="f-full">Detalizēts pieprasījums</button>
+        </div>
+
+        <form id="f-quick" role="tabpanel" aria-labelledby="t-quick" novalidate>
+          <div class="field">
+            <label for="q-contact">E-pasts vai tālrunis</label>
+            <div class="quick-line">
+              <input id="q-contact" name="contact" type="text" inputmode="email" autocomplete="email" placeholder="vards@uznemums.lv vai +371 2…" required>
+              <button class="btn btn-wine" type="submit">Saņemt piedāvājumu <span class="arr" aria-hidden="true">→</span></button>
+            </div>
+            <span class="err" id="q-err" role="alert"></span>
+          </div>
+          <p class="quick-note">Sazināsimies un pajautāsim pārējo paši. Kontaktu izmantosim tikai šim piedāvājumam.</p>
+        </form>
+
+        <form id="f-full" role="tabpanel" aria-labelledby="t-full" novalidate hidden>
+          <div class="row">
+            <div class="field"><label for="d-name">Vārds</label><input id="d-name" name="name" autocomplete="name" required></div>
+            <div class="field"><label for="d-company">Uzņēmums</label><input id="d-company" name="company" autocomplete="organization"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="d-email">E-pasts</label><input id="d-email" name="email" type="email" autocomplete="email" required><span class="err" id="d-email-err" role="alert"></span></div>
+            <div class="field"><label for="d-phone">Tālrunis</label><input id="d-phone" name="phone" type="tel" autocomplete="tel" placeholder="+371"></div>
+          </div>
+          <div class="field">
+            <label for="d-qty">Aptuvenais dāvanu skaits</label>
+            <div class="qty"><input id="d-qty" name="qty" type="range" min="5" max="300" step="5" value="40"><output id="d-qty-out" for="d-qty">40</output></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="d-date">Vajadzīgs līdz</label><input id="d-date" name="date" type="date" value="2026-12-15"></div>
+            <div class="field"><label for="d-budget">Budžets vienai dāvanai</label>
+              <select id="d-budget" name="budget"><option>Vēl nezinu</option><option>~55 € (viens komplekts)</option><option>55–80 € (ar papildinājumiem)</option><option>80 € un vairāk</option></select></div>
+          </div>
+          <fieldset>
+            <legend class="legend">Kolekcija</legend>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="col" value="Romance" id="c-rom" checked><span><i class="swatch" style="background:#d27c36;margin:0"></i>Romance</span></label>
+              <label class="chip"><input type="checkbox" name="col" value="Authentic" id="c-aut"><span><i class="swatch" style="background:#e9eef0;margin:0"></i>Authentic</span></label>
+              <label class="chip"><input type="checkbox" name="col" value="Self-belief" id="c-sel"><span><i class="swatch" style="background:#5d6066;margin:0"></i>Self-belief</span></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend class="legend">Interesē</legend>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="extra" value="kartite" id="x-card"><span>Personalizēta kartīte</span></label>
+              <label class="chip"><input type="checkbox" name="extra" value="logo" id="x-logo"><span>Vaska zīmogs ar uzņēmuma logo</span></label>
+              <label class="chip"><input type="checkbox" name="extra" value="adreses" id="x-addr"><span>Piegāde uz vairākām adresēm</span></label>
+              <label class="chip"><input type="checkbox" name="extra" value="uzpilde" id="x-refill"><span>Papildu uzpildes sveces</span></label>
+            </div>
+          </fieldset>
+          <div class="field"><label for="d-msg">Komentārs</label><textarea id="d-msg" name="msg" placeholder="Piemēram: 25 dāvanas klientiem un 15 komandai, piegāde uz Rīgas biroju."></textarea></div>
+          <div class="form-foot">
+            <small>Atbildēsim ar piedāvājumu. Dati tiek izmantoti tikai šim pieprasījumam.</small>
+            <button class="btn btn-wine" type="submit">Nosūtīt pieprasījumu <span class="arr" aria-hidden="true">→</span></button>
+          </div>
+        </form>
+
+        <div class="done" id="done" hidden tabindex="-1">
+          <div class="seal" aria-hidden="true">M</div>
+          <h3>Paldies, pieteikums saņemts.</h3>
+          <p id="done-text">Sazināsimies ar jums tuvākajā laikā ar piedāvājumu.</p>
+          <p style="font-size:.8rem">Prototips: šajā versijā pieteikums vēl netiek nosūtīts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>Mind Your Light · Svece | Vāze · Koncepciju sagatavoja Echo Time, saturs vēl saskaņojams</span>
+    <a href="https://mindyourlight.shop/?utm_source=corporate-landing&amp;utm_medium=footer" target="_blank" rel="noopener">mindyourlight.shop ↗</a>
+  </div>
+</footer>
+
+<div class="mcta" id="mcta"><a class="btn btn-wine" href="#piedavajums">Saņemt korporatīvo piedāvājumu <span class="arr" aria-hidden="true">→</span></a></div>
+
+<div class="gate-ui gate-top" aria-hidden="true">
+  <span class="brand">MIND YOUR LIGHT</span>
+  <span class="sub">Korporatīvās dāvanas · Ziemassvētki 2026</span>
+</div>
+<div class="gate-ui" id="gate">
+  <button class="light-btn" id="light-btn" type="button"><svg viewBox="0 0 14 20" aria-hidden="true"><path d="M7 0c2.2 3.3 6 6.2 6 11a6 6 0 0 1-12 0C1 7.6 3.4 5.6 4.6 3.2 5 5 5.8 6.4 7 7c-.6-2.4-.4-4.6 0-7z"/></svg>Aizdedziet sveci</button>
+  <span class="hint">vai pieskarieties svecei</span>
+</div>
+
+<script src="stage.js"></script>
+<script>
+(function () {
+  var story = document.getElementById('story');
+  var stageEl = document.getElementById('stage');
+  var top = document.getElementById('top');
+  var mcta = document.getElementById('mcta');
+  var beats = Array.prototype.slice.call(document.querySelectorAll('.beat'));
+  var railItems = Array.prototype.slice.call(document.querySelectorAll('#rail li'));
+  var root = document.documentElement;
+  var stage = null;
+
+  try {
+    if (window.MYLStage) { stage = window.MYLStage.mount(stageEl, { lit: false }); stageEl.classList.add('mounted'); }
+  } catch (e) { console.error(e); }
+
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function smooth(e0, e1, x) { var t = clamp((x - e0) / (e1 - e0), 0, 1); return t * t * (3 - 2 * t); }
+
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var vh = window.innerHeight;
+    var r = story.getBoundingClientRect();
+    var range = Math.max(1, r.height - vh);
+    var p = clamp(-r.top / range, 0, 1);
+    if (stage) stage.setProgress(p);
+
+    // night → morning follows the stage's light crossfade
+    var day = smooth(0.50, 0.60, p);
+    story.style.setProperty('--day', day.toFixed(3));
+    story.classList.toggle('is-day', day > 0.5);
+    var fin = smooth(0.76, 0.84, p);  // stage dissolves into the brand photo here
+    story.style.setProperty('--fin', fin.toFixed(3));
+    story.classList.toggle('is-fin', fin > 0.5);
+    root.style.setProperty('--story-bg', getComputedStyle(story).backgroundColor);
+
+    // active beat follows the stage timeline (burn .10, out .40, lift .52, bloom .70)
+    var cuts = [0.10, 0.40, 0.52, 0.70], active = 0;
+    cuts.forEach(function (c, i) { if (p >= c) active = i + 1; });
+    beats.forEach(function (b, i) { b.classList.toggle('on', i === active); });
+    railItems.forEach(function (li, i) { li.classList.toggle('on', i + 1 === active); });
+
+    var past = r.bottom < 70;
+    top.classList.toggle('solid', past);
+    top.style.color = past ? '' : getComputedStyle(story).color;
+    var desk = document.getElementById('piedavajums').getBoundingClientRect();
+    mcta.classList.toggle('show', r.top < -vh * 0.4 && desk.top > vh * 0.6);
+
+    if (stage && stage.setPaused) stage.setPaused(r.bottom < 0 || r.top > vh);
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
+
+  // ---------- Seal film ----------
+  var sealVideo = document.getElementById('seal-video'), sealBtn = document.getElementById('seal-toggle');
+  var reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var userPaused = reduceMotion, sealInView = false;
+  function sealSync() {
+    var run = sealInView && !userPaused;
+    if (run && sealVideo.paused) { var pr = sealVideo.play(); if (pr && pr.catch) pr.catch(function () {}); }
+    if (!run && !sealVideo.paused) sealVideo.pause();
+    sealBtn.setAttribute('aria-pressed', String(userPaused));
+    sealBtn.setAttribute('aria-label', userPaused ? 'Atskaņot video' : 'Apturēt video');
+  }
+  sealBtn.addEventListener('click', function () { userPaused = !userPaused; sealSync(); });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { sealInView = es[0].isIntersecting; sealSync(); }, { threshold: 0.35 }).observe(sealVideo);
+  } else { sealInView = true; sealSync(); }
+
+
+  // ---------- V2 gate: light the candle to start the story ----------
+  (function () {
+    var canGate = stage && typeof stage.ignite === 'function';
+    if (!canGate) { root.classList.remove('gating'); return; }                       // no stage or old stage: plain V1 behaviour
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+    root.classList.add('gating');  // also set before first paint by the inline script at the top
+    requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.add('gate-anim'); }); });
+    var btn = document.getElementById('light-btn'), gate = document.getElementById('gate'), started = false;
+    function light() {
+      if (started) return; started = true;
+      root.classList.add('igniting');
+      var done = stage.ignite();
+      // the room opens while the flames are still settling
+      setTimeout(function () { root.classList.remove('gating'); onScroll(); }, 1300);
+      Promise.resolve(done).then(function () {
+        root.classList.remove('igniting');
+        setTimeout(function () { root.classList.remove('gate-anim'); document.querySelectorAll('.gate-ui').forEach(function (g) { g.remove(); }); }, 1700);
+      });
+    }
+    btn.addEventListener('click', light);
+    stageEl.addEventListener('click', function () { if (root.classList.contains('gating')) light(); });
+  })();
+
+  // ---------- Form ----------
+  var tabs = [document.getElementById('t-quick'), document.getElementById('t-full')];
+  var forms = [document.getElementById('f-quick'), document.getElementById('f-full')];
+  var done = document.getElementById('done');
+  function select(i) {
+    tabs.forEach(function (t, j) { t.setAttribute('aria-selected', String(i === j)); t.tabIndex = i === j ? 0 : -1; });
+    forms.forEach(function (f, j) { f.hidden = i !== j; });
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { select(i); });
+    t.addEventListener('keydown', function (e) {
+      var n = { ArrowRight: (i + 1) % 2, ArrowLeft: (i + 1) % 2, Home: 0, End: 1 }[e.key];
+      if (n !== undefined) { e.preventDefault(); select(n); tabs[n].focus(); }
+    });
+  });
+  select(0);
+
+  var qty = document.getElementById('d-qty'), qtyOut = document.getElementById('d-qty-out');
+  function showQty() { qtyOut.textContent = qty.value === qty.max ? qty.value + '+' : qty.value; }
+  qty.addEventListener('input', showQty); showQty();
+
+  var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  var phoneRe = /^\+?[\d\s()-]{8,}$/;
+
+  function finish(text) {
+    forms.forEach(function (f) { f.hidden = true; });
+    document.querySelector('.tabs').hidden = true;
+    document.getElementById('done-text').textContent = text;
+    done.hidden = false; done.focus();
+  }
+
+  forms[0].addEventListener('submit', function (e) {
+    e.preventDefault();
+    var input = document.getElementById('q-contact'), v = input.value.trim(), err = document.getElementById('q-err');
+    var ok = emailRe.test(v) || phoneRe.test(v);
+    input.closest('.field').classList.toggle('bad', !ok);
+    input.setAttribute('aria-invalid', String(!ok));
+    err.textContent = ok ? '' : 'Ierakstiet e-pastu (vards@uznemums.lv) vai tālruni ar vismaz 8 cipariem.';
+    if (!ok) { input.focus(); return; }
+    finish((emailRe.test(v) ? 'Rakstīsim uz ' : 'Zvanīsim uz ') + v + ' ar korporatīvo piedāvājumu.');
+  });
+
+  forms[1].addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('d-name'), email = document.getElementById('d-email'), err = document.getElementById('d-email-err');
+    var okE = emailRe.test(email.value.trim());
+    email.closest('.field').classList.toggle('bad', !okE);
+    email.setAttribute('aria-invalid', String(!okE));
+    err.textContent = okE ? '' : 'Ierakstiet e-pastu, uz kuru sūtīt piedāvājumu.';
+    if (!name.value.trim()) { name.focus(); name.closest('.field').classList.add('bad'); return; }
+    name.closest('.field').classList.remove('bad');
+    if (!okE) { email.focus(); return; }
+    finish('Piedāvājumu ' + qtyOut.textContent + ' dāvanām sūtīsim uz ' + email.value.trim() + '.');
+  });
+})();
+</script>
+
+</body>
+</html>
