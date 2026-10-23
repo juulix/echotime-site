@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <title>Mind Your Light — korporatīvās dāvanas · koncepcija</title>
-<meta property="og:title" content="Mind Your Light — gaisma ziemai, vāze pavasarim">
+<meta property="og:title" content="Mind Your Light — Gaisma. Iedvesma. Ilgtspēja.">
 <meta property="og:description" content="Korporatīvo Ziemassvētku dāvanu lapas koncepcija. Skici sagatavoja Echo Time.">
-<meta property="og:image" content="https://www.echotime.app/skices/mindyourlight-k7p4/img/roses-amber.jpg">
+<meta property="og:image" content="https://www.echotime.app/skices/mindyourlight-k7p4/img/final-photo.jpg">
 <meta property="og:url" content="https://www.echotime.app/skices/mindyourlight-k7p4/">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Cpath d=%27M16 4c3 4 5 6 5 9a5 5 0 0 1-10 0c0-3 2-5 5-9z%27 fill=%27%23f4b26a%27/%3E%3Crect x=%279%27 y=%2716%27 width=%2714%27 height=%2713%27 rx=%272%27 fill=%27%235c1a20%27/%3E%3C/svg%3E">
@@ -49,8 +49,11 @@
   --gutter-r: max(16px, env(safe-area-inset-right, 0px));
   --maxw: 1240px;
 
-  /* driven by scroll: 0 = night, 1 = morning */
+  --wall: #625145;           /* wall of the final brand photo, so page and photo meet without a seam */
+
+  /* driven by scroll: 0 = night, 1 = morning; --fin brings in the photo's wall */
   --day: 0;
+  --fin: 0;
 }
 *, *::before, *::after { box-sizing: border-box; }
 [hidden] { display: none !important; }
@@ -109,7 +112,7 @@ img { display: block; max-width: 100%; }
 
 /* ---------- Story (pinned stage) ---------- */
 .story {
-  --story-bg: color-mix(in oklab, var(--night), var(--porcelain) calc(var(--day) * 100%));
+  --story-bg: color-mix(in oklab, color-mix(in oklab, var(--night), var(--porcelain) calc(var(--day) * 100%)), var(--wall) calc(var(--fin) * 100%));
   background: var(--story-bg);
   color: var(--story-fg);
   position: relative;
@@ -160,6 +163,8 @@ img { display: block; max-width: 100%; }
 .story { --story-fg: #f7ece2; --story-soft: rgba(247, 236, 226, .72); --story-accent: var(--ember); --story-line: var(--line-dark); }
 .story.is-day { --story-fg: var(--ink); --story-soft: var(--ink-soft); --story-accent: var(--wine); --story-line: var(--line); }
 .story.is-day .btn-glow { --b-bg: var(--wine); --b-fg: var(--paper); box-shadow: none; }
+.story.is-fin { --story-fg: #f7ece2; --story-soft: rgba(247, 236, 226, .78); --story-accent: var(--ember); --story-line: var(--line-dark); }
+.story.is-fin .btn-glow { --b-bg: var(--ember); --b-fg: var(--wine-deep); }
 
 /* ---------- Sections ---------- */
 section.block { padding-block: clamp(80px, 11vw, 160px); }
@@ -356,7 +361,7 @@ footer.site a { color: #f7ece2; }
       <div class="copy">
         <div class="beat hero hero-beat on" id="b0" style="--h:93">
           <p class="eyebrow" style="color:var(--story-accent)">Korporatīvās dāvanas · Ziemassvētki 2026</p>
-          <h1>Gaisma ziemai.<br><em>Vāze</em> pavasarim.</h1>
+          <h1>Gaisma.<br><em>Iedvesma.</em><br>Ilgtspēja.</h1>
           <p class="lead">Reljefa stikla trauks ar trīs degļu sveci un ziedu ieliktni. Jūsu komanda un klienti to lietos visu gadu, ne tikai svētku vakarā.</p>
           <div class="ctas">
             <a class="btn btn-glow" href="#piedavajums">Saņemt piedāvājumu <span class="arr" aria-hidden="true">→</span></a>
@@ -609,6 +614,9 @@ footer.site a { color: #f7ece2; }
     var day = smooth(0.50, 0.60, p);
     story.style.setProperty('--day', day.toFixed(3));
     story.classList.toggle('is-day', day > 0.5);
+    var fin = smooth(0.76, 0.84, p);  // stage dissolves into the brand photo here
+    story.style.setProperty('--fin', fin.toFixed(3));
+    story.classList.toggle('is-fin', fin > 0.5);
     root.style.setProperty('--story-bg', getComputedStyle(story).backgroundColor);
 
     // active beat follows the stage timeline (burn .10, out .40, lift .52, bloom .70)

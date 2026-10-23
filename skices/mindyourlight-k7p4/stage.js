@@ -93,19 +93,29 @@
     return hs;
   })();
 
-  // Bouquet sprite cut from the brand photo; anchors in sprite px (see work/bouquet.json)
-  var BQ = (function () {
-    var rimL = 544, rimR = 904, rimY = 905, mmpx = (2 * R) / (rimR - rimL);
-    var heads = [[175, 215, 190], [600, 380, 165], [830, 320, 140], [627, 745, 170], [975, 640, 160], [1005, 365, 150]];
-    return {
-      w: 1100, h: 942, rimY: rimY, rimCx: (rimL + rimR) / 2, mmpx: mmpx, fadeX0: 1000,
-      heads: heads,
-      // opening order: nearest the rim first
-      order: [3, 4, 1, 5, 2, 0],
-      pivotX: 0,
-      innerStems: [-36, -14, 9, 31, 42]
-    };
-  })();
+  // Final styled photo (photo px). plate + flowers (at fl.x, fl.y) recreates final-photo exactly.
+  var FP = {
+    w: 1080, h: 1616, region: [150, 380, 1000, 1420],
+    jar: { x0: 546, x1: 762, rim: 1080, bot: 1340 },
+    fl: { x: 216, y: 448, w: 729, h: 727 },
+    pivot: [654, 1080],
+    // c = centre, r = reveal radius, t = start progress; amaranthus hangs, so it wipes downwards
+    items: [
+      { c: [430, 800], r: 60, t: 0.832 },               // protea leaves
+      { c: [535, 935], r: 62, t: 0.840 },               // yellow protea
+      { c: [650, 1045], r: 62, t: 0.848 },              // yellow protea
+      { c: [695, 890], r: 58, t: 0.856 },               // dark protea
+      { c: [605, 720], r: 70, t: 0.862 },               // carnation
+      { c: [785, 1005], r: 60, t: 0.868 },              // dark carnation
+      { c: [470, 625], r: 70, t: 0.872 },               // carnation
+      { c: [275, 600], r: 48, t: 0.874 },               // orange slices, top → down along the arc
+      { c: [515, 510], r: 70, t: 0.880 },               // carnation
+      { c: [335, 700], r: 48, t: 0.882 },
+      { c: [370, 810], r: 48, t: 0.890 },
+      { c: [405, 925], r: 48, t: 0.898 },
+      { c: [865, 960], r: 85, t: 0.895, kind: 'down', d: 0.075 }   // amaranthus
+    ]
+  };
 
   // ---------- timeline ----------
   function timeline(p) {
@@ -125,18 +135,18 @@
     T.discTilt = lerp(0.5, 0, outCubic(d)) + Math.sin(d * PI * 2.2) * 0.035 * (1 - d);
     T.discAlpha = smooth(seg(p, 0.68, 0.70));
     T.water = outCubic(seg(p, 0.70, 0.80));
-    T.wipe = inOutSine(seg(p, 0.76, 0.85));
-    T.stemsIn = smooth(seg(p, 0.76, 0.8));
-    T.heads = BQ.heads.map(function () { return null; });
-    BQ.order.forEach(function (hi, n) {
-      var s = 0.795 + n * 0.021;
-      T.heads[hi] = { rb: outBack(seg(p, s, s + 0.055), 1.3), rs: outBack(seg(p, s + 0.012, s + 0.07), 1.25), s: seg(p, s + 0.012, s + 0.07) };
+    // ending: match cut, relight, dissolves, bloom from the real photo
+    T.match = inOutCubic(seg(p, 0.64, 0.78));
+    T.relight = smooth(seg(p, 0.64, 0.76));
+    T.room = inOutSine(seg(p, 0.74, 0.82));
+    T.jarX = inOutSine(seg(p, 0.78, 0.84));
+    T.finish = smooth(seg(p, 0.76, 0.86));
+    T.wipe = inOutSine(seg(p, 0.82, 0.88));
+    T.items = FP.items.map(function (it) {
+      var d = it.d || 0.065;
+      return { rb: outBack(seg(p, it.t, it.t + d * 0.85), 1.3), rs: it.kind === 'down' ? inOutSine(seg(p, it.t, it.t + d)) : outBack(seg(p, it.t + 0.012, it.t + d), 1.25), s: seg(p, it.t + 0.012, it.t + d) };
     });
-    T.headsAvg = T.heads.reduce(function (a, h) { return a + h.s; }, 0) / T.heads.length;
-    var sc = seg(p, 0.76, 0.95);
-    T.bqScale = lerp(0.9, 1, outBack(sc, 1.6));
-    T.sway = smooth(seg(p, 0.93, 1));
-    T.reframe = inOutSine(seg(p, 0.64, 0.86));
+    T.flScale = lerp(0.96, 1, outBack(seg(p, 0.82, 0.97), 1.4));
     T.push = inOutSine(seg(p, 0, 0.4));
     return T;
   }
@@ -338,20 +348,34 @@
       var glow = T.glowRaw * (0.94 + 0.12 * flick);
       var night = 1 - T.day;
 
-      // final frame: whole bouquet (leans far left) + jar, with margin
-      var bqL = -BQ.rimCx * BQ.mmpx - 8, bqR = (BQ.fadeX0 + 40 - BQ.rimCx) * BQ.mmpx + 6, bqT = -H - BQ.rimY * BQ.mmpx - 6;
-      var boxTop = lerp(-205, bqT, T.reframe), boxBot = lerp(30, 32, T.reframe);
-      var boxW = lerp(268, bqR - bqL, T.reframe), boxCx = lerp(0, (bqL + bqR) / 2, T.reframe);
-      var F = fit(boxTop, boxBot, boxW);
-      var s = F.s * (1 + 0.05 * T.push * (1 - T.reframe));
-      var cx = cw / 2 - boxCx * s, cy = F.cy + (F.s - s) * (boxTop + boxBot) / 2;
-      if (bq.ok) {
-        var kWant = clamp(fit(bqT, 32, bqR - bqL).s * dpr * BQ.mmpx, 0.25, 1);
-        if (!bq.k || Math.abs(kWant - bq.k) / bq.k > 0.12) prepBouquet(kWant);  // async; draws once ready
+      // camera A: the jar story; camera B: the canvas jar sits exactly on the photo jar
+      var F = fit(-205, 30, 268);
+      var sA = F.s * (1 + 0.05 * T.push), cyA = F.cy + (F.s - sA) * (-205 + 30) / 2;
+      var PF = photoFit(), J = FP.jar;
+      var sB = (J.x1 - J.x0) * PF.ps / (2 * R), syB = (J.bot - J.rim) * PF.ps / (H * sB);
+      var cxB = PF.ox + (J.x0 + J.x1) / 2 * PF.ps, cyB = PF.oy + J.bot * PF.ps - RY * sB * syB * 0.5;
+      var m = T.match;
+      var s = Math.exp(lerp(Math.log(sA), Math.log(sB), m)), sy = lerp(1, syB, m);
+      var cx = lerp(cw / 2, cxB, m), cy = lerp(cyA, cyB, m);
+      if (fin.flowers) prepFlowers(clamp(PF.ps * dpr, 0.3, 1));   // async; swaps in when ready
+      var imgsReady = !!(fin.plate && fin.photo);
+      // end state: the photo itself, pixel for pixel, with a barely-there drift
+      var allOpen = T.items.every(function (h) { return h.s >= 1; });
+      if (imgsReady && fin.ready && p >= 0.97 && allOpen) {
+        if (fin.kbStart < 0) fin.kbStart = clock;
+        var kb = reduce ? 0 : 0.01 * (1 - Math.cos((clock - fin.kbStart) * TAU / 40)) / 2;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+        ctx.translate(cw / 2, ch / 2); ctx.scale(1 + kb, 1 + kb); ctx.translate(-cw / 2, -ch / 2);
+        drawPhotoLayer(ctx, fin.photo, PF);
+        return;
       }
-      var vx0 = -cx / s, vx1 = (cw - cx) / s, vy0 = -cy / s, vy1 = (ch - cy) / s;
+      fin.kbStart = -1;
+      var vx0 = -cx / s, vx1 = (cw - cx) / s, vy0 = -cy / (s * sy), vy1 = (ch - cy) / (s * sy);
       curS = s * dpr;
-      function world() { ctx.setTransform(dpr * s, 0, 0, dpr * s, dpr * cx, dpr * cy); }
+      function world() { ctx.setTransform(dpr * s, 0, 0, dpr * s * sy, dpr * cx, dpr * cy); }
+      var tone = fin.tone, RL = tone ? T.relight : 0;
+      var roomDone = imgsReady && T.room >= 1, jarGone = imgsReady && T.jarX >= 1;
       var flameY = T.waxTop - 12;
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -387,16 +411,16 @@
       if (T.day > 0.001) {
         ctx.globalAlpha = T.day;
         var gwall = ctx.createLinearGradient(vx0, vy0, vx1 * 0.6, HORIZON);
-        gwall.addColorStop(0, rgba(DAY_WALL_L)); gwall.addColorStop(1, rgba(DAY_WALL_D));
+        gwall.addColorStop(0, rgba(RL ? mixc(DAY_WALL_L, tone.wallL, RL) : DAY_WALL_L)); gwall.addColorStop(1, rgba(RL ? mixc(DAY_WALL_D, tone.wallD, RL) : DAY_WALL_D));
         ctx.fillStyle = gwall; ctx.fillRect(vx0, vy0, vx1 - vx0, vy1 - vy0);
-        tableFill(DAY_TABLE, DAY_TABLE_D);
+        tableFill(RL ? mixc(DAY_TABLE, tone.top, RL) : DAY_TABLE, RL ? mixc(DAY_TABLE_D, tone.low, RL) : DAY_TABLE_D);
         // window light on the wall from the upper left
         ctx.globalCompositeOperation = 'lighter';
         for (var wi = 0; wi < 2; wi++) {
           var ox = -210 + wi * 120;
           for (var k = 0; k < 9; k++) {
             var gsh = ctx.createLinearGradient(0, -420, 0, HORIZON);
-            gsh.addColorStop(0, 'rgba(255,248,236,0)'); gsh.addColorStop(0.35, 'rgba(255,248,236,' + (0.026 * T.day).toFixed(4) + ')'); gsh.addColorStop(1, 'rgba(255,248,236,0)');
+            gsh.addColorStop(0, 'rgba(255,248,236,0)'); gsh.addColorStop(0.35, 'rgba(255,248,236,' + (0.026 * T.day * (1 - RL)).toFixed(4) + ')'); gsh.addColorStop(1, 'rgba(255,248,236,0)');
             ctx.fillStyle = gsh;
             var sp = k * 4.5;
             ctx.beginPath();
@@ -440,14 +464,32 @@
         ctx.globalCompositeOperation = 'source-over';
         ctx.save(); ctx.translate(80, -18); ctx.rotate(-0.22); ctx.scale(1, 0.3);
         var gca = ctx.createRadialGradient(0, 0, 0, 0, 0, 58);
-        gca.addColorStop(0, 'rgba(236,150,80,' + (0.16 * T.day) + ')'); gca.addColorStop(1, 'rgba(236,150,80,0)');
+        gca.addColorStop(0, 'rgba(236,150,80,' + (0.16 * T.day * (1 - RL)) + ')'); gca.addColorStop(1, 'rgba(236,150,80,0)');
         ctx.fillStyle = gca; ctx.beginPath(); ctx.arc(0, 0, 56, 0, TAU); ctx.fill();
         ctx.restore();
         ctx.globalCompositeOperation = 'source-over';
       }
 
       var SX = SPR.x, SY = SPR.y, SW = SPR.w, SH = SPR.h;
-      if (bq.ready && T.wipe > 0) { composeBouquet(T); drawBouquetShadow(T, t); }
+      // ---- room dissolves into the photo plate (soft radial gradient from the jar outwards) ----
+      if (imgsReady && T.room > 0) {
+        var jx = cxB, jy = cyB - (J.bot - J.rim) * PF.ps * 0.5, diag = Math.hypot(Math.max(jx, cw - jx), Math.max(jy, ch - jy));
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        if (roomDone) drawPhotoLayer(ctx, fin.plate, PF);
+        else {
+          var dc = screenCanvas('a');
+          drawPhotoLayer(dc, fin.plate, PF);
+          dc.globalCompositeOperation = 'destination-in';
+          var rr = lerp(1, diag * 1.9, T.room);
+          var gd = dc.createRadialGradient(jx, jy, 0, jx, jy, rr);
+          gd.addColorStop(0, 'rgba(0,0,0,1)'); gd.addColorStop(0.45, 'rgba(0,0,0,1)'); gd.addColorStop(1, 'rgba(0,0,0,0)');
+          dc.fillStyle = gd; dc.fillRect(0, 0, cw, ch);
+          ctx.setTransform(1, 0, 0, 1, 0, 0);
+          ctx.drawImage(dc.canvas, 0, 0);
+        }
+        world();
+      }
+      if (!jarGone) {
 
       // ---- jar: back wall ----
       ctx.globalCompositeOperation = 'multiply';
@@ -478,8 +520,6 @@
       }
 
       // ---- stems inside the glass: short, refracted under the waterline ----
-      drawInnerStems(T, wl);
-      drawBouquetLayer(T, t, true);
 
       // ---- wax pillar ----
       var liftY = -300 * T.lift, waxA = T.waxAlpha;
@@ -536,7 +576,7 @@
 
       // ---- glass front ----
       ctx.globalCompositeOperation = 'multiply';
-      ctx.globalAlpha = lerp(0.92, 0.42, T.empty) + 0.12 * T.water;
+      ctx.globalAlpha = (lerp(0.92, 0.42, T.empty) + 0.12 * T.water) * (1 - 0.35 * RL);
       ctx.drawImage(sprites.body, SX, SY, SW, SH);
       ctx.globalAlpha = lerp(0.9, 0.95, T.day);
       ctx.drawImage(sprites.relief, SX, SY, SW, SH);
@@ -572,22 +612,53 @@
         WICKS.forEach(function (w, i) { var lv = T.flames[i]; if (lv > 0.003 && w._tx != null) drawFlame(w._tx, w._ty + 1, lv, i, t, true); });
         ctx.restore();
       }
-      drawLabel(glow, T.day);
+      // relight the canvas glass towards the photographed jar: brighter, more orange amber
+      if (RL > 0) {
+        ctx.save(); frontPath(ctx, -H, 0); ctx.clip();
+        ctx.globalCompositeOperation = 'screen';
+        var gR = ctx.createLinearGradient(0, -H, 0, 0);
+        gR.addColorStop(0, 'rgba(214,112,44,' + (0.3 * RL) + ')'); gR.addColorStop(1, 'rgba(190,84,30,' + (0.38 * RL) + ')');
+        ctx.fillStyle = gR; ctx.fillRect(-R, -H - RY, 2 * R, H + 2 * RY);
+        ctx.restore(); ctx.globalCompositeOperation = 'source-over';
+      }
+      drawLabel(glow, T.day, T.match);
 
-      // ---- insert, bouquet, smoke ----
+      // ---- insert, smoke ----
       if (T.discAlpha > 0.002) drawDisc(T);
-      drawBouquetLayer(T, t, false);
       drawSmoke(T, p, t);
+      }
+
+      // ---- canvas jar + disc cross into the photo jar: a soft sweep up through the jar ----
+      if (imgsReady && T.jarX > 0 && !jarGone) {
+        var jc = screenCanvas('b');
+        drawPhotoLayer(jc, fin.plate, PF);
+        jc.globalCompositeOperation = 'destination-in';
+        jc.setTransform(dpr * s, 0, 0, dpr * s * sy, dpr * cx, dpr * cy);
+        var yTop = -H - 40, yBot = 30, edge = lerp(yBot + 40, yTop - 40, T.jarX);
+        var gj = jc.createLinearGradient(0, edge - 45, 0, edge + 45);
+        gj.addColorStop(0, 'rgba(0,0,0,0)'); gj.addColorStop(1, 'rgba(0,0,0,1)');
+        jc.fillStyle = gj;
+        jc.beginPath(); jc.ellipse(0, 0, R * 1.08, RY * 1.4, 0, 0, PI); jc.lineTo(-R * 1.08, -H - RY * 2.5);
+        jc.ellipse(0, -H - 2, R * 1.08, RY * 2.2, 0, PI, TAU); jc.lineTo(R * 1.08, 0); jc.closePath();
+        jc.fill();
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.drawImage(jc.canvas, 0, 0);
+        world();
+      }
+
+      // ---- flowers from the real photo ----
+      if (imgsReady) drawFlowersLayer(T, PF);
+      world();
 
       // ---- motes ----
-      if (!reduce) {
+      if (!reduce && T.finish < 1) {
         ctx.globalCompositeOperation = 'lighter';
         motes.forEach(function (m) {
           var mx = m.x + (fbm(t * 0.05 + m.k) - 0.5) * 60, my = m.y + (fbm(t * 0.04 + m.k + 9) - 0.5) * 50 - ((t * 2 + m.k * 3) % 40);
           var dn = Math.hypot(mx, my - flameY);
           var an = glow * clamp(1 - dn / 220, 0, 1) * 0.7;
           var ad = T.day * clamp((-(mx + 40) + (-my - 120) * 0.6) / 200, 0, 1) * 0.5;
-          var a = (an + ad) * (0.5 + 0.5 * noise(t * 0.8 + m.k));
+          var a = (an + ad) * (0.5 + 0.5 * noise(t * 0.8 + m.k)) * (1 - RL);
           if (a < 0.01) return;
           ctx.fillStyle = an > ad ? 'rgba(255,190,120,' + a.toFixed(3) + ')' : 'rgba(255,255,250,' + a.toFixed(3) + ')';
           ctx.beginPath(); ctx.arc(mx, my, m.s * 0.55, 0, TAU); ctx.fill();
@@ -598,10 +669,10 @@
       // ---- screen-space finish ----
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       var vg = ctx.createRadialGradient(cw / 2, ch * 0.5, Math.min(cw, ch) * 0.35, cw / 2, ch * 0.5, Math.hypot(cw, ch) * 0.62);
-      vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(' + (night > 0.5 ? '8,3,4' : '120,95,75') + ',' + (0.55 * night + 0.16 * T.day) + ')');
+      vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(' + (night > 0.5 ? '8,3,4' : '120,95,75') + ',' + ((0.55 * night + 0.16 * T.day) * (1 - T.finish)) + ')');
       ctx.fillStyle = vg; ctx.fillRect(0, 0, cw, ch);
       if (!grainPat) grainPat = ctx.createPattern(grain, 'repeat');
-      ctx.globalCompositeOperation = 'overlay'; ctx.globalAlpha = 0.07 + 0.03 * night;
+      ctx.globalCompositeOperation = 'overlay'; ctx.globalAlpha = (0.07 + 0.03 * night) * (1 - T.finish);
       var go = reduce ? 0 : ((clock * 24) | 0);
       ctx.save(); ctx.translate(-(go * 37) % 160, -(go * 53) % 160);
       ctx.fillStyle = grainPat; ctx.fillRect(0, 0, cw + 160, ch + 160);
@@ -651,8 +722,10 @@
     }
 
     // ---- label ----
-    function drawLabel(glow, day) {
-      var lx = 20, top = -98, bot = -70;
+    function drawLabel(glow, day, m) {
+      // during the match cut the label slides to where it sits on the photographed jar
+      m = m || 0;
+      var lx = lerp(20, 24, m), top = lerp(-98, -94, m), bot = lerp(-70, -58, m);
       function cyf(x) { return RY * Math.sqrt(1 - (x / R) * (x / R)); }
       ctx.beginPath();
       for (var x = -lx; x <= lx; x += 2) ctx.lineTo(x, top + cyf(x));
@@ -707,21 +780,70 @@
       ctx.restore(); ctx.globalAlpha = 1;
     }
 
-    // ---- bouquet: the real roses from the brand photo, revealed with cached masks ----
-    var bq = { img: null, ok: false, ready: false, job: null, jobK: 0, k: 0, layers: null, shadow: null, cS: null, tmp: null, anyB: false, finalKey: '' };
-    (function () {
+    // ---- ending: the real styled photo (plate + flowers), matched to the canvas jar ----
+    var warm = makeCanvas(2, 2);
+    var fin = { photo: null, plate: null, flowers: null, tone: null, job: null, jobK: 0, k: 0, layers: null, cS: null, tmp: null, ready: false, finalKey: '', kbStart: -1 };
+    function loadImg(src, key, cb) {
       var im = new Image();
-      im.onload = function () { bq.img = im; bq.ok = true; bq.k = 0; bq.jobK = 0; if (paused || !raf) draw(); };
-      im.onerror = function () { bq.ok = false; };
-      im.src = 'img/bouquet.png';
-    })();
+      // decode off the main thread, then touch the image once in its own task so the first
+      // frame that needs it does not pay for decode / upload
+      im.onload = function () {
+        var ready = function () {
+          if (destroyed) return;
+          setTimeout(function () { warm.getContext('2d').drawImage(im, 0, 0, 1, 1); fin[key] = im; if (cb) cb(im); if (paused || !raf) draw(); }, 0);
+        };
+        if (im.decode) im.decode().then(ready, ready); else ready();
+      };
+      im.onerror = function () { fin[key] = null; };
+      im.src = src;
+    }
+    loadImg('img/final-photo.jpg', 'photo');
+    loadImg('img/final-plate.jpg', 'plate', function (im) {
+      // sample the photo's wall and stool tones so the canvas room can be relit towards them
+      var c = makeCanvas(27, 40).getContext('2d'); c.drawImage(im, 0, 0, 27, 40);
+      var d = c.getImageData(0, 0, 27, 40).data;
+      function avg(x0, y0, x1, y1) { var s = [0, 0, 0], n = 0; for (var y = y0; y < y1; y++) for (var x = x0; x < x1; x++) { var o = (y * 27 + x) * 4; s[0] += d[o]; s[1] += d[o + 1]; s[2] += d[o + 2]; n++; } return [s[0] / n, s[1] / n, s[2] / n]; }
+      fin.tone = { wallL: avg(1, 2, 12, 14), wallD: avg(16, 10, 26, 24), top: avg(5, 30, 22, 32), low: avg(4, 36, 24, 40) };
+    });
+    loadImg('img/final-flowers.png', 'flowers', function () { fin.jobK = 0; });
+
     var disc = makeCanvas(128, 128); (function () { var c = disc.getContext('2d'), g = c.createRadialGradient(64, 64, 0, 64, 64, 64);
       g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(0.62, 'rgba(0,0,0,1)'); g.addColorStop(0.82, 'rgba(0,0,0,0.45)'); g.addColorStop(1, 'rgba(0,0,0,0)');
       c.fillStyle = g; c.fillRect(0, 0, 128, 128); })();
-    function softDisc(c, x, y, r) { if (r > 0.5) c.drawImage(disc, x - r, y - r, 2 * r, 2 * r); }
 
-    // build resolution-dependent caches: the sprite split into a stems layer and one layer per head
-    // (green pixels → stems; red pixels → nearest head), each with a pre-blurred twin
+    // photo placement: region x150–1000, y380–1420 always visible with margin; cover when the aspect allows,
+    // otherwise the photo's own edge pixels are stretched outwards (no bars)
+    function photoFit() {
+      var top = Math.min(TOP_SAFE, ch * 0.2), uh = Math.max(40, ch - top - BOT_SAFE);
+      var rg = FP.region, rw = rg[2] - rg[0], rh = rg[3] - rg[1];
+      var ps = Math.min(cw / rw, uh / rh) * 0.94;
+      var ox = cw / 2 - (rg[0] + rw / 2) * ps, oy = top + uh / 2 - (rg[1] + rh / 2) * ps;
+      if (FP.w * ps >= cw) ox = clamp(ox, cw - FP.w * ps, 0);
+      if (FP.h * ps >= ch) oy = clamp(oy, ch - FP.h * ps, 0);
+      return { ps: ps, ox: ox, oy: oy };
+    }
+    // draw a full-frame photo layer in CSS px with stretched edges where it does not reach the stage edge
+    function drawPhotoLayer(c, img, PF) {
+      var ps = PF.ps, x0 = PF.ox, y0 = PF.oy, x1 = x0 + FP.w * ps, y1 = y0 + FP.h * ps, e = 3;
+      c.drawImage(img, x0, y0, FP.w * ps, FP.h * ps);
+      if (x0 > 0) c.drawImage(img, 0, 0, e, FP.h, -1, y0, x0 + 1.5, FP.h * ps);
+      if (x1 < cw) c.drawImage(img, FP.w - e, 0, e, FP.h, x1 - 0.5, y0, cw - x1 + 1, FP.h * ps);
+      if (y0 > 0) c.drawImage(img, 0, 0, FP.w, e, x0, -1, FP.w * ps, y0 + 1.5);
+      if (y1 < ch) c.drawImage(img, 0, FP.h - e, FP.w, e, x0, y1 - 0.5, FP.w * ps, ch - y1 + 1);
+      if (x0 > 0 && y0 > 0) c.drawImage(img, 0, 0, e, e, 0, 0, x0 + 1, y0 + 1);
+      if (x1 < cw && y0 > 0) c.drawImage(img, FP.w - e, 0, e, e, x1 - 1, 0, cw - x1 + 1, y0 + 1);
+      if (x0 > 0 && y1 < ch) c.drawImage(img, 0, FP.h - e, e, e, 0, y1 - 1, x0 + 1, ch - y1 + 1);
+      if (x1 < cw && y1 < ch) c.drawImage(img, FP.w - e, FP.h - e, e, e, x1 - 1, y1 - 1, cw - x1 + 1, ch - y1 + 1);
+    }
+    var scr = { a: null, b: null };
+    function screenCanvas(key) {
+      var cv = scr[key];
+      if (!cv || cv.width !== canvas.width || cv.height !== canvas.height) cv = scr[key] = makeCanvas(canvas.width, canvas.height);
+      var c = cv.getContext('2d'); c.setTransform(1, 0, 0, 1, 0, 0); c.globalCompositeOperation = 'source-over'; c.globalAlpha = 1; c.clearRect(0, 0, cv.width, cv.height);
+      c.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return c;
+    }
+
     function blurCopy(src) {
       var w = src.width, h = src.height, out = makeCanvas(w, h);
       var tiny = makeCanvas(Math.max(4, w / 10), Math.max(4, h / 10)), mid = makeCanvas(Math.max(4, w / 3), Math.max(4, h / 3));
@@ -730,186 +852,169 @@
       tc.drawImage(src, 0, 0, tiny.width, tiny.height); mc.drawImage(tiny, 0, 0, mid.width, mid.height); oc.drawImage(mid, 0, 0, w, h);
       return out;
     }
-    // The split below walks every sprite pixel, so it runs in ~8 ms slices between frames
-    // (a single pass froze the page for about a second). The old layers stay live until the swap.
-    function prepBouquet(k) {
-      if (bq.jobK && Math.abs(k - bq.jobK) / bq.jobK <= 0.12) return;
-      var job = bq.job = {}; bq.jobK = k;
-      var W = Math.ceil(BQ.w * k), Hh = Math.ceil(BQ.h * k);
-      var sharp = makeCanvas(W, Hh), c = sharp.getContext('2d');
-      c.drawImage(bq.img, 0, 0, W, Hh);
-      c.globalCompositeOperation = 'source-atop'; c.fillStyle = 'rgba(255,196,150,0.05)'; c.fillRect(0, 0, W, Hh);
-      // the right crop (a candle stood there in the photo) is already covered by two real heads in the sprite
-      c.globalCompositeOperation = 'source-over';
-
-      // split into layers: stems (olive/brown-green pixels) and one soft-weighted layer per head.
-      // head weights sum to 1 per pixel, so adding the layers with 'lighter' rebuilds the photo exactly.
-      var src = c.getImageData(0, 0, W, Hh).data, NH = BQ.heads.length;
-      var hx = BQ.heads.map(function (h) { return h[0] * k; }), hy = BQ.heads.map(function (h) { return h[1] * k; }), hs = BQ.heads.map(function (h) { return h[2] * k; });
-      var datas = [], bb = [], j;
-      for (j = 0; j <= NH; j++) { datas.push(new Uint8ClampedArray(W * Hh * 4)); bb.push([W, Hh, -1, -1]); }
-      var dist = new Float32Array(NH), wts = new Float32Array(NH);
-      function put(L, o, x, y, w) {
-        var d = datas[L];
+    // Split final-flowers into a stems layer and one soft-weighted layer per listed element.
+    // Weights sum to 1, so adding the layers with 'lighter' rebuilds the photo exactly.
+    // All pixel work runs in ~8 ms slices (setTimeout), one layer per task at the end.
+    function prepFlowers(k) {
+      if (fin.jobK && Math.abs(k - fin.jobK) / fin.jobK <= 0.12) return;
+      var job = fin.job = {}; fin.jobK = k;
+      var FL = FP.fl, W = Math.ceil(FL.w * k), Hh = Math.ceil(FL.h * k), NI = FP.items.length;
+      var src, datas = [], bb = [], y = 0, layers = [], L = 0;
+      var ix = FP.items.map(function (it) { return (it.c[0] - FL.x) * k; }), iy = FP.items.map(function (it) { return (it.c[1] - FL.y) * k; }), ir = FP.items.map(function (it) { return it.r * k; });
+      var dist = new Float32Array(NI), wts = new Float32Array(NI);
+      function alive() { return fin.job === job && !destroyed; }
+      function put(Li, o, x, yy, w) {
+        var d = datas[Li];
         d[o] = src[o]; d[o + 1] = src[o + 1]; d[o + 2] = src[o + 2]; d[o + 3] = Math.round(src[o + 3] * w);
-        var B = bb[L]; if (x < B[0]) B[0] = x; if (y < B[1]) B[1] = y; if (x > B[2]) B[2] = x; if (y > B[3]) B[3] = y;
+        var B = bb[Li]; if (x < B[0]) B[0] = x; if (yy < B[1]) B[1] = yy; if (x > B[2]) B[2] = x; if (yy > B[3]) B[3] = yy;
       }
-      var y = 0;
-      function slice() {
-        if (bq.job !== job || destroyed) return;
+      function start() {
+        if (!alive()) return;
+        var c = makeCanvas(W, Hh).getContext('2d');
+        c.drawImage(fin.flowers, 0, 0, W, Hh);
+        src = c.getImageData(0, 0, W, Hh).data;
+        for (var j = 0; j <= NI; j++) bb.push([W, Hh, -1, -1]);
+        setTimeout(alloc, 0);
+      }
+      function alloc() { // a few MB per layer; spread over tasks
+        if (!alive()) return;
         var until = performance.now() + 8;
+        while (datas.length <= NI && performance.now() < until) datas.push(new Uint8ClampedArray(W * Hh * 4));
+        setTimeout(datas.length <= NI ? alloc : slice, 0);
+      }
+      function slice() {
+        if (!alive()) return;
+        var until = performance.now() + 8, j;
         for (; y < Hh && performance.now() < until; y++) for (var x = 0; x < W; x++) {
           var o = (y * W + x) * 4; if (src[o + 3] < 3) continue;
-          var r = src[o], g = src[o + 1], b2 = src[o + 2];
-          if (g > r * 0.48 && g > 22 && g > b2 * 1.12 && r + g + b2 < 480) { put(NH, o, x, y, 1); continue; }
+          var r = src[o], g = src[o + 1], b = src[o + 2];
+          // dark green / olive stems
+          if (g >= r * 0.72 && g > b * 1.05 && r + g + b < 330) { put(NI, o, x, y, 1); continue; }
           var dmin = 1e9;
-          for (j = 0; j < NH; j++) { var dx = (x - hx[j]) / hs[j], dy = (y - hy[j]) / hs[j]; dist[j] = Math.sqrt(dx * dx + dy * dy); if (dist[j] < dmin) dmin = dist[j]; }
+          for (j = 0; j < NI; j++) { var dx = (x - ix[j]) / ir[j], dy = (y - iy[j]) / ir[j]; dist[j] = Math.sqrt(dx * dx + dy * dy); if (dist[j] < dmin) dmin = dist[j]; }
           var sum = 0;
-          for (j = 0; j < NH; j++) { wts[j] = Math.exp(-(dist[j] - dmin) * 7); sum += wts[j]; }
-          for (j = 0; j < NH; j++) { var w = wts[j] / sum; if (w > 0.004) put(j, o, x, y, w); }
+          for (j = 0; j < NI; j++) { wts[j] = Math.exp(-(dist[j] - dmin) * 6); sum += wts[j]; }
+          for (j = 0; j < NI; j++) { var w = wts[j] / sum; if (w > 0.004) put(j, o, x, y, w); }
         }
-        if (y < Hh) { setTimeout(slice, 0); return; }
-        var layers = bb.map(function (B, L) {
-          if (B[2] < 0) return null;
+        setTimeout(y < Hh ? slice : build, 0);
+      }
+      function build() { // one layer per task
+        if (!alive()) return;
+        var B = bb[L];
+        if (B[2] < 0) layers.push(null);
+        else {
           var x0 = Math.max(0, B[0] - 2), y0 = Math.max(0, B[1] - 2), w = Math.min(W, B[2] + 3) - x0, h = Math.min(Hh, B[3] + 3) - y0;
           var cv = makeCanvas(w, h), cc = cv.getContext('2d'), id = cc.createImageData(w, h), d = id.data, sd = datas[L];
-          for (var yy = 0; yy < h; yy++) {
-            var so = ((yy + y0) * W + x0) * 4;
-            d.set(sd.subarray(so, so + w * 4), yy * w * 4);
-          }
+          for (var yy = 0; yy < h; yy++) { var so = ((yy + y0) * W + x0) * 4; d.set(sd.subarray(so, so + w * 4), yy * w * 4); }
           cc.putImageData(id, 0, 0);
-          return { cv: cv, blur: L < NH ? blurCopy(cv) : null, x: x0, y: y0, w: w, h: h };
-        });
-        datas = null;
-        bq.layers = layers; bq.k = k; bq.finalKey = ''; bq.job = null;
-        bq.cS = makeCanvas(W, Hh); bq.tmp = makeCanvas(W, Hh);
-        bq.shadow = makeCanvas(Math.max(8, W / 8), Math.max(8, Hh / 8));
-        bq.ready = true;
-        if (paused || !raf) draw();
+          layers.push({ cv: cv, blur: L < NI ? blurCopy(cv) : null, x: x0, y: y0, w: w, h: h });
+        }
+        datas[L] = null; L++;
+        if (L <= NI) { setTimeout(build, 0); return; }
+        // upload each layer (and the scratch canvases) in its own task before going live
+        var cS = makeCanvas(W, Hh), tmp = makeCanvas(W, Hh), queue = [];
+        layers.forEach(function (Ly) { if (Ly) { queue.push(Ly.cv); if (Ly.blur) queue.push(Ly.blur); } });
+        queue.push(cS, tmp);
+        (function up() {
+          if (!alive()) return;
+          var cv = queue.shift();
+          if (cv) { var wc = warm.getContext('2d'); wc.drawImage(cv, 0, 0, 1, 1); if (cv === cS || cv === tmp) cv.getContext('2d').clearRect(0, 0, 1, 1); setTimeout(up, 0); return; }
+          fin.layers = layers; fin.k = k; fin.finalKey = ''; fin.job = null;
+          fin.cS = cS; fin.tmp = tmp;
+          fin.ready = true;
+          screenCanvas('a'); screenCanvas('b');
+          if (paused || !raf) draw();
+        })();
       }
-      setTimeout(slice, 0);
+      setTimeout(start, 0);
     }
 
-    function composeBouquet(T) {
-      var k = bq.k, W = bq.cS.width, Hh = bq.cS.height, NH = BQ.heads.length;
-      var done = T.wipe >= 1 && T.heads.every(function (h) { return h.s >= 1; });
+    function composeFlowers(T) {
+      var k = fin.k, W = fin.cS.width, Hh = fin.cS.height, NI = FP.items.length, FL = FP.fl;
+      var done = T.wipe >= 1 && T.items.every(function (h) { return h.s >= 1; });
       var key = done ? 'final' + k : '';
-      if (key && bq.finalKey === key) return;
-      var c = bq.cS.getContext('2d'), tmp = bq.tmp, tc = tmp.getContext('2d');
+      if (key && fin.finalKey === key) return;
+      var c = fin.cS.getContext('2d'), tc = fin.tmp.getContext('2d');
       c.globalCompositeOperation = 'source-over'; c.globalAlpha = 1; c.clearRect(0, 0, W, Hh);
-      // stems: an upward feathered wipe from the rim
-      var st = bq.layers[NH];
+      // stems: feathered upward wipe from the rim
+      var st = fin.layers[NI];
       if (st && T.wipe > 0) {
-        tc.globalCompositeOperation = 'source-over'; tc.clearRect(0, 0, W, Hh);
-        tc.drawImage(st.cv, st.x, st.y);
-        if (T.wipe < 1) {
-          var feather = 160 * k, wy0 = lerp((BQ.rimY + 30) * k, -feather, T.wipe);
-          tc.globalCompositeOperation = 'destination-in';
-          var gw = tc.createLinearGradient(0, wy0, 0, wy0 + feather);
-          gw.addColorStop(0, 'rgba(0,0,0,0)'); gw.addColorStop(1, 'rgba(0,0,0,1)');
-          tc.fillStyle = gw; tc.fillRect(0, 0, W, Hh);
-          tc.fillStyle = 'rgba(0,0,0,0)';
+        if (T.wipe >= 1) c.drawImage(st.cv, st.x, st.y);
+        else {
+          var feather = 140 * k, rimY = (FP.jar.rim - FL.y) * k, wy0 = lerp(rimY + 20 * k, -feather, T.wipe);
+          drawGrad(c, tc, st, wy0, feather, true, 1);
         }
-        c.drawImage(tmp, 0, 0);
       }
-      // heads: feathered radial "opening" with a blurred lead and a brightness lift
-      BQ.order.forEach(function (hi) {
-        var Ly = bq.layers[hi], hd = T.heads[hi], h = BQ.heads[hi];
+      FP.items.forEach(function (it, i) {
+        var Ly = fin.layers[i], hd = T.items[i];
         if (!Ly || hd.rb <= 0) return;
-        var cx = h[0] * k, cy = h[1] * k, sz = h[2] * k;
-        // blurred lead (fades as the sharp layer arrives)
+        var cx = (it.c[0] - FL.x) * k, cy = (it.c[1] - FL.y) * k, sz = it.r * k;
+        c.globalCompositeOperation = 'lighter';
+        if (it.kind === 'down') {        // hanging amaranthus: a downward wipe
+          if (hd.s >= 1) c.drawImage(Ly.cv, Ly.x, Ly.y);
+          else { var f2 = 90 * k; drawGrad(c, tc, Ly, lerp(Ly.y - f2, Ly.y + Ly.h, hd.rs), f2, false, 1); }
+          c.globalCompositeOperation = 'source-over';
+          return;
+        }
+        c.globalCompositeOperation = 'source-over';
         var ab = (1 - hd.s) * smooth(clamp(hd.rb * 1.6, 0, 1)) * 0.6;
-        if (ab > 0.01) drawMasked(c, tc, Ly, Ly.blur, cx, cy, sz * 2.5 * hd.rb, ab);
+        if (ab > 0.01) drawMasked(c, tc, Ly, Ly.blur, cx, cy, sz * 2.4 * hd.rb, ab, 'source-over');
         if (hd.rs > 0) {
-          c.globalCompositeOperation = 'lighter';
-          if (hd.s >= 1) { c.drawImage(Ly.cv, Ly.x, Ly.y); }
+          if (hd.s >= 1) { c.globalCompositeOperation = 'lighter'; c.drawImage(Ly.cv, Ly.x, Ly.y); }
           else {
             var un = seg(hd.s, 0.8, 1);
-            drawMasked(c, tc, Ly, Ly.cv, cx, cy, sz * 2.5 * hd.rs, 1 - un);
+            drawMasked(c, tc, Ly, Ly.cv, cx, cy, sz * 2.4 * hd.rs, 1 - un, 'lighter');
             if (un > 0) { c.globalCompositeOperation = 'lighter'; c.globalAlpha = un; c.drawImage(Ly.cv, Ly.x, Ly.y); c.globalAlpha = 1; }
           }
           c.globalCompositeOperation = 'source-over';
-          var lift = Math.sin(PI * hd.s) * 0.14;
+          var lift = Math.sin(PI * hd.s) * 0.12;
           if (lift > 0.005) {
             c.globalCompositeOperation = 'source-atop';
-            var g = c.createRadialGradient(cx, cy, 0, cx, cy, sz * 1.4);
-            g.addColorStop(0, 'rgba(255,214,200,' + lift + ')'); g.addColorStop(1, 'rgba(255,214,200,0)');
-            c.fillStyle = g; c.fillRect(cx - sz * 1.4, cy - sz * 1.4, sz * 2.8, sz * 2.8);
+            var g = c.createRadialGradient(cx, cy, 0, cx, cy, sz * 1.3);
+            g.addColorStop(0, 'rgba(255,226,200,' + lift + ')'); g.addColorStop(1, 'rgba(255,226,200,0)');
+            c.fillStyle = g; c.fillRect(cx - sz * 1.3, cy - sz * 1.3, sz * 2.6, sz * 2.6);
             c.globalCompositeOperation = 'source-over';
           }
         }
       });
-      // soft shadow silhouette of what is visible right now
-      var sh = bq.shadow, shc = sh.getContext('2d');
-      shc.globalCompositeOperation = 'source-over'; shc.clearRect(0, 0, sh.width, sh.height);
-      shc.imageSmoothingQuality = 'high'; shc.drawImage(bq.cS, 0, 0, sh.width, sh.height);
-      shc.globalCompositeOperation = 'source-in'; shc.fillStyle = 'rgb(120,92,72)'; shc.fillRect(0, 0, sh.width, sh.height);
-      bq.anyB = false;
-      bq.finalKey = key;
+      fin.finalKey = key;
     }
-    // draw one layer through a soft disc mask (cached disc texture, destination-in on a scratch canvas)
-    function drawMasked(c, tc, Ly, img, cx, cy, rad, alpha) {
+    // one layer through a soft disc (cached texture)
+    function drawMasked(c, tc, Ly, img, cx, cy, rad, alpha, op) {
       tc.globalCompositeOperation = 'source-over'; tc.clearRect(Ly.x, Ly.y, Ly.w, Ly.h);
       tc.drawImage(img, Ly.x, Ly.y);
       tc.globalCompositeOperation = 'destination-in';
       tc.save(); tc.beginPath(); tc.rect(Ly.x, Ly.y, Ly.w, Ly.h); tc.clip();
-      tc.fillStyle = '#000';
-      // outside the disc → cleared; inside → soft disc alpha
       tc.drawImage(disc, cx - rad, cy - rad, 2 * rad, 2 * rad);
       tc.restore();
       tc.globalCompositeOperation = 'source-over';
       if (alpha <= 0) return;
+      c.globalCompositeOperation = op; c.globalAlpha = alpha;
+      c.drawImage(tc.canvas, Ly.x, Ly.y, Ly.w, Ly.h, Ly.x, Ly.y, Ly.w, Ly.h);
+      c.globalAlpha = 1; c.globalCompositeOperation = 'source-over';
+    }
+    // one layer through a feathered horizontal edge at y; up = reveal below the edge (stems rising)
+    function drawGrad(c, tc, Ly, y, feather, up, alpha) {
+      tc.globalCompositeOperation = 'source-over'; tc.clearRect(Ly.x, Ly.y, Ly.w, Ly.h);
+      tc.drawImage(Ly.cv, Ly.x, Ly.y);
+      tc.globalCompositeOperation = 'destination-in';
+      var g = tc.createLinearGradient(0, y, 0, y + feather);
+      g.addColorStop(0, up ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,1)'); g.addColorStop(1, up ? 'rgba(0,0,0,1)' : 'rgba(0,0,0,0)');
+      tc.fillStyle = g; tc.fillRect(Ly.x, Ly.y, Ly.w, Ly.h);
+      tc.globalCompositeOperation = 'source-over';
       c.globalAlpha = alpha;
       c.drawImage(tc.canvas, Ly.x, Ly.y, Ly.w, Ly.h, Ly.x, Ly.y, Ly.w, Ly.h);
       c.globalAlpha = 1;
     }
-    // world placement of the sprite with the bloom scale + ambient sway around the rim pivot
-    function bouquetTransform(T, t) {
-      var sway = reduce ? 0 : Math.sin(t * 0.9) * 0.6 * PI / 180 * T.sway + (fbm(t * 0.35) - 0.5) * 0.3 * PI / 180 * T.sway;
-      ctx.translate(BQ.pivotX, -H); ctx.rotate(sway); ctx.scale(T.bqScale, T.bqScale); ctx.translate(-BQ.pivotX, H);
-    }
-    function drawBouquetLayer(T, t, inside) {
-      if (!bq.ready || T.wipe <= 0) return;
-      var mm = BQ.mmpx, x0 = -BQ.rimCx * mm, y0 = -H - BQ.rimY * mm, w = BQ.w * mm, h = BQ.h * mm;
+    function drawFlowersLayer(T, PF) {
+      if (!fin.ready || T.wipe <= 0) return;
+      composeFlowers(T);
+      var FL = FP.fl, pv = FP.pivot;
       ctx.save();
-      // inside the jar (behind the glass) vs everything else (in front)
-      ctx.beginPath();
-      if (inside) { silhouettePath(ctx); ctx.clip(); }
-      else {
-        ctx.rect(-2000, -2000, 4000, 4000);
-        ctx.moveTo(R, -H); ctx.ellipse(0, -H, R, RY, 0, 0, PI, false); ctx.lineTo(-R, 0); ctx.ellipse(0, 0, R, RY, 0, PI, 0, true); ctx.closePath();
-        ctx.clip('evenodd');
-      }
-      bouquetTransform(T, t);
-      ctx.drawImage(bq.cS, x0, y0, w, h);
+      ctx.setTransform(dpr * PF.ps, 0, 0, dpr * PF.ps, dpr * PF.ox, dpr * PF.oy);
+      ctx.translate(pv[0], pv[1]); ctx.scale(T.flScale, T.flScale); ctx.translate(-pv[0], -pv[1]);
+      ctx.drawImage(fin.cS, FL.x, FL.y, FL.w, FL.h);
       ctx.restore();
-    }
-    function drawBouquetShadow(T, t) {
-      if (!bq.ready || T.wipe <= 0 || T.day < 0.01) return;
-      var mm = BQ.mmpx, x0 = -BQ.rimCx * mm, y0 = -H - BQ.rimY * mm, w = BQ.w * mm, h = BQ.h * mm;
-      var amt = T.day * (0.25 * T.wipe + 0.75 * T.headsAvg);
-      ctx.save(); ctx.globalCompositeOperation = 'multiply'; ctx.globalAlpha = 0.2 * amt;
-      // cast onto the wall, up-right of the bouquet, from the window at upper left
-      ctx.translate(0, -H); ctx.transform(0.95, 0, -0.18, 0.86, 70, 18); ctx.translate(0, H);
-      bouquetTransform(T, t);
-      ctx.drawImage(bq.shadow, x0, y0, w, h);
-      ctx.restore(); ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
-    }
-    function drawInnerStems(T, wl) {
-      if (!bq.ready || T.stemsIn <= 0) return;
-      var a = T.stemsIn, yb = Math.min(wl, -BASE - 4);
-      BQ.innerStems.forEach(function (x, i) {
-        var top = [x, -H + 3], dir = (x > 0 ? -1 : 1) * 0.1 + (i % 2 ? 0.04 : -0.04);
-        var xb = top[0] + dir * (yb - top[1]);
-        ctx.strokeStyle = 'rgba(48,74,34,' + (0.7 * a) + ')'; ctx.lineWidth = 1.8; ctx.lineCap = 'butt';
-        ctx.beginPath(); ctx.moveTo(top[0], top[1]); ctx.lineTo(xb, yb); ctx.stroke();
-        var x1 = xb + 1.8, len = 46;
-        for (var j = 0; j < 6; j++) {
-          var u0 = j / 6, u1 = (j + 1) / 6;
-          ctx.strokeStyle = 'rgba(60,84,40,' + (0.32 * a * (1 - u0)) + ')'; ctx.lineWidth = 2.6;
-          ctx.beginPath(); ctx.moveTo(x1 + dir * len * u0, yb + len * u0); ctx.lineTo(x1 + dir * len * u1, yb + len * u1); ctx.stroke();
-        }
-      });
     }
 
     // ---- smoke ----
