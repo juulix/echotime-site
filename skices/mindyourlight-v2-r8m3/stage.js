@@ -520,7 +520,7 @@
       // ---- jar: back wall ----
       ctx.globalCompositeOperation = 'multiply';
       if (jarL.ready) {
-        silhouettePath(ctx); ctx.fillStyle = 'rgba(244,200,150,' + lerp(0.35, 0.28, T.empty) + ')'; ctx.fill();
+        ctx.globalAlpha = lerp(0.35, 0.28, T.empty); ctx.drawImage(jarL.back, jarL.x, jarL.y, jarL.w, jarL.h); ctx.globalAlpha = 1;
         // the opening: looking down into the empty jar — far inner wall warm amber, shadowed towards the near rim
         ctx.save(); ctx.beginPath(); ctx.ellipse(0, -H, R - 1.2, RY - 0.5, 0, 0, TAU); ctx.clip();
         var gop = ctx.createLinearGradient(0, -H - RY, 0, -H + RY);
@@ -536,11 +536,12 @@
         ctx.globalAlpha = 1;
       }
       ctx.globalCompositeOperation = 'source-over';
-      ctx.strokeStyle = 'rgba(' + (T.day > 0.5 ? '170,90,40' : '255,160,80') + ',' + (0.25 + 0.3 * Math.max(T.day, glow)) + ')';
-      ctx.lineWidth = 0.6; ctx.beginPath(); ctx.ellipse(0, -H, R - 1.5, RY - 0.6, 0, PI, TAU); ctx.stroke();
-      if (jarL.ready && T.day > 0.01) { // thin bright lip of the rim
-        ctx.strokeStyle = 'rgba(255,246,232,' + (0.75 * T.day) + ')'; ctx.lineWidth = 0.5;
-        ctx.beginPath(); ctx.ellipse(0, -H, R - 0.6, RY - 0.25, 0, PI * 1.02, PI * 1.98); ctx.stroke();
+      if (jarL.ready) {
+        softLip(R - 1.5, RY - 0.6, PI, TAU, T.day > 0.5 ? [170, 90, 40] : [255, 160, 80], 0.18 + 0.22 * Math.max(T.day, glow), 0.8);
+        if (T.day > 0.01) softLip(R - 0.6, RY - 0.25, PI * 1.02, PI * 1.98, [255, 246, 232], 0.5 * T.day, 0.9);
+      } else {
+        ctx.strokeStyle = 'rgba(' + (T.day > 0.5 ? '170,90,40' : '255,160,80') + ',' + (0.25 + 0.3 * Math.max(T.day, glow)) + ')';
+        ctx.lineWidth = 0.6; ctx.beginPath(); ctx.ellipse(0, -H, R - 1.5, RY - 0.6, 0, PI, TAU); ctx.stroke();
       }
       if (T.empty > 0.01) { // inner floor catches light
         ctx.strokeStyle = 'rgba(255,248,236,' + (0.4 * T.empty) + ')'; ctx.lineWidth = 0.6;
@@ -595,7 +596,14 @@
           gpool.addColorStop(0, 'rgba(255,224,170,' + (0.6 * glow) + ')'); gpool.addColorStop(0.75, 'rgba(250,200,140,' + (0.38 * glow) + ')'); gpool.addColorStop(1, 'rgba(250,200,140,0)');
           ctx.fillStyle = gpool; ctx.beginPath(); ctx.ellipse(0, top, RW * pool, ryw * pool, 0, 0, TAU); ctx.fill();
         }
-        ctx.strokeStyle = 'rgba(255,240,220,' + (0.2 + 0.4 * dayLit) + ')'; ctx.lineWidth = 0.6;
+        if (jarL.ready && glow > 0.01) { // a soft band of light where the molten top meets the wall of wax
+          ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.translate(0, top + ryw * 0.3); ctx.scale(1, ryw * 2.6 / RW);
+          var gband = ctx.createRadialGradient(0, 0, 0, 0, 0, RW);
+          gband.addColorStop(0, 'rgba(255,196,120,' + (0.32 * glow) + ')'); gband.addColorStop(0.6, 'rgba(240,140,64,' + (0.14 * glow) + ')'); gband.addColorStop(1, 'rgba(200,100,40,0)');
+          ctx.fillStyle = gband; ctx.beginPath(); ctx.arc(0, 0, RW, 0, TAU); ctx.fill();
+          ctx.restore();
+        }
+        ctx.strokeStyle = 'rgba(255,240,220,' + (jarL.ready ? 0.35 * dayLit : 0.2 + 0.4 * dayLit) + ')'; ctx.lineWidth = 0.6;
         ctx.beginPath(); ctx.ellipse(0, top, RW - 0.5, ryw - 0.2, 0, 0.05 * PI, 0.95 * PI); ctx.stroke();
         WICKS.forEach(function (w, i) {
           var wx = w.x, wy = top + w.z * K, len = 3.6 + 2.2 * T.burn, lean = (i - 1) * 0.6;
@@ -889,7 +897,13 @@
       var steps = [
         function () { // the photo clipped to the straight walls: the beaded rim flares past them and read as wire handles
           var cv = makeCanvas(W, Hh), c = cv.getContext('2d');
-          c.beginPath(); c.rect(JP.wallL, 0, JP.wallR - JP.wallL + 1, Hh); c.clip(); c.drawImage(im, 0, 0);
+          // and a clean rounded bottom: below the glass's dark bottom edge the cut-out still carries
+          // a pale, ragged strip of the photo's tabletop, which read as a stepped outline
+          var L = JP.wallL, Rr = JP.wallR, yb = 927;
+          c.beginPath(); c.moveTo(L, 0); c.lineTo(L, 815);
+          c.bezierCurveTo(L, 880, L + 48, 918, L + 138, yb); c.lineTo(Rr - 138, yb);
+          c.bezierCurveTo(Rr - 48, 918, Rr, 880, Rr, 815); c.lineTo(Rr, 0); c.closePath();
+          c.clip(); c.drawImage(im, 0, 0);
           im = cv; src = c.getImageData(0, 0, W, Hh).data; return true;
         },
         function () { // blurred luminance via down/up-sampling
@@ -919,15 +933,15 @@
             var o = (y * W + x) * 4, a = src[o + 3]; if (a < 8) continue;
             if (lab && x >= lab.x - 2 && x <= lab.x + lab.w + 2 && y >= lab.y - 2 && y <= lab.y + lab.h + 2) continue;
             var L = 0.3 * src[o] + 0.59 * src[o + 1] + 0.11 * src[o + 2], Lb = 0.3 * blr[o] + 0.59 * blr[o + 1] + 0.11 * blr[o + 2];
-            var v = clamp((L - Lb) * 2.6 - 4, 0, 255) * a / 255;
+            var v = clamp((L - Lb) * 1.9 - 6, 0, 255) * a / 255;
             if (v < 2) continue;
             d[o] = d[o + 1] = 255; d[o + 2] = 250; d[o + 3] = v;
             dw[o] = 255; dw[o + 1] = 190; dw[o + 2] = 110; dw[o + 3] = Math.min(255, v * 1.7);
           }
           return y >= Hh;
         },
-        function () { jarL.hlW0 = putCanvas(hl); return true; },
-        function () { jarL.hlN0 = putCanvas(warm); src = blr = null; return true; },
+        function () { jarL.hlW0 = soften(putCanvas(hl), 2); return true; },
+        function () { jarL.hlN0 = soften(putCanvas(warm), 2); src = blr = null; return true; },
         function () { // multiply layer: the photo itself, paper area left white (the label is drawn opaque later)
           var c = makeCanvas(W, Hh), cc = c.getContext('2d'); cc.drawImage(im, 0, 0);
           if (lab) { cc.globalCompositeOperation = 'source-atop'; cc.fillStyle = '#fff'; cc.fillRect(lab.x - 2, lab.y - 2, lab.w + 4, lab.h + 4); }
@@ -940,16 +954,59 @@
         function () { jarL.hlW = warp(jarL.hlW0); return true; },
         function () { jarL.hlN = warp(jarL.hlN0); return true; },
         function () { jarL.lab = warp(jarL.lab0); jarL.mul0 = jarL.hlW0 = jarL.hlN0 = jarL.lab0 = null; return true; },
+        function () { // feathered silhouette (~3 screen px falloff) from the warped photo alpha
+          var sharp = makeCanvas(jarL.mul.width, jarL.mul.height), sc = sharp.getContext('2d');
+          sc.drawImage(jarL.mul, 0, 0); sc.globalCompositeOperation = 'source-in'; sc.fillStyle = '#000'; sc.fillRect(0, 0, sharp.width, sharp.height);
+          jarL.maskSharp = sharp; jarL.mask = soften(sharp, 5); return true;
+        },
+        function () { // thick glass: a darker refractive band along each wall, then the soft edge
+          var c = jarL.mul.getContext('2d'), Wm = jarL.mul.width, Hm = jarL.mul.height, band = 15;
+          c.globalCompositeOperation = 'multiply';
+          var gl = c.createLinearGradient(JP.wallL, 0, JP.wallL + band, 0);
+          gl.addColorStop(0, 'rgb(150,84,46)'); gl.addColorStop(1, 'rgb(255,255,255)');
+          c.fillStyle = gl; c.fillRect(JP.wallL, 0, band, Hm);
+          var gr = c.createLinearGradient(JP.wallR - band, 0, JP.wallR, 0);
+          gr.addColorStop(0, 'rgb(255,255,255)'); gr.addColorStop(1, 'rgb(150,84,46)');
+          c.fillStyle = gr; c.fillRect(JP.wallR - band, 0, band + 1, Hm);
+          c.globalCompositeOperation = 'destination-in'; c.drawImage(jarL.mask, 0, 0);
+          c.globalCompositeOperation = 'source-over';
+          [jarL.hlW, jarL.hlN].forEach(function (cv) { var x = cv.getContext('2d'); x.globalCompositeOperation = 'destination-in'; x.drawImage(jarL.mask, 0, 0); x.globalCompositeOperation = 'source-over'; });
+          return true;
+        },
+        function () { // a soft ring just around/over the silhouette, for the room light wrapping the glass
+          var big = soften(jarL.maskSharp, 14), rc = big.getContext('2d'), Wm = big.width, Hm = big.height, k = 0.965;
+          rc.globalCompositeOperation = 'destination-out';
+          rc.drawImage(jarL.mask, Wm * (1 - k) / 2, Hm * (1 - k) / 2, Wm * k, Hm * k);
+          jarL.ring = big;
+          var bt = makeCanvas(Wm, Hm), bc = bt.getContext('2d');   // back wall tint, soft edged
+          bc.drawImage(jarL.mask, 0, 0); bc.globalCompositeOperation = 'source-in'; bc.fillStyle = 'rgb(244,200,150)'; bc.fillRect(0, 0, Wm, Hm);
+          jarL.back = bt; jarL.maskSharp = null;
+          return true;
+        },
         function () { // scratch canvases + first upload, then go live
           var wc = warm2.getContext('2d');
           jarL.tmp = makeCanvas(jarL.mul.width, jarL.mul.height); jarL.ltmp = makeCanvas(jarL.mul.width, jarL.mul.height);
-          [jarL.mul, jarL.hlW, jarL.hlN, jarL.lab, jarL.tmp, jarL.ltmp].forEach(function (cv) { wc.drawImage(cv, 0, 0, 1, 1); });
+          [jarL.mul, jarL.hlW, jarL.hlN, jarL.lab, jarL.tmp, jarL.ltmp, jarL.mask, jarL.ring, jarL.back].forEach(function (cv) { wc.drawImage(cv, 0, 0, 1, 1); });
           jarL.mm = mm; jarL.x = -R - JP.wallL * mm; jarL.y = -H; jarL.w = W * mm; jarL.h = jarL.mul.height * mm;
           jarL.labRect = lab ? { cx: jarL.x + (lab.x + lab.w / 2) * mm, cy: -H + (lab.y + lab.h / 2) * mm + RY, hw: lab.w / 2 * mm, hh: lab.h / 2 * mm } : null;
           jarL.ready = true; if (paused || !raf) draw(); return true;
         }
       ];
       function isCream(d, o) { return d[o + 3] > 200 && d[o] > 200 && d[o + 1] > 188 && d[o + 2] > 160 && d[o] - d[o + 2] < 62; }
+      // cheap blur: down- then up-sample (works without ctx.filter)
+      // halve n times, then double back up: a smooth, gaussian-like blur without blocky steps
+      function soften(cv, f) {
+        var n = Math.max(1, Math.round(Math.log(f) / Math.LN2)), chain = [cv], cur = cv, i;
+        for (i = 0; i < n; i++) {
+          var d = makeCanvas(Math.max(2, cur.width / 2), Math.max(2, cur.height / 2)), dc = d.getContext('2d');
+          dc.imageSmoothingQuality = 'high'; dc.drawImage(cur, 0, 0, d.width, d.height); chain.push(d); cur = d;
+        }
+        for (i = n - 1; i >= 0; i--) {
+          var u = makeCanvas(chain[i].width, chain[i].height), uc = u.getContext('2d');
+          uc.imageSmoothingQuality = 'high'; uc.drawImage(cur, 0, 0, u.width, u.height); cur = u;
+        }
+        return cur;
+      }
       function putCanvas(id) { var c = makeCanvas(W, Hh); c.getContext('2d').putImageData(id, 0, 0); return c; }
       // bend the flat front photo around the cylinder: each column drops by the front-arc offset
       function warp(cv) {
@@ -977,45 +1034,40 @@
       ctx.drawImage(jarL.mul, X, Y, Wd, Hd);
       // light from inside: amber glow behind the glass, relief brightest near the flame
       if (glow > 0.002) {
-        ctx.globalCompositeOperation = 'lighter';
-        ctx.save(); frontPath(ctx, -H, 0); ctx.clip();
-        var gin = ctx.createRadialGradient(0, flameY + 8, 4, 0, flameY + 20, 120);
-        gin.addColorStop(0, 'rgba(255,160,70,' + (0.5 * glow) + ')'); gin.addColorStop(0.45, 'rgba(210,92,30,' + (0.26 * glow) + ')'); gin.addColorStop(1, 'rgba(110,36,10,' + (0.06 * glow) + ')');
-        ctx.fillStyle = gin; ctx.fillRect(-R, -H - RY, 2 * R, H + 2 * RY);
-        ctx.restore();
+        maskedPaint('lighter', 1, function (c) {
+          var gin = c.createRadialGradient(0, flameY + 8, 4, 0, flameY + 20, 120);
+          gin.addColorStop(0, 'rgba(255,160,70,' + (0.5 * glow) + ')'); gin.addColorStop(0.45, 'rgba(210,92,30,' + (0.26 * glow) + ')'); gin.addColorStop(1, 'rgba(110,36,10,' + (0.06 * glow) + ')');
+          c.fillStyle = gin; c.fillRect(-R - 4, -H - RY - 4, 2 * R + 8, H + 2 * RY + 8);
+        });
+        // relief: only the ridges near the flame catch it; the upper glass stays smooth and warm
         var tc = jarL.tmp.getContext('2d'), sc = jarL.tmp.width / Wd;
         tc.setTransform(1, 0, 0, 1, 0, 0); tc.globalCompositeOperation = 'source-over'; tc.clearRect(0, 0, jarL.tmp.width, jarL.tmp.height);
         tc.drawImage(jarL.hlN, 0, 0);
         tc.globalCompositeOperation = 'destination-in';
         tc.setTransform(sc, 0, 0, sc, -X * sc, -Y * sc);
-        var gm = tc.createLinearGradient(0, flameY - 14, 0, flameY + 95);
-        gm.addColorStop(0, 'rgba(0,0,0,0.75)'); gm.addColorStop(0.12, 'rgba(0,0,0,1)'); gm.addColorStop(0.45, 'rgba(0,0,0,0.5)'); gm.addColorStop(1, 'rgba(0,0,0,0.1)');
+        var gm = tc.createLinearGradient(0, flameY - 30, 0, flameY + 80);
+        gm.addColorStop(0, 'rgba(0,0,0,0.12)'); gm.addColorStop(0.3, 'rgba(0,0,0,1)'); gm.addColorStop(0.6, 'rgba(0,0,0,0.45)'); gm.addColorStop(1, 'rgba(0,0,0,0.08)');
         tc.fillStyle = gm; tc.fillRect(X, Y, Wd, Hd);
-        ctx.globalAlpha = clamp(glow * 1.15, 0, 1);
-        ctx.drawImage(jarL.tmp, X, Y, Wd, Hd);   // twice: the medallions should sparkle, not look frosted
-        ctx.globalAlpha = clamp(glow * 0.8, 0, 1);
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.globalAlpha = clamp(glow * 0.95, 0, 1);
         ctx.drawImage(jarL.tmp, X, Y, Wd, Hd);
         ctx.globalAlpha = 1;
-        // flame light catching the rim
-        ctx.globalCompositeOperation = 'lighter';
-        ctx.strokeStyle = 'rgba(255,176,96,' + (0.55 * glow) + ')'; ctx.lineWidth = 0.7;
-        ctx.beginPath(); ctx.ellipse(0, -H, R - 0.4, RY - 0.2, 0, 0.04 * PI, 0.96 * PI); ctx.stroke();
-        ctx.strokeStyle = 'rgba(255,150,70,' + (0.3 * glow) + ')';
-        ctx.beginPath(); ctx.ellipse(0, -H, R - 1.6, RY - 0.7, 0, 1.04 * PI, 1.96 * PI); ctx.stroke();
+        // flame light on the lip: soft, brightest at the front centre
+        softLip(R - 0.5, RY - 0.2, 0.04 * PI, 0.96 * PI, [255, 176, 96], 0.42 * glow, 1.1, 'lighter');
+        softLip(R - 1.6, RY - 0.7, 1.04 * PI, 1.96 * PI, [255, 150, 70], 0.22 * glow, 0.9, 'lighter');
       }
       // dusk: quiet window light from the upper left, the jar in shade
       if (dusk > 0.002) {
-        ctx.save(); silhouettePath(ctx); ctx.clip();
-        ctx.globalCompositeOperation = 'multiply';
-        var gsh2 = ctx.createLinearGradient(-R, -H, R * 0.8, 0);
-        gsh2.addColorStop(0, rgba(mixc([255, 255, 255], [146, 136, 146], dusk))); gsh2.addColorStop(1, rgba(mixc([255, 255, 255], [60, 53, 60], dusk)));
-        ctx.fillStyle = gsh2; ctx.fillRect(-R - 3, -H - RY - 3, 2 * R + 6, H + 2 * RY + 6);
-        ctx.restore();
+        maskedPaint('multiply', 1, function (c) {
+          var gsh2 = c.createLinearGradient(-R, -H, R * 0.8, 0);
+          gsh2.addColorStop(0, rgba(mixc([255, 255, 255], [146, 136, 146], dusk))); gsh2.addColorStop(1, rgba(mixc([255, 255, 255], [60, 53, 60], dusk)));
+          c.fillStyle = gsh2; c.fillRect(-R - 4, -H - RY - 4, 2 * R + 8, H + 2 * RY + 8);
+        });
       }
       // daylight specular sparkle of the pressed relief (from the photo itself)
       var sp = clamp(0.06 + 0.94 * T.day + 0.45 * dusk, 0, 1);
       if (sp > 0.01) {
-        ctx.globalCompositeOperation = 'screen'; ctx.globalAlpha = sp;
+        ctx.globalCompositeOperation = 'screen'; ctx.globalAlpha = sp * 0.8;
         ctx.drawImage(jarL.hlW, X, Y, Wd, Hd);
         ctx.globalAlpha = 1;
       }
@@ -1028,6 +1080,39 @@
       }
       var occ = waxA > 0.002 ? WICKS.reduce(function (a, w, i) { return a + (w._occ || 0) * T.flames[i]; }, 0) / 3 : 0;
       drawRealLabel(T, glow, dusk, occ * waxA, liftY);
+      // the room's light wraps softly over the silhouette, so the jar sits in the light
+      var wrapCol = mixc(mixc([120, 112, 130], [255, 150, 72], clamp(glow, 0, 1)), [255, 244, 228], T.day);
+      var wrapA = 0.22 * glow + 0.16 * dusk + 0.14 * T.day;
+      if (wrapA > 0.005) {
+        var tc2 = jarL.tmp.getContext('2d');
+        tc2.setTransform(1, 0, 0, 1, 0, 0); tc2.globalCompositeOperation = 'source-over'; tc2.clearRect(0, 0, jarL.tmp.width, jarL.tmp.height);
+        tc2.drawImage(jarL.ring, 0, 0); tc2.globalCompositeOperation = 'source-in'; tc2.fillStyle = rgba(wrapCol); tc2.fillRect(0, 0, jarL.tmp.width, jarL.tmp.height);
+        ctx.globalCompositeOperation = 'screen'; ctx.globalAlpha = clamp(wrapA, 0, 1);
+        ctx.drawImage(jarL.tmp, X, Y, Wd, Hd);
+        ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+      }
+    }
+    // paint fn (world coords) on the jar scratch canvas, keep it only inside the feathered jar mask, composite with op
+    function maskedPaint(op, alpha, fn) {
+      var tc = jarL.tmp.getContext('2d'), sc = jarL.tmp.width / jarL.w;
+      tc.setTransform(1, 0, 0, 1, 0, 0); tc.globalCompositeOperation = 'source-over'; tc.clearRect(0, 0, jarL.tmp.width, jarL.tmp.height);
+      tc.setTransform(sc, 0, 0, sc, -jarL.x * sc, -jarL.y * sc);
+      fn(tc);
+      tc.setTransform(1, 0, 0, 1, 0, 0); tc.globalCompositeOperation = 'destination-in'; tc.drawImage(jarL.mask, 0, 0);
+      tc.globalCompositeOperation = 'source-over';
+      ctx.globalCompositeOperation = op; ctx.globalAlpha = alpha;
+      ctx.drawImage(jarL.tmp, jarL.x, jarL.y, jarL.w, jarL.h);
+      ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+    }
+    // a rim highlight that is brightest at the front centre and fades out towards the walls
+    function softLip(rx, ry, a0, a1, col, alpha, width, op) {
+      if (alpha < 0.004) return;
+      var g = ctx.createLinearGradient(-rx, 0, rx, 0);
+      g.addColorStop(0, rgba(col, 0)); g.addColorStop(0.3, rgba(col, alpha * 0.55)); g.addColorStop(0.5, rgba(col, alpha)); g.addColorStop(0.7, rgba(col, alpha * 0.55)); g.addColorStop(1, rgba(col, 0));
+      ctx.save(); ctx.globalCompositeOperation = op || 'source-over';
+      ctx.strokeStyle = g; ctx.lineWidth = width; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.ellipse(0, -H, rx, ry, 0, a0, a1); ctx.stroke();
+      ctx.restore();
     }
     // the paper label: opaque, lit by the room in daylight, from behind/above by the flame at night
     function drawRealLabel(T, glow, dusk, occ, liftY) {
