@@ -404,6 +404,46 @@ html.gating, html.gating body { overflow: hidden; }
   .light-btn { animation: none; }
 }
 
+
+/* ---------- V2: owner's chapters, product film, product types ---------- */
+.beat .chapter { font-size: clamp(2.6rem, 1.6rem + 3.6vw, 4.8rem); text-transform: uppercase; letter-spacing: .04em; line-height: .95; }
+.beat .note { font-size: var(--step--1); color: var(--story-soft); max-width: 30rem; padding-top: 14px; border-top: 1px solid var(--story-line); }
+.beat .body { color: var(--story-soft); max-width: 32rem; }
+.beat .points { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; max-width: 32rem; font-size: var(--step-0); color: var(--story-soft); }
+.beat .points li { padding-left: 22px; position: relative; }
+.beat .points li::before { content: ""; position: absolute; left: 0; top: .62em; width: 10px; height: 1px; background: var(--story-accent); }
+.beat .points b { color: var(--story-fg); font-weight: 600; }
+.hero-points { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; color: var(--story-soft); font-size: var(--step-0); }
+.hero-points li::before { content: "— "; color: var(--story-accent); }
+.story { transition: color .6s; }
+.stage canvas { transition: filter 1.6s var(--ease-out); }
+.gating .stage canvas { filter: brightness(.34) sepia(.35) saturate(1.15); }
+html.gating .stage-wrap, html.gating body, html.gating .story { background: #1a1110 !important; }
+.gating.igniting .stage canvas { filter: none; }
+
+.products { background: var(--paper); }
+.sizes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(20px, 4vw, 56px); --jar-h: clamp(200px, 26vw, 300px); }
+.size { display: grid; grid-template-rows: auto auto 1fr; gap: 18px; padding: clamp(20px, 3vw, 36px); background: var(--porcelain); border-radius: 4px; }
+.jar-stage { height: calc(var(--jar-h) + 30px); display: flex; align-items: flex-end; justify-content: center; color: var(--ink-soft); }
+.jar { width: auto; max-width: 100%; overflow: visible; }
+.jar .glass { fill: var(--jar); transition: fill .5s var(--ease-out); }
+.size h3 { font-size: var(--step-2); }
+.spec { margin: 0; display: grid; }
+.spec div { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); }
+.spec dt { color: var(--ink-soft); font-size: var(--step--1); letter-spacing: .04em; }
+.spec dd { margin: 0; font: 400 var(--step-1)/1.1 var(--display); font-variant-numeric: lining-nums tabular-nums; }
+.spec dd.no { color: var(--ink-soft); }
+.colors { margin-top: 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.colors .eyebrow { color: var(--wine); margin-right: 8px; }
+.tone { display: inline-flex; align-items: center; gap: 10px; padding: .55em 1.1em .55em .6em; border: 1px solid var(--line); border-radius: 999px; font-size: var(--step--1); }
+.tone i { width: 22px; height: 22px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.14), inset 0 -6px 10px rgba(0,0,0,.12); }
+.jar-photo { width: auto; max-width: 100%; object-fit: contain; filter: drop-shadow(0 18px 22px rgba(60,30,10,.18)); }
+.shop-line { margin-top: 28px; }
+@media (max-width: 900px) {
+  .sizes { grid-template-columns: minmax(0, 1fr); --jar-h: 220px; }
+  .stage-wrap { height: 62vh; height: 62svh; }
+  .copy { padding-top: 59svh; }
+}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
@@ -416,8 +456,7 @@ html.gating, html.gating body { overflow: hidden; }
   <div class="wrap">
     <a class="logo" href="#story" aria-label="Mind Your Light — uz sākumu">MIND YOUR LIGHT</a>
     <nav aria-label="Galvenā navigācija">
-      <a class="lnk" href="#kapec">Kāpēc dāvināt</a>
-      <a class="lnk" href="#kolekcijas">Kolekcijas</a>
+      <a class="lnk" href="#produkti">Produkti</a>
       <a class="lnk" href="#zimogs">Jūsu logo</a>
       <a class="lnk" href="https://mindyourlight.shop/?utm_source=corporate-landing&amp;utm_medium=nav" target="_blank" rel="noopener">Veikals ↗</a>
       <a class="btn btn-wine" href="#piedavajums"><span class="long">Korporatīvais&nbsp;</span>piedāvājums</a>
@@ -438,56 +477,63 @@ html.gating, html.gating body { overflow: hidden; }
       </div>
 
       <div class="copy">
-        <div class="beat hero hero-beat on" id="b0" style="--h:93">
+        <div class="beat hero hero-beat on" id="b0" style="--h:81">
           <p class="eyebrow" style="color:var(--story-accent)">Korporatīvās dāvanas · Ziemassvētki 2026</p>
           <h1>Gaisma.<br><em>Iedvesma.</em><br>Ilgtspēja.</h1>
-          <p class="lead">Svece un ziedu vāze vienā – pārdomāts, ilgmūžīgs dizaina priekšmets skaistākiem ikdienas mirkļiem. Ar gatavu uzpildes sveci un īpaši izstrādātu ziedu organizatoru, lai vienu un to pašu trauku varētu izmantot atkal un atkal.</p>
+          <p class="lead">Dāvana ar paliekošu vērtību, kura nebeidzas līdz ar sveces pēdējo liesmu.</p>
+          <ul class="hero-points">
+            <li>Premium kvalitāte un ilgtspējīgs dizains.</li>
+            <li>Atkārtoti uzpildāma svece / vāze.</li>
+            <li>Personalizēta ar Jūsu uzņēmuma logo.</li>
+            <li>Radīta, lai priecētu gadiem.</li>
+          </ul>
           <div class="ctas">
             <a class="btn btn-glow" href="#piedavajums">Saņemt piedāvājumu <span class="arr" aria-hidden="true">→</span></a>
             <a class="btn btn-ghost" href="https://mindyourlight.shop/?utm_source=corporate-landing&amp;utm_medium=hero" target="_blank" rel="noopener">Uz veikalu ↗</a>
           </div>
-          <ul class="specs" aria-label="Svarīgākie fakti">
-            <li><b>550&nbsp;ml</b><span>trauka tilpums</span></li>
-            <li><b>~80&nbsp;h</b><span>degšanas laiks</span></li>
-            <li><b>3</b><span>degļi</span></li>
-          </ul>
           <span class="scroll-hint"><i></i>Ritiniet, lai redzētu, kā svece kļūst par vāzi</span>
         </div>
 
-        <div class="beat" id="b1" style="--h:144">
+        <div class="beat" id="b1" style="--h:96">
           <div class="stick">
-            <p class="num eyebrow">01 · Deg</p>
-            <h2>Trīs degļi, viens vienmērīgs gaismas loks.</h2>
-            <p class="lead">Sojas vaska svece ar trim degļiem. Reljefais stikls izkliedē liesmu sīkos, siltos atspīdumos pa visu galdu.</p>
-            <p class="fact"><b>~80 stundas</b> degšanas laiks vienai svecei</p>
+            <p class="num eyebrow">01</p>
+            <h2 class="chapter">Deg</h2>
+            <p class="lead">Pārdomāts, ilgmūžīgs dizaina priekšmets – trauks ar jau gatavu uzpildes sveci un īpaši izstrādātu ziedu organizatoru, lai vienu un to pašu lielo trauku varētu izmantot atkal un atkal.</p>
+            <p class="note">Lielā trauka komplektā ietilpst trauks, uzpildes svece un ziedu organizators. Mazās sveces komplekts – trauks un uzpildes svece.</p>
           </div>
         </div>
 
-        <div class="beat" id="b2" style="--h:58">
+        <div class="beat" id="b2" style="--h:180">
           <div class="stick">
-            <p class="num eyebrow">02 · Nodziest</p>
-            <h2>Svece izdeg. <span class="it">Trauks paliek.</span></h2>
-            <p class="lead">Kad vasks sacietējis, to viegli izņemt no trauka. Stikls nav jāizmet, tas kalpo tālāk.</p>
+            <p class="num eyebrow">02</p>
+            <h2 class="chapter">Nodziest</h2>
+            <ul class="points">
+              <li><b>Ilgstoša vērtība</b> — trauks kalpo arī pēc sveces izdegšanas.</li>
+              <li><b>Personalizēta dāvana</b> — vaska zīmogs ar uzņēmuma logo.</li>
+              <li><b>Radīts Latvijā</b> — rūpīgs roku darbs.</li>
+              <li><b>Pārdomāts dizains</b> — svece un vāze vienā produktā, atkārtoti uzpildāma.</li>
+            </ul>
           </div>
         </div>
 
-        <div class="beat" id="b3" style="--h:86">
+        <div class="beat" id="b3" style="--h:108">
           <div class="stick">
-            <p class="num eyebrow">03 · Nomaini</p>
-            <h2>Izņemiet vasku, un trauks ir brīvs.</h2>
-            <p class="lead">Ielieciet jaunu uzpildes sveci, kas der visām trim kolekcijām. Vai pārvērtiet trauku par vāzi. Svecei nav jāizdeg līdz galam, lai to izdarītu.</p>
-            <p class="fact"><b>15,95&nbsp;€</b> uzpildes svece · 3 gab. komplekts 39,95&nbsp;€</p>
+            <p class="num eyebrow">03</p>
+            <h2 class="chapter">Nomaini</h2>
+            <p class="lead">Izņemiet vasku, un trauks ir brīvs. Ielieciet jaunu uzpildes sveci (gan lielajiem, gan mazajiem traukiem) vai pārvērtiet lielo trauku par vāzi. Svecei nav jāizdeg līdz galam, lai to izmantotu kā vāzi. Kad vasks ir ciets, to iespējams vienkārši izņemt.</p>
+            <p class="note">Ziedu ieliktnis izmantojams tikai lielajiem traukiem. Mazie trauki arī ir atkārtoti uzpildāmi ar uzpildes sveci.</p>
           </div>
         </div>
 
-        <div class="beat" id="b4" style="--h:199">
+        <div class="beat" id="b4" style="--h:235">
           <div class="stick">
-            <p class="num eyebrow">04 · Uzzied</p>
-            <h2>Uzlieciet ieliktni, un tā jau ir vāze.</h2>
-            <p class="lead">Caurspīdīgā ziedu ieliktņa caurumi tur katru kātu savā vietā. Ziemā svece, vasarā vāze, un dāvana ir uz galda arī jūlijā.</p>
+            <p class="num eyebrow">04</p>
+            <h2 class="chapter">Uzzied</h2>
+            <p class="lead">Ievietojiet ziedu organizatoru, un trauks kļūst par vāzi ziedu kompozīciju veidošanai.</p>
+            <p class="body">Ziedu ieliktnis izstrādāts speciāli lielajam MIND YOUR LIGHT traukam, lai kārtotu ziedus un veidotu sakārtotu, skaistu kompozīciju, sagādājot prieku gan procesa laikā, gan par rezultātu. Ar ziedu organizatoru izdodas ikvienam arī bez florista pieredzes, jo tā dizains paredzēts dažāda biezuma puķu kātu noturēšanai.</p>
             <div class="ctas">
               <a class="btn btn-glow" href="#piedavajums">Pieteikt komandai <span class="arr" aria-hidden="true">→</span></a>
-              <a class="btn btn-ghost" href="#kolekcijas">Skatīt kolekcijas</a>
+              <a class="btn btn-ghost" href="#produkti">Produktu veidi</a>
             </div>
           </div>
         </div>
@@ -495,58 +541,46 @@ html.gating, html.gating body { overflow: hidden; }
     </div>
   </section>
 
-  <!-- ===== WHY ===== -->
-  <section class="block why" id="kapec">
+  <!-- ===== PRODUCT TYPES ===== -->
+  <section class="block products" id="produkti">
     <div class="wrap">
       <div class="sec-head">
-        <p class="eyebrow">Kāpēc tieši šī dāvana</p>
-        <h2>Dāvana, kas paliek atmiņā un <span class="it">kalpo gadiem.</span></h2>
-        <p>Rūpīgi radīta svece, kas pārtop ziedu vāzē un ir atkārtoti uzpildāma. Īpašu un personisku akcentu dāvanai piešķir vaska zīmogs ar Jūsu uzņēmuma logotipu.</p>
+        <p class="eyebrow">Produktu veidi</p>
+        <h2>Divi izmēri. <span class="it">Četras krāsas.</span></h2>
+        <p>Abi trauki ir atkārtoti uzpildāmi ar uzpildes sveci. Ziedu organizators ir lielajam traukam.</p>
       </div>
-      <div class="why-grid">
-        <figure class="why-photo" style="margin:0">
-          <img src="img/roses-hand.jpg" alt="Roka ieliek sveci oranžā reljefa stikla traukā, blakus tāds pats trauks ar sarkanām rozēm" loading="lazy" width="1400" height="2100">
-          <figcaption>Kolekcija ROMANCE</figcaption>
-        </figure>
-        <ul class="reasons">
-          <li><span class="k">Visu gadu</span><div><h3>Divi produkti vienā traukā</h3><p>Ziemas mēnešos svece, pavasarī un vasarā vāze. Dāvana nenonāk plauktā pēc svētkiem.</p></div></li>
-          <li><span class="k">Ilgtspējīgi</span><div><h3>Trauks kalpo gadiem</h3><p>Mainās tikai svece. Uzpildes svece maksā mazāk par jaunu sveci traukā, un stikls netiek izmests.</p></div></li>
-          <li><span class="k">Rituāls</span><div><h3>Atvēršana ir daļa no dāvanas</h3><p>Burgundijas papīrs, vaska zīmogs ar jūsu uzņēmuma logotipu un garie sērkociņi ar vēstījumu uz kastītes.</p></div></li>
-          <li><span class="k">Ikvienam</span><div><h3>Iepriecina arī vīriešus</h3><p>Kāds pircējs to uzdāvināja draugam vīrietim, un tas pēc atvēršanas zvanīja pateikties.</p></div></li>
-        </ul>
+      <div class="sizes" id="sizes">
+        <article class="size">
+          <div class="jar-stage"><img class="jar-photo" src="img/jar-big.png" alt="Lielais oranžais reljefa stikla trauks, 15 cm augsts" width="478" height="560" loading="lazy" style="height:var(--jar-h)"></div>
+          <h3>Lielais trauks</h3>
+          <dl class="spec">
+            <div><dt>Tilpums</dt><dd>550 ml</dd></div>
+            <div><dt>Izmērs</dt><dd>15 × Ø 10,5 cm</dd></div>
+            <div><dt>Degļi</dt><dd>3</dd></div>
+            <div><dt>Degšanas laiks</dt><dd>~80 h</dd></div>
+            <div><dt>Ziedu organizators</dt><dd class="yes">Ir</dd></div>
+          </dl>
+        </article>
+        <article class="size">
+          <div class="jar-stage"><img class="jar-photo" src="img/jar-small.png" alt="Mazais oranžais reljefa stikla trauks, 10 cm augsts" width="478" height="340" loading="lazy" style="height:calc(var(--jar-h) * 340 / 560)"></div>
+          <h3>Mazais trauks</h3>
+          <dl class="spec">
+            <div><dt>Tilpums</dt><dd>250 ml</dd></div>
+            <div><dt>Izmērs</dt><dd>10 × Ø 10,5 cm</dd></div>
+            <div><dt>Degļi</dt><dd>3</dd></div>
+            <div><dt>Degšanas laiks</dt><dd>~35 h</dd></div>
+            <div><dt>Ziedu organizators</dt><dd class="no">Nav</dd></div>
+          </dl>
+        </article>
       </div>
-    </div>
-  </section>
-
-  <!-- ===== COLLECTIONS ===== -->
-  <section class="block collections" id="kolekcijas">
-    <div class="wrap">
-      <div class="sec-head">
-        <p class="eyebrow">Trīs kolekcijas</p>
-        <h2>Izvēlieties stiklu, kas atbilst jūsu zīmolam.</h2>
-        <p>Katrā komplektā: trauks, ziedu ieliktnis un uzpildes svece. Var pasūtīt vienā tonī visai komandai vai jaukt kolekcijas.</p>
+      <div class="colors">
+        <span class="eyebrow">Krāsas</span>
+        <span class="tone"><i style="background:#e0782f"></i>Oranža</span>
+        <span class="tone"><i style="background:#eef2f4"></i>Caurspīdīga</span>
+        <span class="tone"><i style="background:#6c6f77"></i>Pelēka</span>
+        <span class="tone"><i style="background:#e7a3ad"></i>Rozā</span>
       </div>
-      <div class="cards">
-        <a class="card" href="https://mindyourlight.shop/products/komplekts-romance-lielais-trauks-ziedu-ieliktnis-uzpildes-svece?utm_source=corporate-landing&amp;utm_medium=collection" target="_blank" rel="noopener">
-          <div class="ph"><img src="img/romance.jpg" alt="Oranžs reljefa stikla trauks ROMANCE ar iesaiņotu sveci" loading="lazy" width="1000" height="1500"><img src="img/roses-amber.jpg" alt="" loading="lazy" width="1400" height="2100"></div>
-          <div class="meta"><h3>Romance</h3><span class="price">54,95&nbsp;€</span><span class="sub"><i class="swatch" style="background:#d27c36"></i>Oranžs stikls · siltākā gaisma</span><span class="go">Skatīt veikalā <span class="arr" aria-hidden="true">→</span></span></div>
-        </a>
-        <a class="card" href="https://mindyourlight.shop/products/komplekts-authentic-lielais-trauks-ziedu-ieliktnis-uzpildes-svece?utm_source=corporate-landing&amp;utm_medium=collection" target="_blank" rel="noopener">
-          <div class="ph"><img src="img/authentic.jpg" alt="Caurspīdīgs reljefa stikla trauks AUTHENTIC ar sveci un ziedu ieliktni" loading="lazy" width="1000" height="1533"><img src="img/authentic-disc.jpg" alt="" loading="lazy" width="1000" height="1483"></div>
-          <div class="meta"><h3>Authentic</h3><span class="price">54,95&nbsp;€</span><span class="sub"><i class="swatch" style="background:#e9eef0"></i>Caurspīdīgs stikls · der jebkuram interjeram</span><span class="go">Skatīt veikalā <span class="arr" aria-hidden="true">→</span></span></div>
-        </a>
-        <a class="card" href="https://mindyourlight.shop/products/komplekts-self-belief-lielais-trauks-ziedu-ieliktnis-uzpildes-svece-copy?utm_source=corporate-landing&amp;utm_medium=collection" target="_blank" rel="noopener">
-          <div class="ph"><img src="img/selfbelief.jpg" alt="Pelēks reljefa stikla trauks SELF-BELIEF ON REPEAT ar sveci un ziedu ieliktni" loading="lazy" width="1000" height="1500"><img src="img/pack-black.jpg" alt="" loading="lazy" width="1000" height="1500"></div>
-          <div class="meta"><h3>Self-belief on repeat</h3><span class="price">54,95&nbsp;€</span><span class="sub"><i class="swatch" style="background:#5d6066"></i>Dūmakaini pelēks stikls · biroja klasika</span><span class="go">Skatīt veikalā <span class="arr" aria-hidden="true">→</span></span></div>
-        </a>
-      </div>
-
-      <div class="addons">
-        <span class="lbl">Papildiniet dāvanu</span>
-        <a class="addon" href="https://mindyourlight.shop/products/uzpildes-svece-large-romance?utm_source=corporate-landing&amp;utm_medium=addon" target="_blank" rel="noopener"><b>Uzpildes svece</b><span>550 ml, 3 degļi</span><em>15,95&nbsp;€</em></a>
-        <a class="addon" href="https://mindyourlight.shop/products/3-uzpildes-svecu-komplekts-large-romance?utm_source=corporate-landing&amp;utm_medium=addon" target="_blank" rel="noopener"><b>3 uzpildes sveces</b><span>izdevīgāk nekā pa vienai</span><em>39,95&nbsp;€</em></a>
-        <a class="addon" href="https://mindyourlight.shop/products/untitled-may16_17-58-52?utm_source=corporate-landing&amp;utm_medium=addon" target="_blank" rel="noopener"><b>Garie sērkociņi</b><span>17 cm, 40 gab., ar vēstījumu</span><em>9,95&nbsp;€</em></a>
-      </div>
+      <p class="shop-line"><a class="btn btn-wine" href="https://mindyourlight.shop/?utm_source=corporate-landing&amp;utm_medium=products" target="_blank" rel="noopener">Skatīt veikalā ↗</a></p>
     </div>
   </section>
 
@@ -627,11 +661,19 @@ html.gating, html.gating body { overflow: hidden; }
               <select id="d-budget" name="budget"><option>Vēl nezinu</option><option>~55 € (viens komplekts)</option><option>55–80 € (ar papildinājumiem)</option><option>80 € un vairāk</option></select></div>
           </div>
           <fieldset>
-            <legend class="legend">Kolekcija</legend>
+            <legend class="legend">Krāsa</legend>
             <div class="chips">
-              <label class="chip"><input type="checkbox" name="col" value="Romance" id="c-rom" checked><span><i class="swatch" style="background:#d27c36;margin:0"></i>Romance</span></label>
-              <label class="chip"><input type="checkbox" name="col" value="Authentic" id="c-aut"><span><i class="swatch" style="background:#e9eef0;margin:0"></i>Authentic</span></label>
-              <label class="chip"><input type="checkbox" name="col" value="Self-belief" id="c-sel"><span><i class="swatch" style="background:#5d6066;margin:0"></i>Self-belief</span></label>
+              <label class="chip"><input type="checkbox" name="col" value="Oranža" id="c-or" checked><span><i class="swatch" style="background:#e0782f;margin:0"></i>Oranža</span></label>
+              <label class="chip"><input type="checkbox" name="col" value="Caurspīdīga" id="c-cl"><span><i class="swatch" style="background:#eef2f4;margin:0"></i>Caurspīdīga</span></label>
+              <label class="chip"><input type="checkbox" name="col" value="Pelēka" id="c-gr"><span><i class="swatch" style="background:#6c6f77;margin:0"></i>Pelēka</span></label>
+              <label class="chip"><input type="checkbox" name="col" value="Rozā" id="c-ro"><span><i class="swatch" style="background:#e7a3ad;margin:0"></i>Rozā</span></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend class="legend">Izmērs</legend>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="size" value="Lielais" id="s-big" checked><span>Lielais · 550 ml</span></label>
+              <label class="chip"><input type="checkbox" name="size" value="Mazais" id="s-small"><span>Mazais · 250 ml</span></label>
             </div>
           </fieldset>
           <fieldset>
@@ -679,7 +721,7 @@ html.gating, html.gating body { overflow: hidden; }
   <span class="hint">vai pieskarieties svecei</span>
 </div>
 
-<script src="stage.js"></script>
+<script src="seq.js"></script>
 <script>
 (function () {
   var story = document.getElementById('story');
@@ -691,9 +733,14 @@ html.gating, html.gating body { overflow: hidden; }
   var root = document.documentElement;
   var stage = null;
 
-  try {
-    if (window.MYLStage) { stage = window.MYLStage.mount(stageEl, { lit: false }); stageEl.classList.add('mounted'); }
-  } catch (e) { console.error(e); }
+  // story background follows the film's own backdrop, frame by frame
+  function lum(hex) { var n = parseInt(hex.slice(1), 16); return (0.2126 * (n >> 16 & 255) + 0.7152 * (n >> 8 & 255) + 0.0722 * (n & 255)) / 255; }
+  function onColor(c) {
+    if (root.classList.contains('gating')) return;   // the gate stays a dark room until the candle is lit
+    story.style.setProperty('--story-bg', c);
+    story.classList.toggle('is-day', lum(c) > 0.5);
+    root.style.setProperty('--story-bg', c);
+  }
 
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
   function smooth(e0, e1, x) { var t = clamp((x - e0) / (e1 - e0), 0, 1); return t * t * (3 - 2 * t); }
@@ -707,17 +754,8 @@ html.gating, html.gating body { overflow: hidden; }
     var p = clamp(-r.top / range, 0, 1);
     if (stage) stage.setProgress(p);
 
-    // night → morning follows the stage's light crossfade
-    var day = smooth(0.50, 0.60, p);
-    story.style.setProperty('--day', day.toFixed(3));
-    story.classList.toggle('is-day', day > 0.5);
-    var fin = smooth(0.76, 0.84, p);  // stage dissolves into the brand photo here
-    story.style.setProperty('--fin', fin.toFixed(3));
-    story.classList.toggle('is-fin', fin > 0.5);
-    root.style.setProperty('--story-bg', getComputedStyle(story).backgroundColor);
-
-    // active beat follows the stage timeline (burn .10, out .40, lift .52, bloom .70)
-    var cuts = [0.10, 0.40, 0.52, 0.70], active = 0;
+    // active beat follows the film (meta.chapters: burning 6.5 s, out 9.5 s, remnant 13.5 s, insert 16 s; scroll covers 6.5–20 s)
+    var cuts = [0.06, 0.22, 0.52, 0.70], active = 0;
     cuts.forEach(function (c, i) { if (p >= c) active = i + 1; });
     beats.forEach(function (b, i) { b.classList.toggle('on', i === active); });
     railItems.forEach(function (li, i) { li.classList.toggle('on', i + 1 === active); });
@@ -753,7 +791,7 @@ html.gating, html.gating body { overflow: hidden; }
 
 
   // ---------- V2 gate: light the candle to start the story ----------
-  (function () {
+  function startGate() {
     var canGate = stage && typeof stage.ignite === 'function';
     if (!canGate) { root.classList.remove('gating'); return; }                       // no stage or old stage: plain V1 behaviour
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
@@ -766,7 +804,7 @@ html.gating, html.gating body { overflow: hidden; }
       root.classList.add('igniting');
       var done = stage.ignite();
       // the room opens while the flames are still settling
-      setTimeout(function () { root.classList.remove('gating'); onScroll(); }, 1300);
+      setTimeout(function () { root.classList.remove('gating'); onColor(stage.color()); onScroll(); }, 1300);
       Promise.resolve(done).then(function () {
         root.classList.remove('igniting');
         setTimeout(function () { root.classList.remove('gate-anim'); document.querySelectorAll('.gate-ui').forEach(function (g) { g.remove(); }); }, 1700);
@@ -774,7 +812,12 @@ html.gating, html.gating body { overflow: hidden; }
     }
     btn.addEventListener('click', light);
     stageEl.addEventListener('click', function () { if (root.classList.contains('gating')) light(); });
-  })();
+  }
+  fetch('seq/meta.json').then(function (r) { return r.json(); }).then(function (meta) {
+    stage = window.MYLSeq.mount(stageEl, { base: 'seq/', meta: meta, lit: false, onColor: onColor });
+    stageEl.classList.add('mounted');
+    startGate(); update();
+  }).catch(function (e) { console.error(e); root.classList.remove('gating'); });
 
   // ---------- Form ----------
   var tabs = [document.getElementById('t-quick'), document.getElementById('t-full')];
