@@ -348,63 +348,6 @@ footer.site a { color: #f7ece2; }
   .top .btn .long { display: none; }
 }
 
-/* ---------- V2 intro gate: dark room, one candle, light it to begin ---------- */
-.gate-ui { display: none; }
-.gating .gate-ui {
-  display: grid; justify-items: center; gap: 18px; position: fixed; z-index: 30;
-  left: 0; right: 0; bottom: calc(max(7vh, 40px) + env(safe-area-inset-bottom, 0px));
-  padding-left: var(--gutter-l); padding-right: var(--gutter-r); text-align: center; color: #f7ece2;
-  transition: opacity .7s var(--ease-out), transform .9s var(--ease-out);
-}
-.gating .gate-top { bottom: auto; top: calc(max(8vh, 48px) + env(safe-area-inset-top, 0px)); gap: 12px; }
-.gate-ui .brand { font: 500 .95rem/1 var(--display); letter-spacing: .32em; opacity: .85; }
-.gate-ui .sub { font-size: var(--step--1); letter-spacing: .14em; text-transform: uppercase; color: rgba(247, 236, 226, .55); }
-.light-btn {
-  position: relative; display: inline-flex; align-items: center; gap: 12px; margin-top: 6px;
-  padding: 1.05em 1.7em; border-radius: 999px; border: 1px solid rgba(244, 178, 106, .55);
-  background: rgba(20, 11, 12, .35); color: #f7ece2; cursor: pointer;
-  font: 600 var(--step--1)/1 var(--body); letter-spacing: .14em; text-transform: uppercase;
-  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-  transition: background-color .4s, border-color .4s, transform .5s var(--ease-out), box-shadow .6s;
-  box-shadow: 0 0 0 0 rgba(244, 178, 106, .0);
-  animation: breathe 3.2s ease-in-out infinite;
-}
-.light-btn:hover { background: rgba(244, 178, 106, .14); border-color: var(--ember); transform: translateY(-2px); }
-.light-btn svg { width: 14px; height: 20px; fill: var(--ember); filter: drop-shadow(0 0 6px rgba(244, 178, 106, .8)); }
-@keyframes breathe { 0%, 100% { box-shadow: 0 0 0 0 rgba(244, 178, 106, 0); } 50% { box-shadow: 0 0 34px 2px rgba(244, 178, 106, .22); } }
-.gate-ui .hint { font-size: .75rem; color: rgba(247, 236, 226, .4); }
-.gating.igniting .gate-ui { opacity: 0; transform: translateY(14px); pointer-events: none; }
-
-/* while gated: only the stage, full viewport; everything else waits */
-html.gating, html.gating body { overflow: hidden; }
-.gating .top, .gating .copy, .gating .rail, .gating .mcta, .gating .stage-wrap::after { opacity: 0; pointer-events: none; }
-.gate-anim .top, .gate-anim .copy, .gate-anim .rail, .gate-anim .stage-wrap::after { transition: opacity 1.2s var(--ease-out); }
-.gating .stage { cursor: pointer; inset: calc(max(8vh, 48px) + 64px) 0 calc(max(7vh, 40px) + 96px) 0; }
-.gate-anim .stage { transition: inset 1.6s cubic-bezier(.65, 0, .35, 1); }
-.gating .stage-wrap { background: #221a1b; }
-.gate-anim .stage-wrap { background-color: var(--story-bg); }
-.gating.igniting .stage-wrap { background: #140b0c; transition: background-color 1.4s var(--ease-out); }
-.gating .stage { -webkit-mask-image: linear-gradient(transparent, #000 14%, #000 86%, transparent); mask-image: linear-gradient(transparent, #000 14%, #000 86%, transparent); }
-.gate-anim .stage-wrap { transition: margin-left 1.6s cubic-bezier(.65, 0, .35, 1), width 1.6s cubic-bezier(.65, 0, .35, 1), height 1.6s cubic-bezier(.65, 0, .35, 1); }
-.gating .stage-wrap { margin-left: calc(-100% * 5 / 7); width: calc(100% * 12 / 7); }
-.gate-anim .copy .hero > * { transition: opacity 1s var(--ease-out), transform 1.2s var(--ease-out); }
-.gating .copy .hero > * { opacity: 0; transform: translateY(18px); }
-.gate-anim .copy .hero > *:nth-child(1) { transition-delay: 0.25s; }
-.gate-anim .copy .hero > *:nth-child(2) { transition-delay: 0.37s; }
-.gate-anim .copy .hero > *:nth-child(3) { transition-delay: 0.49s; }
-.gate-anim .copy .hero > *:nth-child(4) { transition-delay: 0.61s; }
-.gate-anim .copy .hero > *:nth-child(5) { transition-delay: 0.73s; }
-.gate-anim .copy .hero > *:nth-child(6) { transition-delay: 0.85s; }
-.gate-anim .copy .hero > *:nth-child(7) { transition-delay: 0.97s; }
-
-@media (max-width: 900px) {
-  .gating .stage-wrap { margin-left: 0; width: auto; height: 100vh; height: 100svh; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .light-btn { animation: none; }
-}
-
-
 /* ---------- V2: owner's chapters, product film, product types ---------- */
 .beat .chapter { font-size: clamp(2.6rem, 1.6rem + 3.6vw, 4.8rem); text-transform: uppercase; letter-spacing: .04em; line-height: .95; }
 .beat .note { font-size: var(--step--1); color: var(--story-soft); max-width: 30rem; padding-top: 14px; border-top: 1px solid var(--story-line); }
@@ -416,10 +359,7 @@ html.gating, html.gating body { overflow: hidden; }
 .hero-points { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; color: var(--story-soft); font-size: var(--step-0); }
 .hero-points li::before { content: "— "; color: var(--story-accent); }
 .story { transition: color .6s; }
-.stage canvas { transition: filter 1.6s var(--ease-out); }
-.gating .stage canvas { filter: brightness(.34) sepia(.35) saturate(1.15); }
-html.gating .stage-wrap, html.gating body, html.gating .story { background: #1a1110 !important; }
-.gating.igniting .stage canvas { filter: none; }
+
 
 .products { background: var(--paper); }
 .prod-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(28px, 5vw, 80px); align-items: start; }
@@ -464,7 +404,6 @@ html.gating .stage-wrap, html.gating body, html.gating .story { background: #1a1
 </head>
 <body>
 
-<script>document.documentElement.classList.add('gating')</script>
 <header class="top" id="top">
   <div class="wrap">
     <a class="logo" href="#story" aria-label="Mind Your Light — uz sākumu">MIND YOUR LIGHT</a>
@@ -734,15 +673,6 @@ html.gating .stage-wrap, html.gating body, html.gating .story { background: #1a1
 
 <div class="mcta" id="mcta"><a class="btn btn-wine" href="#piedavajums">Saņemt korporatīvo piedāvājumu <span class="arr" aria-hidden="true">→</span></a></div>
 
-<div class="gate-ui gate-top" aria-hidden="true">
-  <span class="brand">MIND YOUR LIGHT</span>
-  <span class="sub">Korporatīvās dāvanas · Ziemassvētki 2026</span>
-</div>
-<div class="gate-ui" id="gate">
-  <button class="light-btn" id="light-btn" type="button"><svg viewBox="0 0 14 20" aria-hidden="true"><path d="M7 0c2.2 3.3 6 6.2 6 11a6 6 0 0 1-12 0C1 7.6 3.4 5.6 4.6 3.2 5 5 5.8 6.4 7 7c-.6-2.4-.4-4.6 0-7z"/></svg>Aizdedziet sveci</button>
-  <span class="hint">vai pieskarieties svecei</span>
-</div>
-
 <script src="seq.js"></script>
 <script>
 (function () {
@@ -758,7 +688,6 @@ html.gating .stage-wrap, html.gating body, html.gating .story { background: #1a1
   // story background follows the film's own backdrop, frame by frame
   function lum(hex) { var n = parseInt(hex.slice(1), 16); return (0.2126 * (n >> 16 & 255) + 0.7152 * (n >> 8 & 255) + 0.0722 * (n & 255)) / 255; }
   function onColor(c) {
-    if (root.classList.contains('gating')) return;   // the gate stays a dark room until the candle is lit
     story.style.setProperty('--story-bg', c);
     story.classList.toggle('is-day', lum(c) > 0.5);
     root.style.setProperty('--story-bg', c);
@@ -812,34 +741,11 @@ html.gating .stage-wrap, html.gating body, html.gating .story { background: #1a1
   } else { sealInView = true; sealSync(); }
 
 
-  // ---------- V2 gate: light the candle to start the story ----------
-  function startGate() {
-    var canGate = stage && typeof stage.ignite === 'function';
-    if (!canGate) { root.classList.remove('gating'); return; }                       // no stage or old stage: plain V1 behaviour
-    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-    window.scrollTo(0, 0);
-    root.classList.add('gating');  // also set before first paint by the inline script at the top
-    requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.add('gate-anim'); }); });
-    var btn = document.getElementById('light-btn'), gate = document.getElementById('gate'), started = false;
-    function light() {
-      if (started) return; started = true;
-      root.classList.add('igniting');
-      var done = stage.ignite();
-      // the room opens while the flames are still settling
-      setTimeout(function () { root.classList.remove('gating'); onColor(stage.color()); onScroll(); }, 1300);
-      Promise.resolve(done).then(function () {
-        root.classList.remove('igniting');
-        setTimeout(function () { root.classList.remove('gate-anim'); document.querySelectorAll('.gate-ui').forEach(function (g) { g.remove(); }); }, 1700);
-      });
-    }
-    btn.addEventListener('click', light);
-    stageEl.addEventListener('click', function () { if (root.classList.contains('gating')) light(); });
-  }
   fetch('seq/meta.json').then(function (r) { return r.json(); }).then(function (meta) {
-    stage = window.MYLSeq.mount(stageEl, { base: 'seq/', meta: meta, lit: false, onColor: onColor });
+    stage = window.MYLSeq.mount(stageEl, { base: 'seq/', meta: meta, onColor: onColor });
     stageEl.classList.add('mounted');
-    startGate(); update();
-  }).catch(function (e) { console.error(e); root.classList.remove('gating'); });
+    onColor(stage.color()); update();
+  }).catch(function (e) { console.error(e); });
 
   // ---------- Product gallery: real photos per colour ----------
   (function () {
