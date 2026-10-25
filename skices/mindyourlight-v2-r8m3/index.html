@@ -422,25 +422,37 @@ html.gating .stage-wrap, html.gating body, html.gating .story { background: #1a1
 .gating.igniting .stage canvas { filter: none; }
 
 .products { background: var(--paper); }
-.sizes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(20px, 4vw, 56px); --jar-h: clamp(200px, 26vw, 300px); }
-.size { display: grid; grid-template-rows: auto auto 1fr; gap: 18px; padding: clamp(20px, 3vw, 36px); background: var(--porcelain); border-radius: 4px; }
-.jar-stage { height: calc(var(--jar-h) + 30px); display: flex; align-items: flex-end; justify-content: center; color: var(--ink-soft); }
-.jar { width: auto; max-width: 100%; overflow: visible; }
-.jar .glass { fill: var(--jar); transition: fill .5s var(--ease-out); }
-.size h3 { font-size: var(--step-2); }
+.prod-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(28px, 5vw, 80px); align-items: start; }
+.gallery { display: grid; gap: 16px; }
+.tones { display: flex; flex-wrap: wrap; gap: 8px; }
+.tone { appearance: none; display: inline-flex; align-items: center; gap: 10px; padding: .55em 1.1em .55em .6em; border: 1px solid var(--line); border-radius: 999px; background: transparent; font: 500 var(--step--1)/1 var(--body); color: var(--ink); cursor: pointer; transition: background-color .3s, border-color .3s, color .3s; }
+.tone i { width: 22px; height: 22px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.14), inset 0 -6px 10px rgba(0,0,0,.12); }
+.tone.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.hero-shot { position: relative; margin: 0; aspect-ratio: 2 / 3; overflow: hidden; background: var(--porcelain); }
+.hero-shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity .45s var(--ease-out); }
+.hero-shot img.fade { opacity: 0; }
+.soon { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; gap: 10px; background: radial-gradient(circle at 50% 40%, #f6d9dc, #e9b9bf 70%); color: #6b2b33; }
+.soon span { font: italic 400 var(--step-3)/1 var(--display); }
+.soon p { font-size: var(--step--1); letter-spacing: .08em; text-transform: uppercase; }
+.thumbs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.thumb { appearance: none; padding: 0; border: 1px solid transparent; background: none; cursor: pointer; aspect-ratio: 2 / 3; overflow: hidden; opacity: .6; transition: opacity .3s, border-color .3s; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb.on, .thumb:hover { opacity: 1; border-color: var(--ink); }
+.sizes { display: grid; gap: 24px; position: sticky; top: 100px; padding-top: 52px; }
+.also { display: flex; align-items: center; gap: 10px; font-size: var(--step--1); color: var(--ink-soft); }
+.also i { width: 16px; height: 16px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.14); }
+.outlines { display: flex; align-items: flex-end; justify-content: center; gap: clamp(28px, 5vw, 64px); padding: 24px 0 8px; color: var(--ink); border-bottom: 1px solid var(--line); }
+.outline { width: auto; overflow: visible; }
+.size-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 3vw, 32px); }
+.size h3 { font-size: var(--step-1); margin-bottom: 6px; }
 .spec { margin: 0; display: grid; }
-.spec div { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); }
-.spec dt { color: var(--ink-soft); font-size: var(--step--1); letter-spacing: .04em; }
+.spec div { display: grid; gap: 2px; padding: 9px 0; border-top: 1px solid var(--line); }
+.spec dt { color: var(--ink-soft); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; }
 .spec dd { margin: 0; font: 400 var(--step-1)/1.1 var(--display); font-variant-numeric: lining-nums tabular-nums; }
 .spec dd.no { color: var(--ink-soft); }
-.colors { margin-top: 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
-.colors .eyebrow { color: var(--wine); margin-right: 8px; }
-.tone { display: inline-flex; align-items: center; gap: 10px; padding: .55em 1.1em .55em .6em; border: 1px solid var(--line); border-radius: 999px; font-size: var(--step--1); }
-.tone i { width: 22px; height: 22px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.14), inset 0 -6px 10px rgba(0,0,0,.12); }
-.jar-photo { width: auto; max-width: 100%; object-fit: contain; filter: drop-shadow(0 18px 22px rgba(60,30,10,.18)); }
-.shop-line { margin-top: 28px; }
 @media (max-width: 900px) {
-  .sizes { grid-template-columns: minmax(0, 1fr); --jar-h: 220px; }
+  .prod-grid { grid-template-columns: minmax(0, 1fr); }
+  .sizes { position: static; }
   .stage-wrap { height: 62vh; height: 62svh; }
   .copy { padding-top: 59svh; }
 }
@@ -451,6 +463,7 @@ html.gating .stage-wrap, html.gating body, html.gating .story { background: #1a1
 </style>
 </head>
 <body>
+
 <script>document.documentElement.classList.add('gating')</script>
 <header class="top" id="top">
   <div class="wrap">
@@ -546,41 +559,50 @@ html.gating .stage-wrap, html.gating body, html.gating .story { background: #1a1
     <div class="wrap">
       <div class="sec-head">
         <p class="eyebrow">Produktu veidi</p>
-        <h2>Divi izmēri. <span class="it">Četras krāsas.</span></h2>
+        <h2>Četras krāsas. <span class="it">Divi izmēri.</span></h2>
         <p>Abi trauki ir atkārtoti uzpildāmi ar uzpildes sveci. Ziedu organizators ir lielajam traukam.</p>
       </div>
-      <div class="sizes" id="sizes">
-        <article class="size">
-          <div class="jar-stage"><img class="jar-photo" src="img/jar-big.png" alt="Lielais oranžais reljefa stikla trauks, 15 cm augsts" width="478" height="560" loading="lazy" style="height:var(--jar-h)"></div>
-          <h3>Lielais trauks</h3>
-          <dl class="spec">
-            <div><dt>Tilpums</dt><dd>550 ml</dd></div>
-            <div><dt>Izmērs</dt><dd>15 × Ø 10,5 cm</dd></div>
-            <div><dt>Degļi</dt><dd>3</dd></div>
-            <div><dt>Degšanas laiks</dt><dd>~80 h</dd></div>
-            <div><dt>Ziedu organizators</dt><dd class="yes">Ir</dd></div>
-          </dl>
-        </article>
-        <article class="size">
-          <div class="jar-stage"><img class="jar-photo" src="img/jar-small.png" alt="Mazais oranžais reljefa stikla trauks, 10 cm augsts" width="478" height="340" loading="lazy" style="height:calc(var(--jar-h) * 340 / 560)"></div>
-          <h3>Mazais trauks</h3>
-          <dl class="spec">
-            <div><dt>Tilpums</dt><dd>250 ml</dd></div>
-            <div><dt>Izmērs</dt><dd>10 × Ø 10,5 cm</dd></div>
-            <div><dt>Degļi</dt><dd>3</dd></div>
-            <div><dt>Degšanas laiks</dt><dd>~35 h</dd></div>
-            <div><dt>Ziedu organizators</dt><dd class="no">Nav</dd></div>
-          </dl>
-        </article>
+      <div class="prod-grid">
+        <div class="gallery" id="gallery">
+          <div class="tones" role="tablist" aria-label="Krāsa">
+            <button type="button" role="tab" class="tone on" aria-selected="true" data-tone="oranza"><i style="background:#e0782f"></i>Oranža</button>
+            <button type="button" role="tab" class="tone" aria-selected="false" data-tone="caurspidiga"><i style="background:#eef2f4"></i>Caurspīdīga</button>
+            <button type="button" role="tab" class="tone" aria-selected="false" data-tone="peleka"><i style="background:#6c6f77"></i>Pelēka</button>
+          </div>
+          <figure class="hero-shot">
+            <img id="gal-main" src="img/gal/oranza-1.jpg" alt="Oranžais MIND YOUR LIGHT trauks ar sveci" width="900" height="1350">
+          </figure>
+          <div class="thumbs" data-tone="oranza"><button type="button" class="thumb on" data-src="img/gal/oranza-1.jpg" aria-label="Oranžais trauks ar sveci"><img src="img/gal/oranza-1-t.jpg" alt="" width="180" height="270" loading="lazy"></button><button type="button" class="thumb" data-src="img/gal/oranza-2.jpg" aria-label="Oranžais trauks ar vāku"><img src="img/gal/oranza-2-t.jpg" alt="" width="180" height="270" loading="lazy"></button><button type="button" class="thumb" data-src="img/gal/oranza-3.jpg" aria-label="Oranžais trauks ar iesaiņotu sveci"><img src="img/gal/oranza-3-t.jpg" alt="" width="180" height="270" loading="lazy"></button></div>
+          <div class="thumbs" data-tone="caurspidiga" hidden><button type="button" class="thumb on" data-src="img/gal/caurspidiga-1.jpg" aria-label="Caurspīdīgais trauks ar sveci un ieliktni"><img src="img/gal/caurspidiga-1-t.jpg" alt="" width="180" height="270" loading="lazy"></button><button type="button" class="thumb" data-src="img/gal/caurspidiga-2.jpg" aria-label="Ieliktņa ievietošana caurspīdīgajā traukā"><img src="img/gal/caurspidiga-2-t.jpg" alt="" width="180" height="270" loading="lazy"></button><button type="button" class="thumb" data-src="img/gal/caurspidiga-3.jpg" aria-label="Caurspīdīgais trauks ar ziediem interjerā"><img src="img/gal/caurspidiga-3-t.jpg" alt="" width="180" height="270" loading="lazy"></button></div>
+          <div class="thumbs" data-tone="peleka" hidden><button type="button" class="thumb on" data-src="img/gal/peleka-1.jpg" aria-label="Pelēkais trauks ar sveci un ieliktni"><img src="img/gal/peleka-1-t.jpg" alt="" width="180" height="270" loading="lazy"></button><button type="button" class="thumb" data-src="img/gal/peleka-2.jpg" aria-label="Sveces ievietošana pelēkajā traukā"><img src="img/gal/peleka-2-t.jpg" alt="" width="180" height="270" loading="lazy"></button><button type="button" class="thumb" data-src="img/gal/peleka-3.jpg" aria-label="Pelēkā trauka iepakojums"><img src="img/gal/peleka-3-t.jpg" alt="" width="180" height="270" loading="lazy"></button></div>
+          <p class="also"><i style="background:#e7a3ad"></i>Pieejama arī rozā krāsā.</p>
+        </div>
+        <div class="sizes">
+          <div class="size-cols">
+            <article class="size">
+              <h3>Lielais trauks</h3>
+              <dl class="spec">
+                <div><dt>Tilpums</dt><dd>550 ml</dd></div>
+                <div><dt>Izmērs</dt><dd>15 × Ø 10,5 cm</dd></div>
+                <div><dt>Degļi</dt><dd>3</dd></div>
+                <div><dt>Degšanas laiks</dt><dd>~80 h</dd></div>
+                <div><dt>Ziedu organizators</dt><dd>Ir</dd></div>
+              </dl>
+            </article>
+            <article class="size">
+              <h3>Mazais trauks</h3>
+              <dl class="spec">
+                <div><dt>Tilpums</dt><dd>250 ml</dd></div>
+                <div><dt>Izmērs</dt><dd>10 × Ø 10,5 cm</dd></div>
+                <div><dt>Degļi</dt><dd>3</dd></div>
+                <div><dt>Degšanas laiks</dt><dd>~35 h</dd></div>
+                <div><dt>Ziedu organizators</dt><dd class="no">Nav</dd></div>
+              </dl>
+            </article>
+          </div>
+          <p class="shop-line"><a class="btn btn-wine" href="https://mindyourlight.shop/?utm_source=corporate-landing&amp;utm_medium=products" target="_blank" rel="noopener">Skatīt veikalā ↗</a></p>
+        </div>
       </div>
-      <div class="colors">
-        <span class="eyebrow">Krāsas</span>
-        <span class="tone"><i style="background:#e0782f"></i>Oranža</span>
-        <span class="tone"><i style="background:#eef2f4"></i>Caurspīdīga</span>
-        <span class="tone"><i style="background:#6c6f77"></i>Pelēka</span>
-        <span class="tone"><i style="background:#e7a3ad"></i>Rozā</span>
-      </div>
-      <p class="shop-line"><a class="btn btn-wine" href="https://mindyourlight.shop/?utm_source=corporate-landing&amp;utm_medium=products" target="_blank" rel="noopener">Skatīt veikalā ↗</a></p>
     </div>
   </section>
 
@@ -819,6 +841,32 @@ html.gating .stage-wrap, html.gating body, html.gating .story { background: #1a1
     startGate(); update();
   }).catch(function (e) { console.error(e); root.classList.remove('gating'); });
 
+  // ---------- Product gallery: real photos per colour ----------
+  (function () {
+    var main = document.getElementById('gal-main');
+    var tones = [].slice.call(document.querySelectorAll('.tone')), sets = [].slice.call(document.querySelectorAll('.thumbs'));
+    function show(src, alt) {
+      if (main.getAttribute('src') === src) return;
+      main.classList.add('fade');
+      var im = new Image(); im.onload = function () { main.src = src; if (alt) main.alt = alt; main.classList.remove('fade'); }; im.src = src;
+    }
+    tones.forEach(function (t) {
+      t.addEventListener('click', function () {
+        var k = t.dataset.tone;
+        tones.forEach(function (x) { x.classList.toggle('on', x === t); x.setAttribute('aria-selected', String(x === t)); });
+        var set = null; sets.forEach(function (st) { var on = st.dataset.tone === k; st.hidden = !on; if (on) set = st; });
+        if (set) { var first = set.querySelector('.thumb'); set.querySelectorAll('.thumb').forEach(function (b) { b.classList.toggle('on', b === first); }); show(first.dataset.src, first.getAttribute('aria-label')); }
+      });
+    });
+    sets.forEach(function (st) {
+      st.addEventListener('click', function (e) {
+        var b = e.target.closest('.thumb'); if (!b) return;
+        st.querySelectorAll('.thumb').forEach(function (x) { x.classList.toggle('on', x === b); });
+        show(b.dataset.src, b.getAttribute('aria-label'));
+      });
+    });
+  })();
+
   // ---------- Form ----------
   var tabs = [document.getElementById('t-quick'), document.getElementById('t-full')];
   var forms = [document.getElementById('f-quick'), document.getElementById('f-full')];
@@ -875,6 +923,5 @@ html.gating .stage-wrap, html.gating body, html.gating .story { background: #1a1
   });
 })();
 </script>
-
 </body>
 </html>
