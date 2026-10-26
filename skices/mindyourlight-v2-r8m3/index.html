@@ -157,11 +157,14 @@ img { display: block; max-width: 100%; }
 .fact b { font: 400 var(--step-2)/1 var(--display); color: var(--story-fg); white-space: nowrap; }
 
 /* progress rail on the stage */
-.rail { position: absolute; right: max(20px, env(safe-area-inset-right, 0px)); top: 50%; transform: translateY(-50%); z-index: 3; display: grid; gap: 14px; list-style: none; margin: 0; padding: 0; }
-.rail li { display: flex; align-items: center; justify-content: flex-end; gap: 10px; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--story-fg); opacity: .4; transition: opacity .5s; }
-.rail li::after { content: ""; width: 18px; height: 1px; background: currentColor; transition: width .6s var(--ease-out); }
+.rail { position: absolute; right: max(20px, env(safe-area-inset-right, 0px)); top: calc(68px + 8vh); z-index: 3; display: grid; gap: clamp(8px, 1.6vh, 18px); list-style: none; margin: 0; padding: 0; }
+.rail li { display: flex; align-items: center; justify-content: flex-end; gap: 14px; font: 400 clamp(1rem, .5rem + 1vw, 1.6rem)/1.1 var(--brand); letter-spacing: .06em; text-transform: uppercase; color: var(--story-fg); opacity: .4; transition: opacity .5s; }
+.rail li::after { content: ""; flex: none; width: 22px; height: 1px; background: currentColor; transition: width .6s var(--ease-out); }
 .rail li.on { opacity: 1; }
-.rail li.on::after { width: 36px; }
+.rail li.on::after { width: 48px; }
+.rail .cm { position: relative; display: inline-block; }
+.rail .cm::after { content: ","; position: absolute; left: 50%; bottom: -.42em; transform: translateX(-50%); font-size: .62em; line-height: 1; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* story colours follow --day; switch text ink once morning wins */
 .story { --story-fg: #f7ece2; --story-soft: rgba(247, 236, 226, .72); --story-accent: var(--ember); --story-line: var(--line-dark); }
@@ -326,6 +329,7 @@ footer.site a { color: #f7ece2; }
   .beat .stick { top: 60svh; }
   .rail { top: auto; bottom: 18px; transform: none; right: var(--gutter-r); grid-auto-flow: column; gap: 6px; }
   .rail li { font-size: 0; gap: 0; }
+  .rail li.on { font-size: 1.15rem; gap: 10px; }
   .rail li::after { width: 14px; }
   .rail li.on::after { width: 28px; }
   .sec-head, .why-grid, .unbox-grid, .desk-grid, .about-grid { grid-template-columns: minmax(0, 1fr); }
@@ -428,7 +432,7 @@ footer.site a { color: #f7ece2; }
         <div class="stage" id="stage"></div>
         <div class="stage-fallback"></div>
         <ol class="rail" id="rail">
-          <li data-for="b1">Deg</li><li data-for="b2">Nodziest</li><li data-for="b3">Nomaini</li><li data-for="b4">Uzzied</li>
+          <li data-for="b1"><span>Aizdedz</span></li><li data-for="b2"><span>Izdedzini</span></li><li data-for="b3"><span>Nomaini</span></li><li data-for="b4"><span><span class="cm">L</span>auj uzziedēt</span></li>
         </ol>
       </div>
 
@@ -452,8 +456,7 @@ footer.site a { color: #f7ece2; }
 
         <div class="beat" id="b1" style="--h:96">
           <div class="stick">
-            <p class="num eyebrow">01</p>
-            <h2 class="chapter">Deg</h2>
+            <h2 class="sr-only">Aizdedz</h2>
             <p class="lead">Pārdomāts, ilgmūžīgs dizaina priekšmets – trauks ar jau gatavu uzpildes sveci un īpaši izstrādātu ziedu organizatoru, lai vienu un to pašu lielo trauku varētu izmantot atkal un atkal.</p>
             <p class="note">Lielā trauka komplektā ietilpst trauks, uzpildes svece un ziedu organizators. Mazās sveces komplekts – trauks un uzpildes svece.</p>
           </div>
@@ -461,8 +464,7 @@ footer.site a { color: #f7ece2; }
 
         <div class="beat" id="b2" style="--h:180">
           <div class="stick">
-            <p class="num eyebrow">02</p>
-            <h2 class="chapter">Nodziest</h2>
+            <h2 class="sr-only">Izdedzini</h2>
             <ul class="points">
               <li><b>Ilgstoša vērtība</b> — trauks kalpo arī pēc sveces izdegšanas.</li>
               <li><b>Personalizēta dāvana</b> — vaska zīmogs ar uzņēmuma logo.</li>
@@ -474,8 +476,7 @@ footer.site a { color: #f7ece2; }
 
         <div class="beat" id="b3" style="--h:108">
           <div class="stick">
-            <p class="num eyebrow">03</p>
-            <h2 class="chapter">Nomaini</h2>
+            <h2 class="sr-only">Nomaini</h2>
             <p class="lead">Izņemiet vasku, un trauks ir brīvs. Ielieciet jaunu uzpildes sveci (gan lielajiem, gan mazajiem traukiem) vai pārvērtiet lielo trauku par vāzi. Svecei nav jāizdeg līdz galam, lai to izmantotu kā vāzi. Kad vasks ir ciets, to iespējams vienkārši izņemt.</p>
             <p class="note">Ziedu ieliktnis izmantojams tikai lielajiem traukiem. Mazie trauki arī ir atkārtoti uzpildāmi ar uzpildes sveci.</p>
           </div>
@@ -483,8 +484,7 @@ footer.site a { color: #f7ece2; }
 
         <div class="beat" id="b4" style="--h:235">
           <div class="stick">
-            <p class="num eyebrow">04</p>
-            <h2 class="chapter">Uzzied</h2>
+            <h2 class="sr-only">Ļauj uzziedēt</h2>
             <p class="lead">Ievietojiet ziedu organizatoru, un trauks kļūst par vāzi ziedu kompozīciju veidošanai.</p>
             <p class="body">Ziedu ieliktnis izstrādāts speciāli lielajam MIND YOUR LIGHT traukam, lai kārtotu ziedus un veidotu sakārtotu, skaistu kompozīciju, sagādājot prieku gan procesa laikā, gan par rezultātu. Ar ziedu organizatoru izdodas ikvienam arī bez florista pieredzes, jo tā dizains paredzēts dažāda biezuma puķu kātu noturēšanai.</p>
             <div class="ctas">
