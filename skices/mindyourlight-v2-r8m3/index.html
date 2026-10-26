@@ -264,7 +264,7 @@ blockquote.q footer { margin-top: 10px; font: 400 var(--step--1)/1.4 var(--body)
 .desk .intro p { color: rgba(247, 236, 226, .75); max-width: 30rem; }
 .steps { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 0; counter-reset: s; }
 .steps li { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: 4px 12px; padding-block: 16px; border-top: 1px solid var(--line-dark); counter-increment: s; }
-.steps li::before { content: counter(s, decimal-leading-zero); font: italic 400 var(--step-0)/1.4 var(--display); color: var(--ember); grid-row: span 2; }
+.steps li::before { content: counter(s, decimal-leading-zero); font: 400 var(--step-0)/1.4 var(--brand); color: var(--ember); grid-row: span 2; }
 .steps b { font-weight: 600; }
 .steps span { color: rgba(247, 236, 226, .65); font-size: var(--step--1); }
 .contact { display: grid; gap: 10px; margin: 0; padding: 18px 0 0; border-top: 1px solid var(--line-dark); }
@@ -300,7 +300,7 @@ fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 10px; min-width
 .chip input:focus-visible + span { outline: 2px solid var(--amber); outline-offset: 2px; }
 .qty { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; }
 .qty input[type="range"] { width: 100%; accent-color: var(--wine); }
-.qty output { font: 400 var(--step-2)/1 var(--display); font-variant-numeric: lining-nums tabular-nums; min-width: 4ch; text-align: right; }
+.qty output { font: 400 var(--step-2)/1 var(--brand); font-variant-numeric: lining-nums tabular-nums; min-width: 4ch; text-align: right; }
 .form-foot { display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: center; justify-content: space-between; margin-top: 4px; }
 .form-foot small { color: var(--ink-soft); font-size: .8rem; max-width: 22rem; }
 .quick-line { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; }
@@ -370,37 +370,35 @@ footer.site a { color: #f7ece2; }
 
 
 .products { background: var(--paper); }
-.prod-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(28px, 5vw, 80px); align-items: start; }
-.gallery { display: grid; gap: 16px; }
-.tones { display: flex; flex-wrap: wrap; gap: 8px; }
-.tone { appearance: none; display: inline-flex; align-items: center; gap: 10px; padding: .55em 1.1em .55em .6em; border: 1px solid var(--line); border-radius: 999px; background: transparent; font: 500 var(--step--1)/1 var(--body); color: var(--ink); cursor: pointer; transition: background-color .3s, border-color .3s, color .3s; }
-.tone i { width: 22px; height: 22px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.14), inset 0 -6px 10px rgba(0,0,0,.12); }
-.tone.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.hero-shot { position: relative; margin: 0; aspect-ratio: 2 / 3; overflow: hidden; background: var(--porcelain); }
-.hero-shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity .45s var(--ease-out); }
-.hero-shot img.fade { opacity: 0; }
-.soon { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; gap: 10px; background: radial-gradient(circle at 50% 40%, #f6d9dc, #e9b9bf 70%); color: #6b2b33; }
-.soon span { font: italic 400 var(--step-3)/1 var(--display); }
-.soon p { font-size: var(--step--1); letter-spacing: .08em; text-transform: uppercase; }
-.thumbs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-.thumb { appearance: none; padding: 0; border: 1px solid transparent; background: none; cursor: pointer; aspect-ratio: 2 / 3; overflow: hidden; opacity: .6; transition: opacity .3s, border-color .3s; }
-.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.thumb.on, .thumb:hover { opacity: 1; border-color: var(--ink); }
-.sizes { display: grid; gap: 24px; position: sticky; top: 100px; padding-top: 52px; }
-.also { display: flex; align-items: center; gap: 10px; font-size: var(--step--1); color: var(--ink-soft); }
+.tone-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 32px); }
+.tc-photo { margin: 0; aspect-ratio: 4 / 5; overflow: hidden; background: var(--porcelain); }
+.tc-photo img { width: 100%; height: 100%; object-fit: cover; transition: opacity .4s var(--ease-out); }
+.tc-photo img.fade { opacity: 0; }
+.tc-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 14px; }
+.tc-meta h3 { display: flex; align-items: center; gap: 10px; font-size: var(--step-1); }
+.dot { width: 14px; height: 14px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); }
+.tc-thumbs { display: flex; gap: 6px; }
+.tc-thumbs button { appearance: none; padding: 0; width: 36px; height: 48px; border: 1px solid transparent; border-radius: 2px; background: none; overflow: hidden; cursor: pointer; opacity: .55; transition: opacity .3s, border-color .3s; }
+.tc-thumbs button img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tc-thumbs button.on, .tc-thumbs button:hover { opacity: 1; border-color: var(--ink); }
+.also { display: flex; align-items: center; gap: 10px; margin-top: 20px; font-size: var(--step--1); color: var(--ink-soft); }
 .also i { width: 16px; height: 16px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.14); }
-.outlines { display: flex; align-items: flex-end; justify-content: center; gap: clamp(28px, 5vw, 64px); padding: 24px 0 8px; color: var(--ink); border-bottom: 1px solid var(--line); }
-.outline { width: auto; overflow: visible; }
-.size-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 3vw, 32px); }
-.size h3 { font-size: var(--step-1); margin-bottom: 6px; }
-.spec { margin: 0; display: grid; }
-.spec div { display: grid; gap: 2px; padding: 9px 0; border-top: 1px solid var(--line); }
-.spec dt { color: var(--ink-soft); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; }
-.spec dd { margin: 0; font: 400 var(--step-1)/1.1 var(--display); font-variant-numeric: lining-nums tabular-nums; }
-.spec dd.no { color: var(--ink-soft); }
+.sizes-block { margin-top: clamp(56px, 7vw, 104px); display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 24px clamp(24px, 5vw, 80px); align-items: start; }
+.sizes-lead { display: grid; gap: 14px; }
+.sizes-lead h3 { font-size: var(--step-2); }
+.sizes-lead p { color: var(--ink-soft); max-width: 24rem; }
+.cmp { width: 100%; border-collapse: collapse; }
+.cmp th, .cmp td { text-align: left; padding: 14px 12px 14px 0; border-top: 1px solid var(--line); vertical-align: baseline; }
+.cmp thead th, .cmp thead td { border-top: 0; padding-top: 0; font: 400 var(--step-1)/1.1 var(--brand); color: var(--ink); }
+.cmp tbody th { width: 36%; font: 500 .75rem/1.3 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+.cmp td { font: 400 var(--step-1)/1.1 var(--brand); font-variant-numeric: lining-nums tabular-nums; }
+.cmp td.no { color: var(--ink-soft); }
 @media (max-width: 900px) {
-  .prod-grid { grid-template-columns: minmax(0, 1fr); }
-  .sizes { position: static; }
+  .tone-cards { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 80%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .tone-cards::-webkit-scrollbar { display: none; }
+  .tone-card { scroll-snap-align: start; }
+  .sizes-block { grid-template-columns: minmax(0, 1fr); }
+  .cmp tbody th { width: 40%; }
   .stage-wrap { height: 62vh; height: 62svh; }
   .copy { padding-top: 59svh; }
 }
@@ -503,48 +501,39 @@ footer.site a { color: #f7ece2; }
       <div class="sec-head">
         <p class="eyebrow">Produktu veidi</p>
         <h2>Četras krāsas. <span class="it">Divi izmēri.</span></h2>
-        <p>Abi trauki ir atkārtoti uzpildāmi ar uzpildes sveci. Ziedu organizators ir lielajam traukam.</p>
+        <p>Visas krāsas un abi izmēri vienuviet. Ziedu organizators ir lielajam traukam.</p>
       </div>
-      <div class="prod-grid">
-        <div class="gallery" id="gallery">
-          <div class="tones" role="tablist" aria-label="Krāsa">
-            <button type="button" role="tab" class="tone on" aria-selected="true" data-tone="oranza"><i style="background:#e0782f"></i>Oranža</button>
-            <button type="button" role="tab" class="tone" aria-selected="false" data-tone="caurspidiga"><i style="background:#eef2f4"></i>Caurspīdīga</button>
-            <button type="button" role="tab" class="tone" aria-selected="false" data-tone="peleka"><i style="background:#6c6f77"></i>Pelēka</button>
-          </div>
-          <figure class="hero-shot">
-            <img id="gal-main" src="img/gal/oranza-1.jpg" alt="Oranžais trauks ar iesaiņotu uzpildes sveci" width="900" height="1350">
-          </figure>
-          <div class="thumbs" data-tone="oranza"><button type="button" class="thumb on" data-src="img/gal/oranza-1.jpg" aria-label="Oranžais trauks ar iesaiņotu uzpildes sveci"><img src="img/gal/oranza-1-t.jpg" alt="" width="180" height="270" loading="lazy"></button><button type="button" class="thumb" data-src="img/gal/oranza-2.jpg" aria-label="Uzpildes sveces ievietošana oranžajā traukā, blakus rozes"><img src="img/gal/oranza-2-t.jpg" alt="" width="180" height="270" loading="lazy"></button><button type="button" class="thumb" data-src="img/gal/oranza-3.jpg" aria-label="Oranžie trauki ar rozēm un uzpildes sveci"><img src="img/gal/oranza-3-t.jpg" alt="" width="180" height="270" loading="lazy"></button></div>
-          <div class="thumbs" data-tone="caurspidiga" hidden><button type="button" class="thumb on" data-src="img/gal/caurspidiga-1.jpg" aria-label="Caurspīdīgais trauks ar sveci un ieliktni"><img src="img/gal/caurspidiga-1-t.jpg" alt="" width="180" height="270" loading="lazy"></button><button type="button" class="thumb" data-src="img/gal/caurspidiga-2.jpg" aria-label="Ieliktņa ievietošana caurspīdīgajā traukā"><img src="img/gal/caurspidiga-2-t.jpg" alt="" width="180" height="270" loading="lazy"></button><button type="button" class="thumb" data-src="img/gal/caurspidiga-3.jpg" aria-label="Caurspīdīgais trauks ar ziediem interjerā"><img src="img/gal/caurspidiga-3-t.jpg" alt="" width="180" height="270" loading="lazy"></button></div>
-          <div class="thumbs" data-tone="peleka" hidden><button type="button" class="thumb on" data-src="img/gal/peleka-1.jpg" aria-label="Pelēkais trauks ar sveci un ieliktni"><img src="img/gal/peleka-1-t.jpg" alt="" width="180" height="270" loading="lazy"></button><button type="button" class="thumb" data-src="img/gal/peleka-2.jpg" aria-label="Sveces ievietošana pelēkajā traukā"><img src="img/gal/peleka-2-t.jpg" alt="" width="180" height="270" loading="lazy"></button><button type="button" class="thumb" data-src="img/gal/peleka-3.jpg" aria-label="Pelēkā trauka iepakojums"><img src="img/gal/peleka-3-t.jpg" alt="" width="180" height="270" loading="lazy"></button></div>
-          <p class="also"><i style="background:#e7a3ad"></i>Pieejama arī rozā krāsā.</p>
-        </div>
-        <div class="sizes">
-          <div class="size-cols">
-            <article class="size">
-              <h3>Lielais trauks</h3>
-              <dl class="spec">
-                <div><dt>Tilpums</dt><dd>550 ml</dd></div>
-                <div><dt>Izmērs</dt><dd>15 × Ø 10,5 cm</dd></div>
-                <div><dt>Degļi</dt><dd>3</dd></div>
-                <div><dt>Degšanas laiks</dt><dd>~80 h</dd></div>
-                <div><dt>Ziedu organizators</dt><dd>Ir</dd></div>
-              </dl>
-            </article>
-            <article class="size">
-              <h3>Mazais trauks</h3>
-              <dl class="spec">
-                <div><dt>Tilpums</dt><dd>250 ml</dd></div>
-                <div><dt>Izmērs</dt><dd>10 × Ø 10,5 cm</dd></div>
-                <div><dt>Degļi</dt><dd>3</dd></div>
-                <div><dt>Degšanas laiks</dt><dd>~35 h</dd></div>
-                <div><dt>Ziedu organizators</dt><dd class="no">Nav</dd></div>
-              </dl>
-            </article>
-          </div>
+      <div class="tone-cards">
+        <article class="tone-card">
+          <figure class="tc-photo"><img src="img/gal/oranza-1.jpg?v=2" alt="Oranžais trauks ar iesaiņotu uzpildes sveci" width="900" height="1350" loading="lazy"></figure>
+          <div class="tc-meta"><h3><i class="dot" style="background:#e0782f"></i>Oranža</h3><div class="tc-thumbs"><button type="button" class="on" data-src="img/gal/oranza-1.jpg?v=2" aria-label="Oranžais trauks ar iesaiņotu uzpildes sveci"><img src="img/gal/oranza-1-t.jpg?v=2" alt="" width="180" height="270" loading="lazy"></button><button type="button" data-src="img/gal/oranza-2.jpg?v=2" aria-label="Uzpildes sveces ievietošana oranžajā traukā, blakus rozes"><img src="img/gal/oranza-2-t.jpg?v=2" alt="" width="180" height="270" loading="lazy"></button><button type="button" data-src="img/gal/oranza-3.jpg?v=2" aria-label="Oranžie trauki ar rozēm un uzpildes sveci"><img src="img/gal/oranza-3-t.jpg?v=2" alt="" width="180" height="270" loading="lazy"></button></div></div>
+        </article>
+        <article class="tone-card">
+          <figure class="tc-photo"><img src="img/gal/caurspidiga-3.jpg" alt="Caurspīdīgais trauks ar ziediem interjerā" width="900" height="1350" loading="lazy"></figure>
+          <div class="tc-meta"><h3><i class="dot" style="background:#eef2f4"></i>Caurspīdīga</h3><div class="tc-thumbs"><button type="button" class="on" data-src="img/gal/caurspidiga-3.jpg" aria-label="Caurspīdīgais trauks ar ziediem interjerā"><img src="img/gal/caurspidiga-3-t.jpg" alt="" width="180" height="270" loading="lazy"></button><button type="button" data-src="img/gal/caurspidiga-1.jpg" aria-label="Caurspīdīgais trauks ar sveci un ieliktni"><img src="img/gal/caurspidiga-1-t.jpg" alt="" width="180" height="270" loading="lazy"></button><button type="button" data-src="img/gal/caurspidiga-2.jpg" aria-label="Ieliktņa ievietošana caurspīdīgajā traukā"><img src="img/gal/caurspidiga-2-t.jpg" alt="" width="180" height="270" loading="lazy"></button></div></div>
+        </article>
+        <article class="tone-card">
+          <figure class="tc-photo"><img src="img/gal/peleka-1.jpg" alt="Pelēkais trauks ar sveci un ieliktni" width="900" height="1350" loading="lazy"></figure>
+          <div class="tc-meta"><h3><i class="dot" style="background:#6c6f77"></i>Pelēka</h3><div class="tc-thumbs"><button type="button" class="on" data-src="img/gal/peleka-1.jpg" aria-label="Pelēkais trauks ar sveci un ieliktni"><img src="img/gal/peleka-1-t.jpg" alt="" width="180" height="270" loading="lazy"></button><button type="button" data-src="img/gal/peleka-2.jpg" aria-label="Sveces ievietošana pelēkajā traukā"><img src="img/gal/peleka-2-t.jpg" alt="" width="180" height="270" loading="lazy"></button><button type="button" data-src="img/gal/peleka-3.jpg" aria-label="Pelēkā trauka iepakojums"><img src="img/gal/peleka-3-t.jpg" alt="" width="180" height="270" loading="lazy"></button></div></div>
+        </article>
+      </div>
+      <p class="also"><i style="background:#e7a3ad"></i>Pieejama arī rozā krāsā.</p>
+      <div class="sizes-block">
+        <div class="sizes-lead">
+          <h3>Divi izmēri</h3>
+          <p>Abiem traukiem ir trīs degļi, un tos var atkārtoti uzpildīt ar uzpildes sveci.</p>
           <p class="shop-line"><a class="btn btn-wine" href="https://mindyourlight.shop/?utm_source=corporate-landing&amp;utm_medium=products" target="_blank" rel="noopener">Skatīt veikalā ↗</a></p>
         </div>
+        <table class="cmp">
+          <thead><tr><td></td><th scope="col">Lielais trauks</th><th scope="col">Mazais trauks</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Tilpums</th><td>550 ml</td><td>250 ml</td></tr>
+            <tr><th scope="row">Izmērs</th><td>15 × Ø 10,5 cm</td><td>10 × Ø 10,5 cm</td></tr>
+            <tr><th scope="row">Degļi</th><td>3</td><td>3</td></tr>
+            <tr><th scope="row">Degšanas laiks</th><td>~80 h</td><td>~35 h</td></tr>
+            <tr><th scope="row">Ziedu organizators</th><td>Ir</td><td class="no">Nav</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
@@ -751,31 +740,16 @@ footer.site a { color: #f7ece2; }
     onColor(stage.color()); update();
   }).catch(function (e) { console.error(e); });
 
-  // ---------- Product gallery: real photos per colour ----------
-  (function () {
-    var main = document.getElementById('gal-main');
-    var tones = [].slice.call(document.querySelectorAll('.tone')), sets = [].slice.call(document.querySelectorAll('.thumbs'));
-    function show(src, alt) {
-      if (main.getAttribute('src') === src) return;
+  // ---------- Product colours: each card swaps between its own real photos ----------
+  [].forEach.call(document.querySelectorAll('.tone-card'), function (card) {
+    var main = card.querySelector('.tc-photo img');
+    card.querySelector('.tc-thumbs').addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b || b.classList.contains('on')) return;
+      [].forEach.call(card.querySelectorAll('.tc-thumbs button'), function (x) { x.classList.toggle('on', x === b); });
       main.classList.add('fade');
-      var im = new Image(); im.onload = function () { main.src = src; if (alt) main.alt = alt; main.classList.remove('fade'); }; im.src = src;
-    }
-    tones.forEach(function (t) {
-      t.addEventListener('click', function () {
-        var k = t.dataset.tone;
-        tones.forEach(function (x) { x.classList.toggle('on', x === t); x.setAttribute('aria-selected', String(x === t)); });
-        var set = null; sets.forEach(function (st) { var on = st.dataset.tone === k; st.hidden = !on; if (on) set = st; });
-        if (set) { var first = set.querySelector('.thumb'); set.querySelectorAll('.thumb').forEach(function (b) { b.classList.toggle('on', b === first); }); show(first.dataset.src, first.getAttribute('aria-label')); }
-      });
+      var im = new Image(); im.onload = function () { main.src = b.dataset.src; main.alt = b.getAttribute('aria-label'); main.classList.remove('fade'); }; im.src = b.dataset.src;
     });
-    sets.forEach(function (st) {
-      st.addEventListener('click', function (e) {
-        var b = e.target.closest('.thumb'); if (!b) return;
-        st.querySelectorAll('.thumb').forEach(function (x) { x.classList.toggle('on', x === b); });
-        show(b.dataset.src, b.getAttribute('aria-label'));
-      });
-    });
-  })();
+  });
 
   // ---------- Form ----------
   var tabs = [document.getElementById('t-quick'), document.getElementById('t-full')];
