@@ -16,8 +16,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400;1,6..96,500&family=Elms+Sans:ital,wght@0,300..700;1,300..700&display=swap">
 <style>
-/* brand fonts: Allenoire (free personal cut, no Latvian diacritics) only for the wordmark and the ASCII chapter titles; Elms Sans for text */
-@font-face { font-family: "Allenoire"; src: url(fonts/Allenoire.otf) format("opentype"); font-weight: 400; font-style: normal; font-display: swap; }
+/* brand fonts: Allenoire (licensed web kit) for the wordmark and headlines, Elms Sans for text.
+   Allenoire has ā ē ī ū č š ž but no ģ ķ ļ ņ and no italic: headlines with those letters and italic accents stay in Bodoni. */
+@font-face { font-family: "Allenoire"; src: url(fonts/allenoire.woff2) format("woff2"), url(fonts/allenoire.woff) format("woff"); font-weight: 400; font-style: normal; font-display: swap; }
 /* Layout: a pinned candle→vase stage (right) carries the story while copy scrolls (left);
    the whole story band moves from night to morning with the scroll. Then quiet porcelain
    sections, and a wine-dark request desk at the end. Single deliberate look (brand palette). */
@@ -71,14 +72,14 @@ body {
   text-rendering: optimizeLegibility;
 }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--story-bg, var(--night)); }
-h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: 1.04; letter-spacing: -.01em; text-wrap: balance; margin: 0; }
+h1, h2, h3 { font-family: var(--brand); font-weight: 400; line-height: 1.04; letter-spacing: -.01em; text-wrap: balance; margin: 0; }
 p { margin: 0; text-wrap: pretty; }
 a { color: inherit; }
 img { display: block; max-width: 100%; }
 :focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
 .wrap { width: 100%; max-width: calc(var(--maxw) + 2 * 16px); margin-inline: auto; padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
 .eyebrow { font: 600 var(--step--1)/1.2 var(--body); letter-spacing: .16em; text-transform: uppercase; }
-.it { font-style: italic; }
+.it { font-style: italic; font-family: var(--display); }
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -141,7 +142,7 @@ img { display: block; max-width: 100%; }
 .beat .num::after { content: ""; flex: 0 0 56px; height: 1px; background: currentColor; opacity: .5; }
 
 .hero h1 { font-size: var(--step-4); }
-.hero h1 em { font-style: italic; color: var(--story-accent); }
+.hero h1 em { font-style: italic; font-family: var(--display); color: var(--story-accent); }
 .hero .lead { font-size: var(--step-1); line-height: 1.45; color: var(--story-soft); max-width: 32rem; }
 .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
 .specs { display: flex; flex-wrap: wrap; gap: 0; margin: 10px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--story-line); max-width: 30rem; }
@@ -254,7 +255,7 @@ blockquote.q footer { margin-top: 10px; font: 400 var(--step--1)/1.4 var(--body)
 .desk { background: var(--wine-deep); color: #f7ece2; position: relative; overflow: hidden; }
 .desk::before { content: ""; position: absolute; width: 80vmax; height: 80vmax; left: -30vmax; top: -40vmax; background: radial-gradient(closest-side, rgba(244, 178, 106, .16), transparent 70%); pointer-events: none; }
 .desk-grid { position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(40px, 6vw, 96px); align-items: start; }
-.desk h2 { font-size: var(--step-3); }
+.desk h2 { font-size: var(--step-3); font-family: var(--display); }
 .desk .eyebrow { color: var(--ember); }
 .desk .intro { display: grid; gap: 24px; }
 .desk .intro p { color: rgba(247, 236, 226, .75); max-width: 30rem; }
@@ -302,7 +303,7 @@ fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 10px; min-width
 .quick-line { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; }
 .quick-note { color: var(--ink-soft); font-size: var(--step--1); }
 .done { text-align: left; display: grid; gap: 14px; padding-block: 12px; }
-.done h3 { font-size: var(--step-2); }
+.done h3 { font-size: var(--step-2); font-family: var(--display); }
 .done p { color: var(--ink-soft); }
 .done .seal { width: 64px; height: 64px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #a43a44, var(--wine) 60%, #3a0f13); display: grid; place-items: center; color: #f3d9c9; font: italic 500 1.4rem/1 var(--display); box-shadow: inset 0 -3px 6px rgba(0,0,0,.35), 0 6px 18px -6px rgba(92,26,32,.6); animation: stamp .9s var(--ease-out) both; }
 @keyframes stamp { 0% { transform: scale(1.6) rotate(-20deg); opacity: 0 } 60% { transform: scale(.94) rotate(4deg); opacity: 1 } 100% { transform: scale(1) rotate(0) } }
