@@ -14,8 +14,10 @@
 <meta name="description" content="Korporatīvās Ziemassvētku dāvanas: svece, kas pēc tam kļūst par vāzi. Mind Your Light.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400;1,6..96,500&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400;1,6..96,500&family=Elms+Sans:ital,wght@0,300..700;1,300..700&display=swap">
 <style>
+/* brand fonts: Allenoire (free personal cut, no Latvian diacritics) only for the wordmark and the ASCII chapter titles; Elms Sans for text */
+@font-face { font-family: "Allenoire"; src: url(fonts/Allenoire.otf) format("opentype"); font-weight: 400; font-style: normal; font-display: swap; }
 /* Layout: a pinned candle→vase stage (right) carries the story while copy scrolls (left);
    the whole story band moves from night to morning with the scroll. Then quiet porcelain
    sections, and a wine-dark request desk at the end. Single deliberate look (brand palette). */
@@ -35,7 +37,8 @@
   --line-dark: rgba(250, 236, 222, .16);
 
   --display: "Bodoni Moda", "Didot", "Bodoni 72", "Times New Roman", serif;
-  --body: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --brand: "Allenoire", "Bodoni Moda", "Didot", serif;
+  --body: "Elms Sans", "Helvetica Neue", Arial, sans-serif;
 
   --step--1: clamp(.8rem, .77rem + .12vw, .875rem);
   --step-0: clamp(1rem, .96rem + .2vw, 1.125rem);
@@ -103,7 +106,7 @@ img { display: block; max-width: 100%; }
 .top:not(.solid) { background: color-mix(in srgb, var(--story-bg) 78%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 .top.solid { background: color-mix(in oklab, var(--paper) 88%, transparent); color: var(--ink); backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); box-shadow: 0 1px 0 var(--line); }
 .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 68px; }
-.logo { font: 500 1.05rem/1 var(--display); letter-spacing: .14em; text-decoration: none; white-space: nowrap; }
+.logo { font: 400 1.05rem/1 var(--brand); letter-spacing: .14em; text-decoration: none; white-space: nowrap; }
 .top nav { display: flex; align-items: center; gap: clamp(12px, 2.4vw, 32px); font-size: var(--step--1); }
 .top nav a.lnk { text-decoration: none; opacity: .82; }
 .top nav a.lnk:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
@@ -349,7 +352,7 @@ footer.site a { color: #f7ece2; }
 }
 
 /* ---------- V2: owner's chapters, product film, product types ---------- */
-.beat .chapter { font-size: clamp(2.6rem, 1.6rem + 3.6vw, 4.8rem); text-transform: uppercase; letter-spacing: .04em; line-height: .95; }
+.beat .chapter { font-family: var(--brand); font-size: clamp(2.6rem, 1.6rem + 3.6vw, 4.8rem); text-transform: uppercase; letter-spacing: .04em; line-height: .95; }
 .beat .note { font-size: var(--step--1); color: var(--story-soft); max-width: 30rem; padding-top: 14px; border-top: 1px solid var(--story-line); }
 .beat .body { color: var(--story-soft); max-width: 32rem; }
 .beat .points { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; max-width: 32rem; font-size: var(--step-0); color: var(--story-soft); }
