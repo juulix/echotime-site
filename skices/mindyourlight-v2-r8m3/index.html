@@ -370,11 +370,14 @@ footer.site a { color: #f7ece2; }
 
 
 .products { background: var(--paper); }
-.tone-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 32px); }
+.tone-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 32px); }
 .tc-photo { margin: 0; aspect-ratio: 4 / 5; overflow: hidden; background: var(--porcelain); }
 .tc-photo img { width: 100%; height: 100%; object-fit: cover; transition: opacity .4s var(--ease-out); }
 .tc-photo img.fade { opacity: 0; }
-.tc-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 14px; }
+.tc-soon { height: 100%; display: grid; place-content: center; gap: 8px; text-align: center; background: radial-gradient(circle at 50% 38%, #f6dfe1, #e9bcc2 75%); color: #6b2b33; }
+.tc-soon span { font: 400 var(--step-2)/1 var(--brand); }
+.tc-soon p { font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; }
+.tc-meta { display: grid; gap: 10px; padding-top: 14px; }
 .tc-meta h3 { display: flex; align-items: center; gap: 10px; font-size: var(--step-1); }
 .dot { width: 14px; height: 14px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); }
 .tc-thumbs { display: flex; gap: 6px; }
@@ -394,9 +397,9 @@ footer.site a { color: #f7ece2; }
 .cmp td { font: 400 var(--step-1)/1.1 var(--brand); font-variant-numeric: lining-nums tabular-nums; }
 .cmp td.no { color: var(--ink-soft); }
 @media (max-width: 900px) {
-  .tone-cards { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 80%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
-  .tone-cards::-webkit-scrollbar { display: none; }
-  .tone-card { scroll-snap-align: start; }
+  .tone-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 12px; }
+  .tc-meta h3 { font-size: var(--step-0); }
+  .tc-thumbs button { width: 30px; height: 40px; }
   .sizes-block { grid-template-columns: minmax(0, 1fr); }
   .cmp tbody th { width: 40%; }
   .stage-wrap { height: 62vh; height: 62svh; }
@@ -516,8 +519,11 @@ footer.site a { color: #f7ece2; }
           <figure class="tc-photo"><img src="img/gal/peleka-1.jpg" alt="Pelēkais trauks ar sveci un ieliktni" width="900" height="1350" loading="lazy"></figure>
           <div class="tc-meta"><h3><i class="dot" style="background:#6c6f77"></i>Pelēka</h3><div class="tc-thumbs"><button type="button" class="on" data-src="img/gal/peleka-1.jpg" aria-label="Pelēkais trauks ar sveci un ieliktni"><img src="img/gal/peleka-1-t.jpg" alt="" width="180" height="270" loading="lazy"></button><button type="button" data-src="img/gal/peleka-2.jpg" aria-label="Sveces ievietošana pelēkajā traukā"><img src="img/gal/peleka-2-t.jpg" alt="" width="180" height="270" loading="lazy"></button><button type="button" data-src="img/gal/peleka-3.jpg" aria-label="Pelēkā trauka iepakojums"><img src="img/gal/peleka-3-t.jpg" alt="" width="180" height="270" loading="lazy"></button></div></div>
         </article>
+        <article class="tone-card tone-soon">
+          <figure class="tc-photo"><div class="tc-soon"><span>Rozā</span><p>Foto drīzumā</p></div></figure>
+          <div class="tc-meta"><h3><i class="dot" style="background:#e7a3ad"></i>Rozā</h3></div>
+        </article>
       </div>
-      <p class="also"><i style="background:#e7a3ad"></i>Pieejama arī rozā krāsā.</p>
       <div class="sizes-block">
         <div class="sizes-lead">
           <h3>Divi izmēri</h3>
