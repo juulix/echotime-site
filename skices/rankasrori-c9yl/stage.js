@@ -59,7 +59,8 @@
     bg: '#D9D6D0', panel: '#E2DFD9', ink: '#161616', red: '#C42A23', redD: '#9E1F1A',
     conc: '#ECE9E3', concS: '#CBC6BD', concD: '#A8A299', mix: '#9A948B', wet: '#7F796F',
     top: '#5C4532', sand: '#C9A876', clay: '#8C6C4C', fill: '#D8BF92', grass: '#67713F',
-    air: '#E6E3DD', tank: '#F4F2ED', closeSoil: '#6A5240'
+    air: '#E6E3DD', tank: '#F4F2ED', closeSoil: '#6A5240',
+    yel: '#E0AE2E', yelD: '#B88A16', binD: '#2C2C2A', trench: '#735843', shadow: 'rgba(22,22,22,0.16)'
   };
   var MONO = '"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace';
   var REDUCED = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -104,11 +105,12 @@
     [0.620, 6060, -180, 6580, 55],
     [0.700, 6060, -270, 7030, 65],
     [0.765, 7300, -800, 10200, 420],
-    [0.800, 8050, -430, 9900, 300],
-    [0.850, 8300, -380, 9750, 280],
+    [0.800, 7900, -430, 9800, 300],
+    [0.835, 8650, -430, 10650, 300],
+    [0.850, 8300, -400, 9750, 280],
     [0.900, 7950, -430, 10100, 300],
     [0.955, 7850, -560, 9900, 280],
-    [1.000, 7900, -520, 9850, 260]
+    [1.000, 7650, -640, 10100, 300]
   ];
   function camAt(p) {
     var i = 0;
@@ -126,7 +128,7 @@
 
   // ---------- static plant geometry (polylines, drawn in on mount) ----------
   function R(x0, y0, x1, y1) { return [[x0, y0], [x1, y0], [x1, y1], [x0, y1], [x0, y0]]; }
-  var INC_A = [2200, -190], INC_B = [1560, -930];
+  var INC_A = [2075, -150], INC_B = [1560, -930];
   var INC_N = (function () { var dx = INC_B[0] - INC_A[0], dy = INC_B[1] - INC_A[1], l = Math.hypot(dx, dy); return [-dy / l, dx / l]; })();
   if (INC_N[1] > 0) { INC_N[0] = -INC_N[0]; INC_N[1] = -INC_N[1]; }
   function off(pt, n, d) { return [pt[0] + n[0] * d, pt[1] + n[1] * d]; }
@@ -154,28 +156,36 @@
     { pts: R(1120, -1040, 1262, -900), fill: COL.conc, lw: 1.2 },
     { pts: [[1262, -980], [1300, -980], [1300, -900]], lw: 1 },
     { pts: [[1060, -640], [1640, -640]], lw: 1.6 },
-    { pts: [[1090, -640], [1090, 0]], lw: 1.3 }, { pts: [[1610, -640], [1610, 0]], lw: 1.3 },
-    { pts: [[1090, -630], [1610, -330]], lw: 0.6 }, { pts: [[1610, -630], [1090, -330]], lw: 0.6 },
+    // yellow steel tower (MEKA): legs, bracing, top railing, stair to the platform
+    { pts: [[1090, -640], [1090, 0]], lw: 1.3, sc: COL.yelD }, { pts: [[1610, -640], [1610, 0]], lw: 1.3, sc: COL.yelD },
+    { pts: [[1090, -630], [1610, -330]], lw: 0.7, sc: COL.yelD }, { pts: [[1610, -630], [1090, -330]], lw: 0.7, sc: COL.yelD },
+    { pts: [[1090, -320], [1610, -320]], lw: 0.9, sc: COL.yelD },
+    { pts: [[1080, -900], [1080, -980], [1620, -980], [1620, -900]], lw: 1.1, sc: COL.yelD },
+    { pts: [[1080, -940], [1620, -940]], lw: 0.7, sc: COL.yelD },
+    { pts: [[1260, -980], [1260, -900]], lw: 0.7, sc: COL.yelD }, { pts: [[1440, -980], [1440, -900]], lw: 0.7, sc: COL.yelD },
+    { pts: [[1640, -640], [1905, 0]], lw: 1.3, sc: COL.yelD }, { pts: [[1680, -640], [1945, 0]], lw: 1.3, sc: COL.yelD },
+    { pts: [[1640, -640], [1640, -720], [1905, -80]], lw: 0.8, sc: COL.yelD },
     { pts: [[1310, -640], [1330, -470], [1370, -470], [1390, -640]], fill: COL.concS, lw: 1.1 },
-    // inclined belt
+    // inclined belt bin → mixer
     { pts: [off(INC_A, INC_N, 14), off(INC_B, INC_N, 14)], lw: 1.2 },
     { pts: [off(INC_A, INC_N, -14), off(INC_B, INC_N, -14)], lw: 1.2 },
-    { pts: [[1820, -630], [1820, 0]], lw: 0.9 }, { pts: [[2010, -410], [2010, 0]], lw: 0.9 },
-    // bins
-    { pts: [[2250, -520], [2580, -520], [2580, -390], [2445, -262], [2385, -262], [2250, -390], [2250, -520]], fill: COL.conc, lw: 1.4 },
-    { pts: [[2600, -520], [2930, -520], [2930, -390], [2795, -262], [2735, -262], [2600, -390], [2600, -520]], fill: COL.conc, lw: 1.4 },
-    { pts: [[2250, -390], [2930, -390]], lw: 0.6 },
-    { pts: [[2262, -390], [2262, 0]], lw: 1.3 }, { pts: [[2590, -390], [2590, 0]], lw: 1.3 }, { pts: [[2918, -390], [2918, 0]], lw: 1.3 },
-    { pts: [[2180, -200], [2960, -200]], lw: 1.1 }, { pts: [[2180, -180], [2960, -180]], lw: 1.1 }
+    { pts: [[1820, -470], [1820, 0]], lw: 0.9 }, { pts: [[1990, -270], [1990, 0]], lw: 0.9 },
+    // one wide low 4-compartment aggregate bin, as on the photo
+    { pts: [[2040, -380], [2900, -380], [2900, -250], [2040, -250], [2040, -380]], fill: COL.binD, lw: 1.4 },
+    { pts: [[2040, -250], [2093, -165], [2202, -165], [2255, -250], [2308, -165], [2417, -165], [2470, -250], [2523, -165], [2632, -165], [2685, -250], [2738, -165], [2847, -165], [2900, -250]], fill: COL.binD, lw: 1.3 },
+    { pts: [[2255, -380], [2255, -250]], lw: 0.8 }, { pts: [[2470, -380], [2470, -250]], lw: 0.8 }, { pts: [[2685, -380], [2685, -250]], lw: 0.8 },
+    { pts: [[2040, -150], [2900, -150]], lw: 1.1 }, { pts: [[2040, -128], [2900, -128]], lw: 1.1 },
+    { pts: [[2050, -150], [2050, 0]], lw: 1.3 }, { pts: [[2470, -150], [2470, 0]], lw: 1.3 }, { pts: [[2890, -150], [2890, 0]], lw: 1.3 }
   ];
   PLANT.forEach(function (s) { s.len = plen(s.pts); });
 
+  // aggregate: compartment outlet → collecting belt → incline → mixer inlet
+  var BIN_X = [2147, 2362, 2577, 2792];
   var PEB_PATH = [
-    [[2415, -262], [2415, -214], [2214, -214], off(INC_B, INC_N, 22), [1520, -880]],
-    [[2765, -262], [2765, -214], [2214, -214], off(INC_B, INC_N, 22), [1520, -880]]
+    [[2362, -165], [2362, -158], [2075, -158], off(INC_B, INC_N, 22), [1520, -880]],
+    [[2577, -165], [2577, -158], [2075, -158], off(INC_B, INC_N, 22), [1520, -880]]
   ];
   PEB_PATH[0][2] = off(INC_A, INC_N, 22); PEB_PATH[1][2] = off(INC_A, INC_N, 22);
-  PEB_PATH[0][2][1] = -214; PEB_PATH[1][2][1] = -214;
 
   // ---------- ground section helpers ----------
   var SEC_X0 = 7250, SEC_X1 = 10650;
@@ -224,8 +234,17 @@
     if (p < 0.605) return ['GRODS', 'KC 10-7.5', 'Ø1200 / Ø1000 · H 750 · 625 kg'];
     if (p < 0.665) return ['PAMATU BLOKS', 'FBS 24-3-6', '2400 × 300 × 600 · 970 kg'];
     if (p < 0.76) return ['SALIEKAMAIS BLOKS', 'LB 18-6-6', 'L 1800 · H 600 · 1550 kg'];
-    if (p < 0.93) return ['ĀRĒJIE TĪKLI', 'KANALIZĀCIJA', p < 0.83 ? 'tranšejas rakšana' : p < 0.875 ? 'grodu aka · attīrīšanas iekārta' : 'aizbēršana'];
+    if (p < 0.93) return ['ĀRĒJIE TĪKLI', 'KANALIZĀCIJA', p < 0.835 ? 'tranšejas rakšana' : p < 0.899 ? 'grodu aka · attīrīšanas iekārta' : 'aizbēršana'];
     return ['VIRS ZEMES', 'VĀKS Z/Z', 'zaļās zonas vāks'];
+  }
+
+  // drum speed by phase: slow agitation, fast while charging, reverse while discharging
+  function drumRate(p) {
+    if (p < 0.20) return 0.6;
+    if (p < 0.285) return lerp(0.6, 2.6, sm(seg(p, 0.20, 0.22)));
+    if (p < 0.43) return lerp(2.6, 1.0, sm(seg(p, 0.285, 0.3)));
+    if (p < 0.5) return lerp(1.0, -2.4, sm(seg(p, 0.43, 0.445)));
+    return lerp(-2.4, 0.4, sm(seg(p, 0.5, 0.52)));
   }
 
   // =====================================================================
@@ -242,7 +261,7 @@
     var mountT = performance.now(), playing = null, destroyed = false;
     var cardCv = document.createElement('canvas'), cctx = cardCv.getContext('2d');
     var pores = null, poreTile = null;
-    var lastVal = '', valT = -9;
+    var lastVal = '', valT = -9, drumAng = 0;
     // view state (filled per frame)
     var s = 1, ox = 0, oy = 0, ip = 1, vx0 = 0, vx1 = 0, vy0 = 0, vy1 = 0;
 
@@ -317,32 +336,49 @@
     }
     // label whose text sits at world height ty (keeps section labels in the "sky")
     function labelTo(wx, wy, ty, text, a, dx) { label(wx, wy, text, a, dx, sy(ty) - sy(wy)); }
+    // dimension text types itself in once the line is drawn
     function dimText(wx, wy, text, a, align, base) {
-      if (a <= 0.01) return;
-      ctx.save(); screen(); ctx.globalAlpha = a;
+      var n = Math.ceil(text.length * seg(a, 0.68, 1));
+      if (n <= 0) return;
+      ctx.save(); screen();
       setFont(L.fs.tag, 500); spacing('0.04em');
       ctx.textAlign = align || 'center'; ctx.textBaseline = base || 'bottom';
-      ctx.lineJoin = 'round'; ctx.lineWidth = 4; ctx.strokeStyle = COL.bg; ctx.strokeText(text, sx(wx), sy(wy));
-      ctx.fillStyle = COL.ink; ctx.fillText(text, sx(wx), sy(wy));
+      var tx = text.slice(0, n);
+      if (ctx.textAlign === 'center') { ctx.textAlign = 'left'; var full = ctx.measureText(text).width; var x0 = sx(wx) - full / 2; ctx.lineJoin = 'round'; ctx.lineWidth = 4; ctx.strokeStyle = COL.bg; ctx.strokeText(tx, x0, sy(wy)); ctx.fillStyle = COL.ink; ctx.fillText(tx, x0, sy(wy)); }
+      else { ctx.lineJoin = 'round'; ctx.lineWidth = 4; ctx.strokeStyle = COL.bg; ctx.strokeText(tx, sx(wx), sy(wy)); ctx.fillStyle = COL.ink; ctx.fillText(tx, sx(wx), sy(wy)); }
       spacing('0px'); ctx.restore();
     }
-    // dimension line (world) with slash ticks + extension lines
+    // dimension lines draw like a draughtsman: extension lines → dimension line from the middle → ticks
     function dimH(x0, x1, y, ext0, ext1, a) {
       if (a <= 0.01) return;
-      ctx.save(); ctx.globalAlpha = a;
-      var t = 5 * ip;
-      line(x0, y, x1, y, 0.8);
-      line(x0, ext0, x0, y - 4 * ip, 0.6); line(x1, ext1, x1, y - 4 * ip, 0.6);
-      line(x0 - t, y + t, x0 + t, y - t, 1.1); line(x1 - t, y + t, x1 + t, y - t, 1.1);
+      var e = sm(seg(a, 0, 0.35)), g = sm(seg(a, 0.28, 0.68)), k = ob(seg(a, 0.6, 0.78));
+      ctx.save();
+      line(x0, ext0, x0, lerp(ext0, y - 4 * ip, e), 0.6); line(x1, ext1, x1, lerp(ext1, y - 4 * ip, e), 0.6);
+      var m = (x0 + x1) / 2, hw = (x1 - x0) / 2 * g;
+      if (g > 0) line(m - hw, y, m + hw, y, 0.8);
+      if (k > 0) { var t = 5 * ip * k; line(x0 - t, y + t, x0 + t, y - t, 1.1); line(x1 - t, y + t, x1 + t, y - t, 1.1); }
       ctx.restore();
     }
     function dimV(x, y0, y1, ext, a) {
       if (a <= 0.01) return;
-      ctx.save(); ctx.globalAlpha = a;
-      var t = 5 * ip;
-      line(x, y0, x, y1, 0.8);
-      line(ext, y0, x + 4 * ip, y0, 0.6); line(ext, y1, x + 4 * ip, y1, 0.6);
-      line(x - t, y0 + t, x + t, y0 - t, 1.1); line(x - t, y1 + t, x + t, y1 - t, 1.1);
+      var e = sm(seg(a, 0, 0.35)), g = sm(seg(a, 0.28, 0.68)), k = ob(seg(a, 0.6, 0.78));
+      ctx.save();
+      line(ext, y0, lerp(ext, x + 4 * ip, e), y0, 0.6); line(ext, y1, lerp(ext, x + 4 * ip, e), y1, 0.6);
+      var m = (y0 + y1) / 2, hh = (y1 - y0) / 2 * g;
+      if (g > 0) line(x, m - hh, x, m + hh, 0.8);
+      if (k > 0) { var t = 5 * ip * k; line(x - t, y0 + t, x + t, y0 - t, 1.1); line(x - t, y1 + t, x + t, y1 - t, 1.1); }
+      ctx.restore();
+    }
+    // soft puff of dust/steam: n blobs spreading from (x,y) with progress u (0..1)
+    function puff(x, y, spread, u, seed, n, col) {
+      if (u <= 0 || u >= 1 || REDUCED) return;
+      ctx.save();
+      for (var i = 0; i < n; i++) {
+        var hx = hash(seed + i), dir = hx < 0.5 ? -1 : 1, d = (0.35 + 0.65 * hash(seed + i + 9)) * spread * oc(u);
+        ctx.globalAlpha = 0.32 * (1 - u) * (0.6 + 0.4 * hash(seed + i + 4));
+        ctx.beginPath(); ctx.arc(x + dir * d, y - oc(u) * spread * 0.35 * hash(seed + i + 2), spread * (0.12 + 0.22 * u) * (0.6 + 0.6 * hash(seed + i + 6)), 0, TAU);
+        fillC(col || '#CFC9BF');
+      }
       ctx.restore();
     }
 
@@ -394,8 +430,26 @@
         if (a2 <= 0) continue;
         path(sh2.pts, false);
         if (a2 < 1) ctx.setLineDash([sh2.len * a2, sh2.len + 1]);
-        strokeW(sh2.lw);
+        strokeW(sh2.lw, sh2.sc);
         ctx.setLineDash([]);
+      }
+      // bin details: yellow mesh guards between the legs, painted compartment numbers, stair treads
+      var dA = sm(seg(intro, 0.55, 1));
+      if (dA > 0.01) {
+        ctx.save(); ctx.globalAlpha = dA;
+        [[2062, 2458], [2482, 2878]].forEach(function (m) {
+          rectP(m[0], -118, m[1], -12); strokeW(1.2, COL.yel);
+          ctx.save(); rectP(m[0], -118, m[1], -12); ctx.clip(); ctx.beginPath();
+          for (var gx = m[0] - 110; gx < m[1]; gx += 16) { ctx.moveTo(gx, -12); ctx.lineTo(gx + 106, -118); ctx.moveTo(gx + 106, -12); ctx.lineTo(gx, -118); }
+          strokeW(0.45, 'rgba(184,138,22,0.75)'); ctx.restore();
+          for (var px = m[0] + 132; px < m[1] - 20; px += 132) line(px, -118, px, -12, 0.9, COL.yel);
+        });
+        ctx.fillStyle = COL.yel; ctx.font = '700 64px ' + MONO; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ['4', '3', '2', '1'].forEach(function (n, i) { ctx.fillText(n, BIN_X[i], -318); });
+        ctx.beginPath();
+        for (var st = 1; st < 12; st++) { var u = st / 12, ax = lerp(1640, 1905, u), ay = lerp(-640, 0, u); ctx.moveTo(ax, ay); ctx.lineTo(ax + 40, ay); }
+        strokeW(1, COL.yelD);
+        ctx.restore();
       }
       // screw helix ticks (move while dosing cement)
       var run = seg(p, 0.09, 0.11) * (1 - seg(p, 0.20, 0.23));
@@ -453,7 +507,7 @@
       if (!REDUCED) {
         ctx.save();
         for (var m = 0; m < 16; m++) {
-          var mx = 2150 + hash(m) * 900 + Math.sin(t * 0.4 + m) * 30, my = -60 - frac(t * 0.05 + hash(m + 9)) * 520;
+          var mx = 2060 + hash(m) * 840 + Math.sin(t * 0.4 + m) * 30, my = -60 - frac(t * 0.05 + hash(m + 9)) * 520;
           ctx.globalAlpha = 0.25 * Math.sin(frac(t * 0.05 + hash(m + 9)) * PI) * intro;
           ctx.beginPath(); ctx.arc(mx, my, 4 + hash(m + 2) * 4, 0, TAU); fillC('#8D877E');
         }
@@ -510,36 +564,49 @@
       for (var i = 0; i <= 24; i++) { var u = i / 24, c = [A[0] + dx * u, A[1] + dy * u], rr = r(u); topP.push([c[0] + n[0] * rr, c[1] + n[1] * rr]); botP.push([c[0] - n[0] * rr, c[1] - n[1] * rr]); }
       return { top: topP, bot: botP, A: A, d: d, n: n, Ld: Ld, r: r };
     }
+    // boom unfolds section by section: outriggers first, then each arm with its own ease and a small overshoot
+    function eo(t) { return lerp(sm(t), ob(t), 0.38); }
     function boomPose(p, xr) {
       var bt = seg(p, 0.375, 0.445);
-      var e1 = sm(seg(bt, 0, 0.62)), e3 = sm(seg(bt, 0.32, 1));
+      var e1 = eo(seg(bt, 0.2, 0.62)), e2 = eo(seg(bt, 0.42, 0.8)), e3 = eo(seg(bt, 0.55, 1));
       var sweep = lerp(-12, 14, sm(seg(p, 0.445, 0.495))) * PI / 180;
-      var a1 = lerp(180, 288, e1) * PI / 180, a2 = lerp(0, -2, e1) * PI / 180, a3 = lerp(180, 422, e3) * PI / 180 + sweep * sm(seg(bt, 0.9, 1));
+      var a1 = lerp(180, 288, e1) * PI / 180, a2 = lerp(0, -7, e2) * PI / 180, a3 = lerp(180, 422, e3) * PI / 180 + sweep * sm(seg(bt, 0.9, 1));
       var P0 = [xr + 760, -395], lens = [650, 600, 450], angs = [a1, a2, a3], pts = [P0];
       for (var i = 0; i < 3; i++) { var q = pts[i]; pts.push([q[0] + Math.cos(angs[i]) * lens[i], q[1] + Math.sin(angs[i]) * lens[i]]); }
-      return { pts: pts, bt: bt, fold: 1 - sm(seg(bt, 0, 0.4)) };
+      return { pts: pts, bt: bt, fold: 1 - sm(seg(bt, 0.15, 0.55)), angs: angs };
     }
     function wheel(x, y, r, ang) {
       ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); fillC('#3A3936'); strokeW(1.1);
       ctx.beginPath(); ctx.arc(x, y, r * 0.55, 0, TAU); fillC(COL.concS); strokeW(0.8);
       for (var i = 0; i < 5; i++) { var a = ang + i * TAU / 5; line(x + Math.cos(a) * r * 0.18, y + Math.sin(a) * r * 0.18, x + Math.cos(a) * r * 0.5, y + Math.sin(a) * r * 0.5, 0.7); }
+      ctx.beginPath(); ctx.arc(x, y, r * 0.12, 0, TAU); fillC(COL.ink);
     }
+    function shadowE(cx, w, a) { ctx.save(); ctx.globalAlpha *= (a == null ? 1 : a); ctx.beginPath(); ctx.ellipse(cx, 2, w, 7, 0, 0, TAU); fillC(COL.shadow); ctx.restore(); }
+    function truckX(p) { return lerp(1290, 3000, ioc(seg(p, 0.285, 0.375))); }
     function drawTruck(p, t, intro) {
-      var xr = lerp(1290, 3000, ioc(seg(p, 0.285, 0.375)));
-      if (!visible(xr - 100, xr + 1900)) return;
+      var xr = truckX(p);
+      if (!visible(xr - 300, xr + 1900)) return;
       var wAng = (xr - 1290) / 52;
+      // suspension: pitch follows acceleration, then a damped settle after the stop
+      var h = 0.003, acc = (truckX(p + h) + truckX(p - h) - 2 * xr) / (h * h);
+      var pitch = clamp(-acc / 1.3e6, -1, 1) * 0.022;
+      if (p > 0.375) { var d = (p - 0.375) / 0.012; pitch += 0.016 * Math.exp(-d * 1.3) * Math.sin(d * 4.2); }
+      if (p > 0.285 && p < 0.375 && !REDUCED) pitch += Math.sin(xr * 0.021) * 0.0025;
       ctx.save(); ctx.globalAlpha = sm(seg(intro, 0.45, 1));
       var pose = boomPose(p, xr);
+      shadowE(xr + 520, 520, 0.9);
       // outriggers
-      var og = sm(seg(pose.bt, 0, 0.3));
+      var og = sm(seg(pose.bt, 0, 0.25));
       if (og > 0.01) {
         [[xr + 300, -1], [xr + 745, 1]].forEach(function (o) {
           var fx = o[0] + o[1] * 70 * og, fy = -110 + 110 * og;
           line(o[0], -112, fx, fy, 2.4); rectP(fx - 18, fy - 4, fx + 18, fy + 2); fillC(COL.ink);
         });
       }
-      // chassis
+      ctx.save(); ctx.translate(xr + 520, -52); ctx.rotate(pitch); ctx.translate(-(xr + 520), 52);
+      // chassis + fenders
       rectP(xr + 40, -128, xr + 990, -100); fillC(COL.concS); strokeW(1.2);
+      [150, 282, 835].forEach(function (w) { ctx.beginPath(); ctx.arc(xr + w, -52, 66, PI * 1.08, PI * 1.92); strokeW(1.1); });
       // drum
       var D = drumProfile(xr);
       ctx.beginPath(); ctx.moveTo(D.top[0][0], D.top[0][1]);
@@ -547,55 +614,103 @@
       for (var i = D.bot.length - 1; i >= 0; i--) ctx.lineTo(D.bot[i][0], D.bot[i][1]);
       ctx.closePath();
       var gr = ctx.createLinearGradient(xr, -420, xr, -120);
-      gr.addColorStop(0, '#F3F1EC'); gr.addColorStop(0.55, '#D8D3CB'); gr.addColorStop(1, '#A9A39A');
+      gr.addColorStop(0, '#F6F4EF'); gr.addColorStop(0.35, '#E6E2DA'); gr.addColorStop(0.7, '#CFC9C0'); gr.addColorStop(1, '#A49E95');
       ctx.fillStyle = gr; ctx.fill(); strokeW(1.4);
-      // spiral stripes (rotation)
+      // spiral blades seen through the shell: curved, fading at the silhouette, turning with the drum
       ctx.save(); ctx.clip();
-      var da = t * 1.3 + (xr - 1290) * 0.002;
-      ctx.beginPath();
-      for (var k = 0; k < 7; k++) {
-        var u0 = frac(k / 7 + da / TAU * 0.5);
-        var ia = Math.round(u0 * 24), ib = Math.min(24, ia + 3);
-        ctx.moveTo(D.top[ia][0], D.top[ia][1]); ctx.lineTo(D.bot[ib][0], D.bot[ib][1]);
+      for (var k = 0; k < 8; k++) {
+        var u0 = frac(k / 8 + drumAng / TAU * 0.5);
+        var ia = Math.round(u0 * 24), ib = Math.min(24, ia + 4), im = Math.min(24, ia + 2);
+        if (ia >= 24) continue;
+        var mid = [(D.top[im][0] + D.bot[im][0]) / 2 + 22, (D.top[im][1] + D.bot[im][1]) / 2];
+        ctx.beginPath(); ctx.moveTo(D.top[ia][0], D.top[ia][1]); ctx.quadraticCurveTo(mid[0], mid[1], D.bot[ib][0], D.bot[ib][1]);
+        var edge = Math.sin(u0 * PI);
+        strokeW(1.1, 'rgba(22,22,22,' + (0.14 + 0.3 * edge).toFixed(3) + ')');
       }
-      strokeW(1, 'rgba(22,22,22,0.35)'); ctx.restore();
-      // hopper / mouth
+      ctx.restore();
+      // drum rings + roller
+      [0.3, 0.78].forEach(function (u) { var ii = Math.round(u * 24); line(D.top[ii][0], D.top[ii][1], D.bot[ii][0], D.bot[ii][1], 1.6); });
+      // mouth + discharge chute at the rear
       path([[xr + 40, -392], [xr + 120, -392], [xr + 105, -340], [xr + 70, -335]], true); fillC(COL.concS); strokeW(1.1);
+      var chute = sm(seg(p, 0.42, 0.44)) * (1 - sm(seg(p, 0.5, 0.52)));
+      var ca = lerp(-1.05, -0.35, chute);
+      ctx.save(); ctx.translate(xr + 70, -330); ctx.rotate(ca);
+      path([[0, -8], [-150, -2], [-150, 10], [0, 8]], true); fillC(COL.concS); strokeW(1.1); ctx.restore();
       line(xr + 150, -215, xr + 200, -128, 1.4); line(xr + 640, -170, xr + 690, -128, 1.4);
-      // cab
-      path([[xr + 790, -110], [xr + 790, -335], [xr + 932, -335], [xr + 990, -255], [xr + 990, -110]], true); fillC(COL.conc); strokeW(1.4);
-      path([[xr + 812, -310], [xr + 922, -310], [xr + 966, -250], [xr + 812, -250]], true); fillC('#B8C0C3'); strokeW(0.9);
-      line(xr + 870, -235, xr + 870, -120, 0.6);
+      // cab: Volvo FM-like box with rounded roof edge, big door window, grille, bumper, mirror, beacon
+      ctx.beginPath(); ctx.moveTo(xr + 790, -112); ctx.lineTo(xr + 790, -342); ctx.lineTo(xr + 950, -342);
+      ctx.quadraticCurveTo(xr + 984, -342, xr + 986, -305); ctx.lineTo(xr + 993, -150); ctx.lineTo(xr + 993, -112); ctx.closePath();
+      fillC(COL.conc); strokeW(1.4);
+      path([[xr + 808, -322], [xr + 940, -322], [xr + 972, -290], [xr + 972, -238], [xr + 808, -238]], true); fillC('#B8C0C3'); strokeW(0.9);
+      line(xr + 812, -300, xr + 900, -300, 0.5, 'rgba(255,255,255,0.6)');
+      line(xr + 800, -228, xr + 800, -122, 0.7); line(xr + 940, -228, xr + 940, -122, 0.7);
+      line(xr + 960, -342, xr + 995, -336, 2.4);
+      rectP(xr + 976, -214, xr + 993, -140); fillC('#3A3936'); strokeW(0.8);
+      for (var gl = -206; gl < -142; gl += 10) line(xr + 978, gl, xr + 991, gl, 0.6, 'rgba(255,255,255,0.35)');
+      rectP(xr + 960, -136, xr + 1004, -108); fillC('#2F2E2B'); strokeW(1);
+      rectP(xr + 984, -168, xr + 996, -150); fillC('#F2E7B8'); strokeW(0.6);
+      line(xr + 990, -284, xr + 1018, -296, 1.2); rectP(xr + 1012, -318, xr + 1024, -272); fillC('#3A3936'); strokeW(0.8);
+      path([[xr + 836, -112], [xr + 836, -100], [xr + 870, -100]], false); strokeW(1);
+      ctx.beginPath(); ctx.arc(xr + 900, -342, 10, PI, 0); fillC('#E8892B'); strokeW(0.8);
+      if (!REDUCED && p > 0.285 && p < 0.375) { ctx.save(); ctx.globalAlpha *= 0.25 + 0.25 * Math.sin(t * 9); ctx.beginPath(); ctx.arc(xr + 900, -346, 22, 0, TAU); fillC('#F2A54A'); ctx.restore(); }
       // turret
       rectP(xr + 732, -398, xr + 788, -345); fillC(COL.concS); strokeW(1.1);
-      // boom sections
-      var offs = [0, -26, -52];
+      // boom sections with hydraulic rams
+      var offs = [0, -26, -52], P = pose.pts;
       for (var b = 0; b < 3; b++) {
-        var p0 = pose.pts[b], p1 = pose.pts[b + 1], oy2 = offs[b] * pose.fold;
+        var p0 = P[b], p1 = P[b + 1], oy2 = offs[b] * pose.fold;
         ctx.lineCap = 'round';
         ctx.beginPath(); ctx.moveTo(p0[0], p0[1] + oy2); ctx.lineTo(p1[0], p1[1] + oy2);
-        ctx.lineWidth = 30; ctx.strokeStyle = COL.ink; ctx.stroke();
-        ctx.lineWidth = Math.max(4, 30 - 2.8 * ip); ctx.strokeStyle = COL.conc; ctx.stroke();
+        ctx.lineWidth = 30 - b * 4; ctx.strokeStyle = COL.ink; ctx.stroke();
+        ctx.lineWidth = Math.max(4, 30 - b * 4 - 2.8 * ip); ctx.strokeStyle = COL.conc; ctx.stroke();
         ctx.lineCap = 'butt';
         ctx.beginPath(); ctx.arc(p0[0], p0[1] + oy2, 9, 0, TAU); fillC(COL.ink);
       }
-      // hose + pour
-      var tip = pose.pts[3];
+      if (pose.fold < 0.98) {
+        // hydraulic rams on the underside of each arm: barrel + rod
+        var rams = [[P[0], P[1], [P[0][0] + 10, P[0][1] + 40], 0.36], [P[1], P[2], [lerp(P[1][0], P[0][0], 0.16), lerp(P[1][1], P[0][1], 0.16)], 0.2]];
+        rams.forEach(function (r, ri) {
+          var a0 = r[0], a1 = r[1], dx = a1[0] - a0[0], dy = a1[1] - a0[1], l = Math.hypot(dx, dy) || 1, nx = -dy / l, ny = dx / l;
+          if (ny < 0) { nx = -nx; ny = -ny; }
+          var end = [a0[0] + dx * r[3] + nx * 20, a0[1] + dy * r[3] + ny * 20], st = r[2];
+          var mid = [lerp(st[0], end[0], 0.58), lerp(st[1], end[1], 0.58)];
+          ctx.lineCap = 'round';
+          ctx.beginPath(); ctx.moveTo(st[0], st[1]); ctx.lineTo(mid[0], mid[1]); ctx.lineWidth = 11; ctx.strokeStyle = COL.ink; ctx.stroke(); ctx.lineWidth = 11 - 2.4 * ip; ctx.strokeStyle = COL.concS; ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(mid[0], mid[1]); ctx.lineTo(end[0], end[1]); ctx.lineWidth = 5; ctx.strokeStyle = COL.ink; ctx.stroke(); ctx.lineWidth = Math.max(1, 5 - 2 * ip); ctx.strokeStyle = '#EDEBE6'; ctx.stroke();
+          ctx.lineCap = 'butt';
+        });
+      }
+      ctx.restore(); // end pitch
+      // hose + pour (the hose sways, the stream wobbles, drops fall, the surface splashes)
+      var tip = P[3];
       if (pose.bt > 0.92) {
         var hang = sm(seg(pose.bt, 0.92, 1)), surf = -50 * sm(seg(p, 0.425, 0.49));
-        var hy = lerp(tip[1] + 40, surf - 30, hang);
-        line(tip[0], tip[1], tip[0] + Math.sin(t * 2) * 4, hy, 3.2);
+        var hy = lerp(tip[1] + 40, surf - 70, hang), sw = REDUCED ? 0 : Math.sin(t * 2) * 5 + Math.sin(t * 3.7) * 2;
+        ctx.beginPath(); ctx.moveTo(tip[0], tip[1]); ctx.quadraticCurveTo(tip[0] + sw * 0.4, (tip[1] + hy) / 2, tip[0] + sw, hy);
+        ctx.lineWidth = 9; ctx.strokeStyle = COL.ink; ctx.stroke(); ctx.lineWidth = 9 - 2.4 * ip; ctx.strokeStyle = '#3A3936'; ctx.stroke();
         var pour = seg(p, 0.43, 0.44) * (1 - seg(p, 0.488, 0.5));
         if (pour > 0.01) {
           ctx.save(); ctx.globalAlpha *= pour;
-          rectP(tip[0] - 7, hy, tip[0] + 7, surf); fillC(COL.wet); ctx.restore();
+          var hx = tip[0] + sw;
+          ctx.beginPath(); ctx.moveTo(hx - 7, hy);
+          for (var yy = hy; yy <= surf; yy += 6) ctx.lineTo(hx - 5 - 3 * seg(yy, hy, surf) + Math.sin(yy * 0.08 + t * 11) * 1.6, yy);
+          for (var yy2 = surf; yy2 >= hy; yy2 -= 6) ctx.lineTo(hx + 5 + 3 * seg(yy2, hy, surf) + Math.sin(yy2 * 0.08 + t * 11 + 1) * 1.6, yy2);
+          ctx.closePath(); fillC(COL.wet);
+          if (!REDUCED) {
+            for (var dd = 0; dd < 6; dd++) { var fu = frac(t * 1.7 + dd / 6), yd = lerp(hy, surf, fu); ctx.beginPath(); ctx.arc(hx + (hash(dd) - 0.5) * 18, yd, 3.2, 0, TAU); fillC(COL.wet); }
+            for (var sp = 0; sp < 10; sp++) {
+              var su = frac(t * 1.25 + sp / 10), dir = sp % 2 ? 1 : -1, sxp = hx + dir * (10 + su * (40 + hash(sp) * 40));
+              ctx.globalAlpha = pour * (1 - su) * 0.9; ctx.beginPath(); ctx.arc(sxp, surf - Math.sin(su * PI) * (16 + hash(sp + 3) * 16), 2.6, 0, TAU); fillC(COL.wet);
+            }
+          }
+          ctx.restore();
         }
       }
-      // wheels
+      // wheels (outside the pitch: they stay on the ground)
       [[150], [282], [835]].forEach(function (w) { wheel(xr + w[0], -52, 52, wAng); });
       ctx.restore();
       label(xr + 420, -360, 'MIKSERIS', sm(seg(p, 0.29, 0.31)) * (1 - seg(p, 0.37, 0.39)), 30, -46);
-      label(pose.pts[2][0], pose.pts[2][1], 'SŪKNIS', sm(seg(p, 0.42, 0.44)) * (1 - seg(p, 0.495, 0.51)), 26, -24);
+      label(P[2][0], P[2][1], 'SŪKNIS', sm(seg(p, 0.42, 0.44)) * (1 - seg(p, 0.495, 0.51)), 26, -24);
     }
 
     // ---------- slab / formwork ----------
@@ -606,14 +721,26 @@
       ctx.save(); ctx.globalAlpha = a;
       var f = sm(seg(p, 0.425, 0.49)), lev = sm(seg(p, 0.468, 0.5));
       var pose = boomPose(p, 3000), px = pose.pts[3][0];
+      // the screed bar travels left → right; behind it the surface is flat and dull, ahead it is wet and wavy
+      var sx2 = lerp(4300, 5450, lev);
       if (f > 0.002) {
-        ctx.beginPath(); ctx.moveTo(4300, 0);
-        for (var x = 4300; x <= 5450; x += 12) {
-          var bump = 26 * f * (1 - lev) * Math.exp(-Math.pow((x - px) / 170, 2));
-          var wob = (1 - lev) * Math.sin(x * 0.05 + t * 3) * 1.5 * f;
-          ctx.lineTo(x, -50 * f - bump + wob);
+        var prof = function () {
+          ctx.beginPath(); ctx.moveTo(4300, 0);
+          for (var x = 4300; x <= 5450; x += 10) {
+            var wet = lev > 0 ? sm(clamp((x - sx2) / 50 + 0.5, 0, 1)) : 1;
+            var bump = 26 * f * wet * Math.exp(-Math.pow((x - px) / 170, 2));
+            var wob = wet * (Math.sin(x * 0.05 + t * 3) * 1.6 + Math.sin(x * 0.13 - t * 2.1) * 0.8) * f;
+            var heap = lev > 0 && lev < 1 ? 7 * Math.exp(-Math.pow((x - sx2 - 22) / 26, 2)) : 0; // mortar pushed ahead of the bar
+            ctx.lineTo(x, -50 * f - bump + wob - heap);
+          }
+          ctx.lineTo(5450, 0); ctx.closePath();
+        };
+        prof(); fillC(COL.wet);
+        if (lev > 0) {
+          ctx.save(); rectP(4300, -90, sx2, 2); ctx.clip(); prof(); fillC(COL.mix); ctx.restore();
+          line(4304, -50 * f + 1.5, Math.max(4304, sx2 - 10), -50 * f + 1.5, 1.2, 'rgba(255,255,255,0.35)');
         }
-        ctx.lineTo(5450, 0); ctx.closePath(); fillC(lerp(0, 1, lev) > 0.5 ? COL.mix : COL.wet); strokeW(1);
+        prof(); strokeW(1);
       }
       // rebar (section dots) + mesh line
       ctx.globalAlpha = a;
@@ -626,8 +753,9 @@
       line(5472, -20, 5488, -20, 1); line(5510, 0, 5472, -60, 1.1);
       // screed bar levelling
       if (lev > 0 && lev < 1) {
-        var sx2 = lerp(4320, 5430, lev);
-        line(sx2, -64, sx2, -48, 3); line(sx2 - 60, -64, sx2 + 60, -64, 2.4);
+        var bob = REDUCED ? 0 : Math.sin(t * 7) * 1.2;
+        line(sx2, -66 + bob, sx2, -48 + bob, 3); line(sx2 - 60, -66 + bob, sx2 + 60, -66 + bob, 2.4);
+        line(sx2 - 60, -66 + bob, sx2 - 92, -150 + bob, 1.6); line(sx2 + 60, -66 + bob, sx2 + 92, -150 + bob, 1.6);
       }
       ctx.restore();
       label(4290, -70, 'VEIDŅI', sm(seg(p, 0.36, 0.39)) * (1 - seg(p, 0.45, 0.47)), 30, -56);
@@ -659,9 +787,10 @@
       ctx.restore();
 
       // ---- grods KC 10-7.5 ----
-      var f = sm(seg(p, 0.515, 0.565)), dm = sm(seg(p, 0.565, 0.6)), dimA = sm(seg(p, 0.592, 0.61));
+      var f = sm(seg(p, 0.515, 0.565)), dm = sm(seg(p, 0.565, 0.6)), dimA = seg(p, 0.586, 0.62);
       ctx.save(); ctx.globalAlpha = gA;
       ctx.translate(0, -6);
+      shadowE(GX, 70, 0.8);
       // finished ring (hidden by the mould until it lifts)
       ringBody(GX, 60, 75, [COL.concD, COL.conc, COL.concS]);
       ctx.beginPath(); ctx.ellipse(GX, -75, 60, 15, 0, 0, TAU); fillC(COL.conc); strokeW(1.2);
@@ -688,6 +817,8 @@
         for (var rb = -1; rb <= 1; rb += 2) line(GX + rb * 66, -60, GX + rb * 72, -60, 2);
         ctx.restore();
       }
+      // dust/steam where the mould breaks free
+      puff(GX, -4, 120, seg(dm, 0.02, 0.6), 11, 12);
       // pour stream into the annulus
       var pr = seg(p, 0.515, 0.522) * (1 - seg(p, 0.558, 0.566));
       if (pr > 0.01) {
@@ -705,11 +836,13 @@
       label(GX - 66, -40, 'VEIDNE', sm(seg(p, 0.515, 0.53)) * (1 - seg(p, 0.56, 0.575)), -26, -40);
 
       // ---- FBS 24-3-6 ----
-      var X0 = 6300, f2 = sm(seg(p, 0.578, 0.615)), dm2 = sm(seg(p, 0.615, 0.642)), dimB = sm(seg(p, 0.635, 0.652));
+      var X0 = 6300, f2 = sm(seg(p, 0.578, 0.615)), dm2 = sm(seg(p, 0.615, 0.642)), dimB = seg(p, 0.632, 0.662);
       var fa = sm(seg(p, 0.565, 0.58));
       if (fa > 0.01) {
         ctx.save(); ctx.globalAlpha = fa; ctx.translate(0, -6);
+        shadowE(X0 + 130, 140, 0.7);
         box(X0, 240, 60, 20, 10, [COL.conc, COL.concS, '#DCD8D1']);
+        puff(X0 + 120, -2, 190, seg(dm2, 0.02, 0.6), 31, 12);
         if (dm2 > 0.5) { // lifting loops
           ctx.globalAlpha = fa * sm(seg(dm2, 0.5, 1));
           [X0 + 48, X0 + 192].forEach(function (lx) { ctx.beginPath(); ctx.arc(lx + 10, -65, 7, PI, 0); strokeW(1.6); });
@@ -742,12 +875,13 @@
         for (var bi = 0; bi < BL.length; bi++) {
           var b = BL[bi], st = 0.655 + bi * 0.011, tt = seg(p, st, st + 0.03);
           if (tt <= 0) continue;
-          var drop = (1 - ob(tt)) * 150;
+          var drop = tt < 0.6 ? (1 - Math.pow(tt / 0.6, 2)) * 150 : Math.abs(Math.sin((tt - 0.6) / 0.4 * PI * 2)) * 9 * (1 - (tt - 0.6) / 0.4);
           ctx.save(); ctx.globalAlpha = sm(seg(tt, 0, 0.3)) * la; ctx.translate(0, -drop);
           lbBlock(b[0], -60 * b[1], b[2], bi, b[1] === 2 || (b[1] === 1 && p < 0.655 + 5 * 0.011 + 0.01));
           ctx.restore();
+          puff(b[0] + b[2] / 2, -60 * b[1] - 2, b[2] * 0.75, seg(tt, 0.42, 0.95), 50 + bi * 7, 7);
         }
-        var dimC = sm(seg(p, 0.705, 0.725));
+        var dimC = seg(p, 0.70, 0.735);
         dimH(6600, 6780, 20, 4, 4, dimC);
         dimV(6578, -60, 0, 6596, dimC);
         ctx.restore();
@@ -788,11 +922,35 @@
       for (var x = 8300; x <= xb; x += 10) ctx.lineTo(x, bottomY(x));
       ctx.lineTo(xb, bottomY(xb)); ctx.lineTo(xb, 0); ctx.closePath();
     }
+    // ---- ground-section timeline (p) ----
+    // dig .768–.835 · drive back .835–.842 · base/ring/ring .842–.869 (lowered on a chain by the excavator)
+    // slew .869–.874 · BIO tank .874–.887 · slew .887–.891 · lid .891–.899
+    // reverse .899–.905 · backfill pushed right → left .905–.95 · drive off .95–.975 · ground closes, grass .945–1
+    var LIFT = [
+      { k: 'base', a: 0.842, b: 0.851 }, { k: 'r1', a: 0.851, b: 0.860 }, { k: 'r2', a: 0.860, b: 0.869 },
+      { k: 'tank', a: 0.874, b: 0.887 }, { k: 'lid', a: 0.891, b: 0.899 }
+    ];
+    var EX_X = 9140, CH = 110;
+    function liftU(L1, p) { return oc(seg(p, L1.a + (L1.b - L1.a) * 0.08, L1.b)); }
+    function exState(p, digX) {
+      if (p < 0.835) return { x: digX + 140, face: -1, mode: 'dig' };
+      if (p < 0.842) return { x: lerp(10440, EX_X, ioc(seg(p, 0.835, 0.842))), face: -1, mode: 'carry' };
+      if (p < 0.869) return { x: EX_X, face: -1, mode: 'lift' };
+      if (p < 0.874) return { x: EX_X, face: lerp(-1, 1, ioc(seg(p, 0.869, 0.874))), mode: 'carry' };
+      if (p < 0.887) return { x: EX_X, face: 1, mode: 'lift' };
+      if (p < 0.891) return { x: EX_X, face: lerp(1, -1, ioc(seg(p, 0.887, 0.891))), mode: 'carry' };
+      if (p < 0.899) return { x: EX_X, face: -1, mode: 'lift' };
+      if (p < 0.905) return { x: lerp(EX_X, 10250, ioc(seg(p, 0.899, 0.905))), face: -1, mode: 'carry' };
+      if (p < 0.95) return { x: lerp(10250, 8420, lerp(seg(p, 0.905, 0.95), ioc(seg(p, 0.905, 0.95)), 0.5)), face: -1, mode: 'push' };
+      return { x: lerp(8420, 11100, ioc(seg(p, 0.95, 0.975))), face: -1, mode: 'carry' };
+    }
+    function sway(t, seed, u) { return REDUCED ? 0 : 0.085 * Math.sin(t * 2.4 + seed) * (1 - u) + 0.02 * Math.sin(t * 5.1 + seed * 2) * (1 - u); }
     function drawSection(p, t) {
       if (!visible(SEC_X0, SEC_X1)) return;
       if (p < 0.66) return;
-      var digX = lerp(8300, 10300, ioc(seg(p, 0.768, 0.835)));
-      var back = sm(seg(p, 0.875, 0.925)), close = sm(seg(p, 0.94, 0.99)), grassG = sm(seg(p, 0.925, 0.99));
+      var dg = seg(p, 0.768, 0.835), digX = lerp(8300, 10300, lerp(dg, ioc(dg), 0.5));
+      var back = sm(seg(p, 0.905, 0.95)), close = sm(seg(p, 0.95, 0.99)), grassG = sm(seg(p, 0.945, 0.995));
+      var fillFront = lerp(10310, 8290, back);
 
       // soil layers
       ctx.save(); soilClip(); ctx.clip();
@@ -802,7 +960,6 @@
       line(SEC_X0 - 40, 36, SEC_X1 + 40, 36, 0.6, 'rgba(22,22,22,0.5)');
       line(SEC_X0 - 40, 150, SEC_X1 + 40, 150, 0.6, 'rgba(22,22,22,0.5)');
       var gx0 = Math.max(SEC_X0, vx0), gx1 = Math.min(SEC_X1, vx1), gs = Math.max(18, 9 * ip);
-      // topsoil strokes + sand dots
       ctx.beginPath();
       for (var x = Math.floor(gx0 / gs) * gs; x < gx1; x += gs) {
         for (var y = 8; y < 34; y += gs * 0.8) { var h = hash2(x, y); ctx.moveTo(x + h * gs, y + 4); ctx.lineTo(x + h * gs + 8, y); }
@@ -812,60 +969,83 @@
       for (var x2 = Math.floor(gx0 / gs) * gs; x2 < gx1; x2 += gs) {
         for (var y2 = 40; y2 < 148; y2 += gs * 0.7) { var h2 = hash2(x2, y2); ctx.fillRect(x2 + h2 * gs, y2 + hash2(y2, x2) * 8, 1.6 * ip + 2, 1.6 * ip + 2); }
       }
-      // clay hatch
       var sp = 12 * ip;
       ctx.beginPath();
       for (var x3 = Math.floor(gx0 / sp) * sp; x3 < gx1 + 400; x3 += sp) { ctx.moveTo(x3, 150); ctx.lineTo(x3 - 370, 520); }
       strokeW(0.5, 'rgba(40,26,14,0.35)');
 
-      // excavation (air) and backfill
+      // the trench: in a long section we look at its far wall — darker soil with bucket-tooth scrapes
       if (digX > 8305) {
-        excavation(Math.min(digX, 10300)); fillC(COL.air);
-        ctx.setLineDash([6 * ip, 5 * ip]); strokeW(0.8, 'rgba(22,22,22,0.6)'); ctx.setLineDash([]);
+        excavation(Math.min(digX, 10300)); fillC(COL.trench);
+        ctx.save(); excavation(Math.min(digX, 10300)); ctx.clip();
+        ctx.beginPath();
+        for (var xs = 8300; xs < Math.min(digX, 10300); xs += 34) {
+          var hs = hash(xs * 0.37);
+          for (var tooth = 0; tooth < 3; tooth++) { var bx = xs + tooth * 8 + hs * 10; ctx.moveTo(bx, 6); ctx.quadraticCurveTo(bx + 10, 90, bx + 4 + hs * 12, 250); }
+        }
+        strokeW(0.6, 'rgba(25,15,8,0.28)');
+        ctx.fillStyle = 'rgba(25,15,8,0.12)'; ctx.fillRect(8300, 0, 2000, 28);
+        ctx.restore();
+        excavation(Math.min(digX, 10300)); ctx.setLineDash([6 * ip, 5 * ip]); strokeW(0.9, 'rgba(22,22,22,0.7)'); ctx.setLineDash([]);
       }
       if (back > 0.002) {
-        ctx.save(); rectP(8290, 262 - back * 268, 10310, 270); ctx.clip();
+        ctx.save(); rectP(fillFront, -2, 10310, 270); ctx.clip();
         excavation(10300); fillC(COL.fill);
         ctx.fillStyle = 'rgba(90,66,40,0.35)';
-        for (var q = 0; q < 260; q++) ctx.fillRect(8300 + hash(q) * 2000, 4 + hash(q + 99) * 240, 2 * ip + 2, 2 * ip + 2);
+        for (var q = 0; q < 260; q++) { var fx = 8300 + hash(q) * 2000; if (fx > fillFront) ctx.fillRect(fx, 4 + hash(q + 99) * 240, 2 * ip + 2, 2 * ip + 2); }
         ctx.restore();
         if (grassG > 0) { ctx.globalAlpha = grassG; rectP(8300, 0, 10300, 36); fillC(COL.top); ctx.globalAlpha = 1; }
       }
 
       // FBS foundation under the house
       for (var c = 0; c < 2; c++) for (var k = 0; k < 3; k++) {
-        var bx = 7700 + k * 240 - (c ? 120 : 0), bx0 = Math.max(7700, bx), bx1 = Math.min(8300, bx + 240);
+        var bx0 = Math.max(7700, 7700 + k * 240 - (c ? 120 : 0)), bx1 = Math.min(8300, 7700 + k * 240 - (c ? 120 : 0) + 240);
         if (bx1 <= bx0) continue;
         rectP(bx0, c * 60, bx1, c * 60 + 60); fillC(COL.concS); strokeW(1);
       }
       hatchRect(7700, 0, 8300, 120, 10);
 
-      // pipes
-      var pa = seg(p, 0.83, 0.858), pb = seg(p, 0.858, 0.878), pc = seg(p, 0.872, 0.895), pw = seg(p, 0.845, 0.872), pm = seg(p, 0.865, 0.895);
+      // pipes, laid once the structure they join is in place
+      var pa = seg(p, 0.862, 0.876), pb = seg(p, 0.887, 0.897), pc = seg(p, 0.89, 0.902), pw = seg(p, 0.866, 0.884), pm = seg(p, 0.884, 0.9);
       pipe([[8300, 100], [8800, 140]], pa); pipe([[8920, 150], [9330, 165]], pb); pipe([[9471, 180], [10650, 206]], pc);
       if (pw > 0) {
-        ctx.beginPath(); ctx.moveTo(7700, 175); ctx.lineTo(lerp(7700, 7230, pw), 175);
-        strokeW(1, COL.ink); ctx.lineWidth = 9; ctx.strokeStyle = COL.ink; ctx.stroke(); ctx.lineWidth = 4; ctx.strokeStyle = COL.air; ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(7700, 175); ctx.lineTo(lerp(7700, 7230, sm(pw)), 175);
+        ctx.lineWidth = 9; ctx.strokeStyle = COL.ink; ctx.stroke(); ctx.lineWidth = 9 - 2.4 * ip; ctx.strokeStyle = '#3F6E8C'; ctx.stroke();
       }
       if (pm > 0) {
-        var mx1 = lerp(9640, 10650, pm);
+        var mx1 = lerp(9640, 10650, sm(pm));
         ctx.fillStyle = 'rgba(60,58,54,0.55)';
         for (var g = 0; g < 70; g++) { var gxx = 9640 + hash(g + 300) * 1010; if (gxx > mx1) continue; ctx.beginPath(); ctx.arc(gxx, 100 + hash(g + 500) * 22, 3 + hash(g) * 2.5, 0, TAU); ctx.fill(); }
         ctx.beginPath(); ctx.moveTo(9640, 111); ctx.lineTo(mx1, 111);
         ctx.setLineDash([16, 8]); ctx.lineWidth = 8; ctx.strokeStyle = COL.ink; ctx.stroke(); ctx.setLineDash([]);
       }
-
-      // well: base, rings, lid
-      var wb = oc(seg(p, 0.822, 0.842)), w1 = oc(seg(p, 0.832, 0.852)), w2 = oc(seg(p, 0.842, 0.862));
       ctx.restore(); // end soil clip
-      wellPart(8800, 160, 8920, 172, 'base', wb);
-      wellPart(8800, 85, 8920, 160, 'ring', w1);
-      wellPart(8800, 10, 8920, 85, 'ring', w2);
 
-      // things that may stick out above ground or hang from above
-      var wl = oc(seg(p, 0.856, 0.874)), tk = oc(seg(p, 0.848, 0.874));
-      // tank
-      if (tk > 0) tank(9330, 9471, -8, 232, (1 - tk) * 380, tk < 1);
+      // spoil heap beside the trench (grows while digging, shrinks during backfill)
+      var heap = sm(dg) * (1 - back);
+      if (heap > 0.01) {
+        var hcx = 10080, hw = 260, hh = 95 * heap;
+        ctx.beginPath(); ctx.moveTo(hcx - hw, 0);
+        for (var hx = -hw; hx <= hw; hx += 12) { var uu = hx / hw; ctx.lineTo(hcx + hx, -hh * (1 - uu * uu) * (0.9 + 0.1 * Math.sin(hx * 0.09))); }
+        ctx.closePath(); fillC(COL.fill); strokeW(1);
+        ctx.fillStyle = 'rgba(90,66,40,0.4)';
+        for (var hq = 0; hq < 40; hq++) { var qx = (hash(hq + 700) * 2 - 1) * hw * 0.9, qy = -hh * (1 - Math.pow(qx / hw, 2)) * hash(hq + 800); ctx.fillRect(hcx + qx, qy, 3, 3); }
+      }
+
+      // lifted parts: each hangs on a chain from the bucket, swings, and settles as it lands
+      var EX = exState(p, digX), tipW = null;
+      function placed(k) { for (var i = 0; i < LIFT.length; i++) if (LIFT[i].k === k) return p >= LIFT[i].b; return false; }
+      function active() { for (var i = 0; i < LIFT.length; i++) if (p >= LIFT[i].a && p < LIFT[i].b) return LIFT[i]; return null; }
+      var act = active();
+      var GEO = { base: [8800, 8920, 160, 172], r1: [8800, 8920, 85, 160], r2: [8800, 8920, 10, 85], lid: [8792, 8928, -10, 10], tank: [9330, 9471, -8, 232] };
+      function drawPart(k, dy, ox) {
+        var G = GEO[k];
+        if (k === 'tank') tank(G[0] + ox, G[1] + ox, G[2], G[3], dy);
+        else if (k === 'lid') wellLid(8800 + ox, 8920 + ox, dy);
+        else wellPart(G[0] + ox, G[2], G[1] + ox, G[3], k === 'base' ? 'base' : 'ring', dy);
+      }
+      ['base', 'r1', 'r2'].forEach(function (k) { if (placed(k)) drawPart(k, 0, 0); });
+      if (placed('tank')) drawPart('tank', 0, 0);
       // the closing ground: section covered, only the lids remain
       if (close > 0.002) {
         ctx.save(); soilClip(); ctx.clip();
@@ -875,32 +1055,44 @@
         strokeW(0.5, 'rgba(20,12,6,0.6)');
         ctx.restore();
       }
-      if (tk >= 1) tankLid(9330, 9471, -8);
-      if (wl > 0) wellLid(8800, 8920, (1 - wl) * 380, wl < 1);
+      if (placed('tank')) tankLid(9330, 9471, -8);
+      if (placed('lid')) drawPart('lid', 0, 0);
+      if (act) {
+        var u = liftU(act, p), G = GEO[act.k], cx = (G[0] + G[1]) / 2, start = act.k === 'tank' ? 230 : act.k === 'base' ? 300 : 260;
+        var dy = (1 - u) * start, th = sway(t, act.a * 100, u), ox = Math.sin(th) * CH;
+        var top = (act.k === 'lid' ? -10 : G[2]) - dy;
+        drawPart(act.k, dy, ox);
+        tipW = [cx + ox * 0.15, top - CH * Math.cos(th)];
+        // sling: chain from the bucket hook to two lifting points
+        var hx2 = tipW[0], hy2 = tipW[1], half = Math.min(34, (G[1] - G[0]) / 2 - 8);
+        ctx.save(); ctx.setLineDash([5 * ip, 3 * ip]);
+        line(hx2, hy2, cx + ox - half, top, 1.3); line(hx2, hy2, cx + ox + half, top, 1.3);
+        ctx.setLineDash([]); ctx.beginPath(); ctx.arc(hx2, hy2 + 6, 6, 0, PI); strokeW(1.6); ctx.restore();
+        if (u > 0.9) puff(cx, act.k === 'tank' ? 232 : G[3], 70, seg(u, 0.9, 1), act.a * 1000, 6, '#B79C79');
+      }
 
       // ground surface line over the section
       line(SEC_X0, 0, SEC_X1, 0, 1.6);
-      // break lines
       ctx.save(); soilClip(); strokeW(1.1); ctx.restore();
-
-      // house
       house();
-      // grass
       if (grassG > 0.01) grass(grassG, t);
-      // excavator
-      var exA = 1;
-      if (p < 0.835) excavator(digX + 140, -1, 'dig', t, Math.min(digX, 10300));
-      else if (p < 0.86) excavator(lerp(10440, 11000, seg(p, 0.835, 0.86)), -1, 'carry', t);
-      else if (p > 0.866 && p < 0.955) excavator(lerp(7300, 10950, seg(p, 0.866, 0.955)), 1, 'push', t);
+      // excavator (contact shadow first)
+      if (p < 0.975) {
+        var ex = EX;
+        shadowE(ex.x, 150, 0.9);
+        excavator(ex.x, ex.face, ex.mode, t, ex.mode === 'dig' ? Math.min(digX, 10300) : ex.mode === 'lift' ? tipW : null);
+        if (ex.mode === 'dig' && !REDUCED) puff(Math.min(digX, 10300) + 10, -4, 60, frac(t * 0.85), Math.floor(t * 0.85) * 13, 5, '#B79C79');
+        if (ex.mode === 'push' && !REDUCED) puff(ex.x - 230, -4, 70, frac(t * 1.1), Math.floor(t * 1.1) * 17, 5, '#C9B08A');
+      }
 
       // labels (text kept in the "sky" above the ground line)
       var la = 1 - sm(seg(p, 0.93, 0.95));
       labelTo(7712, 60, -110, 'FBS PAMATI', sm(seg(p, 0.79, 0.805)) * (1 - seg(p, 0.85, 0.865)), -18);
-      labelTo(8560, 124, -150, 'KANALIZĀCIJA', sm(seg(p, 0.838, 0.852)) * la, 24);
-      labelTo(8860, 120, -320, 'GRODU AKA · KC 10-7.5', sm(seg(p, 0.86, 0.872)) * la, 20);
-      labelTo(9400, 60, -190, 'BIOLOĢISKĀ ATTĪRĪŠANA', sm(seg(p, 0.874, 0.886)) * la, 22);
-      labelTo(7450, 175, -110, 'ŪDENSVADS', sm(seg(p, 0.862, 0.874)) * la, -16);
-      labelTo(10120, 111, -130, 'MELIORĀCIJA', sm(seg(p, 0.885, 0.897)) * la, 20);
+      labelTo(8560, 124, -150, 'KANALIZĀCIJA', sm(seg(p, 0.868, 0.88)) * la, 24);
+      labelTo(8860, 120, -320, 'GRODU AKA · KC 10-7.5', sm(seg(p, 0.853, 0.865)) * la, 20);
+      labelTo(9400, 60, -190, 'BIOLOĢISKĀ ATTĪRĪŠANA', sm(seg(p, 0.884, 0.894)) * la, 22);
+      labelTo(7450, 175, -110, 'ŪDENSVADS', sm(seg(p, 0.874, 0.886)) * la, -16);
+      labelTo(10120, 111, -130, 'MELIORĀCIJA', sm(seg(p, 0.893, 0.903)) * la, 20);
       labelTo(8860, -8, -230, 'VĀKS Z/Z', sm(seg(p, 0.955, 0.975)), 20);
       labelTo(8000, -10, -470, 'KONSULTĒJAM · APSEKOJAM · PROJEKTĒJAM', sm(seg(p, 0.775, 0.79)) * (1 - seg(p, 0.82, 0.835)), 24);
     }
@@ -912,16 +1104,14 @@
     }
     function pipe(pts, u) {
       if (u <= 0) return;
-      var e = along(pts, u);
+      var e = along(pts, sm(u));
       ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]); ctx.lineTo(e[0], e[1]);
       ctx.lineWidth = 15; ctx.strokeStyle = COL.ink; ctx.stroke();
       ctx.lineWidth = 15 - 2.4 * ip; ctx.strokeStyle = COL.red; ctx.stroke();
       ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(255,255,255,0.25)'; ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1] - 3); ctx.lineTo(e[0], e[1] - 3); ctx.stroke();
+      if (u < 1) { ctx.beginPath(); ctx.arc(e[0], e[1], 8, 0, TAU); fillC(COL.redD); strokeW(1); }
     }
-    function chain(x, yTop, yBot) { line(x, yTop, x, yBot, 1, 'rgba(22,22,22,0.8)'); ctx.setLineDash([]); }
-    function wellPart(x0, y0, x1, y1, kind, u) {
-      if (u <= 0) return;
-      var dy = (1 - u) * 380;
+    function wellPart(x0, y0, x1, y1, kind, dy) {
       ctx.save(); ctx.translate(0, -dy);
       if (kind === 'base') { rectP(x0, y0, x1, y1); fillC(COL.concS); hatchRect(x0, y0, x1, y1, 8); }
       else {
@@ -930,27 +1120,25 @@
         rectP(x1 - 10, y0, x1, y1); fillC(COL.concS); hatchRect(x1 - 10, y0, x1, y1, 7);
       }
       ctx.restore();
-      if (u < 1) { chain((x0 + x1) / 2 - 30, y0 - dy - 600, y0 - dy); chain((x0 + x1) / 2 + 30, y0 - dy - 600, y0 - dy); }
     }
-    function wellLid(x0, x1, dy, hanging) {
+    function wellLid(x0, x1, dy) {
       ctx.save(); ctx.translate(0, -dy);
       rectP(x0 - 8, -4, x1 + 8, 10); fillC(COL.concS); hatchRect(x0 - 8, -4, x1 + 8, 10, 7);
       rectP((x0 + x1) / 2 - 24, -10, (x0 + x1) / 2 + 24, -4); fillC('#2F2E2B'); strokeW(1);
       ctx.restore();
-      if (hanging) { chain((x0 + x1) / 2 - 40, -4 - dy - 600, -4 - dy); chain((x0 + x1) / 2 + 40, -4 - dy - 600, -4 - dy); }
     }
-    function tank(x0, x1, y0, y1, dy, hanging) {
+    function tank(x0, x1, y0, y1, dy) {
       ctx.save(); ctx.translate(0, -dy);
       var r = 14;
       ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x0, y1 - r); ctx.quadraticCurveTo(x0, y1, x0 + r, y1); ctx.lineTo(x1 - r, y1); ctx.quadraticCurveTo(x1, y1, x1, y1 - r); ctx.lineTo(x1, y0); ctx.closePath();
-      fillC(COL.tank); strokeW(1.3);
+      var tg = ctx.createLinearGradient(x0, 0, x1, 0); tg.addColorStop(0, '#DAD7D0'); tg.addColorStop(0.35, COL.tank); tg.addColorStop(1, '#CFCBC3');
+      ctx.fillStyle = tg; ctx.fill(); strokeW(1.3);
       ctx.setLineDash([6 * ip, 5 * ip]);
       line(x0 + 47, 40, x0 + 47, y1 - 10, 0.8); line(x1 - 47, 70, x1 - 47, y1 - 10, 0.8);
       line(x0 + 6, 70, x1 - 6, 70, 0.6, 'rgba(22,22,22,0.5)');
       ctx.setLineDash([]);
+      tankLid(x0, x1, y0);
       ctx.restore();
-      tankLid(x0, x1, y0 - dy);
-      if (hanging) { chain(x0 + 30, y0 - dy - 600, y0 - dy - 12); chain(x1 - 30, y0 - dy - 600, y0 - dy - 12); }
     }
     function tankLid(x0, x1, y0) {
       var cx = (x0 + x1) / 2;
@@ -965,6 +1153,7 @@
       rectP(7780, -330, 7900, -120); fillC('#9FA9AC'); strokeW(1);
       rectP(8010, -330, 8240, -170); fillC('#9FA9AC'); strokeW(1);
     }
+    // grass grows blade by blade, each with its own delay and height
     function grass(g, t) {
       var x0 = Math.max(SEC_X0, vx0 - 20), x1 = Math.min(SEC_X1, vx1 + 20), st = 3.2 * ip;
       ctx.beginPath();
@@ -972,33 +1161,41 @@
         if (x > 7690 && x < 8310) continue;
         if (x > 8784 && x < 8936) continue;
         if (x > 9334 && x < 9467) continue;
-        var i = Math.round(x / st), h = (5 + 7 * hash(i)) * ip * g, sw = REDUCED ? 0 : Math.sin(t * 1.4 + x * 0.004) * 1.6 * ip * g;
+        var i = Math.round(x / st), d0 = hash(i + 3) * 0.55, gi = ob(seg(g, d0, d0 + 0.45));
+        if (gi <= 0) continue;
+        var h = (5 + 8 * hash(i)) * ip * gi, sw = REDUCED ? 0 : Math.sin(t * 1.4 + x * 0.004) * 1.6 * ip * gi;
         ctx.moveTo(x, 0); ctx.quadraticCurveTo(x + sw * 0.4, -h * 0.5, x + sw + (hash(i + 7) - 0.5) * 2 * ip, -h);
       }
       ctx.lineCap = 'round'; strokeW(1.3, COL.grass); ctx.lineCap = 'butt';
     }
-    function excavator(x, face, mode, t, digFront) {
+    // Bobcat-type mini excavator: tracks, dozer blade, ROPS cab, 2-link boom (IK), bucket
+    function excavator(x, face, mode, t, arg) {
       if (!visible(x - 300, x + 300)) return;
-      var cyc = REDUCED ? 0.4 : t * 1.7;
-      var tipW;
+      var cyc = REDUCED ? 0.4 : t * 1.7, sgn = face >= 0 ? 1 : -1;
+      var T;
       if (mode === 'dig') {
-        var tx = digFront + 10 + Math.sin(cyc) * 28;
+        var tx = arg + 10 + Math.sin(cyc) * 28;
         var dep = Math.min(bottomY(Math.max(8300, tx)), 230);
-        tipW = [tx, lerp(-30, dep - 12, 0.5 + 0.5 * Math.sin(cyc + 1.2))];
-      } else if (mode === 'carry') tipW = [x + face * 210, -60];
-      else tipW = [x + face * 220, -6 + Math.sin(cyc) * 6];
+        var jit = REDUCED ? 0 : Math.sin(t * 23) * 2.2 * Math.max(0, Math.sin(cyc + 1.2));
+        T = [(tx - x) * sgn, lerp(-30, dep - 12, 0.5 + 0.5 * Math.sin(cyc + 1.2)) + jit];
+      } else if (mode === 'lift' && arg) T = [(arg[0] - x) * sgn, arg[1]];
+      else if (mode === 'push') T = [220, -8 + (REDUCED ? 0 : Math.sin(cyc) * 4)];
+      else T = [205, -70];
       ctx.save(); ctx.translate(x, 0); ctx.scale(face, 1);
-      var T = [(tipW[0] - x) * face, tipW[1]];
-      // tracks
+      // tracks + blade
       ctx.beginPath(); ctx.moveTo(-100, -42); ctx.lineTo(100, -42); ctx.arc(100, -21, 21, -PI / 2, PI / 2); ctx.lineTo(-100, 0); ctx.arc(-100, -21, 21, PI / 2, PI * 1.5); ctx.closePath();
       fillC('#3A3936'); strokeW(1.2);
       var roll = (x / 18) % TAU;
       for (var w = -96; w <= 96; w += 48) { ctx.beginPath(); ctx.arc(w, -21, 12, 0, TAU); fillC(COL.concS); strokeW(0.8); line(w, -21, w + Math.cos(roll) * 10, -21 + Math.sin(roll) * 10, 0.8); }
-      // upper body + counterweight + cab
+      path([[118, -46], [134, -46], [140, 0], [118, 0]], true); fillC('#2F2E2B'); strokeW(1);
+      line(100, -30, 120, -34, 3);
+      // upper body, counterweight, ROPS cab
       rectP(-112, -92, 70, -44); fillC(COL.conc); strokeW(1.3);
       ctx.beginPath(); ctx.moveTo(-112, -98); ctx.lineTo(-138, -88); ctx.lineTo(-138, -50); ctx.lineTo(-112, -44); ctx.closePath(); fillC(COL.concS); strokeW(1.2);
-      path([[-74, -92], [-74, -196], [26, -196], [36, -92]], true); fillC(COL.conc); strokeW(1.3);
-      path([[-62, -184], [18, -184], [24, -104], [-62, -104]], true); fillC('#9FA9AC'); strokeW(0.9);
+      path([[-74, -92], [-74, -202], [20, -202], [36, -92]], true); fillC(COL.conc); strokeW(1.3);
+      path([[-64, -190], [12, -190], [24, -104], [-64, -104]], true); fillC('#9FA9AC'); strokeW(0.9);
+      line(-60, -180, -20, -112, 0.6, 'rgba(255,255,255,0.5)');
+      rectP(-130, -60, -116, -50); fillC(COL.red);
       // boom + arm via 2-link IK (elbow up)
       var B = [56, -104], L1 = 215, L2 = 165;
       var dx = T[0] - B[0], dy = T[1] - B[1], d = clamp(Math.hypot(dx, dy), Math.abs(L1 - L2) + 1, L1 + L2 - 1);
@@ -1012,10 +1209,12 @@
         ctx.lineWidth = sg[2] - 2.6 * ip; ctx.strokeStyle = COL.conc; ctx.stroke();
       });
       ctx.lineCap = 'butt';
-      // hydraulic cylinder hint
-      line(B[0] - 10, B[1] + 18, lerp(B[0], E[0], 0.55), lerp(B[1], E[1], 0.55) + 8, 3.2);
-      // bucket
-      var ca = th2 + 1.9, cb = th2 + 0.7;
+      // hydraulic rams: boom and arm
+      line(B[0] - 10, B[1] + 18, lerp(B[0], E[0], 0.55), lerp(B[1], E[1], 0.55) + 8, 3.6);
+      line(lerp(B[0], E[0], 0.8), lerp(B[1], E[1], 0.8) - 12, lerp(E[0], Tt[0], 0.3), lerp(E[1], Tt[1], 0.3) - 10, 2.6);
+      // bucket: open while digging/pushing, curled with a hook while lifting/carrying
+      var curl = mode === 'lift' || mode === 'carry' ? 1.2 : 0;
+      var ca = th2 + 1.9 - curl, cb = th2 + 0.7 - curl;
       path([Tt, [Tt[0] + Math.cos(ca) * 44, Tt[1] + Math.sin(ca) * 44], [Tt[0] + Math.cos(cb) * 36, Tt[1] + Math.sin(cb) * 36]], true);
       fillC('#2F2E2B'); strokeW(1);
       ctx.beginPath(); ctx.arc(E[0], E[1], 7, 0, TAU); fillC(COL.ink);
@@ -1137,9 +1336,18 @@
       label(420, -1250, 'CEMENTS', plA, 70, -26);
       label(1190, -1000, 'ŪDENS', plA, -40, -34);
       label(1450, -760, 'MAISĪTĀJS', plA, 90, -150);
-      label(2600, -540, 'ŠĶEMBA / OĻI', plA, -40, -50);
-      label(2415, -330, '5/8', plA, -30, 30);
-      label(2765, -330, '8/16', plA, -30, 44);
+      // finale: low warm light over the finished lawn
+      var warm = sm(seg(p, 0.95, 1));
+      if (warm > 0.01) {
+        screen();
+        var D0 = L.draw, wg = ctx.createRadialGradient(D0.x + D0.w * 0.78, D0.y, 10, D0.x + D0.w * 0.6, D0.y + D0.h * 0.45, D0.w * 0.95);
+        wg.addColorStop(0, 'rgba(255,190,110,' + (0.2 * warm).toFixed(3) + ')'); wg.addColorStop(1, 'rgba(255,190,110,0)');
+        ctx.fillStyle = wg; ctx.fillRect(0, 0, W, L.panelY);
+        world();
+      }
+      label(2685, -380, 'ŠĶEMBA / OĻI', plA, 30, -70);
+      label(2362, -200, '5/8', plA, -26, 60);
+      label(2577, -200, '8/16', plA, 26, 60);
       drawPanel(p, now);
     }
 
@@ -1147,7 +1355,7 @@
       raf = 0;
       if (destroyed) return;
       var dt = last ? clamp((now - last) / 1000, 0, 0.05) : 0.016; last = now;
-      if (!REDUCED) tAmb += dt;
+      if (!REDUCED) { tAmb += dt; drumAng += dt * drumRate(pos); }
       if (playing) { target = clamp((now - playing.t0) / playing.dur, 0, 1); if (target >= 1) playing = null; }
       if (REDUCED) { pos = target; vel = 0; }
       else {
