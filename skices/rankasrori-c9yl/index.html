@@ -83,7 +83,7 @@ p { margin: 0; }
 .top .btn { min-height: 40px; padding: .55em 1em; font-size: var(--step--1); }
 
 /* story */
-.story { position: relative; background: var(--concrete); height: 900vh; height: 900svh; }
+.story { position: relative; background: var(--concrete); height: 600vh; height: 600svh; }
 .story-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); height: 100%; }
 .stage-wrap { grid-area: 1 / 2; align-self: start; position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
 .stage { position: absolute; inset: 0; }
@@ -105,7 +105,9 @@ p { margin: 0; }
 .dirs { display: flex; flex-wrap: wrap; gap: 0; margin: 4px 0 0; padding: 0; list-style: none; border-top: 1.5px solid var(--ink); max-width: 31rem; }
 .dirs li { flex: 1 1 0; min-width: 0; padding: 12px 12px 0 0; display: grid; gap: 4px; }
 .dirs li + li { padding-left: 12px; border-left: 1px solid var(--line); }
-.dirs b { font: 800 var(--step-0)/1.1 var(--display); font-stretch: 110%; }
+.dirs a { display: grid; gap: 4px; text-decoration: none; }
+.dirs a:hover b { color: var(--red); }
+.dirs b { font: 800 .98rem/1.15 var(--display); font-stretch: 100%; overflow-wrap: anywhere; }
 .dirs span { font: 400 .78rem/1.35 var(--mono); color: var(--ink-mute); }
 .fact { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; align-items: baseline; padding-top: 14px; border-top: 1px solid var(--line-strong); max-width: 31rem; font-size: var(--step--1); color: var(--ink-soft); }
 .fact b { font: 500 var(--step-1)/1.1 var(--mono); color: var(--ink); white-space: nowrap; font-feature-settings: "tnum"; }
@@ -254,6 +256,7 @@ footer.site b { color: var(--paper); font-weight: 600; }
 footer.site .echo { grid-column: 1 / -1; padding-top: 20px; border-top: 1px solid var(--asphalt-line); }
 
 .mcta { display: none; }
+.mnav { display: none; }
 
 @media (max-width: 1080px) {
   .nav { display: none; }
@@ -268,6 +271,14 @@ footer.site .echo { grid-column: 1 / -1; padding-top: 20px; border-top: 1px soli
 @media (max-width: 820px) {
   :root { --head-h: 56px; }
   .top .tel { display: none; }
+  .top { height: auto; flex-direction: column; align-items: stretch; }
+  .top .wrap { height: var(--head-h); }
+  .mnav { display: flex; gap: 18px; overflow-x: auto; padding: 0 var(--gutter) 8px; scrollbar-width: none; }
+  .mnav::-webkit-scrollbar { display: none; }
+  .mnav a { flex: none; font-size: .86rem; color: var(--ink-soft); text-decoration: none; padding: 6px 0; border-bottom: 1.5px solid transparent; }
+  .mnav a:hover { border-color: var(--red); }
+  html { scroll-padding-top: 104px; }
+  .stage { top: 36px; }
   .top .btn { margin-left: auto; }
   .story-grid { grid-template-columns: minmax(0, 1fr); }
   .stage-wrap { grid-area: 1 / 1; height: 50vh; height: 50svh; top: 0; z-index: 2; background: var(--concrete); }
@@ -325,12 +336,13 @@ footer.site .echo { grid-column: 1 / -1; padding-top: 20px; border-top: 1px soli
     <nav class="nav" aria-label="Galvenā">
       <a href="#betons">Transportbetons</a>
       <a href="#elementi">Betona elementi</a>
-      <a href="#tikli">Ārējie tīkli</a>
+      <a href="#tikli">Ārējo tīklu izbūve</a>
       <a href="#par">Par mums</a>
     </nav>
     <a class="tel" href="tel:+37120017001">+371 20017001</a>
     <a class="btn btn-red" href="#cena">Pieprasīt cenu</a>
   </div>
+  <nav class="mnav" aria-label="Sadaļas"><a href="#betons">Transportbetons</a><a href="#elementi">Elementi</a><a href="#tikli">Tīklu izbūve</a><a href="#cena">Kontakti</a></nav>
 </header>
 
 <main id="saturs">
@@ -345,16 +357,16 @@ footer.site .echo { grid-column: 1 / -1; padding-top: 20px; border-top: 1px soli
         <div class="beat hero on" id="b0">
           <div class="stick">
             <p class="tag red">Rankas pagasts, Gulbenes novads · kopš 2016</p>
-            <h1>Paši ražojam betonu. Paši to <em>ieliekam zemē.</em></h1>
-            <p class="lead">Sertificēts transportbetons, betona un dzelzsbetona izstrādājumi un ārējo tīklu izbūve. Konsultējam, ražojam, rokam un būvējam līdz nodošanai ekspluatācijā.</p>
+            <h1>Transportbetons, betona elementi un <em>ārējo tīklu izbūve.</em></h1>
+            <p class="lead">Ražojam un piegādājam transportbetonu un betona elementus. Izbūvējam ārējos inženiertīklus: no konsultācijas līdz nodošanai ekspluatācijā.</p>
             <div class="ctas">
               <a class="btn btn-red" href="#cena">Pieprasīt cenu <span class="arr" aria-hidden="true">→</span></a>
               <a class="btn btn-ghost" href="#zvanit">Zvanīt</a>
             </div>
             <ul class="dirs">
-              <li><b>Betons</b><span>C12/15 – C35/45</span></li>
-              <li><b>Elementi</b><span>grodi, FBS, LB</span></li>
-              <li><b>Tīkli</b><span>kanalizācija, ūdens</span></li>
+              <li><a href="#betons"><b>Transportbetons</b><span>ražošana, piegāde, sūknēšana</span></a></li>
+              <li><a href="#elementi"><b>Betona elementi</b><span>grodi, vāki, bloki, plāksnes</span></a></li>
+              <li><a href="#tikli"><b>Ārējo tīklu izbūve</b><span>kanalizācija, ūdensapgāde, drenāža</span></a></li>
             </ul>
           </div>
         </div>
@@ -393,7 +405,7 @@ footer.site .echo { grid-column: 1 / -1; padding-top: 20px; border-top: 1px soli
 
         <div class="beat" id="b4">
           <div class="stick">
-            <p class="tag k">Ārējie tīkli</p>
+            <p class="tag k">Ārējo tīklu izbūve</p>
             <h2>Un tad tas viss nonāk zemē.</h2>
             <p class="lead">Kanalizācija, ūdensvads, meliorācija un bioloģiskās attīrīšanas iekārtas. Konsultējam, apsekojam objektu, izstrādājam projektu, saskaņojam, izbūvējam un nododam ekspluatācijā.</p>
             <div class="fact"><b>Garantija</b><span>darbam, iekārtām un materiālam</span></div>
@@ -435,7 +447,7 @@ footer.site .echo { grid-column: 1 / -1; padding-top: 20px; border-top: 1px soli
         </article>
         <article class="dir">
           <figure><img src="img/grodi-laukums.jpg" alt="Dzelzsbetona grodi laukumā pie ražotnes" loading="lazy" width="1140" height="696"></figure>
-          <h3>Betona elementi</h3>
+          <h3>Betona elementu ražošana</h3>
           <ul>
             <li>Grodi, vāki, pārsedzes un pamatnes</li>
             <li>FBS pamatu bloki, LB saliekamie sienu bloki</li>
@@ -445,7 +457,7 @@ footer.site .echo { grid-column: 1 / -1; padding-top: 20px; border-top: 1px soli
         </article>
         <article class="dir">
           <figure><img src="img/bio-bedre.jpg" alt="Bioloģiskās attīrīšanas iekārta izraktā bedrē uzstādīšanas laikā" loading="lazy" width="1140" height="696"></figure>
-          <h3>Ārējie tīkli</h3>
+          <h3>Ārējo tīklu izbūve</h3>
           <ul>
             <li>Kanalizācijas izbūve, BIO iekārtas, septiķi</li>
             <li>Ūdensvads, ūdenssūkņa montāža, meliorācija</li>
@@ -462,7 +474,7 @@ footer.site .echo { grid-column: 1 / -1; padding-top: 20px; border-top: 1px soli
       <div class="sec-head">
         <p class="tag">Transportbetons</p>
         <h2 id="betons-h">Marka, daudzums, adrese. Pārējo izdarām mēs.</h2>
-        <p>Betonā izmanto granīta šķembu un oļus (5/8, 8/16). Pēc pasūtījuma ar jums sazinās “Rankas Rori” pārstāvis.</p>
+        <p>Nezināt vajadzīgo marku vai apjomu? Palīdzēsim precizēt. Betonā izmanto granīta šķembu un oļus (5/8, 8/16).</p>
       </div>
       <div class="betons-grid">
         <div>
@@ -518,7 +530,7 @@ footer.site .echo { grid-column: 1 / -1; padding-top: 20px; border-top: 1px soli
     <div class="wrap">
       <div class="sec-head">
         <p class="tag">Betona un dzelzsbetona izstrādājumi</p>
-        <h2 id="elementi-h">Ražots Rankā. Izmēri un svars, kā rasējumā.</h2>
+        <h2 id="elementi-h">Betona elementi tieši no ražotāja.</h2>
         <p>Pasūtot norādiet nosaukumu, daudzumu un vēlamo izpildes laiku. Izgatavojam arī nestandarta pasūtījumus.</p>
       </div>
       <div class="cat">
@@ -611,7 +623,7 @@ footer.site .echo { grid-column: 1 / -1; padding-top: 20px; border-top: 1px soli
     <div class="wrap">
       <div class="sec-head">
         <p class="tag">Par “Rankas Rori”</p>
-        <h2 id="par-h">Sākām ar grodiem. Tagad arī rokam un būvējam.</h2>
+        <h2 id="par-h">Ražošana un būvniecība vienā uzņēmumā.</h2>
         <p>Uzņēmums sāka darbu 2016. gadā ar betona un dzelzsbetona izstrādājumu ražošanu. Augot izveidojām sertificētu speciālistu komandu inženierkomunikāciju izbūvei.</p>
       </div>
       <div class="ledger">
@@ -635,7 +647,7 @@ footer.site .echo { grid-column: 1 / -1; padding-top: 20px; border-top: 1px soli
       <div class="sec-head">
         <p class="tag">Pieprasīt cenu</p>
         <h2 id="cena-h">Pastāstiet, kas jāizdara.</h2>
-        <p>Pietiek ar tālruni. Ja gribat precīzāku cenu uzreiz, aizpildiet detalizēto pieprasījumu.</p>
+        <p>Atstājiet tālruni vai e-pastu, un sazināsimies, lai precizētu vajadzīgo. Precīzākai cenai aizpildiet detalizēto pieprasījumu.</p>
       </div>
       <div class="req-grid">
         <div class="contacts" id="zvanit">
