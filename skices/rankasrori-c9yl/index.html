@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="lv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Rankas Rori — betons, elementi, ārējie tīkli · koncepcija</title>
+<meta name="description" content="SIA “Rankas Rori”: transportbetons, betona un dzelzsbetona izstrādājumi, ārējo tīklu izbūve. Mājaslapas koncepcija, sagatavoja Echo Time.">
+<meta property="og:title" content="Rankas Rori — paši ražojam betonu, paši to ieliekam zemē">
+<meta property="og:description" content="Transportbetons, betona elementi un ārējo tīklu izbūve. Mājaslapas koncepcija, sagatavoja Echo Time.">
+<meta property="og:image" content="https://www.echotime.app/skices/rankasrori-c9yl/img/mezgls-auto.jpg">
+<meta property="og:url" content="https://www.echotime.app/skices/rankasrori-c9yl/">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%27%23161616%27/%3E%3Crect x=%276%27 y=%276%27 width=%2720%27 height=%2720%27 fill=%27none%27 stroke=%27%23fff%27 stroke-width=%272%27/%3E%3Ctext x=%2716%27 y=%2723%27 font-family=%27Georgia,serif%27 font-size=%2711%27 fill=%27%23fff%27 text-anchor=%27middle%27%3ERR%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+/* Layout: a pinned technical-drawing stage (right) follows one batch of concrete from the
+   plant to a lid on the lawn while copy scrolls (left). Then quiet catalogue sections
+   ruled like a factory drawing, and a two-tab price request. */
+:root {
+  --concrete: #d9d6d0;
+  --concrete-hi: #e8e6e1;
+  --paper: #f3f2ef;
+  --ink: #161616;
+  --ink-soft: #4a4844;
+  --ink-mute: #57544f;
+  --line: rgba(22, 22, 22, .16);
+  --line-strong: rgba(22, 22, 22, .55);
+  --red: #c42a23;
+  --red-deep: #9e1f19;
+  --asphalt: #1b1b1a;
+  --asphalt-line: rgba(243, 242, 239, .14);
+  --display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "Source Sans 3", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --step--1: clamp(.84rem, .8rem + .15vw, .92rem);
+  --step-0: clamp(1rem, .96rem + .2vw, 1.1rem);
+  --step-1: clamp(1.15rem, 1.05rem + .45vw, 1.4rem);
+  --step-2: clamp(1.45rem, 1.2rem + 1.1vw, 2.1rem);
+  --step-3: clamp(1.9rem, 1.4rem + 2.2vw, 3.2rem);
+  --step-4: clamp(2.5rem, 1.6rem + 4.2vw, 5.4rem);
+  --gutter: max(16px, env(safe-area-inset-left), env(safe-area-inset-right));
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --head-h: 64px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--head-h) + 8px); }
+body { margin: 0; background: var(--concrete); color: var(--ink); font: 400 var(--step-0)/1.55 var(--body); -webkit-font-smoothing: antialiased; overflow-x: clip; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 800; font-stretch: 112%; line-height: 1.02; letter-spacing: -.01em; text-wrap: balance; }
+p { margin: 0; }
+:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+.wrap { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: var(--gutter); }
+.mono { font-family: var(--mono); font-feature-settings: "tnum"; letter-spacing: .02em; }
+.tag { font: 500 .74rem/1.2 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-mute); }
+.tag.red { color: var(--red-deep); }
+.skip { position: absolute; left: -999px; top: 8px; z-index: 100; background: var(--ink); color: var(--paper); padding: 8px 14px; }
+.skip:focus { left: 8px; }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: .7em 1.25em; border: 1.5px solid var(--ink); background: var(--ink); color: var(--paper); font: 600 var(--step-0)/1 var(--body); text-decoration: none; cursor: pointer; transition: background-color .2s, color .2s, border-color .2s, transform .2s var(--ease-out); }
+.btn:hover { transform: translateY(-1px); }
+.btn-red { background: var(--red); border-color: var(--red); color: #fff; }
+.btn-red:hover { background: var(--red-deep); border-color: var(--red-deep); }
+.btn-ghost { background: transparent; color: var(--ink); }
+.btn-ghost:hover { background: var(--ink); color: var(--paper); }
+.arr { font-family: var(--mono); }
+
+/* header */
+.top { position: fixed; inset: 0 0 auto; z-index: 50; height: var(--head-h); display: flex; align-items: center; background: color-mix(in srgb, var(--concrete) 80%, transparent); backdrop-filter: blur(12px) saturate(1.2); -webkit-backdrop-filter: blur(12px) saturate(1.2); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; gap: 24px; }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex: none; }
+.logo img { width: 30px; height: 30px; }
+.logo span { font: 800 .95rem/1 var(--display); font-stretch: 118%; letter-spacing: .08em; }
+.nav { display: flex; gap: 22px; margin-left: auto; }
+.nav a { font-size: var(--step--1); text-decoration: none; color: var(--ink-soft); padding: 6px 0; border-bottom: 1.5px solid transparent; }
+.nav a:hover { color: var(--ink); border-color: var(--red); }
+.top .tel { font: 500 var(--step--1)/1 var(--mono); text-decoration: none; white-space: nowrap; }
+.top .btn { min-height: 40px; padding: .55em 1em; font-size: var(--step--1); }
+
+/* story */
+.story { position: relative; background: var(--concrete); height: 900vh; height: 900svh; }
+.story-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); height: 100%; }
+.stage-wrap { grid-area: 1 / 2; align-self: start; position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+.stage { position: absolute; inset: 0; }
+.stage-wrap::after { content: ""; position: absolute; inset: 0 auto 0 0; width: 9%; background: linear-gradient(90deg, var(--concrete), transparent); pointer-events: none; }
+/* one pinned text panel; beats cross-fade on the same p cuts as the stage, so copy and drawing never drift apart */
+.beats { grid-area: 1 / 1; align-self: start; position: sticky; top: 0; height: 100vh; height: 100svh; z-index: 1; }
+.beat { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; padding: calc(var(--head-h) + 24px) clamp(16px, 3vw, 48px) 40px var(--gutter); opacity: 0; visibility: hidden; transform: translateY(18px); transition: opacity .45s var(--ease-out), transform .6s var(--ease-out), visibility 0s linear .45s; }
+.beat.on { opacity: 1; visibility: visible; transform: none; transition: opacity .45s var(--ease-out) .1s, transform .6s var(--ease-out) .1s, visibility 0s; }
+.beat .stick { display: grid; gap: 20px; max-width: 34rem; margin-left: auto; width: 100%; }
+.beat h2 { font-size: var(--step-3); }
+.beat .lead { font-size: var(--step-1); line-height: 1.45; color: var(--ink-soft); max-width: 31rem; }
+.beat .k { display: flex; align-items: center; gap: 12px; }
+.beat .k::after { content: ""; flex: 0 0 48px; height: 1.5px; background: var(--red); }
+.progress { position: absolute; left: var(--gutter); right: clamp(16px, 3vw, 48px); bottom: 28px; height: 2px; background: var(--line); }
+.progress i { position: absolute; inset: 0 auto 0 0; width: 100%; background: var(--red); transform-origin: left; transform: scaleX(var(--p, 0)); }
+.hero h1 { font-size: clamp(2.3rem, 1.5rem + 2.6vw, 4rem); font-stretch: 100%; }
+.hero h1 em { font-style: normal; color: var(--red); }
+.hero .ctas { display: flex; flex-wrap: wrap; gap: 10px; }
+.dirs { display: flex; flex-wrap: wrap; gap: 0; margin: 4px 0 0; padding: 0; list-style: none; border-top: 1.5px solid var(--ink); max-width: 31rem; }
+.dirs li { flex: 1 1 0; min-width: 0; padding: 12px 12px 0 0; display: grid; gap: 4px; }
+.dirs li + li { padding-left: 12px; border-left: 1px solid var(--line); }
+.dirs b { font: 800 var(--step-0)/1.1 var(--display); font-stretch: 110%; }
+.dirs span { font: 400 .78rem/1.35 var(--mono); color: var(--ink-mute); }
+.fact { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; align-items: baseline; padding-top: 14px; border-top: 1px solid var(--line-strong); max-width: 31rem; font-size: var(--step--1); color: var(--ink-soft); }
+.fact b { font: 500 var(--step-1)/1.1 var(--mono); color: var(--ink); white-space: nowrap; font-feature-settings: "tnum"; }
+.beat ul.ticks { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; max-width: 31rem; }
+.beat ul.ticks li { display: flex; gap: 10px; color: var(--ink-soft); }
+.beat ul.ticks li::before { content: "—"; color: var(--red); font-family: var(--mono); }
+.final h2 { font-size: clamp(2.3rem, 1.5rem + 2.6vw, 4rem); font-stretch: 100%; }
+
+/* sections */
+section.block { padding-block: clamp(64px, 9vw, 128px); border-top: 1.5px solid var(--ink); }
+.sec-head { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 24px 48px; align-items: end; margin-bottom: clamp(32px, 5vw, 56px); }
+.sec-head h2 { font-size: var(--step-3); }
+.sec-head p { color: var(--ink-soft); font-size: var(--step-1); line-height: 1.45; max-width: 40rem; }
+.sec-head .tag { grid-column: 1 / -1; }
+
+/* three directions */
+.three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line-strong); }
+.dir { display: grid; grid-template-rows: auto auto 1fr auto; gap: 16px; padding: 24px 24px 28px 0; }
+.dir + .dir { padding-left: 24px; border-left: 1px solid var(--line); }
+.dir figure { margin: 0; aspect-ratio: 4 / 3; overflow: hidden; background: var(--concrete-hi); }
+.dir figure img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease-out); }
+.dir:hover figure img { transform: scale(1.03); }
+.dir h3 { font-size: var(--step-2); }
+.dir ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; color: var(--ink-soft); font-size: var(--step--1); }
+.dir ul li { padding-block: 6px; border-bottom: 1px dashed var(--line); }
+.dir .call { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; font-size: var(--step--1); }
+.dir .call a.tel { font: 500 var(--step-0)/1 var(--mono); text-decoration: none; border-bottom: 1.5px solid var(--red); padding-bottom: 2px; }
+.dir .call a.req { color: var(--ink-soft); }
+
+/* concrete price table + calculator */
+.betons-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 48px; align-items: start; }
+table.grades { width: 100%; border-collapse: collapse; font-size: var(--step--1); }
+table.grades caption { text-align: left; padding-bottom: 12px; }
+table.grades th, table.grades td { text-align: left; padding: 12px 12px 12px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.grades thead th { font: 500 .72rem/1.2 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); border-bottom: 1.5px solid var(--ink); }
+table.grades td.g { font: 500 var(--step-0)/1.2 var(--mono); white-space: nowrap; }
+table.grades td.p { font: 500 var(--step-0)/1.2 var(--mono); white-space: nowrap; text-align: right; padding-right: 0; }
+table.grades th.p { text-align: right; padding-right: 0; }
+table.grades td.u { color: var(--ink-soft); }
+table.grades tr.sel td { background: color-mix(in srgb, var(--red) 8%, transparent); }
+.extras { margin-top: 28px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; font-size: var(--step--1); }
+.extras div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--line); }
+.extras b { font: 500 var(--step--1)/1.3 var(--mono); white-space: nowrap; }
+.note { margin-top: 14px; font-size: .82rem; color: var(--ink-mute); }
+.calc { position: sticky; top: calc(var(--head-h) + 24px); background: var(--asphalt); color: var(--paper); padding: clamp(20px, 3vw, 32px); display: grid; gap: 18px; }
+.calc h3 { font-size: var(--step-2); }
+.calc .row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.calc label { display: grid; gap: 6px; font: 500 .72rem/1.2 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: rgba(243, 242, 239, .7); }
+.calc input, .calc select { width: 100%; min-height: 46px; padding: .5em .7em; border: 1px solid var(--asphalt-line); background: #262625; color: var(--paper); font: 500 1rem/1.2 var(--mono); border-radius: 0; }
+.calc output { display: block; font: 500 var(--step-3)/1 var(--mono); font-feature-settings: "tnum"; }
+.calc .res { display: grid; gap: 6px; padding-top: 16px; border-top: 1px solid var(--asphalt-line); }
+.calc .res small { color: rgba(243, 242, 239, .66); font-size: .82rem; }
+.calc .btn { justify-content: center; }
+
+/* elements catalogue */
+.cat { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--line-strong); }
+.item { display: grid; grid-template-rows: auto auto auto 1fr; gap: 10px; padding: 22px 22px 26px 0; border-bottom: 1px solid var(--line); }
+.item:not(:nth-child(3n + 1)) { padding-left: 22px; border-left: 1px solid var(--line); }
+.item figure { margin: 0; aspect-ratio: 16 / 10; overflow: hidden; background: var(--concrete-hi); }
+.item figure img { width: 100%; height: 100%; object-fit: cover; }
+.item h3 { font-size: var(--step-1); font-stretch: 108%; }
+.item p { color: var(--ink-soft); font-size: var(--step--1); }
+.item dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: .8rem; align-self: end; }
+.item dt { font-family: var(--mono); color: var(--ink); white-space: nowrap; }
+.item dd { margin: 0; color: var(--ink-mute); font-family: var(--mono); text-align: right; }
+.item .draw { aspect-ratio: 16 / 10; display: grid; place-items: center; background: var(--concrete-hi); }
+.item .draw svg { width: 78%; height: auto; }
+
+/* networks */
+.steps { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); margin: 0 0 56px; padding: 0; list-style: none; counter-reset: s; border-top: 1.5px solid var(--ink); }
+.steps li { counter-increment: s; padding: 16px 14px 0 0; display: grid; gap: 6px; font: 800 var(--step-0)/1.15 var(--display); font-stretch: 108%; }
+.steps li + li { padding-left: 14px; border-left: 1px solid var(--line); }
+.steps li::before { content: counter(s, decimal-leading-zero); font: 500 .72rem/1 var(--mono); color: var(--red); letter-spacing: .1em; }
+.net-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; align-items: start; }
+.svc h3 { font-size: var(--step-1); margin-bottom: 10px; }
+.svc ul { margin: 0 0 28px; padding: 0; list-style: none; columns: 2; column-gap: 24px; font-size: var(--step--1); color: var(--ink-soft); }
+.svc li { break-inside: avoid; padding: 7px 0; border-bottom: 1px dashed var(--line); }
+.systems { display: grid; grid-template-columns: minmax(0, 1fr); border-top: 1px solid var(--line-strong); }
+.sys { padding: 14px 0; display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 4px 16px; align-items: baseline; border-bottom: 1px dashed var(--line); }
+.sys h4 { margin: 0; font: 800 var(--step-0)/1.1 var(--display); font-stretch: 108%; }
+.sys p { font-size: .88rem; color: var(--ink-soft); }
+.works { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); grid-auto-rows: 150px; gap: 6px; }
+.works figure { margin: 0; position: relative; overflow: hidden; background: var(--concrete-hi); }
+.works figure img { width: 100%; height: 100%; object-fit: cover; }
+.works figcaption { position: absolute; left: 0; bottom: 0; padding: 6px 10px; background: rgba(22, 22, 22, .78); color: var(--paper); font: 500 .68rem/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.works .w-a { grid-column: span 3; grid-row: span 2; }
+.works .w-b { grid-column: span 3; }
+.works .w-c { grid-column: span 2; }
+.works .w-d { grid-column: span 1; }
+.works-note { margin-top: 10px; font-size: .82rem; color: var(--ink-mute); }
+
+/* trust */
+.trust { background: var(--asphalt); color: var(--paper); border-top: 0; }
+.trust .sec-head p { color: rgba(243, 242, 239, .72); }
+.trust .tag { color: rgba(243, 242, 239, .6); }
+.ledger { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--asphalt-line); }
+.ledger div { padding: 20px 20px 0 0; display: grid; gap: 8px; align-content: start; }
+.ledger div + div { padding-left: 20px; border-left: 1px solid var(--asphalt-line); }
+.ledger b { font: 500 var(--step-2)/1.05 var(--mono); font-feature-settings: "tnum"; }
+.ledger span { font-size: var(--step--1); color: rgba(243, 242, 239, .72); }
+.fleet { margin-top: 48px; display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid var(--asphalt-line); }
+.fleet span { padding: 14px 20px 14px 0; margin-right: 20px; font: 400 .86rem/1.2 var(--mono); color: rgba(243, 242, 239, .86); border-right: 1px solid var(--asphalt-line); }
+.fleet span:last-child { border-right: 0; }
+.trust-photo { margin-top: 48px; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 6px; }
+.trust-photo figure { margin: 0; overflow: hidden; }
+.trust-photo img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4 / 3; }
+.trust-photo figcaption { font: 400 .78rem/1.3 var(--mono); color: rgba(243, 242, 239, .6); padding-top: 8px; }
+
+/* request form */
+.req-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; align-items: start; }
+.contacts { display: grid; gap: 0; border-top: 1.5px solid var(--ink); }
+.contacts div { padding: 16px 0; border-bottom: 1px solid var(--line); display: grid; gap: 6px; }
+.contacts a.tel { font: 500 var(--step-2)/1 var(--mono); text-decoration: none; }
+.contacts a.tel:hover { color: var(--red); }
+.contacts span { font-size: var(--step--1); color: var(--ink-soft); }
+.panel { background: var(--paper); border: 1.5px solid var(--ink); padding: clamp(18px, 3vw, 32px); }
+.tabs { display: flex; gap: 0; border-bottom: 1.5px solid var(--ink); margin-bottom: 24px; }
+.tabs button { flex: 1; min-height: 48px; padding: 10px 12px; border: 0; background: transparent; font: 600 var(--step--1)/1.2 var(--body); color: var(--ink-mute); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -1.5px; }
+.tabs button[aria-selected="true"] { color: var(--ink); border-color: var(--red); }
+form { display: grid; gap: 18px; }
+.fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.field { display: grid; gap: 6px; }
+.field.wide { grid-column: 1 / -1; }
+.field label, .lbl { font: 500 .74rem/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+.field input, .field select, .field textarea { width: 100%; min-height: 48px; padding: .6em .75em; border: 1px solid var(--line-strong); background: #fff; color: var(--ink); font: 400 1rem/1.3 var(--body); border-radius: 0; }
+.field textarea { min-height: 96px; resize: vertical; }
+.field.bad input { border-color: var(--red); box-shadow: inset 0 0 0 1px var(--red); }
+.err { min-height: 0; font-size: .86rem; color: var(--red-deep); }
+.err:empty { display: none; }
+fieldset { margin: 0; padding: 0; border: 0; display: grid; gap: 10px; }
+legend { padding: 0; margin-bottom: 10px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { position: relative; }
+.chip input { position: absolute; opacity: 0; inset: 0; cursor: pointer; margin: 0; }
+.chip span { display: inline-flex; align-items: center; min-height: 40px; padding: .45em .9em; border: 1px solid var(--line-strong); font-size: var(--step--1); background: #fff; transition: background-color .2s, color .2s, border-color .2s; }
+.chip input:checked + span { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.chip input:focus-visible + span { outline: 3px solid var(--red); outline-offset: 2px; }
+.form-note { font-size: .82rem; color: var(--ink-mute); }
+.done { display: grid; gap: 14px; }
+.done h3 { font-size: var(--step-2); }
+.done p { color: var(--ink-soft); }
+
+footer.site { background: var(--ink); color: rgba(243, 242, 239, .66); font-size: var(--step--1); padding-block: 36px 48px; }
+footer.site .wrap { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+footer.site b { color: var(--paper); font-weight: 600; }
+footer.site .echo { grid-column: 1 / -1; padding-top: 20px; border-top: 1px solid var(--asphalt-line); }
+
+.mcta { display: none; }
+
+@media (max-width: 1080px) {
+  .nav { display: none; }
+  .cat { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .item:not(:nth-child(3n + 1)) { padding-left: 0; border-left: 0; }
+  .item:nth-child(2n) { padding-left: 22px; border-left: 1px solid var(--line); }
+  .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .steps li:nth-child(4) { padding-left: 0; border-left: 0; }
+  .ledger { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ledger div:nth-child(3) { padding-left: 0; border-left: 0; }
+}
+@media (max-width: 820px) {
+  :root { --head-h: 56px; }
+  .top .tel { display: none; }
+  .top .btn { margin-left: auto; }
+  .story-grid { grid-template-columns: minmax(0, 1fr); }
+  .stage-wrap { grid-area: 1 / 1; height: 50vh; height: 50svh; top: 0; z-index: 2; background: var(--concrete); }
+  .stage-wrap::after { inset: auto 0 0 0; width: auto; height: 16%; background: linear-gradient(0deg, var(--concrete), transparent); }
+  .beats { grid-area: 1 / 1; top: 50svh; height: 50vh; height: 50svh; }
+  .beat { justify-content: flex-start; padding: 6px var(--gutter) 20px; }
+  .beat .stick { gap: 12px; max-width: none; margin-left: 0; }
+  .beat h2 { font-size: clamp(1.6rem, 1.2rem + 2vw, 2.2rem); }
+  .beat .lead { font-size: 1rem; line-height: 1.45; }
+  .beat .fact, .hero .dirs, .beat .tag { display: none; }
+  .beat ul.ticks { gap: 2px; font-size: .95rem; }
+  .hero h1 { font-size: clamp(2rem, 1.4rem + 3vw, 2.6rem); }
+  .progress { bottom: 12px; }
+  .sec-head, .betons-grid, .net-grid, .req-grid { grid-template-columns: minmax(0, 1fr); }
+  .three { grid-template-columns: minmax(0, 1fr); }
+  .dir, .dir + .dir { padding: 24px 0; border-left: 0; border-bottom: 1px solid var(--line); }
+  .calc { position: static; }
+  .extras { grid-template-columns: minmax(0, 1fr); }
+  .works { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 130px; }
+  .works .w-a { grid-column: span 2; grid-row: span 2; }
+  .works .w-b, .works .w-c, .works .w-d { grid-column: span 1; }
+  .trust-photo { grid-template-columns: minmax(0, 1fr); }
+  footer.site .wrap { grid-template-columns: minmax(0, 1fr); }
+  footer.site { padding-bottom: 96px; }
+  .mcta { display: flex; gap: 8px; position: fixed; z-index: 60; left: 0; right: 0; bottom: 0; padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom)); background: color-mix(in srgb, var(--concrete) 88%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--line); transform: translateY(110%); transition: transform .35s var(--ease-out); }
+  .mcta.show { transform: none; }
+  .mcta .btn { flex: 1 1 auto; justify-content: center; min-height: 46px; padding-inline: .6em; font-size: var(--step--1); }
+}
+@media (max-width: 560px) {
+  .cat { grid-template-columns: minmax(0, 1fr); }
+  .item:nth-child(2n) { padding-left: 0; border-left: 0; }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .steps li:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .steps li:nth-child(4) { padding-left: 14px; border-left: 1px solid var(--line); }
+  .svc ul { columns: 1; }
+  .sys { grid-template-columns: minmax(0, 1fr); }
+  .fields { grid-template-columns: minmax(0, 1fr); }
+  .ledger { grid-template-columns: minmax(0, 1fr); }
+  .ledger div, .ledger div + div { padding-left: 0; border-left: 0; padding-bottom: 16px; border-bottom: 1px solid var(--asphalt-line); }
+  .calc .row { grid-template-columns: minmax(0, 1fr); }
+  table.grades td.u { display: none; }
+  table.grades th.u { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#saturs">Pāriet uz saturu</a>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="logo" href="#story" aria-label="Rankas Rori — uz sākumu"><img src="img/mark.png" alt="" width="30" height="30"><span>RANKAS RORI</span></a>
+    <nav class="nav" aria-label="Galvenā">
+      <a href="#betons">Transportbetons</a>
+      <a href="#elementi">Betona elementi</a>
+      <a href="#tikli">Ārējie tīkli</a>
+      <a href="#par">Par mums</a>
+    </nav>
+    <a class="tel" href="tel:+37120017001">+371 20017001</a>
+    <a class="btn btn-red" href="#cena">Pieprasīt cenu</a>
+  </div>
+</header>
+
+<main id="saturs">
+  <section class="story" id="story" aria-label="Betona ceļš no mezgla līdz vākam zālienā">
+    <div class="story-grid">
+      <div class="stage-wrap">
+        <div class="stage" id="stage" role="img" aria-label="Animēts rasējums: betons tiek sajaukts mezglā, aizvests ar mikseri un iesūknēts, izliets grodos un blokos, un grodi ar attīrīšanas iekārtu tiek ierakti zemē, līdz virs zāliena redzams tikai vāks."></div>
+      </div>
+
+      <div class="beats">
+        <div class="progress" aria-hidden="true"><i id="prog"></i></div>
+        <div class="beat hero on" id="b0">
+          <div class="stick">
+            <p class="tag red">Rankas pagasts, Gulbenes novads · kopš 2016</p>
+            <h1>Paši ražojam betonu. Paši to <em>ieliekam zemē.</em></h1>
+            <p class="lead">Sertificēts transportbetons, betona un dzelzsbetona izstrādājumi un ārējo tīklu izbūve. Konsultējam, ražojam, rokam un būvējam līdz nodošanai ekspluatācijā.</p>
+            <div class="ctas">
+              <a class="btn btn-red" href="#cena">Pieprasīt cenu <span class="arr" aria-hidden="true">→</span></a>
+              <a class="btn btn-ghost" href="#zvanit">Zvanīt</a>
+            </div>
+            <ul class="dirs">
+              <li><b>Betons</b><span>C12/15 – C35/45</span></li>
+              <li><b>Elementi</b><span>grodi, FBS, LB</span></li>
+              <li><b>Tīkli</b><span>kanalizācija, ūdens</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="beat" id="b1">
+          <div class="stick">
+            <p class="tag k">Betona mezgls</p>
+            <h2>Viss sākas ar pareizu recepti.</h2>
+            <p class="lead">Betonā izmantojam granīta šķembu un oļus, frakcijas 5/8 un 8/16. Marku izvēlas pēc darba: no sagatavošanas kārtas līdz industriālām konstrukcijām.</p>
+            <div class="fact"><b>Nr. 4025/2024</b><span>ražošanas procesa kontroles atbilstības sertifikāts transportbetonam</span></div>
+          </div>
+        </div>
+
+        <div class="beat" id="b2">
+          <div class="stick">
+            <p class="tag k">Transportbetons</p>
+            <h2>Atvedam un iesūknējam objektā.</h2>
+            <p class="lead">Betons ar piegādi un sūknēšanu: pamatiem, plātnēm, grīdām un laukumiem. Pasūtot pietiek ar marku, daudzumu, adresi un laiku.</p>
+            <div class="fact"><b>80–103 €/m³</b><span>markas C12/15 – C35/45, bez PVN, cenas no rankasrori.lv</span></div>
+          </div>
+        </div>
+
+        <div class="beat" id="b3">
+          <div class="stick">
+            <p class="tag k">Betona elementi</p>
+            <h2>Ražots Rankā: grodi, bloki un plāksnes.</h2>
+            <ul class="ticks">
+              <li>Grodi, grodu vāki un pārsedzes</li>
+              <li>Pamatu bloki FBS un saliekamie sienu bloki LB</li>
+              <li>Ceļa plāksnes un L veida atbalsta sienas</li>
+              <li>Individuāli pasūtījumi: sētu stabi, paneļi, dārza mēbeles</li>
+            </ul>
+            <div class="fact"><b>KC 10-7.5</b><span>Ø 1200 / 1000 mm, augstums 750 mm, 625 kg</span></div>
+          </div>
+        </div>
+
+        <div class="beat" id="b4">
+          <div class="stick">
+            <p class="tag k">Ārējie tīkli</p>
+            <h2>Un tad tas viss nonāk zemē.</h2>
+            <p class="lead">Kanalizācija, ūdensvads, meliorācija un bioloģiskās attīrīšanas iekārtas. Konsultējam, apsekojam objektu, izstrādājam projektu, saskaņojam, izbūvējam un nododam ekspluatācijā.</p>
+            <div class="fact"><b>Garantija</b><span>darbam, iekārtām un materiālam</span></div>
+          </div>
+        </div>
+
+        <div class="beat final" id="b5">
+          <div class="stick">
+            <p class="tag k">Gatavs</p>
+            <h2>Virs zemes paliek tikai vāks.</h2>
+            <p class="lead">Betons, elementi un izbūve vienā uzņēmumā. Pastāstiet, kas jums jāizdara, un sagatavosim cenu.</p>
+            <div class="ctas" style="display:flex;flex-wrap:wrap;gap:10px">
+              <a class="btn btn-red" href="#cena">Pieprasīt cenu <span class="arr" aria-hidden="true">→</span></a>
+              <a class="btn btn-ghost" href="#virzieni">Skatīt virzienus</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="virzieni" aria-labelledby="virzieni-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="tag">Trīs virzieni</p>
+        <h2 id="virzieni-h">Ko jums vajag?</h2>
+        <p>Divi tālruņi: 20017001 betonam, elementiem un asenizācijai; 29335921 kanalizācijai, BIO iekārtām un konsultācijām.</p>
+      </div>
+      <div class="three">
+        <article class="dir">
+          <figure><img src="img/sukne-3.jpg" alt="Betona sūknis ar izvērstu strēli pie miksera auto" loading="lazy" width="1050" height="1400" style="object-position:50% 40%"></figure>
+          <h3>Transportbetons</h3>
+          <ul>
+            <li>Markas C12/15, C16/20, C20/25, C25/30, C30/37, C35/45</li>
+            <li>Piegāde, sūknēšana objektā, papildu šļauka</li>
+            <li>Betona fibra pēc vajadzības</li>
+          </ul>
+          <div class="call"><a class="tel" href="tel:+37120017001">20017001</a><a class="req" href="#cena" data-dir="betons">Pieprasīt cenu →</a></div>
+        </article>
+        <article class="dir">
+          <figure><img src="img/grodi-laukums.jpg" alt="Dzelzsbetona grodi laukumā pie ražotnes" loading="lazy" width="1140" height="696"></figure>
+          <h3>Betona elementi</h3>
+          <ul>
+            <li>Grodi, vāki, pārsedzes un pamatnes</li>
+            <li>FBS pamatu bloki, LB saliekamie sienu bloki</li>
+            <li>Ceļa plāksnes, atbalsta sienas, nestandarta pasūtījumi</li>
+          </ul>
+          <div class="call"><a class="tel" href="tel:+37120017001">20017001</a><a class="req" href="#cena" data-dir="elementi">Pieprasīt cenu →</a></div>
+        </article>
+        <article class="dir">
+          <figure><img src="img/bio-bedre.jpg" alt="Bioloģiskās attīrīšanas iekārta izraktā bedrē uzstādīšanas laikā" loading="lazy" width="1140" height="696"></figure>
+          <h3>Ārējie tīkli</h3>
+          <ul>
+            <li>Kanalizācijas izbūve, BIO iekārtas, septiķi</li>
+            <li>Ūdensvads, ūdenssūkņa montāža, meliorācija</li>
+            <li>Zemes darbi, pievedceļi un laukumi</li>
+          </ul>
+          <div class="call"><a class="tel" href="tel:+37129335921">29335921</a><a class="req" href="#cena" data-dir="kanalizacija">Pieprasīt cenu →</a></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="betons" aria-labelledby="betons-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="tag">Transportbetons</p>
+        <h2 id="betons-h">Marka, daudzums, adrese. Pārējo izdarām mēs.</h2>
+        <p>Betonā izmanto granīta šķembu un oļus (5/8, 8/16). Pēc pasūtījuma ar jums sazinās “Rankas Rori” pārstāvis.</p>
+      </div>
+      <div class="betons-grid">
+        <div>
+          <table class="grades" id="grades">
+            <caption class="tag">Markas un cenas, EUR/m³ bez PVN</caption>
+            <thead><tr><th scope="col">Marka</th><th scope="col" class="u">Kur izmanto</th><th scope="col" class="p">€/m³</th></tr></thead>
+            <tbody>
+              <tr data-g="C12/15" data-p="80"><td class="g">C12/15</td><td class="u">Sagatavošanās darbi pirms grīdu, plātņu, nelielu pamatu un celiņu betonēšanas</td><td class="p">80</td></tr>
+              <tr data-g="C16/20" data-p="83"><td class="g">C16/20</td><td class="u">Privātmāju būvniecība: pamati, plātņveida pamati, grīdas, žogi, kāpnes</td><td class="p">83</td></tr>
+              <tr data-g="C20/25" data-p="87"><td class="g">C20/25</td><td class="u">Monolītas konstrukcijas bez lielas slodzes, laukumi, celiņi, pārsegumi</td><td class="p">87</td></tr>
+              <tr data-g="C25/30" data-p="92"><td class="g">C25/30</td><td class="u">Industriālas būves, dzelzsbetona izstrādājumi, pamati, grīdas, sienas</td><td class="p">92</td></tr>
+              <tr data-g="C30/37" data-p="97"><td class="g">C30/37</td><td class="u">Izplatītākā klase industriālajā celtniecībā, hidrotehniskas konstrukcijas</td><td class="p">97</td></tr>
+              <tr data-g="C35/45" data-p="103"><td class="g">C35/45</td><td class="u">—</td><td class="p">103</td></tr>
+            </tbody>
+          </table>
+          <div class="extras">
+            <div><span>Sūknēšana objektā (min. 60 min)</span><b>1,50 €/min</b></div>
+            <div><span>Papildu šļauka 5 m</span><b>10 €/gab</b></div>
+            <div><span>Miksera dīkstāve (30 min bez maksas)</span><b>0,75 €/min</b></div>
+            <div><span>Betona fibra</span><b>16–30 €/m³</b></div>
+            <div><span>Betona piegāde (līdz 80 km cena jāprecizē, sākot no 80 km)</span><b>1,50 €/km</b></div>
+          </div>
+          <p class="note">Cenas pārņemtas no rankasrori.lv 27.10.2026. Skicē tās vēl jāsaskaņo.</p>
+        </div>
+        <form class="calc" id="calc" aria-labelledby="calc-h" novalidate>
+          <h3 id="calc-h">Cik betona vajag?</h3>
+          <div class="row">
+            <label for="c-area">Laukums, m²<input id="c-area" type="number" inputmode="decimal" min="0" step="0.5" value="60"></label>
+            <label for="c-thick">Biezums, cm<input id="c-thick" type="number" inputmode="decimal" min="0" step="1" value="15"></label>
+          </div>
+          <label for="c-grade">Marka
+            <select id="c-grade">
+              <option value="80">C12/15 · 80 €/m³</option>
+              <option value="83">C16/20 · 83 €/m³</option>
+              <option value="87">C20/25 · 87 €/m³</option>
+              <option value="92" selected>C25/30 · 92 €/m³</option>
+              <option value="97">C30/37 · 97 €/m³</option>
+              <option value="103">C35/45 · 103 €/m³</option>
+            </select>
+          </label>
+          <div class="res" aria-live="polite">
+            <output id="c-vol" for="c-area c-thick">9,0 m³</output>
+            <small id="c-sum">≈ 828 € betons bez PVN, bez piegādes un sūknēšanas</small>
+            <small>Apjoms noapaļots uz augšu līdz 0,5 m³. Rezervi saskaņojiet, pasūtot.</small>
+          </div>
+          <a class="btn btn-red" href="#cena" id="c-go">Pieprasīt šo apjomu <span class="arr" aria-hidden="true">→</span></a>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="elementi" aria-labelledby="elementi-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="tag">Betona un dzelzsbetona izstrādājumi</p>
+        <h2 id="elementi-h">Ražots Rankā. Izmēri un svars, kā rasējumā.</h2>
+        <p>Pasūtot norādiet nosaukumu, daudzumu un vēlamo izpildes laiku. Izgatavojam arī nestandarta pasūtījumus.</p>
+      </div>
+      <div class="cat">
+        <article class="item">
+          <figure><img src="img/grodi-augsa.jpg" alt="Dzelzsbetona grodi no augšas" loading="lazy" width="1140" height="696"></figure>
+          <h3>Grodi</h3>
+          <p>Ar vai bez pamatnes, iekšējais diametrs (d) no 600 līdz 2000 mm. Zemāk: ārējais diametrs (D).</p>
+          <dl><dt>KC 10-7.5</dt><dd>D1200 / d1000 · H750 · 55 €</dd><dt>KC 15-9</dt><dd>D1700 / d1500 · H900 · 91 €</dd><dt>KC 20-9</dt><dd>D2200 / d2000 · H900 · 160 €</dd></dl>
+        </article>
+        <article class="item">
+          <figure><img src="img/vaki.jpg" alt="Grodu vāki ar lūkas caurumu sakrauti kaudzēs" loading="lazy" width="1140" height="696"></figure>
+          <h3>Vāki un pārsedzes</h3>
+          <p>Braucamās daļas (B/D) un zaļās zonas (Z/Z) vāki, ar lūku Ø600 vai Ø700.</p>
+          <dl><dt>KCP 15-10 Z/Z</dt><dd>Ø1700 · 75 €</dd><dt>KCP 20-15 B/D</dt><dd>Ø2200 · 174 €</dd></dl>
+        </article>
+        <article class="item">
+          <figure><img src="img/fbs.jpg" alt="FBS pamatu bloki sakrauti uz paliktņiem" loading="lazy" width="1140" height="696"></figure>
+          <h3>Pamatu bloki FBS</h3>
+          <p>Ēku un būvju pamatiem.</p>
+          <dl><dt>FBS 24-3-6</dt><dd>2400×300×600 · 970 kg · 43 €</dd><dt>FBS 12-3-6</dt><dd>1200×300×600 · 27 €</dd><dt>FBS 9-3-6</dt><dd>900×300×600 · 25 €</dd></dl>
+        </article>
+        <article class="item">
+          <figure><img src="img/lb-rinda.jpg" alt="Saliekamie LB sienu bloki ar izciļņiem" loading="lazy" width="1400" height="938"></figure>
+          <h3>Saliekamie sienu bloki LB</h3>
+          <p>No C20/25 betona: atbalsta un atdalošām sienām, pamatiem, žogiem, pagaidu un pastāvīgām būvēm.</p>
+          <dl><dt>LB 18-6-6</dt><dd>1550 kg · 85 €</dd><dt>LB 6-6-6</dt><dd>520 kg · 47 €</dd></dl>
+        </article>
+        <article class="item">
+          <figure><img src="img/cela-plaksnes.jpg" alt="Dzelzsbetona ceļa plāksnes ar rievotu virsmu" loading="lazy" width="1400" height="1012"></figure>
+          <h3>Ceļa plāksnes</h3>
+          <p>Brauktuvēm, piebraucamajiem ceļiem un būvlaukumiem. Gluda vai rievota virsma.</p>
+          <dl><dt>BP 20-20-16</dt><dd>200×200×16 cm · 1540 kg</dd><dt>BP 20-15-16</dt><dd>200×150×16 cm · 1150 kg</dd></dl>
+        </article>
+        <article class="item">
+          <div class="draw" aria-hidden="true">
+            <svg viewBox="0 0 200 120" fill="none" stroke="#161616" stroke-width="1.6"><path d="M40 20 h22 v72 h96 v14 H40 Z" fill="#cfccc5"/><path d="M40 112 v-4 M158 112 v-4 M40 110 H158" stroke-width="1"/><path d="M28 20 h-4 M28 106 h-4 M26 20 V106" stroke-width="1"/><text x="18" y="66" font-family="IBM Plex Mono, monospace" font-size="8" fill="#161616" stroke="none" text-anchor="middle" transform="rotate(-90 18 66)">L veida</text></svg>
+          </div>
+          <h3>Atbalsta sienas</h3>
+          <p>L veida elementi terasēm, kraujām, kaskādēm un skābbarības bedrēm.</p>
+          <dl><dt>LS 10-10</dt><dd>650 kg · 82 €</dd><dt>LS 20-10</dt><dd>940 kg · 107 €</dd></dl>
+        </article>
+      </div>
+      <p class="note">Cenas EUR/gab bez PVN, pārņemtas no rankasrori.lv 27.10.2026. Pilnās tabulas būtu katra produkta lapā.</p>
+    </div>
+  </section>
+
+  <section class="block" id="tikli" aria-labelledby="tikli-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="tag">Ārējo tīklu izbūve</p>
+        <h2 id="tikli-h">No pirmās sarunas līdz nodošanai ekspluatācijā.</h2>
+        <p>Privātmājām, daudzdzīvokļu ēkām, jaunbūvēm, saimniecībām, uzņēmumiem, atpūtas kompleksiem un industriāliem objektiem.</p>
+      </div>
+      <ol class="steps">
+        <li>Konsultējam</li><li>Apsekojam objektu</li><li>Izstrādājam projektu</li><li>Saskaņojam</li><li>Izbūvējam</li><li>Nododam ekspluatācijā</li>
+      </ol>
+      <div class="net-grid">
+        <div class="svc">
+          <h3>Ko izbūvējam</h3>
+          <ul>
+            <li>Kanalizācijas projektēšana</li><li>Sadzīves kanalizācija</li><li>Centralizētie pieslēgumi</li><li>Lietus kanalizācija</li><li>Bioloģiskās attīrīšanas iekārtas</li><li>Grodu krājrezervuāri</li><li>Septiķi</li><li>Sūkņu stacijas</li><li>Ārējais ūdensvads</li><li>Ūdenssūkņa montāža</li><li>Meliorācija un drenāža</li><li>Pievedceļi un laukumi</li>
+          </ul>
+          <h3>Kuru sistēmu izvēlēties?</h3>
+          <div class="systems">
+            <div class="sys"><h4>Krājrezervuārs</h4><p>Hermētiska tvertne vasarnīcai vai mājai ar mazu notekūdeņu apjomu. Tikai jāizved saturs.</p></div>
+            <div class="sys"><h4>BIO iekārta</h4><p>Attīra ar baktērijām, der arī augstiem gruntsūdeņiem. Apkope reizi gadā.</p></div>
+            <div class="sys"><h4>Septiķis</h4><p>Vairākas kameras un infiltrācija. Zemas izmaksas, ja grunts filtrē un gruntsūdens zems.</p></div>
+          </div>
+        </div>
+        <div>
+          <div class="works">
+            <figure class="w-a"><img src="img/transeja.jpg" alt="Izrakta tranšeja lauku sētā" loading="lazy" width="1140" height="696"><figcaption>Tranšeja</figcaption></figure>
+            <figure class="w-b"><img src="img/pieslegums.jpg" alt="Aka izraktā bedrē" loading="lazy" width="1140" height="696"><figcaption>Aka</figcaption></figure>
+            <figure class="w-c"><img src="img/melioracija.jpg" alt="Meliorācijas tranšeja ar grants slāni" loading="lazy" width="1140" height="696"><figcaption>Meliorācija</figcaption></figure>
+            <figure class="w-d"><img src="img/zalaja-vaks.jpg" alt="Pabeigta iekārta: zālienā redzams tikai vāks" loading="lazy" width="1024" height="768"><figcaption>Gatavs</figcaption></figure>
+            <figure class="w-b"><img src="img/celsh.jpg" alt="Pievedceļa izbūve ar blīvētāju" loading="lazy" width="1140" height="696"><figcaption>Pievedceļš</figcaption></figure>
+            <figure class="w-b"><img src="img/bio-ekskavators.jpg" alt="Mini ekskavators nolaiž attīrīšanas iekārtu bedrē" loading="lazy" width="1024" height="768"><figcaption>BIO iekārta</figcaption></figure>
+          </div>
+          <p class="works-note">Fotogrāfijas no rankasrori.lv. Objektu nosaukumi un vietas jāprecizē.</p>
+          <div class="svc" style="margin-top:32px">
+            <h3>Asenizācija un kanalizācijas tīrīšana</h3>
+            <p style="color:var(--ink-soft);font-size:var(--step--1)">Notekūdeņu savākšana un trubu tīrīšana ar augstspiediena skalošanu Gulbenes un Jaunpiebalgas novados, juridiskām un fiziskām personām. <a href="tel:+37120017001" class="mono">20017001</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block trust" id="par" aria-labelledby="par-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="tag">Par “Rankas Rori”</p>
+        <h2 id="par-h">Sākām ar grodiem. Tagad arī rokam un būvējam.</h2>
+        <p>Uzņēmums sāka darbu 2016. gadā ar betona un dzelzsbetona izstrādājumu ražošanu. Augot izveidojām sertificētu speciālistu komandu inženierkomunikāciju izbūvei.</p>
+      </div>
+      <div class="ledger">
+        <div><b>19.04.2016</b><span>darbības sākums</span></div>
+        <div><b>4025/2024</b><span>transportbetona ražošanas procesa kontroles sertifikāts</span></div>
+        <div><b>Visa Latvija</b><span>produkcijas piegāde un darbu veikšana (asenizācija: Gulbenes un Jaunpiebalgas nov.)</span></div>
+        <div><b>CE</b><span>sertificētas attīrīšanas iekārtas ar CE marķējumu</span></div>
+      </div>
+      <div class="fleet" aria-label="Tehnika">
+        <span>Mini ekskavators 3,5 t</span><span>Universālais ekskavators</span><span>Treileris</span><span>Ceļamkrāns 17 t</span><span>Asenizācijas mašīna 6 m³</span>
+      </div>
+      <div class="trust-photo">
+        <figure><img src="img/mezgls.jpg" alt="Betona mezgls ar cementa silosu un inertu bunkuriem" loading="lazy" width="1400" height="1050"><figcaption>Betona mezgls</figcaption></figure>
+        <figure><img src="img/maisitajs.jpg" alt="Sarkans betona maisītājs ražotnē" loading="lazy" width="900" height="696"><figcaption>Betona maisītājs ražotnē</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="cena" aria-labelledby="cena-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="tag">Pieprasīt cenu</p>
+        <h2 id="cena-h">Pastāstiet, kas jāizdara.</h2>
+        <p>Pietiek ar tālruni. Ja gribat precīzāku cenu uzreiz, aizpildiet detalizēto pieprasījumu.</p>
+      </div>
+      <div class="req-grid">
+        <div class="contacts" id="zvanit">
+          <div><a class="tel" href="tel:+37120017001">+371 20017001</a><span>Transportbetons, dzelzsbetona izstrādājumi, asenizācija</span></div>
+          <div><a class="tel" href="tel:+37129335921">+371 29335921</a><span>Kanalizācijas izbūve, BIO iekārtas, konsultācijas</span></div>
+          <div><a href="mailto:info@rankasrori.lv" class="mono">info@rankasrori.lv</a><span>Pasūtījumi e-pastā</span></div>
+          <div><span>Ražotne: “Lāčpavāriņi”, Rankas pagasts, Gulbenes novads, LV-4416</span></div>
+        </div>
+        <div class="panel">
+          <div class="tabs" role="tablist" aria-label="Pieprasījuma veids">
+            <button type="button" role="tab" id="t-quick" aria-selected="true" aria-controls="f-quick">Ātri: piezvaniet man</button>
+            <button type="button" role="tab" id="t-full" aria-selected="false" aria-controls="f-full" tabindex="-1">Detalizēts pieprasījums</button>
+          </div>
+
+          <form id="f-quick" role="tabpanel" aria-labelledby="t-quick" novalidate>
+            <div class="field">
+              <label for="q-contact">Tālrunis vai e-pasts</label>
+              <input id="q-contact" name="contact" type="text" autocomplete="on" placeholder="+371 … vai vards@epasts.lv" required aria-describedby="q-err">
+              <span class="err" id="q-err" role="alert"></span>
+            </div>
+            <button class="btn btn-red" type="submit">Lūdzu, sazinieties <span class="arr" aria-hidden="true">→</span></button>
+            <p class="form-note">Skice: pieteikums vēl netiek nosūtīts.</p>
+          </form>
+
+          <form id="f-full" role="tabpanel" aria-labelledby="t-full" novalidate hidden>
+            <fieldset>
+              <legend class="lbl">Kas jums vajadzīgs?</legend>
+              <div class="chips">
+                <label class="chip"><input type="checkbox" name="dir" value="betons" id="x-betons"><span>Transportbetons</span></label>
+                <label class="chip"><input type="checkbox" name="dir" value="elementi" id="x-elementi"><span>Betona elementi</span></label>
+                <label class="chip"><input type="checkbox" name="dir" value="kanalizacija" id="x-kanalizacija"><span>Kanalizācija / BIO</span></label>
+                <label class="chip"><input type="checkbox" name="dir" value="udensvads" id="x-udensvads"><span>Ūdensvads</span></label>
+                <label class="chip"><input type="checkbox" name="dir" value="melioracija" id="x-melioracija"><span>Meliorācija</span></label>
+                <label class="chip"><input type="checkbox" name="dir" value="zemes" id="x-zemes"><span>Zemes darbi / tehnika</span></label>
+                <label class="chip"><input type="checkbox" name="dir" value="asenizacija" id="x-asenizacija"><span>Asenizācija</span></label>
+              </div>
+            </fieldset>
+            <div class="fields" id="betons-fields" hidden>
+              <div class="field"><label for="d-grade">Betona marka</label>
+                <select id="d-grade" name="grade"><option>C12/15</option><option>C16/20</option><option>C20/25</option><option selected>C25/30</option><option>C30/37</option><option>C35/45</option><option>Nezinu, ieteiciet</option></select></div>
+              <div class="field"><label for="d-m3">Daudzums, m³</label><input id="d-m3" name="m3" type="number" inputmode="decimal" min="0" step="0.5"></div>
+            </div>
+            <div class="fields">
+              <div class="field"><label for="d-name">Vārds vai uzņēmums</label><input id="d-name" name="name" type="text" autocomplete="name" required aria-describedby="d-name-err"><span class="err" id="d-name-err" role="alert"></span></div>
+              <div class="field"><label for="d-phone">Tālrunis</label><input id="d-phone" name="phone" type="tel" autocomplete="tel" required aria-describedby="d-phone-err"><span class="err" id="d-phone-err" role="alert"></span></div>
+              <div class="field"><label for="d-place">Objekta adrese vai novads</label><input id="d-place" name="place" type="text" autocomplete="address-level2"></div>
+              <div class="field"><label for="d-when">Kad?</label>
+                <select id="d-when" name="when"><option>Pēc iespējas ātrāk</option><option>Mēneša laikā</option><option>Šajā sezonā</option><option>Tikai plānoju</option></select></div>
+              <div class="field wide"><label for="d-msg">Ko jāizdara?</label><textarea id="d-msg" name="msg" placeholder="Piem., māja 4 cilvēkiem, gruntsūdens augsts, vajag kanalizāciju un ūdensvadu"></textarea></div>
+            </div>
+            <button class="btn btn-red" type="submit">Nosūtīt pieprasījumu <span class="arr" aria-hidden="true">→</span></button>
+            <p class="form-note">Skice: pieteikums vēl netiek nosūtīts.</p>
+          </form>
+
+          <div class="done" id="done" hidden tabindex="-1">
+            <h3>Pieprasījums saņemts.</h3>
+            <p id="done-text">Ar jums sazināsies “Rankas Rori” pārstāvis.</p>
+            <p>Steidzami? Betons un elementi: <a class="mono" href="tel:+37120017001">20017001</a>, kanalizācija: <a class="mono" href="tel:+37129335921">29335921</a>.</p>
+            <p class="form-note">Šī ir skice. Pieteikums netika nosūtīts.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div><b>SIA “Rankas Rori”</b><br>Reģ. Nr. 44103105997<br>PVN Nr. LV44103105997</div>
+    <div>“Lāčpavāriņi”, Rankas pag.,<br>Gulbenes nov., LV-4416</div>
+    <div><a href="tel:+37120017001">+371 20017001</a><br><a href="tel:+37129335921">+371 29335921</a><br><a href="mailto:info@rankasrori.lv">info@rankasrori.lv</a></div>
+    <p class="echo">Koncepciju sagatavoja Echo Time, saturs vēl saskaņojams. Fotogrāfijas un dati no rankasrori.lv.</p>
+  </div>
+</footer>
+
+<div class="mcta" id="mcta"><a class="btn btn-ghost" href="tel:+37120017001" aria-label="Zvanīt par betonu un elementiem, 20017001">Betons</a><a class="btn btn-ghost" href="tel:+37129335921" aria-label="Zvanīt par kanalizāciju, 29335921">Kanalizācija</a><a class="btn btn-red" href="#cena">Cena</a></div>
+
+<script src="stage.js"></script>
+<script>
+(function () {
+  var story = document.getElementById('story');
+  var stageEl = document.getElementById('stage');
+  var mcta = document.getElementById('mcta');
+  var beats = Array.prototype.slice.call(document.querySelectorAll('.beat'));
+  var prog = document.getElementById('prog');
+  var stage = null;
+
+  try {
+    if (window.RRStage) stage = window.RRStage.mount(stageEl);
+  } catch (e) { console.error(e); }
+
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+
+  // beats follow the stage timeline: plant .08, truck .26, elements .50, networks .76, lid .93
+  var cuts = [0.08, 0.26, 0.50, 0.76, 0.93];
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var vh = window.innerHeight;
+    var r = story.getBoundingClientRect();
+    var range = Math.max(1, r.height - vh);
+    var p = clamp(-r.top / range, 0, 1);
+    if (stage) stage.setProgress(p);
+    var active = 0;
+    cuts.forEach(function (c, i) { if (p >= c) active = i + 1; });
+    beats.forEach(function (b, i) { b.classList.toggle('on', i === active); });
+    prog.style.setProperty('--p', p.toFixed(4));
+    var form = document.getElementById('cena').getBoundingClientRect();
+    mcta.classList.toggle('show', r.bottom < vh * 0.5 && form.top > vh * 0.6);
+    if (stage && stage.setPaused) stage.setPaused(r.bottom < 0 || r.top > vh);
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
+
+  // ---------- Concrete calculator ----------
+  var area = document.getElementById('c-area'), thick = document.getElementById('c-thick'), grade = document.getElementById('c-grade');
+  var vol = document.getElementById('c-vol'), sum = document.getElementById('c-sum'), rows = document.querySelectorAll('#grades tbody tr');
+  var nf1 = new Intl.NumberFormat('lv-LV', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  var nf0 = new Intl.NumberFormat('lv-LV', { maximumFractionDigits: 0 });
+  function num(el) { var v = parseFloat(String(el.value).replace(',', '.')); return isFinite(v) && v > 0 ? v : 0; }
+  function calc() {
+    var m3 = Math.ceil(num(area) * num(thick) / 100 * 2) / 2;
+    vol.textContent = nf1.format(m3) + ' m³';
+    sum.textContent = '≈ ' + nf0.format(m3 * +grade.value) + ' € betons bez PVN, bez piegādes un sūknēšanas';
+    rows.forEach(function (r) { r.classList.toggle('sel', r.getAttribute('data-p') === grade.value); });
+    return m3;
+  }
+  [area, thick, grade].forEach(function (el) { el.addEventListener('input', calc); });
+  calc();
+
+  // ---------- Form ----------
+  var tabs = [document.getElementById('t-quick'), document.getElementById('t-full')];
+  var forms = [document.getElementById('f-quick'), document.getElementById('f-full')];
+  var done = document.getElementById('done');
+  var betonsChip = document.getElementById('x-betons'), betonsFields = document.getElementById('betons-fields');
+  function select(i) {
+    tabs.forEach(function (t, j) { t.setAttribute('aria-selected', String(i === j)); t.tabIndex = i === j ? 0 : -1; });
+    forms.forEach(function (f, j) { f.hidden = i !== j; });
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { select(i); });
+    t.addEventListener('keydown', function (e) {
+      var n = { ArrowRight: (i + 1) % 2, ArrowLeft: (i + 1) % 2, Home: 0, End: 1 }[e.key];
+      if (n !== undefined) { e.preventDefault(); select(n); tabs[n].focus(); }
+    });
+  });
+  select(0);
+  function syncBetons() { betonsFields.hidden = !betonsChip.checked; }
+  betonsChip.addEventListener('change', syncBetons);
+
+  // "Pieprasīt cenu" links from a direction or the calculator preselect the detailed form
+  function preselect(dir, m3, g) {
+    select(1);
+    var chip = document.getElementById('x-' + dir);
+    if (chip) chip.checked = true;
+    if (m3) { document.getElementById('d-m3').value = m3; }
+    if (g) { document.getElementById('d-grade').value = g; }
+    syncBetons();
+  }
+  document.querySelectorAll('[data-dir]').forEach(function (a) {
+    a.addEventListener('click', function () { preselect(a.getAttribute('data-dir')); });
+  });
+  document.getElementById('c-go').addEventListener('click', function () {
+    preselect('betons', calc(), grade.options[grade.selectedIndex].text.split(' ·')[0]);
+  });
+
+  var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  var phoneRe = /^\+?[\d\s()-]{8,}$/;
+  function mark(input, errId, ok, msg) {
+    input.closest('.field').classList.toggle('bad', !ok);
+    input.setAttribute('aria-invalid', String(!ok));
+    document.getElementById(errId).textContent = ok ? '' : msg;
+    return ok;
+  }
+  function finish(text) {
+    forms.forEach(function (f) { f.hidden = true; });
+    document.querySelector('.tabs').hidden = true;
+    document.getElementById('done-text').textContent = text;
+    done.hidden = false; done.focus();
+  }
+  forms[0].addEventListener('submit', function (e) {
+    e.preventDefault();
+    var input = document.getElementById('q-contact'), v = input.value.trim();
+    if (!mark(input, 'q-err', emailRe.test(v) || phoneRe.test(v), 'Ierakstiet tālruni ar vismaz 8 cipariem vai e-pastu.')) { input.focus(); return; }
+    finish((emailRe.test(v) ? 'Rakstīsim uz ' : 'Zvanīsim uz ') + v + '.');
+  });
+  forms[1].addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('d-name'), phone = document.getElementById('d-phone');
+    var okN = mark(name, 'd-name-err', !!name.value.trim(), 'Ierakstiet vārdu vai uzņēmuma nosaukumu.');
+    var okP = mark(phone, 'd-phone-err', phoneRe.test(phone.value.trim()), 'Ierakstiet tālruni ar vismaz 8 cipariem.');
+    if (!okN) { name.focus(); return; }
+    if (!okP) { phone.focus(); return; }
+    var picked = Array.prototype.filter.call(document.querySelectorAll('input[name="dir"]'), function (c) { return c.checked; })
+      .map(function (c) { return c.nextElementSibling.textContent; });
+    finish('Zvanīsim uz ' + phone.value.trim() + (picked.length ? ' par: ' + picked.join(', ').toLowerCase() + '.' : '.'));
+  });
+})();
+</script>
+</body>
+</html>
