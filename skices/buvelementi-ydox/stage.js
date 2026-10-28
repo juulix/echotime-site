@@ -209,52 +209,157 @@
       { x: -180, h: 190 }, { x: -130, h: 262, fall: 1 }, { x: -82, h: 228 }, { x: -34, h: 282 },
       { x: 14, h: 214 }, { x: 64, h: 268 }, { x: 116, h: 236 }, { x: 170, h: 198 }
     ];
-    // spruce silhouette: slim trunk, tiered outline with a faint moss fill and fine branch lines
-    function spruce(x, base, h, wb, ca) {
-      var top = base - h, cb = base - h * 0.16, n = Math.max(4, Math.round(h / 34)), mw = h * 0.15;
-      ctx.fillStyle = L(0.8);
-      ctx.beginPath(); ctx.moveTo(x - wb, base); ctx.lineTo(x - wb * 0.3, top + 8); ctx.lineTo(x + wb * 0.3, top + 8); ctx.lineTo(x + wb, base); ctx.closePath(); ctx.fill();
-      if (ca <= 0) return;
-      var pts = [[x, top]], th = (cb - top) / n, j, yb, w;
-      for (j = 0; j < n; j++) { yb = top + th * (j + 1); w = mw * Math.pow((j + 1) / n, 0.85); pts.push([x + w, yb], [x + w * 0.42, yb - th * 0.28]); }
-      pts.pop(); pts.push([x, cb + 2]);
-      for (j = n - 1; j >= 0; j--) { yb = top + th * (j + 1); w = mw * Math.pow((j + 1) / n, 0.85); if (j < n - 1) pts.push([x - w * 0.42, yb - th * 0.28 + th]); pts.push([x - w, yb]); }
-      var a0 = ctx.globalAlpha;
-      ctx.globalAlpha = a0 * ca;
-      poly(ctx, pts);
-      ctx.fillStyle = 'rgba(' + MOSS + ',0.16)'; ctx.fill();
-      ctx.strokeStyle = L(0.55); ctx.lineWidth = lw(1); ctx.stroke();
-      ctx.strokeStyle = L(0.22); ctx.lineWidth = lw(0.8);
-      for (j = 0; j < n; j++) {
-        yb = top + th * (j + 1); w = mw * Math.pow((j + 1) / n, 0.85);
-        ctx.beginPath(); ctx.moveTo(x - w * 0.9, yb - 1); ctx.lineTo(x, yb - th * 0.62); ctx.lineTo(x + w * 0.9, yb - 1); ctx.stroke();
+    // back row, hazier and lower: gives the forest depth
+    var BACK = [
+      { x: -206, h: 150 }, { x: -158, h: 196 }, { x: -106, h: 172 }, { x: -58, h: 212 }, { x: -9, h: 182 },
+      { x: 40, h: 204 }, { x: 91, h: 176 }, { x: 143, h: 208 }, { x: 196, h: 158 }
+    ];
+    function rng(seed) {
+      return function () {
+        seed = (seed + 0x6D2B79F5) | 0;
+        var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+    // Norway spruce rendered once per tree into an offscreen bitmap: drooping branch tiers,
+    // thousands of needle strokes in four tones, lit from the beam side (right), optional haze.
+    function buildSpruce(Ht, seed, k, haze) {
+      var R = rng(seed), mw = Ht * 0.235, pad = 8;
+      var cw = Math.ceil((2 * mw * 1.3 + pad * 2) * k), ch = Math.ceil((Ht * 1.03 + pad) * k);
+      var c = document.createElement('canvas'); c.width = cw; c.height = ch;
+      var g = c.getContext('2d');
+      var ox = cw / 2, oy = ch - pad * 0.4 * k;
+      g.translate(ox, oy); g.scale(k, k);
+      var top = -Ht, cb = -Ht * 0.04, crown = cb - top;
+      function wAt(y) { return mw * Math.pow(clamp((y - top) / crown, 0, 1), 0.9); }
+      // trunk (mostly hidden; shows near the base and through gaps)
+      var tg = g.createLinearGradient(-Ht * 0.014, 0, Ht * 0.014, 0);
+      tg.addColorStop(0, '#1E1712'); tg.addColorStop(0.6, '#3A2D22'); tg.addColorStop(1, '#4A3A2B');
+      g.fillStyle = tg;
+      g.beginPath(); g.moveTo(-Ht * 0.014, 0); g.lineTo(-Ht * 0.002, top + Ht * 0.06); g.lineTo(Ht * 0.002, top + Ht * 0.06); g.lineTo(Ht * 0.014, 0); g.fill();
+      // branch whorls, denser and longer towards the base
+      var br = [], y = top + Ht * 0.012;
+      while (y < cb) {
+        var f = (y - top) / crown, gap = Ht * (0.007 + 0.016 * f);
+        for (var s = -1; s <= 1; s += 2) {
+          var len = Math.max(1.2, wAt(y) * (0.74 + R() * 0.34));
+          br.push({ y: y + (R() - 0.5) * gap * 0.5, s: s, len: len, f: f, droop: 0.16 + 0.3 * f + R() * 0.1 });
+        }
+        y += gap;
       }
-      ctx.globalAlpha = a0;
+      function pt(b, t) { // quadratic branch curve, slight upturn at the tip
+        var ex = b.s * b.len, ey = b.y + b.droop * b.len - b.len * 0.06, cx = b.s * b.len * 0.5, cy = b.y + b.droop * b.len * 0.42, u = 1 - t;
+        return [u * u * 0 + 2 * u * t * cx + t * t * ex, u * u * b.y + 2 * u * t * cy + t * t * ey];
+      }
+      // dark core mass so the crown never reads as see-through wire
+      var right = br.filter(function (b) { return b.s > 0; }), left = br.filter(function (b) { return b.s < 0; });
+      g.beginPath(); g.moveTo(0, top);
+      right.forEach(function (b) { var q = pt(b, 0.8); g.lineTo(q[0], q[1]); });
+      g.lineTo(0, cb + Ht * 0.02);
+      left.slice().reverse().forEach(function (b) { var q = pt(b, 0.8); g.lineTo(q[0], q[1]); });
+      g.closePath(); g.fillStyle = '#0D120C'; g.fill();
+      // twigs
+      g.lineCap = 'round';
+      g.strokeStyle = '#1B1611'; g.lineWidth = Ht * 0.0032;
+      g.beginPath();
+      br.forEach(function (b) {
+        g.moveTo(0, b.y);
+        g.quadraticCurveTo(b.s * b.len * 0.5, b.y + b.droop * b.len * 0.42, b.s * b.len, b.y + b.droop * b.len - b.len * 0.06);
+      });
+      g.stroke();
+      // needles in tone buckets (one path per tone keeps it fast)
+      var P = [new Path2D(), new Path2D(), new Path2D(), new Path2D(), new Path2D()];
+      br.forEach(function (b) {
+        var n = Math.max(3, Math.round(b.len / (Ht * 0.0095)));
+        for (var j = 0; j < n; j++) {
+          var t = 0.12 + 0.88 * (j + R() * 0.7) / n, q = pt(b, Math.min(1, t));
+          var m = 3 + (R() * 3 | 0);
+          for (var u = 0; u < m; u++) {
+            var th = 0.35 + R() * 1.25, nl = Ht * (0.008 + 0.011 * R()) * (0.65 + 0.55 * t);
+            var dx = b.s * Math.cos(th) * nl, dy = Math.sin(th) * nl * (R() < 0.18 ? -0.6 : 1);
+            var lit = (b.s > 0 ? 0.42 : 0.04) + t * 0.32 + (1 - b.f) * 0.18 + (R() - 0.5) * 0.36 + (dy < 0 ? 0.12 : 0);
+            var bk = lit > 0.95 ? 4 : lit > 0.72 ? 3 : lit > 0.48 ? 2 : lit > 0.22 ? 1 : 0;
+            P[bk].moveTo(q[0], q[1]); P[bk].lineTo(q[0] + dx, q[1] + dy);
+          }
+        }
+      });
+      var tones = ['#11170F', '#1C2617', '#2A3621', '#3D4B2E', '#6C7250'];
+      var widths = [0.0042, 0.0036, 0.0032, 0.0028, 0.0024];
+      for (var i = 0; i < 5; i++) { g.strokeStyle = tones[i]; g.lineWidth = Ht * widths[i]; g.stroke(P[i]); }
+      // warm rim light on the beam side tips
+      g.strokeStyle = 'rgba(232,211,176,.38)'; g.lineWidth = Ht * 0.0018;
+      g.beginPath();
+      right.forEach(function (b) {
+        if (R() < 0.55) return;
+        var q = pt(b, 0.82 + R() * 0.18); g.moveTo(q[0], q[1]); g.lineTo(q[0] + b.len * 0.08, q[1] + Ht * 0.006);
+      });
+      g.stroke();
+      if (haze > 0) { // atmospheric perspective for the back row
+        g.setTransform(1, 0, 0, 1, 0, 0);
+        g.globalCompositeOperation = 'source-atop';
+        g.fillStyle = 'rgba(52,48,38,' + haze + ')'; g.fillRect(0, 0, cw, ch);
+      }
+      return { c: c, ox: ox, oy: oy, k: k };
+    }
+    var forest = { key: 0, front: [], back: [], timer: 0 };
+    function ensureForest() {
+      var key = Math.round(lay.s * dpr * 1.12 * 100) / 100;
+      if (forest.key === key) return;
+      clearTimeout(forest.timer);
+      forest = { key: key, front: [], back: [], timer: 0 };
+      var jobs = [], f = forest;
+      TREES.forEach(function (tr, i) { jobs.push(function () { f.front[i] = buildSpruce(tr.h, 101 + i * 7, key, 0); }); });
+      BACK.forEach(function (tr, i) { jobs.push(function () { f.back[i] = buildSpruce(tr.h, 503 + i * 11, key * 0.8, 0.5); }); });
+      (function next() { // one tree per task keeps every frame short
+        if (f !== forest || !jobs.length) return;
+        jobs.shift()();
+        request();
+        f.timer = setTimeout(next, 0);
+      })();
+    }
+    function glow(cx, cy, rx, ry, stops) { // elliptical radial gradient without hard edges
+      ctx.save(); ctx.translate(cx, cy); ctx.scale(1, ry / rx);
+      var gg = ctx.createRadialGradient(0, 0, 0, 0, 0, rx);
+      stops.forEach(function (st) { gg.addColorStop(st[0], st[1]); });
+      ctx.fillStyle = gg; ctx.beginPath(); ctx.arc(0, 0, rx, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+    }
+    function tree(bm, x, base, g) {
+      if (!bm || g <= 0) return;
+      ctx.save(); ctx.translate(x, base); ctx.scale(g, g);
+      ctx.drawImage(bm.c, -bm.ox / bm.k, -bm.oy / bm.k, bm.c.width / bm.k, bm.c.height / bm.k);
+      ctx.restore();
     }
     function scene0(t) { // forest → felled tree → log
-      // ground with hatch
-      al(1); ctx.strokeStyle = L(0.35); ctx.lineWidth = lw(1.2);
-      ctx.beginPath(); ctx.moveTo(-215, GY); ctx.lineTo(215, GY); ctx.stroke();
-      ctx.strokeStyle = L(0.12); ctx.lineWidth = lw(1);
-      for (var hx = -210; hx < 212; hx += 12) { ctx.beginPath(); ctx.moveTo(hx, GY + 2); ctx.lineTo(hx - 8, GY + 10); ctx.stroke(); }
+      ensureForest();
+      // horizon glow behind the stand and a dark ground pool, both soft-edged ellipses
+      al(1);
+      glow(0, GY - 70, 300, 170, [[0, 'rgba(232,211,176,.075)'], [0.55, 'rgba(232,211,176,.03)'], [1, 'rgba(232,211,176,0)']]);
+      glow(0, GY + 8, 270, 34, [[0, 'rgba(6,5,4,.85)'], [0.7, 'rgba(6,5,4,.35)'], [1, 'rgba(6,5,4,0)']]);
 
       var fade = 1 - 0.84 * sm(seg(t, 0.46, 0.66));
       var fall = Math.pow(seg(t, 0.28, 0.5), 2.1);
       var morph = eio(seg(t, 0.48, 0.66));
+      var tg0 = Math.max(t, intro * 0.3);
+      BACK.forEach(function (tr, i) {
+        var g = eo(seg(tg0, 0.02 + i * 0.014, 0.24 + i * 0.014));
+        al(fade * 0.9 * sm(g * 2)); tree(forest.back[i], tr.x, GY - 6, g);
+      });
       TREES.forEach(function (tr, i) {
-        var tg = Math.max(t, intro * 0.3), g = eo(seg(tg, i * 0.018, 0.22 + i * 0.018)), h = tr.h * g;
-        if (h < 1) return;
-        if (!tr.fall) {
-          al(fade); spruce(tr.x, GY, h, 2.6, sm(g * 1.4 - 0.2));
-          return;
-        }
+        var g = eo(seg(tg0, i * 0.018, 0.22 + i * 0.018));
+        if (g <= 0) return;
+        if (!tr.fall) { al(fade * sm(g * 2)); tree(forest.front[i], tr.x, GY, g); return; }
         // the tree that is felled
         if (morph >= 1) return;
-        ctx.save(); al(1 - morph);
+        ctx.save(); al((1 - morph) * sm(g * 2));
         ctx.translate(tr.x, GY); ctx.rotate(fall * Math.PI / 2);
-        spruce(0, 0, h, 3.4, (1 - seg(t, 0.33, 0.48)) * sm(g * 1.4 - 0.2));
+        tree(forest.front[i], 0, 0, g);
         ctx.restore();
       });
+      // low mist over the trunks
+      al(fade);
+      glow(0, GY - 6, 250, 26, [[0, 'rgba(232,211,176,.075)'], [1, 'rgba(232,211,176,0)']]);
       // felling cut at the base
       var cut = seg(t, 0.2, 0.28);
       if (cut > 0 && morph < 1) {
