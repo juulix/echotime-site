@@ -6,7 +6,7 @@
 <title>Būvelementi — kokzāģētava Baldonē</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="Kokzāģētava Baldonē: pērkam mežu, zāģējam, žāvējam un ēvelējam paši. Koncepcijas skice.">
-<meta property="og:title" content="Būvelementi — no meža līdz jūsu izmēram">
+<meta property="og:title" content="Būvelementi — kokmateriāli tieši no ražotāja">
 <meta property="og:description" content="Mājaslapas koncepcijas skice SIA “Būvelementi”. Sagatavoja Echo Time.">
 <meta property="og:image" content="https://www.echotime.app/skices/buvelementi-ydox/img/og.jpg">
 <meta property="og:type" content="website">
@@ -98,7 +98,7 @@ p { margin: 0; }
 .kick { display: flex; align-items: center; gap: 12px; font: 500 13px/1 var(--ff-m); letter-spacing: .08em; text-transform: uppercase; color: var(--wood-2); }
 .kick b { color: #E0713A; font-weight: 500; }
 .kick::after { content: ""; flex: 0 0 48px; height: 1px; background: currentColor; opacity: .5; }
-.beat h1 { font-size: clamp(54px, 7.6vw, 112px); color: #F6E9D3; }
+.beat h1 { font-size: clamp(48px, 5.6vw, 86px); color: #F6E9D3; }
 .beat h2 { font-size: clamp(44px, 5.6vw, 84px); color: #F6E9D3; }
 .beat h1 em, .beat h2 em { font-style: normal; color: var(--rust); }
 .beat .lead { font-size: clamp(17px, 1.35vw, 20px); line-height: 1.55; color: rgba(243, 234, 219, .86); max-width: 52ch; }
@@ -178,7 +178,8 @@ blockquote cite { font: normal 400 12.5px/1.3 var(--ff-m); color: rgba(232, 211,
 /* price */
 .price { background: var(--dust); }
 .price-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(32px, 5vw, 72px); align-items: start; }
-.factors { display: grid; gap: 0; margin-top: 28px; border-top: 1.5px solid var(--ink); }
+.factors-h { margin-top: 28px; font: 500 12.5px/1 var(--ff-m); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+.factors { display: grid; gap: 0; margin-top: 10px; border-top: 1.5px solid var(--ink); }
 .factors div { display: grid; grid-template-columns: 120px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 15.5px; }
 .factors dt { font: 500 13px/1.6 var(--ff-m); text-transform: uppercase; letter-spacing: .05em; }
 .factors dd { margin: 0; color: var(--ink-2); }
@@ -269,7 +270,7 @@ footer a { color: var(--wood); }
   .stage-wrap { grid-area: 1 / 1; top: var(--head-h); height: 44svh; }
   .beats { grid-area: 1 / 1; top: calc(var(--head-h) + 44svh); height: calc(100svh - var(--head-h) - 44svh); z-index: 2; }
   .beat { justify-content: flex-start; gap: 10px; padding: 14px var(--gutter-r) 16px var(--gutter); background: var(--bark); max-width: none; margin: 0; overflow: hidden; }
-  .beat h1 { font-size: clamp(38px, 11vw, 54px); }
+  .beat h1 { font-size: clamp(34px, 9.6vw, 46px); }
   .beat h2 { font-size: clamp(32px, 9.4vw, 46px); }
   .beat .lead { font-size: 15.5px; line-height: 1.45; }
   .beat .facts span { font-size: 12px; padding: 7px 9px; }
@@ -318,7 +319,7 @@ footer a { color: var(--wood); }
 </header>
 
 <main id="saturs">
-  <section class="story" id="story" aria-label="No meža līdz jūsu izmēram">
+  <section class="story" id="story" aria-label="Kā top kokmateriāli: no meža līdz pakai">
     <div class="stage-wrap" aria-hidden="true">
       <div class="stage-fallback"></div>
       <div id="stage"></div>
@@ -327,8 +328,8 @@ footer a { color: var(--wood); }
     <div class="beats">
       <div class="beat on" data-i="0">
         <span class="kick"><b>Kokzāģētava Baldonē</b></span>
-        <h1>No meža līdz <em>jūsu izmēram</em>.</h1>
-        <p class="lead">Iepērkam mežu, zāģējam un ēvelējam paši. Jūs pērkat no ražotāja, ne no starpnieka, un dabūjat arī izmēru, kura veikalā nav.</p>
+        <h1>Kokmateriāli jūsu projektam. <em>Tieši no ražotāja.</em></h1>
+        <p class="lead">Iepērkam mežu, zāģējam un ēvelējam paši savā ražotnē Baldonē. Varam sagatavot arī izmēru, kura nav veikalā.</p>
         <div class="ctas">
           <a class="btn btn-rust" href="#cena">Uzzināt cenu savam izmēram <span class="arr" aria-hidden="true">→</span></a>
           <a class="btn btn-line m-hide" href="tel:+37126408359">Zvanīt 26 408 359</a>
@@ -347,14 +348,14 @@ footer a { color: var(--wood); }
       <div class="beat" data-i="2">
         <span class="kick"><b>03</b> Zāģēšana</span>
         <h2>Zāģējam <em>paši</em>.</h2>
-        <p class="lead">Tāpēc varam sagatavot izmērus, kurus veikalos neatrast. Brusas zāģējam līdz 8 metriem; vairumam piegādātāju standarts beidzas pie 6.</p>
+        <p class="lead">Tāpēc varam sagatavot arī nestandarta biezumu, platumu vai garumu. Brusas zāģējam līdz 8 metru garumā.</p>
         <div class="facts"><span>dēļi 25×100 – 50×200</span><span>brusas 100×100, 150×150</span><span>līdz 8,0 m</span></div>
       </div>
 
       <div class="beat" data-i="3">
         <span class="kick"><b>04</b> Žāvēšana</span>
         <h2>Tik sauss, cik <em>vajag</em>.</h2>
-        <p class="lead">Svaigi zāģēts veidņiem un pamatnēm. Žāvēts līdz 18 % karkasam, spārēm un fasādei. 12 % iekšdarbiem un pirtij. Izvēlieties pēc tā, kur koksne kalpos.</p>
+        <p class="lead">Piedāvājam svaigi zāģētus, žāvētus līdz 18 % vai 12 % un impregnētus kokmateriālus. Piemērotāko variantu palīdzēsim izvēlēties pēc paredzētā lietojuma.</p>
         <div class="facts"><span>svaigs</span><span>18 %</span><span>12 %</span><span class="m-hide">impregnēts zem spiediena</span></div>
       </div>
 
@@ -383,7 +384,7 @@ footer a { color: var(--wood); }
       <div class="head-row">
         <div>
           <span class="eyebrow">Divi ceļi</span>
-          <h2 id="celi-h">Pērkat koku vai pārdodat mežu?</h2>
+          <h2 id="celi-h">Vajadzīgi kokmateriāli vai vēlaties pārdot cirsmu?</h2>
         </div>
         <p class="intro">Strādājam abos aprites galos. Pircējiem: gatavi kokmateriāli un kurināmais. Meža īpašniekiem: cirsmu un apaļkoku iepirkšana, mežizstrāde un transports.</p>
       </div>
@@ -416,9 +417,9 @@ footer a { color: var(--wood); }
       <div class="head-row">
         <div>
           <span class="eyebrow">Sortiments</span>
-          <h2 id="sort-h">Izmēri, šķiras, mitrums.</h2>
+          <h2 id="sort-h">Kokmateriāli būvniecībai, apdarei un labiekārtošanai.</h2>
         </div>
-        <p class="intro">Standarta izmēri tabulās. Ja vajag citu biezumu vai garumu, zvaniet: zāģējam pēc pasūtījuma.</p>
+        <p class="intro">Standarta izmēri tabulās. Ja vajag citu izmēru vai neesat drošs par izvēli, pastāstiet par iecerēto darbu, un palīdzēsim izvēlēties.</p>
       </div>
 
       <div class="tabs" role="tablist" aria-label="Kokmateriālu veidi" id="stabs"></div>
@@ -431,25 +432,25 @@ footer a { color: var(--wood); }
       <div class="head-row">
         <div>
           <span class="eyebrow">Kāpēc no ražotāja</span>
-          <h2 id="why-h">Viena saruna. Bez starpnieka.</h2>
+          <h2 id="why-h">Pielāgojam kokmateriālus jūsu vajadzībām.</h2>
         </div>
-        <p class="intro">SIA “Būvelementi”, kokzāģētava Baldonē kopš 2004. Strādājam ar privātpersonām un uzņēmumiem.</p>
+        <p class="intro">SIA “Būvelementi”, kokzāģētava Baldonē kopš 2004.</p>
       </div>
       <div class="why-grid">
         <div>
           <span class="num">8<small>m</small></span>
           <h3>Izmērs pēc pasūtījuma</h3>
-          <p>Zāģējam un ēvelējam paši, tāpēc nestandarta biezums vai garums nav jāgaida no piegādātāja. Brusas līdz 8 m.</p>
+          <p>Daudzus izmērus, kas veikalos nav pieejami, varam sagatavot paši. Brusas līdz 8 m garumā.</p>
         </div>
         <div>
           <span class="num">C24</span>
           <h3>Arī konstrukcijām</h3>
-          <p>Kalibrēti C16/C24 egles dēļi karkasiem, spārēm un sijām: viens precīzs izmērs visā garumā.</p>
+          <p>Kalibrēti C16/C24 egles dēļi karkasiem, spārēm un sijām, ēvelēti līdz precīzam izmēram un šķiroti pēc stiprības.</p>
         </div>
         <div>
           <span class="num">2004</span>
           <h3>Pilns cikls</h3>
-          <p>Iepērkam mežu un cirsmas, zāģējam un ēvelējam paši. Jūs pērkat no ražotāja, ne no starpnieka. Cenu pasakām sarunas laikā.</p>
+          <p>Mežizstrāde, zāģēšana, ēvelēšana, piegāde un kurināmais no viena uzņēmuma Baldonē. Strādājam ar privātpersonām un uzņēmumiem.</p>
         </div>
       </div>
       <div class="quotes">
@@ -465,8 +466,9 @@ footer a { color: var(--wood); }
     <div class="wrap price-grid">
       <div>
         <span class="eyebrow">Cena</span>
-        <h2 id="price-h">Cena jūsu izmēram, nevis vidējā.</h2>
-        <p class="intro">Cenas lapā nepublicējam, jo tās veido septiņas lietas. Nosauciet tās, un pateiksim precīzi.</p>
+        <h2 id="price-h">Uzziniet cenu savam pasūtījumam.</h2>
+        <p class="intro">Norādiet vajadzīgo materiālu, izmērus un apjomu. Ja vēl nezināt visus parametrus, pastāstiet par iecerēto darbu, un palīdzēsim izvēlēties.</p>
+        <p class="factors-h">Cenu ietekmē</p>
         <dl class="factors">
           <div><dt>Suga</dt><dd>egle, priede, bērzs; apse, melnalksnis, liepa</dd></div>
           <div><dt>Šķira</dt><dd>AB mazāk zaru, BC lētāka</dd></div>
@@ -529,7 +531,7 @@ footer a { color: var(--wood); }
               <input id="d-qty" placeholder="piem., 3 m³ vai 120 gab.">
             </div>
             <div class="f">
-              <label for="d-moist">Mitrums</label>
+              <label for="d-moist">Mitrums un apstrāde</label>
               <select id="d-moist">
                 <option>Nezinu, ieteiciet</option>
                 <option>Svaigi zāģēts</option>
@@ -588,10 +590,10 @@ footer a { color: var(--wood); }
         <p class="intro">Pērkam galvenās, kopšanas un sanitārās cirtes, arī apaļkokus un zāģbaļķus atsevišķi. Strādājam arī ar nelieliem apjomiem.</p>
       </div>
       <ol class="steps">
-        <li><span class="n">1 · pieteikums</span><h3>Piesakāties</h3><p>Nosaucat novadu un aptuveno platību vai kadastra numuru.</p></li>
+        <li><span class="n">1 · pieteikums</span><h3>Piesakieties</h3><p>Nosauciet novadu un aptuveno platību vai kadastra numuru.</p></li>
         <li><span class="n">2 · apskate</span><h3>Apskatām</h3><p>Atbraucam uz cirsmu un novērtējam apjomu un sugas.</p></li>
         <li><span class="n">3 · cena</span><h3>Piedāvājam cenu</h3><p>Pasakām, cik maksājam, un paskaidrojam, no kā cena veidojas.</p></li>
-        <li><span class="n">4 · līgums</span><h3>Norēķināmies</h3><p>Dokumentus kārtojam mēs. Jums jāiesniedz īpašuma dokumenti.</p></li>
+        <li><span class="n">4 · līgums</span><h3>Līgums un norēķins</h3><p>Ja piedāvājums der, noslēdzam līgumu un norēķināmies. Dokumentus kārtojam mēs; no jums vajadzīgi īpašuma dokumenti.</p></li>
       </ol>
       <div class="forest-cta">
         <p>Novērtējums ir bez maksas un neuzliek pienākumu pārdot. No pieteikuma līdz piedāvājumam parasti dažas dienas.</p>
@@ -648,13 +650,13 @@ footer a { color: var(--wood); }
 
 <div class="mcta" id="mcta"><a class="btn btn-line" href="tel:+37126408359">Zvanīt</a><a class="btn btn-rust" href="#cena">Uzzināt cenu</a></div>
 
-<script src="stage.js?v=3"></script>
+<script src="stage.js?v=4"></script>
 <script>
 (function () {
   /* ---------- assortment data (buvelementi.lv, 28.10.2026) ---------- */
   var S = [
     { id: 'zag', name: 'Zāģmateriāli', img: 'zagmateriali.jpg', cap: 'Zāģmateriālu pakas laukumā',
-      txt: 'Svaigi zāģēti, žāvēti un impregnēti. Svaigi zāģēts ir lētākais veidņiem, pamatnēm un pagaidu konstrukcijām; žāvēts līdz 18 % paliek izmērā un der nesošām konstrukcijām.',
+      txt: 'Piedāvājam svaigi zāģētus, žāvētus un impregnētus zāģmateriālus. Piemērotāko variantu palīdzēsim izvēlēties atbilstoši paredzētajam lietojumam.',
       head: ['Veids', 'Izmērs, mm', 'Garums, m', 'Suga', 'Šķira', 'Mitrums'],
       rows: [['Dēļi, svaigi zāģēti', '25×100 – 50×200', '3,0–6,0', 'egle, priede', '1., 2.', 'svaigs'],
              ['Dēļi, žāvēti', '25×100 – 50×200', '3,0–6,0', 'egle, priede', 'AB, BC', '18 %'],
@@ -662,7 +664,7 @@ footer a { color: var(--wood); }
              ['Latas', '25×50, 32×100', '3,0–6,0', 'egle', '2.', 'svaigs'],
              ['Impregnēti', 'pēc pasūtījuma', '3,0–6,0', 'priede', 'AB', '18 %']] },
     { id: 'eve', name: 'Ēvelēti un C24', img: 'eveleti.jpg', cap: 'Ēvelēti kokmateriāli krautnē',
-      txt: 'Četrpusīgi ēvelēti dēļi un brusas. Kalibrēti C16/C24 dēļi ir vienā precīzā izmērā visā garumā, tāpēc karkasa plakne sanāk taisna.',
+      txt: 'Četrpusīgi ēvelēti dēļi un brusas, brusas līdz 8 m. Kalibrēti C16/C24 dēļi ir ēvelēti līdz precīzam izmēram un šķiroti pēc stiprības.',
       head: ['Veids', 'Izmērs, mm', 'Garums, m', 'Suga', 'Mitrums'],
       rows: [['Ēvelēts dēlis', '20×95 – 45×195', '3,0–6,0', 'egle, priede', '18 %'],
              ['Ēvelēta brusa', '45×95, 45×145', '3,0–8,0', 'egle', '18 %'],
@@ -676,20 +678,20 @@ footer a { color: var(--wood); }
              ['Fasāde', 'pusspunde, blokhaus, kubla', 'egle, priede', 'AB, BC', '18 %'],
              ['Pirts', 'pēc pasūtījuma', 'apse, melnalksnis, liepa', 'AB', '12 %']] },
     { id: 'ter', name: 'Terase', img: 'krautne.jpg', cap: 'Kokmateriālu krautnes Baldonē',
-      txt: 'Impregnēts priedes dēlis ir biežākā izvēle Latvijas laikapstākļiem. Rievas nav pretslīdes risinājums: tās mazina spriegumu dēlī un ļauj ūdenim notecēt.',
+      txt: 'Gludi, rievoti un impregnēti priedes terases dēļi, arī lāgas. Nosauciet terases platību un vietu, un ieteiksim piemērotāko.',
       head: ['Veids', 'Izmērs, mm', 'Garums, m', 'Suga', 'Mitrums'],
       rows: [['Gludais terases dēlis', '28×120, 28×145', '3,0–6,0', 'priede', '18 %'],
              ['Rievotais terases dēlis', '28×145', '3,0–6,0', 'priede', '18 %'],
              ['Impregnēts terases dēlis', '28×145', '3,0–6,0', 'priede', '18 %'],
              ['Terases lāgas', '45×95', '3,0–6,0', 'priede', '18 %']] },
     { id: 'gri', name: 'Grīda', img: 'gridas.jpg', cap: 'Spundēti grīdas dēļi krautnē',
-      txt: 'Spundēti egles un priedes dēļi, žāvēti līdz 16–18 %. 28 mm der dzīvojamai istabai ar lāgām ik pēc 60 cm; 35–40 mm lielākiem atstatumiem un slodzei.',
+      txt: 'Spundēti egles un priedes grīdas dēļi, žāvēti līdz 16–18 %. Biezumu palīdzēsim izvēlēties pēc telpas un pamatnes.',
       head: ['Biezums, mm', 'Platums, mm', 'Garums, m', 'Suga', 'Mitrums'],
       rows: [['28', '120, 145', '3,0–6,0', 'egle, priede', '16–18 %'],
              ['35', '120, 145', '3,0–6,0', 'egle, priede', '16–18 %'],
              ['40', '145', '3,0–6,0', 'priede', '16–18 %']] },
     { id: 'pir', name: 'Pirts', img: 'pirts.jpg', cap: 'Lapu koku apdares dēļi',
-      txt: 'Lapu koks pirtī nekarst tik ļoti kā skujkoks un nesveķo. Apse gaišākā un lētākā, melnalksnis siltā tonī, liepa ar vieglu smaržu. Lāvai 28 mm, sienām 15 mm.',
+      txt: 'Apses, melnalkšņa un liepas dēļi pirts sienām, griestiem un lāvām. Lapu koks nesveķo un karstumā nekarst tik ļoti kā skujkoks.',
       head: ['Veids', 'Izmērs, mm', 'Garums, m', 'Suga', 'Mitrums'],
       rows: [['Apdares dēlis', '15×90', '2,4–3,0', 'apse, melnalksnis, liepa', '12 %'],
              ['Lāvas dēlis', '28×90, 28×120', '2,4–3,0', 'apse, melnalksnis, liepa', '12 %'],

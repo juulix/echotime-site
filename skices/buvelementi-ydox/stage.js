@@ -180,7 +180,7 @@
     function layout() {
       var pad = clamp(W * 0.05, 16, 40);
       var top = clamp(H * 0.09, 60, 78);
-      var pw = clamp(W * 0.4, 128, 300), ph = Math.round(pw * 0.66);
+      var pw = W > 520 ? clamp(W * 0.5, 240, 380) : clamp(W * 0.4, 128, 300), ph = Math.round(pw * 0.66);
       var photo = { x: W - pad - pw, y: H - pad - ph, w: pw, h: ph };
       var D = { x: pad, y: top, w: W - 2 * pad, h: Math.max(80, photo.y - 14 - top) };
       var s = Math.min(D.w, D.h) / BOX;
