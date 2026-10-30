@@ -405,6 +405,20 @@ footer.site a { color: #f7ece2; }
   .cmp tbody th { width: 40%; }
   .stage-wrap { height: 62vh; height: 62svh; }
   .copy { padding-top: 59svh; }
+  /* phone: the jar sits higher so the beat text fits under it; in the flower beats (--bloom 0→1)
+     the picture grows to show the whole bouquet and the text slides over the jar */
+  .stage-wrap { top: calc(-13svh * (1 - var(--bloom, 0))); height: calc(58svh + 20svh * var(--bloom, 0)); }
+  .stage-wrap::after { height: calc(14% + 30% * var(--bloom, 0)); background: linear-gradient(0deg, var(--story-bg) calc(var(--bloom, 0) * 40%), transparent); }
+  .beat .stick { top: 46svh; gap: 14px; }
+  .beat p.lead, .beat p.lead.closing { font-size: 1.02rem; line-height: 1.42; }
+  .beat .beat-title { font-size: 1.6rem; }
+  .beat .note { font-size: .84rem; padding-top: 10px; }
+  .beat .points { gap: 10px; }
+  .story.is-bloom .copy { z-index: 4; }
+  .story.is-bloom .beat .stick { top: 60svh; }
+  .story.is-bloom .beat:not(.on) { opacity: 0; }
+  .rail { transition: bottom .5s var(--ease-out); }
+  .story.is-bloom .rail { bottom: calc(18svh + 14px); }
 }
 .beat .beat-title { font-size: var(--step-2); line-height: 1.12; }
 .beat .lead.closing { font-size: var(--step-1); }
@@ -818,6 +832,8 @@ footer.site a { color: #f7ece2; }
     // active beat follows the film (meta.chapters: burning 6.5 s, out 9.5 s, remnant 13.5 s, insert 16 s; scroll covers 6.5–20 s)
     var cuts = [0.06, 0.22, 0.52, 0.70, 0.86], active = 0;
     cuts.forEach(function (c, i) { if (p >= c) active = i + 1; });
+    story.style.setProperty('--bloom', smooth(0.66, 0.74, p).toFixed(3)); // phone layout only (see CSS)
+    story.classList.toggle('is-bloom', active >= 4);
     beats.forEach(function (b, i) { b.classList.toggle('on', i === active); });
     railItems.forEach(function (li, i) { li.classList.toggle('on', i + 1 === Math.min(active, 4)); }); // the closing beat stays under ĻAUJ UZZIEDĒT
 
@@ -825,7 +841,7 @@ footer.site a { color: #f7ece2; }
     top.classList.toggle('solid', past);
     top.style.color = past ? '' : getComputedStyle(story).color;
     var desk = document.getElementById('piedavajums').getBoundingClientRect();
-    mcta.classList.toggle('show', r.top < -vh * 0.4 && desk.top > vh * 0.6);
+    mcta.classList.toggle('show', r.top < -vh * 0.4 && desk.top > vh * 0.6 && active < 5); // the closing beat has its own buttons
 
     if (stage && stage.setPaused) stage.setPaused(r.bottom < 0 || r.top > vh);
   }
