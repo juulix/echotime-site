@@ -433,6 +433,10 @@ footer.site a { color: #f7ece2; }
 .xgrid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: start; }
 .xfigs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .xfigs figure { margin: 0; }
+.xfigs .xmatch { grid-column: 1 / -1; }
+.xmatch div { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.xmatch div img { aspect-ratio: 1 / 1; }
+.xdet { display: block; margin-top: 2px; font: 400 var(--step--1)/1.3 var(--body); color: var(--ink-soft); }
 .xfigs img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
 .xfigs figcaption { padding-top: 8px; font: 500 .72rem/1.3 var(--body); letter-spacing: .04em; color: var(--ink-soft); }
 @media (max-width: 900px) { .xgrid { grid-template-columns: minmax(0, 1fr); } }
@@ -660,14 +664,15 @@ footer.site a { color: #f7ece2; }
         <tbody>
           <tr><th scope="row">Apsveikuma kartīte MYL dizainā</th><td>0,79 € / gab.</td><td class="cond">Pēc izvēles</td></tr>
           <tr><th scope="row">Dāvanu maisiņš</th><td>1,49 € / gab.</td><td class="cond">Pēc izvēles</td></tr>
-          <tr><th scope="row">Sērkociņi</th><td>9,95 € / gab.</td><td class="cond">1–19 gab.</td></tr>
-          <tr class="cont"><th scope="row"><span class="sr-only">Sērkociņi</span></th><td>8,95 € / gab.</td><td class="cond">20–49 gab.</td></tr>
-          <tr class="cont"><th scope="row"><span class="sr-only">Sērkociņi</span></th><td>7,95 € / gab.</td><td class="cond">50+ gab.</td></tr>
+          <tr><th scope="row">Kamīna sērkociņi<span class="xdet">17 cm · 40 gab. kastītē</span></th><td>9,95 € / gab.</td><td class="cond">1–19 gab.</td></tr>
+          <tr class="cont"><th scope="row"><span class="sr-only">Kamīna sērkociņi</span></th><td>8,95 € / gab.</td><td class="cond">20–49 gab.</td></tr>
+          <tr class="cont"><th scope="row"><span class="sr-only">Kamīna sērkociņi</span></th><td>7,95 € / gab.</td><td class="cond">50+ gab.</td></tr>
         </tbody>
       </table>
       <div class="xfigs">
         <figure><img src="img/x-cards.jpg" alt="Apsveikuma kartītes MYL dizainā" loading="lazy" width="720" height="900"><figcaption>Apsveikuma kartītes</figcaption></figure>
         <figure><img src="img/x-bag.jpg" alt="Melns dāvanu maisiņš ar MIND YOUR LIGHT uzlīmi" loading="lazy" width="720" height="900"><figcaption>Dāvanu maisiņš</figcaption></figure>
+        <figure class="xmatch"><div><img src="img/x-match-1.jpg" alt="Atvērta kamīna sērkociņu kastīte bordo svītrainā dizainā" loading="lazy" width="600" height="600"><img src="img/x-match-2.jpg" alt="Trīs kamīna sērkociņu kastītes dažādos dizainos" loading="lazy" width="600" height="600"><img src="img/x-match-3.jpg" alt="Kamīna sērkociņi trīs dizainos ar atvērtām kastītēm" loading="lazy" width="600" height="600"></div><figcaption>Kamīna sērkociņi · 17 cm, 40 gab.</figcaption></figure>
       </div>
       </div>
       <p class="xnote">Sērkociņu personalizācija pašlaik nav iekļauta piedāvājumā.</p>
