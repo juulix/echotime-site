@@ -307,6 +307,8 @@ fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 10px; min-width
 .form-foot small { color: var(--ink-soft); font-size: .8rem; max-width: 22rem; }
 .quick-line { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; }
 .quick-note { color: var(--ink-soft); font-size: var(--step--1); }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; } /* spam trap, people never see it */
+button[aria-busy="true"] { opacity: .6; pointer-events: none; }
 .done { text-align: left; display: grid; gap: 14px; padding-block: 12px; }
 .done h3 { font-size: var(--step-2); font-family: var(--display); }
 .done p { color: var(--ink-soft); }
@@ -671,6 +673,7 @@ footer.site a { color: #f7ece2; }
         </div>
 
         <form id="f-quick" role="tabpanel" aria-labelledby="t-quick" novalidate>
+          <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div class="field">
             <label for="q-contact">E-pasts vai tālrunis</label>
             <div class="quick-line">
@@ -679,10 +682,11 @@ footer.site a { color: #f7ece2; }
             </div>
             <span class="err" id="q-err" role="alert"></span>
           </div>
-          <p class="quick-note">Sazināsimies, lai precizētu detaļas. Kontaktinformāciju izmantosim saziņai par pieprasījumu.</p>
+          <p class="quick-note">Sazināsimies, lai precizētu detaļas. Kontaktinformāciju izmantosim saziņai par pieprasījumu; pieprasījums tiek nosūtīts ar formsubmit.co starpniecību.</p>
         </form>
 
         <form id="f-full" role="tabpanel" aria-labelledby="t-full" novalidate hidden>
+          <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div class="row">
             <div class="field"><label for="d-company">Uzņēmuma nosaukums</label><input id="d-company" name="company" autocomplete="organization"></div>
             <div class="field"><label for="d-name">Kontaktpersonas vārds</label><input id="d-name" name="name" autocomplete="name"></div>
@@ -726,16 +730,16 @@ footer.site a { color: #f7ece2; }
           <div class="field"><label for="d-date">Vēlamais saņemšanas datums</label><input id="d-date" name="date" type="date"></div>
           <div class="field"><label for="d-msg">Komentārs (neobligāts)</label><textarea id="d-msg" name="msg"></textarea></div>
           <div class="form-foot">
-            <small>Sazināsimies, lai precizētu detaļas un sagatavotu individuālu piedāvājumu. Piegādi aprēķinām atsevišķi.</small>
+            <small>Sazināsimies, lai precizētu detaļas un sagatavotu individuālu piedāvājumu. Piegādi aprēķinām atsevišķi. Pieprasījums tiek nosūtīts ar formsubmit.co starpniecību.</small>
             <button class="btn btn-wine" type="submit">Saņemt piedāvājumu <span class="arr" aria-hidden="true">→</span></button>
           </div>
         </form>
 
         <div class="done" id="done" hidden tabindex="-1">
           <div class="seal" aria-hidden="true">M</div>
-          <h3>Paldies, pieteikums saņemts.</h3>
+          <h3 id="done-title">Paldies, pieteikums saņemts.</h3>
           <p id="done-text">Sazināsimies ar jums tuvākajā laikā ar piedāvājumu.</p>
-          <p style="font-size:.8rem">Prototips: šajā versijā pieteikums vēl netiek nosūtīts.</p>
+          <p id="done-mail" hidden><a class="btn btn-wine" id="done-mail-link" href="#">Nosūtīt e-pastā <span class="arr" aria-hidden="true">→</span></a></p>
         </div>
       </div>
     </div>
@@ -874,6 +878,41 @@ footer.site a { color: #f7ece2; }
     done.hidden = false; done.focus();
   }
 
+  // requests go to the owner's inbox through FormSubmit; if that fails, the same request opens as a ready e-mail
+  var INBOX = 'pece.paula@gmail.com';
+  var LABELS = { company: 'Uzņēmums', name: 'Kontaktpersona', contact: 'E-pasts / tālrunis', size: 'Sveču izmērs', qty: 'Daudzums', col: 'Krāsa', logo: 'Personalizācija', extra: 'Papildu komplektācija', date: 'Vēlamais saņemšanas datums', msg: 'Komentārs' };
+  function collect(form) {
+    var out = {};
+    [].forEach.call(form.elements, function (el) {
+      if (!el.name || el.name.charAt(0) === '_' || ((el.type === 'checkbox' || el.type === 'radio') && !el.checked)) return;
+      var v = el.value.trim(); if (!v) return;
+      var k = LABELS[el.name] || el.name;
+      out[k] = out[k] ? out[k] + ', ' + v : v;
+    });
+    return out;
+  }
+  function send(form, kind, okText) {
+    var data = collect(form), btn = form.querySelector('button[type="submit"]');
+    if (form.querySelector('[name="_honey"]').value) { finish(okText); return; } // bots fill the hidden field
+    var subject = 'Korporatīvais pieprasījums (' + kind + ') — mindyourlight landing';
+    var contact = data[LABELS.contact] || '';
+    var payload = Object.assign({ _subject: subject, _template: 'table', _captcha: 'false' }, data);
+    var mail = contact.split(/[,;\s]+/).filter(function (x) { return emailRe.test(x); })[0];
+    if (mail) payload._replyto = mail;
+    btn.setAttribute('aria-busy', 'true');
+    fetch('https://formsubmit.co/ajax/' + INBOX, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) })
+      .then(function (r) { return r.json().then(function (j) { if (!r.ok || String(j.success) !== 'true') throw new Error(j.message || r.status); }); })
+      .then(function () { finish(okText); })
+      .catch(function () {
+        var body = Object.keys(data).map(function (k) { return k + ': ' + data[k]; }).join('\n');
+        document.getElementById('done-mail-link').href = 'mailto:' + INBOX + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+        document.getElementById('done-title').textContent = 'Pieprasījums vēl nav nosūtīts.';
+        document.getElementById('done-mail').hidden = false;
+        finish('Automātiskā nosūtīšana neizdevās. Nospiediet pogu, un pieprasījums atvērsies Jūsu e-pastā jau aizpildīts uz ' + INBOX + '.');
+      })
+      .then(function () { btn.removeAttribute('aria-busy'); });
+  }
+
   forms[0].addEventListener('submit', function (e) {
     e.preventDefault();
     var input = document.getElementById('q-contact'), v = input.value.trim(), err = document.getElementById('q-err');
@@ -882,7 +921,7 @@ footer.site a { color: #f7ece2; }
     input.setAttribute('aria-invalid', String(!ok));
     err.textContent = ok ? '' : 'Ierakstiet e-pastu (vards@uznemums.lv) vai tālruni ar vismaz 8 cipariem.';
     if (!ok) { input.focus(); return; }
-    finish((emailRe.test(v) ? 'Rakstīsim uz ' : 'Zvanīsim uz ') + v + ' ar korporatīvo piedāvājumu.');
+    send(forms[0], 'ātrs', (emailRe.test(v) ? 'Rakstīsim uz ' : 'Zvanīsim uz ') + v + ' ar korporatīvo piedāvājumu.');
   });
 
   forms[1].addEventListener('submit', function (e) {
@@ -893,7 +932,7 @@ footer.site a { color: #f7ece2; }
     input.setAttribute('aria-invalid', String(!ok));
     err.textContent = ok ? '' : 'Ierakstiet e-pastu vai tālruni, lai varam sazināties.';
     if (!ok) { input.focus(); return; }
-    finish('Sazināsimies ar Jums (' + v + '), lai precizētu detaļas un sagatavotu piedāvājumu.');
+    send(forms[1], 'detalizēts', 'Sazināsimies ar Jums (' + v + '), lai precizētu detaļas un sagatavotu piedāvājumu.');
   });
 })();
 </script>
