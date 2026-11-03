@@ -142,7 +142,7 @@ img { display: block; max-width: 100%; }
 .beat .num::after { content: ""; flex: 0 0 56px; height: 1px; background: currentColor; opacity: .5; }
 
 .hero h1 { font-size: clamp(2.4rem, 1.2rem + 3.2vw, 4.2rem); } /* "Ilgstoša vērtība." stays on one line */
-@media (min-width: 901px) { .beat.hero { padding-top: 100px; gap: 18px; } }
+@media (min-width: 901px) { .beat.hero { padding-top: 100px; gap: 18px; } .beat:not(.hero) { padding-block: 60px 40px; } }
 .hero h1 em { font-style: normal; color: var(--story-accent); }
 .hero .lead { font-size: var(--step-1); line-height: 1.45; color: var(--story-soft); max-width: 32rem; }
 .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -332,7 +332,7 @@ footer.site a { color: #f7ece2; }
   .stage-wrap { grid-area: 1 / 1; height: 58vh; height: 58svh; z-index: 3; }
   .stage-wrap::after { inset: auto 0 0 0; width: auto; height: 22%; background: linear-gradient(0deg, var(--story-bg), transparent); }
   .copy { grid-area: 1 / 1; padding-left: var(--gutter-l); padding-right: var(--gutter-r); padding-top: 55svh; }
-  .beat { padding-block: 24px 48px; justify-content: flex-start; }
+  .beat { padding-block: 8px 24px; justify-content: flex-start; }
   .beat .stick { top: 60svh; }
   .rail { top: auto; bottom: 18px; transform: none; right: var(--gutter-r); grid-auto-flow: column; gap: 6px; }
   .rail li { font-size: 0; gap: 0; }
@@ -408,20 +408,16 @@ footer.site a { color: #f7ece2; }
   .cmp tbody th { width: 40%; }
   .stage-wrap { height: 62vh; height: 62svh; }
   .copy { padding-top: 59svh; }
-  /* phone: the jar sits higher so the beat text fits under it; in the flower beats (--bloom 0→1)
-     the picture grows to show the whole bouquet and the text slides over the jar */
-  .stage-wrap { top: calc(-13svh * (1 - var(--bloom, 0))); height: calc(58svh + 20svh * var(--bloom, 0)); }
-  .stage-wrap::after { height: calc(14% + 30% * var(--bloom, 0)); background: linear-gradient(0deg, var(--story-bg) calc(var(--bloom, 0) * 40%), transparent); }
+  /* phone: the jar sits higher so the beat text fits under it; the layout never changes while
+     scrolling, the bouquet is fitted inside the canvas (see the stage's frame option) */
+  .stage-wrap { top: -13svh; height: 58svh; }
+  .stage-wrap::after { height: 14%; }
   .beat .stick { top: 46svh; gap: 14px; }
   .beat p.lead, .beat p.lead.closing { font-size: 1.02rem; line-height: 1.42; }
   .beat .beat-title { font-size: 1.6rem; }
   .beat .note { font-size: .84rem; padding-top: 10px; }
   .beat .points { gap: 10px; }
-  .story.is-bloom .copy { z-index: 4; }
-  .story.is-bloom .beat .stick { top: 60svh; }
-  .story.is-bloom .beat:not(.on) { opacity: 0; }
-  .rail { transition: bottom .5s var(--ease-out), opacity .4s; }
-  .story.is-bloom .rail { bottom: calc(18svh + 14px); }
+  .rail { transition: opacity .4s; }
   /* blur over a canvas that redraws every frame is what made phones stutter */
   .top:not(.solid), .top.solid, .mcta { backdrop-filter: none; -webkit-backdrop-filter: none; }
   .top:not(.solid) { background: var(--story-bg, var(--night)); }
@@ -539,14 +535,14 @@ footer.site a { color: #f7ece2; }
           </div>
         </div>
 
-        <div class="beat" id="b3" style="--h:108">
+        <div class="beat" id="b3" style="--h:100">
           <div class="stick">
             <h2 class="sr-only">Nomaini</h2>
             <p class="lead">Sveces izdegšanas kvalitāte ir galvenā MIND YOUR LIGHT produktu vērtība. Svece izdeg bez vai ar ļoti nelielu vaska atlikumu. Kad tā izdegusi, atbrīvojiet trauku ar siltu ūdeni un ievietojiet tajā traukam paredzētu gatavu uzpildes sveci — un gaisma turpinās.</p>
           </div>
         </div>
 
-        <div class="beat" id="b4" style="--h:125">
+        <div class="beat" id="b4" style="--h:100">
           <div class="stick">
             <h2 class="sr-only">Ļauj uzziedēt</h2>
             <p class="lead">Ievietojiet ziedu organizatoru lielajā traukā un izkārtojiet ziedus savā veidā. Īpaši šim traukam izstrādātais organizators palīdz noturēt kātus vēlamajā vietā, lai arī no tikai pāris ziediem varētu izveidot skaistu, personisku kompozīciju.</p>
@@ -554,7 +550,7 @@ footer.site a { color: #f7ece2; }
           </div>
         </div>
 
-        <div class="beat" id="b5" style="--h:110">
+        <div class="beat" id="b5" style="--h:90">
           <div class="stick">
             <p class="lead closing">Ziedu organizators ļauj izbaudīt ne tikai gatavu kompozīciju, bet arī pašu ziedu kārtošanas procesu. Kolekcija “Romance” aicina romantizēt parastās dienās — ar sveces gaismu, dažiem svaigiem ziediem un mirkļiem, ko radām paši.</p>
             <div class="ctas">
@@ -835,7 +831,18 @@ footer.site a { color: #f7ece2; }
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
   function smooth(e0, e1, x) { var t = clamp((x - e0) / (e1 - e0), 0, 1); return t * t * (3 - 2 * t); }
 
-  var ticking = false, lastBloom = '', topPast = false;
+  var ticking = false, topPast = false;
+  // film frames per beat (10 fps film): hero = lit candle; burning; out + smoke; refill lifted out;
+  // organiser in and the bouquet grows in one go; full bouquet for the closing words
+  var SEG = [[65, 65], [65, 92], [92, 124], [128, 156], [156, 192], [192, 199]];
+  var knots = [];
+  function measure() {
+    var vh = window.innerHeight, b1 = beats[1], st = b1.querySelector('.stick');
+    var sTop = story.getBoundingClientRect().top + window.scrollY, range = Math.max(1, story.offsetHeight - vh);
+    // a beat takes over just before its text settles at the sticky position
+    var trig = parseFloat(getComputedStyle(st).top) - parseFloat(getComputedStyle(b1).paddingTop) + vh * 0.08;
+    knots = beats.map(function (b, i) { return i ? clamp((b.getBoundingClientRect().top + window.scrollY - sTop - trig) / range, 0, 1) : 0; });
+  }
   function paintTop() { top.style.color = topPast ? '' : (story.classList.contains('is-day') ? 'var(--ink)' : '#f7ece2'); }
   function update() {
     ticking = false;
@@ -843,14 +850,15 @@ footer.site a { color: #f7ece2; }
     var r = story.getBoundingClientRect();
     var range = Math.max(1, r.height - vh);
     var p = clamp(-r.top / range, 0, 1);
-    if (stage) stage.setProgress(p);
 
     // active beat follows the film (meta.chapters: burning 6.5 s, out 9.5 s, remnant 13.5 s, insert 16 s; scroll covers 6.5–20 s)
-    var cuts = [0.06, 0.22, 0.52, 0.70, 0.86], active = 0;
-    cuts.forEach(function (c, i) { if (p >= c) active = i + 1; });
-    var bloom = smooth(0.66, 0.74, p).toFixed(3); // phone layout only (see CSS)
-    if (bloom !== lastBloom) { lastBloom = bloom; story.style.setProperty('--bloom', bloom); }
-    story.classList.toggle('is-bloom', active >= 4);
+    // each beat owns one stretch of the film: its text and its frames change together
+    if (!knots.length) measure();
+    var active = 0;
+    knots.forEach(function (k, i) { if (i > 0 && p >= k) active = i; });
+    var k0 = knots[active], k1 = active + 1 < knots.length ? knots[active + 1] : 1;
+    var u = clamp((p - k0) / Math.max(1e-4, k1 - k0), 0, 1), seg = SEG[active];
+    if (stage) stage.setFrame(seg[0] + (seg[1] - seg[0]) * u);
     story.classList.toggle('at-start', active === 0);
     beats.forEach(function (b, i) { b.classList.toggle('on', i === active); });
     railItems.forEach(function (li, i) { li.classList.toggle('on', i + 1 === Math.min(active, 4)); }); // the closing beat stays under ĻAUJ UZZIEDĒT
@@ -865,7 +873,8 @@ footer.site a { color: #f7ece2; }
   }
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
+  window.addEventListener('resize', function () { knots = []; onScroll(); });
+  window.addEventListener('load', function () { knots = []; onScroll(); });
   update();
 
   // ---------- Seal film ----------
@@ -886,7 +895,10 @@ footer.site a { color: #f7ece2; }
 
 
   fetch('seq/meta.json').then(function (r) { return r.json(); }).then(function (meta) {
-    stage = window.MYLSeq.mount(stageEl, { base: 'seq/', meta: meta, onColor: onColor });
+    var phoneMQ = window.matchMedia('(max-width: 900px)');
+    stage = window.MYLSeq.mount(stageEl, { base: 'seq/', meta: meta, onColor: onColor,
+      // phone: the stage top is tucked under the header, so the camera pulls back while the flowers grow
+      frame: function (f) { if (!phoneMQ.matches) return null; return { t: smooth(160, 188, f), h: 0.62, span: 0.84, cy: 0.56, mid: 0.49 }; } });
     stageEl.classList.add('mounted');
     onColor(stage.color()); update();
   }).catch(function (e) { console.error(e); });

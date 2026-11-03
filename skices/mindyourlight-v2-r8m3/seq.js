@@ -103,7 +103,11 @@
       if (i >= 0) {
         var W = canvas.width, H = canvas.height;
         var s = Math.min(Math.max(W / fw, H / fh), H / (BAND * fh));
-        var dw = fw * s, dh = fh * s, dx = (W - dw) / 2, dy = (H - dh) / 2;
+        var dh = fh * s, dy = (H - dh) / 2;
+        // optional framing per frame (phones pull back as the bouquet grows, so it fits above the text)
+        var z = opts.frame && opts.frame(f, W, H, fw, fh);
+        if (z) { var s1 = z.h * H / (z.span * fh), dy1 = z.cy * H - z.mid * fh * s1; s = s + (s1 - s) * z.t; dh = fh * s; dy = dy + (dy1 - dy) * z.t; }
+        var dw = fw * s, dx = (W - dw) / 2;
         ctx.drawImage(bmp[i] || imgs[i], dx, dy, dw, dh);
         // feather the photo into the fill colour where it doesn't reach the edges
         var fe = Math.min(70 * dpr, dw * 0.12);
@@ -145,6 +149,8 @@
 
     return {
       setProgress: function (p) { if (!lit || playing) return; ft = F0 + clamp(+p || 0, 0, 1) * (N - 1 - F0); start(); },
+      setFrame: function (fr) { if (!lit || playing) return; ft = clamp(+fr || 0, 0, N - 1); start(); },
+      redraw: function () { dirty = true; start(); },
       ignite: function () {
         if (lit) return Promise.resolve();
         return new Promise(function (res) {
