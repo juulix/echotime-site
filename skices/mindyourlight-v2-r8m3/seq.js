@@ -25,12 +25,15 @@
     var cw = 0, ch = 0, dpr = 1, set = 'v720', fw = 720, fh = 1280;
     var imgs = new Array(N), loaded = new Array(N);
     var lit = opts.lit !== false, f = lit ? F0 : 0, ft = f, playing = null;
-    var raf = 0, paused = false, last = 0, dirty = true, lastColor = '';
+    var raf = 0, paused = false, last = 0, dirty = true, lastColor = '', lastWarm = -1;
 
     function pickSet() {
+      // chosen once: switching sets mid-scroll reloads all 200 frames (the picture froze on big phones);
+      // phones always take v720, it decodes fast enough to keep up with a finger swipe
+      if (imgs[0]) return;
       var need = ch * dpr;
-      var s = (need > 1350 && meta.sizes && meta.sizes.v1080) ? 'v1080' : 'v720';
-      if (s !== set || !imgs[0]) {
+      var s = (window.innerWidth > 900 && need > 1350 && meta.sizes && meta.sizes.v1080) ? 'v1080' : 'v720';
+      {
         set = s; fw = (meta.sizes && meta.sizes[s] ? meta.sizes[s][0] : 720); fh = (meta.sizes && meta.sizes[s] ? meta.sizes[s][1] : 1280);
         load();
       }
@@ -48,12 +51,30 @@
         while (inflight < 6 && k < order.length) {
           (function (i) {
             var im = new Image(); im.decoding = 'async';
-            im.onload = function () { loaded[i] = true; inflight--; if (Math.abs(i - f) < 12) dirty = true; pump(); };
+            im.onload = function () { loaded[i] = true; inflight--; if (Math.abs(i - f) < 12) { dirty = true; lastWarm = -1; } pump(); };
             im.onerror = function () { inflight--; pump(); };
             im.src = src(i); imgs[i] = im; inflight++;
           })(order[k++]);
         }
       })();
+    }
+    // keep the frames around the playhead decoded, so drawing never waits for a WebP decode
+    var bmp = [], pend = [], WIN = 12;
+    function warm(c) {
+      if (!window.createImageBitmap) return;
+      for (var d = 0; d <= WIN; d++) {
+        [c + d, c - d].forEach(function (i) {
+          if (i < 0 || i >= N || !loaded[i] || bmp[i] || pend[i]) return;
+          pend[i] = true;
+          var forSet = set;
+          createImageBitmap(imgs[i]).then(function (b) {
+            pend[i] = false;
+            if (forSet !== set) { b.close && b.close(); return; }
+            bmp[i] = b; if (Math.abs(i - f) < 2) dirty = true;
+          }, function () { pend[i] = false; });
+        });
+      }
+      for (var j = 0; j < N; j++) if (bmp[j] && Math.abs(j - c) > WIN * 2) { bmp[j].close && bmp[j].close(); bmp[j] = null; }
     }
     function nearest(i) {
       if (loaded[i]) return i;
@@ -83,7 +104,7 @@
         var W = canvas.width, H = canvas.height;
         var s = Math.min(Math.max(W / fw, H / fh), H / (BAND * fh));
         var dw = fw * s, dh = fh * s, dx = (W - dw) / 2, dy = (H - dh) / 2;
-        ctx.drawImage(imgs[i], dx, dy, dw, dh);
+        ctx.drawImage(bmp[i] || imgs[i], dx, dy, dw, dh);
         // feather the photo into the fill colour where it doesn't reach the edges
         var fe = Math.min(70 * dpr, dw * 0.12);
         if (dx > 0.5) {
@@ -95,6 +116,7 @@
       }
       if (bg !== lastColor) { lastColor = bg; if (opts.onColor) opts.onColor(bg); }
       dirty = false;
+      if (i >= 0 && i !== lastWarm) { lastWarm = i; warm(i); }
     }
     function hexA(hex, a) {
       var n = parseInt(hex.slice(1), 16);

@@ -71,7 +71,7 @@ body {
   font-variation-settings: "opsz" 28; /* Bodoni hairlines at display opsz drop Latvian macrons */
   text-rendering: optimizeLegibility;
 }
-body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--story-bg, var(--night)); }
+.safe-top { position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--night); }
 h1, h2, h3 { font-family: var(--brand); font-weight: 400; line-height: 1.04; letter-spacing: -.01em; text-wrap: balance; margin: 0; }
 p { margin: 0; text-wrap: pretty; }
 a { color: inherit; }
@@ -104,7 +104,7 @@ img { display: block; max-width: 100%; }
   color: var(--story-fg, var(--paper));
   transition: background-color .4s, color .4s, box-shadow .4s;
 }
-.top:not(.solid) { background: color-mix(in srgb, var(--story-bg) 78%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.top:not(.solid) { background: color-mix(in srgb, var(--story-bg, var(--night)) 78%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 .top.solid { background: color-mix(in oklab, var(--paper) 88%, transparent); color: var(--ink); backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); box-shadow: 0 1px 0 var(--line); }
 .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 68px; }
 .logo { font: 400 1.05rem/1 var(--brand); letter-spacing: .14em; text-decoration: none; white-space: nowrap; }
@@ -163,6 +163,9 @@ img { display: block; max-width: 100%; }
 .rail li::after { content: ""; flex: none; width: 22px; height: 1px; background: currentColor; transition: width .6s var(--ease-out); }
 .rail li.on { opacity: 1; }
 .rail li.on::after { width: 48px; }
+.stage-hint { display: none; position: absolute; z-index: 3; right: var(--gutter-r, 16px); bottom: 16px; margin: 0; max-width: 11.5rem; text-align: right; font: 400 1.05rem/1.15 var(--brand); letter-spacing: .05em; text-transform: uppercase; color: #f7ece2; opacity: 0; transform: translateY(6px); transition: opacity .5s, transform .5s var(--ease-out); pointer-events: none; }
+.story.at-start .stage-hint { opacity: 1; transform: none; }
+.rail { transition: opacity .4s; }
 .rail .cm { position: relative; display: inline-block; }
 .rail .cm::after { content: ","; position: absolute; left: 50%; bottom: -.42em; transform: translateX(-50%); font-size: .62em; line-height: 1; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -417,8 +420,14 @@ footer.site a { color: #f7ece2; }
   .story.is-bloom .copy { z-index: 4; }
   .story.is-bloom .beat .stick { top: 60svh; }
   .story.is-bloom .beat:not(.on) { opacity: 0; }
-  .rail { transition: bottom .5s var(--ease-out); }
+  .rail { transition: bottom .5s var(--ease-out), opacity .4s; }
   .story.is-bloom .rail { bottom: calc(18svh + 14px); }
+  /* blur over a canvas that redraws every frame is what made phones stutter */
+  .top:not(.solid), .top.solid, .mcta { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .top:not(.solid) { background: var(--story-bg, var(--night)); }
+  .top.solid, .mcta { background: var(--paper); }
+  .stage-hint { display: block; }
+  .story.at-start .rail { opacity: 0; }
 }
 .beat .beat-title { font-size: var(--step-2); line-height: 1.12; }
 .beat .lead.closing { font-size: var(--step-1); }
@@ -467,6 +476,7 @@ footer.site a { color: #f7ece2; }
 </style>
 </head><body>
 
+<div class="safe-top" id="safe-top" aria-hidden="true"></div>
 <header class="top" id="top">
   <div class="wrap">
     <a class="logo" href="#story" aria-label="Mind Your Light — uz sākumu">MIND YOUR LIGHT</a>
@@ -486,6 +496,7 @@ footer.site a { color: #f7ece2; }
       <div class="stage-wrap" aria-hidden="true">
         <div class="stage" id="stage"></div>
         <div class="stage-fallback"></div>
+        <p class="stage-hint" aria-hidden="true">Ritini un pārvērt sveci par vāzi</p>
         <ol class="rail" id="rail">
           <li data-for="b1"><span>Aizdedz</span></li><li data-for="b2"><span>Izdedzini</span></li><li data-for="b3"><span>Nomaini</span></li><li data-for="b4"><span><span class="cm">L</span>auj uzziedēt</span></li>
         </ol>
@@ -804,6 +815,7 @@ footer.site a { color: #f7ece2; }
   var stageEl = document.getElementById('stage');
   var top = document.getElementById('top');
   var mcta = document.getElementById('mcta');
+  var safeTop = document.getElementById('safe-top');
   var beats = Array.prototype.slice.call(document.querySelectorAll('.beat'));
   var railItems = Array.prototype.slice.call(document.querySelectorAll('#rail li'));
   var root = document.documentElement;
@@ -814,13 +826,17 @@ footer.site a { color: #f7ece2; }
   function onColor(c) {
     story.style.setProperty('--story-bg', c);
     story.classList.toggle('is-day', lum(c) > 0.5);
-    root.style.setProperty('--story-bg', c);
+    // only the header and the notch strip follow the film; setting it on <html> restyled the whole page every frame
+    top.style.setProperty('--story-bg', c);
+    safeTop.style.background = c;
+    paintTop();
   }
 
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
   function smooth(e0, e1, x) { var t = clamp((x - e0) / (e1 - e0), 0, 1); return t * t * (3 - 2 * t); }
 
-  var ticking = false;
+  var ticking = false, lastBloom = '', topPast = false;
+  function paintTop() { top.style.color = topPast ? '' : (story.classList.contains('is-day') ? 'var(--ink)' : '#f7ece2'); }
   function update() {
     ticking = false;
     var vh = window.innerHeight;
@@ -832,14 +848,16 @@ footer.site a { color: #f7ece2; }
     // active beat follows the film (meta.chapters: burning 6.5 s, out 9.5 s, remnant 13.5 s, insert 16 s; scroll covers 6.5–20 s)
     var cuts = [0.06, 0.22, 0.52, 0.70, 0.86], active = 0;
     cuts.forEach(function (c, i) { if (p >= c) active = i + 1; });
-    story.style.setProperty('--bloom', smooth(0.66, 0.74, p).toFixed(3)); // phone layout only (see CSS)
+    var bloom = smooth(0.66, 0.74, p).toFixed(3); // phone layout only (see CSS)
+    if (bloom !== lastBloom) { lastBloom = bloom; story.style.setProperty('--bloom', bloom); }
     story.classList.toggle('is-bloom', active >= 4);
+    story.classList.toggle('at-start', active === 0);
     beats.forEach(function (b, i) { b.classList.toggle('on', i === active); });
     railItems.forEach(function (li, i) { li.classList.toggle('on', i + 1 === Math.min(active, 4)); }); // the closing beat stays under ĻAUJ UZZIEDĒT
 
     var past = r.bottom < 70;
     top.classList.toggle('solid', past);
-    top.style.color = past ? '' : getComputedStyle(story).color;
+    topPast = past; paintTop();
     var desk = document.getElementById('piedavajums').getBoundingClientRect();
     mcta.classList.toggle('show', r.top < -vh * 0.4 && desk.top > vh * 0.6 && active < 5); // the closing beat has its own buttons
 
