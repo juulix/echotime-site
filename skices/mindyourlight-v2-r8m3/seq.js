@@ -58,23 +58,16 @@
         }
       })();
     }
-    // keep the frames around the playhead decoded, so drawing never waits for a WebP decode
-    var bmp = [], pend = [], WIN = 12;
+    // ask the browser to decode the frames just ahead of the playhead; it keeps and evicts them itself
+    // (an ImageBitmap cache of 1080p frames ran a Retina Mac tab out of memory)
+    var decoded = [], WIN = 6;
     function warm(c) {
-      if (!window.createImageBitmap) return;
-      for (var d = 0; d <= WIN; d++) {
-        [c + d, c - d].forEach(function (i) {
-          if (i < 0 || i >= N || !loaded[i] || bmp[i] || pend[i]) return;
-          pend[i] = true;
-          var forSet = set;
-          createImageBitmap(imgs[i]).then(function (b) {
-            pend[i] = false;
-            if (forSet !== set) { b.close && b.close(); return; }
-            bmp[i] = b; if (Math.abs(i - f) < 2) dirty = true;
-          }, function () { pend[i] = false; });
-        });
+      for (var d = -WIN; d <= WIN; d++) {
+        var i = c + d;
+        if (i < 0 || i >= N || !loaded[i] || decoded[i] || !imgs[i].decode) continue;
+        decoded[i] = true;
+        imgs[i].decode().catch(function () {});
       }
-      for (var j = 0; j < N; j++) if (bmp[j] && Math.abs(j - c) > WIN * 2) { bmp[j].close && bmp[j].close(); bmp[j] = null; }
     }
     function nearest(i) {
       if (loaded[i]) return i;
@@ -108,7 +101,7 @@
         var z = opts.frame && opts.frame(f, W, H, fw, fh);
         if (z) { var s1 = z.h * H / (z.span * fh), dy1 = z.cy * H - z.mid * fh * s1; s = s + (s1 - s) * z.t; dh = fh * s; dy = dy + (dy1 - dy) * z.t; }
         var dw = fw * s, dx = (W - dw) / 2;
-        ctx.drawImage(bmp[i] || imgs[i], dx, dy, dw, dh);
+        ctx.drawImage(imgs[i], dx, dy, dw, dh);
         // feather the photo into the fill colour where it doesn't reach the edges
         var fe = Math.min(70 * dpr, dw * 0.12);
         if (dx > 0.5) {
