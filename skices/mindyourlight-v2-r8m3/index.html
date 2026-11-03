@@ -731,7 +731,7 @@ footer.site a { color: #f7ece2; }
             </div>
             <span class="err" id="q-err" role="alert"></span>
           </div>
-          <p class="quick-note">Sazināsimies, lai precizētu detaļas. Kontaktinformāciju izmantosim saziņai par pieprasījumu; pieprasījums tiek nosūtīts ar formsubmit.co starpniecību.</p>
+          <p class="quick-note">Sazināsimies, lai precizētu detaļas. Kontaktinformāciju izmantosim saziņai par pieprasījumu; pieprasījums tiek nosūtīts ar web3forms.com starpniecību.</p>
         </form>
 
         <form id="f-full" role="tabpanel" aria-labelledby="t-full" novalidate hidden>
@@ -779,7 +779,7 @@ footer.site a { color: #f7ece2; }
           <div class="field"><label for="d-date">Vēlamais saņemšanas datums</label><input id="d-date" name="date" type="date"></div>
           <div class="field"><label for="d-msg">Komentārs (neobligāts)</label><textarea id="d-msg" name="msg"></textarea></div>
           <div class="form-foot">
-            <small>Sazināsimies, lai precizētu detaļas un sagatavotu individuālu piedāvājumu. Piegādi aprēķinām atsevišķi. Pieprasījums tiek nosūtīts ar formsubmit.co starpniecību.</small>
+            <small>Sazināsimies, lai precizētu detaļas un sagatavotu individuālu piedāvājumu. Piegādi aprēķinām atsevišķi. Pieprasījums tiek nosūtīts ar web3forms.com starpniecību.</small>
             <button class="btn btn-wine" type="submit">Saņemt piedāvājumu <span class="arr" aria-hidden="true">→</span></button>
           </div>
         </form>
@@ -952,8 +952,9 @@ footer.site a { color: #f7ece2; }
     done.hidden = false; done.focus();
   }
 
-  // requests go to the owner's inbox through FormSubmit; if that fails, the same request opens as a ready e-mail
-  var INBOX = 'pece.paula@gmail.com';
+  // requests go to the owner's inbox through Web3Forms (public access key, bound to her address);
+  // if that fails, the same request opens as a ready e-mail
+  var INBOX = 'pece.paula@gmail.com', W3F_KEY = '11285eba-78ea-4092-abef-1575972ce3e9';
   var LABELS = { company: 'Uzņēmums', name: 'Kontaktpersona', contact: 'E-pasts / tālrunis', size: 'Sveču izmērs', qty: 'Daudzums', col: 'Krāsa', logo: 'Personalizācija', extra: 'Papildu komplektācija', date: 'Vēlamais saņemšanas datums', msg: 'Komentārs' };
   function collect(form) {
     var out = {};
@@ -970,11 +971,11 @@ footer.site a { color: #f7ece2; }
     if (form.querySelector('[name="_honey"]').value) { finish(okText); return; } // bots fill the hidden field
     var subject = 'Korporatīvais pieprasījums (' + kind + ') — mindyourlight landing';
     var contact = data[LABELS.contact] || '';
-    var payload = Object.assign({ _subject: subject, _template: 'table', _captcha: 'false' }, data);
+    var payload = Object.assign({ access_key: W3F_KEY, subject: subject, from_name: 'Mind Your Light korporatīvā lapa' }, data);
     var mail = contact.split(/[,;\s]+/).filter(function (x) { return emailRe.test(x); })[0];
-    if (mail) payload._replyto = mail;
+    if (mail) payload.replyto = mail;
     btn.setAttribute('aria-busy', 'true');
-    fetch('https://formsubmit.co/ajax/' + INBOX, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) })
+    fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) })
       .then(function (r) { return r.json().then(function (j) { if (!r.ok || String(j.success) !== 'true') throw new Error(j.message || r.status); }); })
       .then(function () { finish(okText); })
       .catch(function () {
