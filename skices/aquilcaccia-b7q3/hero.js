@@ -22,7 +22,7 @@ var reticle={x:0,y:0,a:0,t:0,on:false};
 var dogs=[], fb=null, phase="point", phaseT=0, pointHold=2.4, loops=0;
 var home={a:0,b:0,f:0};
 
-var INK="#070b08", INK_FAR="#141c16", RIM="rgba(255,198,132,.5)";
+var INK="#070b08", INK_FAR="#121a14", RIM="#c98f52";
 
 /* ---------------------------------------------------------------
    layout: where the text is, where the stage can live
@@ -53,13 +53,12 @@ function resize(){
   if(side){ stage.x0=tb.right+30; stage.x1=W-26; G=Math.round(H*.6); }
   else { stage.x0=8; stage.x1=W-8; G=Math.round(clamp(tb.top-18, 176, H*.6)); }
   stage.s=stage.x1-stage.x0;
-  U = side ? clamp(stage.s/9.6,50,84) : clamp(stage.s/9.2,38,60);
+  U = side ? clamp(stage.s/9.2,50,84) : clamp(stage.s/8.4,40,54);
   skyTop = side?84:66;
   if(side){ clr.a=stage.x0+stage.s*.03; clr.b=stage.x0+stage.s*.95; }
   else { clr.a=W*.1; clr.b=W*.9; }
-  home.b=stage.x0+stage.s*(side?.07:.06);
-  home.a=stage.x0+stage.s*(side?.31:.385);
-  home.f=stage.x0+stage.s*(side?.5:.6);
+  home.a=stage.x0+stage.s*(side?.2:.2);
+  home.f=stage.x0+stage.s*(side?.44:.5);
   buildLayers(); buildHill();
   stars=[]; var ns=Math.round(W*G/9000);
   for(var i=0;i<ns;i++) stars.push({x:Math.random()*W,y:Math.random()*G*.7,r:Math.random()*1.1+.2,p:Math.random()*6});
@@ -160,14 +159,14 @@ function newAmb(init){
 }
 
 /* ---------------------------------------------------------------
-   the dog: a small skeleton drawn as a backlit silhouette.
+   the dog: an English setter, drawn as one backlit silhouette
+   over a small skeleton with a flexible spine.
    Units: 1 = height at the withers. x forward, y down, 0 = ground.
    Leg angles are measured from straight down, positive = forward.
    --------------------------------------------------------------- */
-var FLN=[.27,.33,.22], HLN=[.37,.37,.31], FW=[.085,.062,.04,.034], HW=[.14,.085,.045,.036];
-var TORSO=[[.44,-.29],[.08,-.24],[-.4,-.255],[-.7,-.17],[-.76,.04],[-.56,.2],[-.24,.1],[.16,.33],[.5,.3],[.68,.04],[.62,-.2]];
+var FLN=[.27,.33,.22], HLN=[.37,.37,.31];
 function P(o){
-  var p={by:0,air:0,pitch:0,stretch:1,neck:.85,head:-.15,jaw:0,tail:-.6,ear:0,
+  var p={by:0,air:0,pitch:0,arch:0,stretch:1,neck:.85,head:-.15,jaw:0,tail:-.6,ear:0,
          fl:[-.45,.05,.12],fr:[-.38,.02,.12],hl:[.5,-.85,.05],hr:[.42,-.8,.08],ground:1};
   for(var k in o) p[k]=o[k]; return p;
 }
@@ -177,33 +176,40 @@ function mixP(a,b,t){
   return r;
 }
 var STAND=P({});
-var POINT=P({pitch:-.03,stretch:1.03,neck:.2,head:.03,tail:.1,fl:[.32,.9,-.7],fr:[-.52,-.02,.1],hl:[.3,-.95,-.12],hr:[.44,-.86,0]});
-var BACK =P({pitch:-.02,stretch:1.02,neck:.36,head:0,tail:.3,fl:[-.3,.1,.14],fr:[-.5,0,.1],hl:[.32,-.93,-.1],hr:[.46,-.84,.02]});
-var CROUCH=P({pitch:-.08,stretch:.97,neck:.3,head:.08,tail:.22,fl:[-.62,.3,.2],fr:[-.5,.22,.2],hl:[.85,-1.12,.12],hr:[.72,-1.05,.14]});
+var POINT=P({pitch:-.03,arch:-.04,stretch:1.03,neck:.2,head:.03,tail:.1,fl:[.32,.9,-.7],fr:[-.52,-.02,.1],hl:[.3,-.95,-.12],hr:[.44,-.86,0]});
+var CROUCH=P({pitch:-.08,arch:.22,stretch:.97,neck:.3,head:.08,tail:.22,fl:[-.62,.3,.2],fr:[-.5,.22,.2],hl:[.85,-1.12,.12],hr:[.72,-1.05,.14]});
 var PROUD=P({neck:1.08,head:.1,tail:.95,jaw:.3,fl:[-.4,.05,.12],fr:[-.34,.02,.12]});
-var TURN =P({stretch:.9,neck:.8,head:-.05,tail:.5,fl:[-.2,.1,.12],fr:[-.5,0,.1],hl:[.65,-.95,.1],hr:[.4,-.8,.08]});
+var TURN =P({arch:.2,stretch:.9,neck:.8,head:-.05,tail:.5,fl:[-.2,.1,.12],fr:[-.5,0,.1],hl:[.65,-.95,.1],hr:[.4,-.8,.08]});
 var LEAP=[
-  [0,  P({ground:0,by:-.04,pitch:.32,stretch:1.06,neck:.75,head:.25,jaw:.15,tail:.28,fl:[.55,1.25,-.5],fr:[.7,1.3,-.35],hl:[-.55,-1.15,-.6],hr:[-.35,-1.0,-.45]})],
-  [.26,P({ground:0,by:-.04,pitch:.44,stretch:1.09,neck:.95,head:.36,jaw:.95,tail:.1,fl:[.75,1.35,.2],fr:[.9,1.4,.4],hl:[-.7,-1.25,-.8],hr:[-.55,-1.15,-.65]})],
-  [.5, P({ground:0,by:-.04,pitch:.22,stretch:1.05,neck:1.0,head:.3,jaw:.3,tail:.02,fl:[.8,1.2,.5],fr:[.95,1.25,.6],hl:[-.45,-1.2,-.5],hr:[-.25,-1.1,-.35]})],
-  [.78,P({ground:0,by:-.04,pitch:-.28,stretch:1.0,neck:.75,head:0,jaw:.1,tail:.45,fl:[.75,.75,.65],fr:[.9,.85,.75],hl:[.5,-1.35,.2],hr:[.7,-1.3,.3]})],
-  [1,  P({ground:0,by:0,pitch:-.12,stretch:.97,neck:.7,head:.02,jaw:.1,tail:.4,fl:[.2,.25,.3],fr:[.45,.5,.5],hl:[.9,-.9,.5],hr:[1.05,-.6,.6]})]
+  [0,  P({ground:0,by:-.04,pitch:.3,arch:-.08,stretch:1.05,neck:.7,head:.22,jaw:.15,tail:.28,fl:[.55,1.25,-.5],fr:[.7,1.3,-.35],hl:[-.55,-1.15,-.6],hr:[-.35,-1.0,-.45]})],
+  [.26,P({ground:0,by:-.04,pitch:.42,arch:-.2,stretch:1.07,neck:.9,head:.34,jaw:.95,tail:.1,fl:[.75,1.35,.2],fr:[.9,1.4,.4],hl:[-.7,-1.25,-.8],hr:[-.55,-1.15,-.65]})],
+  [.5, P({ground:0,by:-.04,pitch:.2,arch:-.05,stretch:1.04,neck:.95,head:.28,jaw:.3,tail:.02,fl:[.8,1.2,.5],fr:[.95,1.25,.6],hl:[-.45,-1.2,-.5],hr:[-.25,-1.1,-.35]})],
+  [.78,P({ground:0,by:-.04,pitch:-.26,arch:.22,stretch:1.0,neck:.75,head:0,jaw:.1,tail:.45,fl:[.75,.75,.65],fr:[.9,.85,.75],hl:[.5,-1.35,.2],hr:[.7,-1.3,.3]})],
+  [1,  P({ground:0,by:0,pitch:-.12,arch:.3,stretch:.97,neck:.7,head:.02,jaw:.1,tail:.4,fl:[.2,.25,.3],fr:[.45,.5,.5],hl:[.9,-.9,.5],hr:[1.05,-.6,.6]})]
 ];
 function leapPose(t){
   for(var i=1;i<LEAP.length;i++) if(t<=LEAP[i][0]) return mixP(LEAP[i-1][1],LEAP[i][1],sst((t-LEAP[i-1][0])/(LEAP[i][0]-LEAP[i-1][0])));
   return LEAP[LEAP.length-1][1];
 }
+/* the gallop, as its four real phases: stretched in the air, on the forelegs,
+   gathered in the air, on the hind legs. Blended with a cyclic spline. */
+var GK=[
+  P({air:.13,pitch:.02,arch:-.2,stretch:1.05,neck:.3,head:-.02,jaw:.15,tail:.06,ear:.9,fl:[.95,1.0,.85],fr:[.72,.78,.65],hl:[-.8,-1.2,-.85],hr:[-.6,-1.05,-.7]}),
+  P({air:0,pitch:-.1,arch:.06,stretch:1.0,neck:.42,head:.05,jaw:.15,tail:.2,ear:.5,fl:[-.3,-.08,.1],fr:[.2,.3,.35],hl:[.3,-1.3,-.3],hr:[.05,-1.4,-.55]}),
+  P({air:.07,pitch:0,arch:.5,stretch:.94,neck:.5,head:.08,jaw:.15,tail:.36,ear:.3,fl:[-.7,-.45,-1.15],fr:[-.45,.15,-1.0],hl:[1.2,.15,.7],hr:[1.0,-.05,.5]}),
+  P({air:0,pitch:.1,arch:.1,stretch:1.0,neck:.42,head:.03,jaw:.15,tail:.25,ear:.6,fl:[.55,1.25,-.35],fr:[.3,1.1,-.5],hl:[.2,-.75,-.1],hr:[.5,-.55,.2]})
+];
+function cr(a,b,c,d,t){ return b+.5*t*(c-a+t*(2*a-5*b+4*c-d+t*(3*(b-c)+d-a))); }
+function gallop(ph){
+  var u=(((ph/TAU)%1)+1)%1*4, i=Math.floor(u)%4, t=u-Math.floor(u), a=GK[(i+3)%4], b=GK[i], c=GK[(i+1)%4], d=GK[(i+2)%4], r={}, k;
+  for(k in b){ r[k]=b[k].length?[cr(a[k][0],b[k][0],c[k][0],d[k][0],t),cr(a[k][1],b[k][1],c[k][1],d[k][1],t),cr(a[k][2],b[k][2],c[k][2],d[k][2],t)]:cr(a[k],b[k],c[k],d[k],t); }
+  r.ground=1; r.air=Math.max(0,r.air); return r;
+}
 function frontLeg(t){ var s=Math.sin(t), f=Math.pow(Math.max(0,Math.cos(t)),.8); return [-.2+.72*s+.45*f, .05+.85*s+1.15*f, .15+.7*s-.9*f]; }
 function hindLeg(t){ var s=Math.sin(t), f=Math.pow(Math.max(0,Math.cos(t)),.8); return [.3+.95*s+.3*f, -.6+.75*s-.7*f, -.05+.7*s+.35*f]; }
-function gallop(ph){
-  var tf=ph+PI*.9;
-  return {by:0,air:.05+.07*Math.max(0,Math.sin(ph*2+1.2)),pitch:.1*Math.sin(ph+1.2),stretch:1-.07*Math.sin(ph),
-    neck:.5+.08*Math.sin(ph+1),head:.05,jaw:.12,tail:.2+.18*Math.sin(ph+2),ear:.75+.4*Math.sin(ph+2.5),
-    fl:frontLeg(tf+.28),fr:frontLeg(tf-.28),hl:hindLeg(ph+.25),hr:hindLeg(ph-.25),ground:1};
-}
 function mix3(a,b,t){ return [lerp(a[0],b[0],t),lerp(a[1],b[1],t),lerp(a[2],b[2],t)]; }
 function trot(ph,k,o){
-  var p={by:0,air:.02*Math.abs(Math.sin(ph)),pitch:.015*Math.sin(ph*2),stretch:1,neck:.95,head:.05,jaw:0,tail:.8,ear:.25+.2*Math.sin(ph*2),
+  var p={by:0,air:.02*Math.abs(Math.sin(ph)),pitch:.015*Math.sin(ph*2),arch:0,stretch:1,neck:.95,head:.05,jaw:0,tail:.8,ear:.25+.2*Math.sin(ph*2),
     fl:mix3(STAND.fl,frontLeg(ph),k),hr:mix3(STAND.hr,hindLeg(ph+.2),k),fr:mix3(STAND.fr,frontLeg(ph+PI),k),hl:mix3(STAND.hl,hindLeg(ph+PI+.2),k),ground:1};
   if(o) for(var q in o) p[q]=o[q];
   return p;
@@ -215,17 +221,21 @@ function leg(o,L,a){
   return [o[0],o[1],x1,y1,x2,y2,x3,y3];
 }
 function rig(p){
-  var py=-.78+p.by, c=Math.cos(p.pitch), s=Math.sin(p.pitch), st=p.stretch;
-  function T(x,y){ x*=st; return [x*c+y*s, py-x*s+y*c]; }
+  var py=-.78+p.by, c=Math.cos(p.pitch), s=Math.sin(p.pitch), st=p.stretch, k=p.arch;
+  function T(x,y){
+    x*=st; var bx=x, by=y;
+    if(k>.002||k<-.002){ var a=k*x; bx=Math.sin(a)/k-y*Math.sin(a); by=(1-Math.cos(a))/k+y*Math.cos(a); }
+    return [bx*c+by*s, py-bx*s+by*c];
+  }
   var S=T(.36,-.02), Hp=T(-.4,-.1), NB=T(.47,-.16), TB=T(-.6,-.15), r={T:T,NB:NB,TB:TB};
   r.fl=leg(S,FLN,p.fl); r.fr=leg([S[0]+.035,S[1]-.012],FLN,p.fr);
   r.hl=leg(Hp,HLN,p.hl); r.hr=leg([Hp[0]+.045,Hp[1]-.012],HLN,p.hr);
-  var na=p.neck+p.pitch*.7; r.na=na; r.Hd=[NB[0]+.4*Math.cos(na), NB[1]-.4*Math.sin(na)];
-  var ha=p.head+p.pitch*.4; r.ha=ha; r.f=[Math.cos(ha),-Math.sin(ha)];
-  var ta=p.tail+p.pitch; r.tip=[TB[0]-.62*Math.cos(ta), TB[1]-.62*Math.sin(ta)];
+  var na=p.neck+p.pitch*.7-k*.3; r.na=na; r.Hd=[NB[0]+.4*Math.cos(na), NB[1]-.4*Math.sin(na)];
+  var ha=p.head+p.pitch*.4-k*.12; r.ha=ha; r.f=[Math.cos(ha),-Math.sin(ha)];
+  var ta=p.tail+p.pitch-k*.55; r.tip=[TB[0]-.64*Math.cos(ta), TB[1]-.64*Math.sin(ta)];
   var low=Math.max(r.fl[7],r.fr[7],r.hl[7],r.hr[7])+.035;
   r.shift=(p.ground>.5?-low:Math.min(0,-low))-(p.air||0);
-  r.mouth=[r.Hd[0]+r.f[0]*.3+r.f[1]*-.045, r.Hd[1]+r.f[1]*.3+r.f[0]*.045+.1+r.shift];
+  r.mouth=[r.Hd[0]+r.f[0]*.3-r.f[1]*.045, r.Hd[1]+r.f[1]*.3+r.f[0]*.045+.1+r.shift];
   return r;
 }
 function blob(pts){
@@ -235,88 +245,74 @@ function blob(pts){
   ctx.closePath(); ctx.fill();
 }
 /* a limb as a soft tube: joints with a radius each, skinned and smoothed */
-function tube(P,R){
-  var n=P.length, L=[], Rt=[], i, ax, ay, bx, by, l;
+function tube(Q,R){
+  var n=Q.length, L=[], Rt=[], i, ax, ay, bx, by, l;
   for(i=0;i<n;i++){
-    ax=(i>0?P[i][0]-P[i-1][0]:P[1][0]-P[0][0]); ay=(i>0?P[i][1]-P[i-1][1]:P[1][1]-P[0][1]); l=Math.sqrt(ax*ax+ay*ay)||1; ax/=l; ay/=l;
-    bx=(i<n-1?P[i+1][0]-P[i][0]:ax); by=(i<n-1?P[i+1][1]-P[i][1]:ay); l=Math.sqrt(bx*bx+by*by)||1; bx/=l; by/=l;
+    ax=(i>0?Q[i][0]-Q[i-1][0]:Q[1][0]-Q[0][0]); ay=(i>0?Q[i][1]-Q[i-1][1]:Q[1][1]-Q[0][1]); l=Math.sqrt(ax*ax+ay*ay)||1; ax/=l; ay/=l;
+    bx=(i<n-1?Q[i+1][0]-Q[i][0]:ax); by=(i<n-1?Q[i+1][1]-Q[i][1]:ay); l=Math.sqrt(bx*bx+by*by)||1; bx/=l; by/=l;
     var tx=ax+bx, ty=ay+by; l=Math.sqrt(tx*tx+ty*ty)||1; tx/=l; ty/=l;
-    var k=R[i]/Math.max(.55,ax*tx+ay*ty);
-    L.push([P[i][0]-ty*k,P[i][1]+tx*k]); Rt.push([P[i][0]+ty*k,P[i][1]-tx*k]);
+    var k=R[i]/Math.max(.6,ax*tx+ay*ty);
+    L.push([Q[i][0]-ty*k,Q[i][1]+tx*k]); Rt.push([Q[i][0]+ty*k,Q[i][1]-tx*k]);
   }
-  var e=P[n-1], d=[e[0]-P[n-2][0],e[1]-P[n-2][1]]; l=Math.sqrt(d[0]*d[0]+d[1]*d[1])||1;
+  var e=Q[n-1], d=[e[0]-Q[n-2][0],e[1]-Q[n-2][1]]; l=Math.sqrt(d[0]*d[0]+d[1]*d[1])||1;
   L.push([e[0]+d[0]/l*R[n-1],e[1]+d[1]/l*R[n-1]]);
   blob(L.concat(Rt.reverse()));
 }
 function mid(a,b,t){ return [lerp(a[0],b[0],t),lerp(a[1],b[1],t)]; }
-/* soft feathering: a smooth sliver of hair hanging off a line */
-function sliver(a,b,gx,gy,d1,d2){
-  blob([a, mid(a,b,.5), b, [lerp(a[0],b[0],.72)+gx*d2, lerp(a[1],b[1],.72)+gy*d2], [lerp(a[0],b[0],.3)+gx*d1, lerp(a[1],b[1],.3)+gy*d1]]);
-}
 function drawLeg(j,hind){
   var a=[j[0],j[1]], b=[j[2],j[3]], c=[j[4],j[5]], e=[j[6],j[7]];
   var dx=e[0]-c[0], dy=e[1]-c[1], l=Math.sqrt(dx*dx+dy*dy)||1, px=dy/l, py=-dx/l;
-  if(hind){
-    tube([a, mid(a,b,.5), b, mid(b,c,.5), c, mid(c,e,.55), e], [.17,.15,.1,.07,.05,.038,.036]);
-  } else {
-    tube([a, b, mid(b,c,.5), c, e], [.1,.07,.05,.04,.034]);
-    sliver([b[0]-px*.05,b[1]-py*.05], [c[0]-px*.03,c[1]-py*.03], -px*.8-.1,-py*.8+.5, .075,.06);
-  }
-  ctx.beginPath(); ctx.ellipse(e[0]+px*.04,e[1]+py*.04-.004,.072,.04,Math.atan2(py,px),0,TAU); ctx.fill();
+  if(hind) tube([a, mid(a,b,.5), b, mid(b,c,.45), c, mid(c,e,.55), e], [.17,.15,.1,.068,.048,.037,.035]);
+  else tube([a, b, mid(b,c,.5), c, e], [.1,.07,.05,.04,.034]);
+  ctx.beginPath(); ctx.ellipse(e[0]+px*.04,e[1]+py*.04-.004,.07,.038,Math.atan2(py,px),0,TAU); ctx.fill();
 }
+function poly(pts){ ctx.beginPath(); ctx.moveTo(pts[0][0],pts[0][1]); for(var i=1;i<pts.length;i++) ctx.lineTo(pts[i][0],pts[i][1]); ctx.closePath(); ctx.fill(); }
 function drawDog(d){
   var p=d.pose, r=rig(p), T=r.T, f=r.f, up=[f[1],-f[0]], Hd=r.Hd, NB=r.NB, TB=r.TB;
   var fs=d.face<0?-1:1, fa=Math.max(.06,Math.abs(d.face));
   function at(o,a,b,c,e){ return [o[0]+a[0]*b+c[0]*e, o[1]+a[1]*b+c[1]*e]; }
-  ctx.save(); ctx.translate(d.x, groundY(d.x)+d.jy); ctx.scale(fs*fa*d.u, d.u); ctx.translate(0,r.shift);
-  ctx.lineCap="round"; ctx.lineJoin="round";
-  // far legs
-  ctx.fillStyle=INK_FAR; drawLeg(r.fr,0); drawLeg(r.hr,1);
-  ctx.fillStyle=INK;
-  // tail: a fine, tapering line with the setter's flag of silky hair under it
+  // geometry shared by both passes
   var tx=r.tip[0]-TB[0], ty=r.tip[1]-TB[1], tl=Math.sqrt(tx*tx+ty*ty)||1; tx/=tl; ty/=tl; var nx=ty, ny=-tx; if(ny<0){ nx=-nx; ny=-ny; }
-  var t0=[TB[0]+.12,TB[1]+.02];
+  var t0=T(-.56,-.17), hang=clamp(.5+ny*.5,0,1), gx=lerp(nx,-.1,.5*hang), gy=lerp(ny,1,.5*hang);
   function tp(t,o){ return [TB[0]+tx*tl*t+nx*o, TB[1]+ty*tl*t+ny*o]; }
-  var hang=clamp(.5+ny*.5,0,1), gx=lerp(nx,-.1,.5*hang), gy=lerp(ny,1,.5*hang);
-  function fl(t,dp){ var q=tp(t,.01); return [q[0]+gx*dp,q[1]+gy*dp]; }
-  blob([[t0[0]-nx*.04,t0[1]-ny*.04], tp(.3,-.03), tp(.7,-.018), r.tip, r.tip, fl(.88,.035), fl(.7,.085), fl(.5,.12), fl(.32,.14), fl(.16,.11), [t0[0]+nx*.06,t0[1]+ny*.06]]);
-  // torso, with the mass of the shoulder and the haunch
-  blob(TORSO.map(function(q){return T(q[0],q[1])}));
-  var sh=T(.37,.03), hn=T(-.45,-.01);
-  ctx.beginPath(); ctx.ellipse(sh[0],sh[1],.19,.24,-p.pitch,0,TAU); ctx.fill();
-  ctx.beginPath(); ctx.ellipse(hn[0],hn[1],.25,.22,-p.pitch,0,TAU); ctx.fill();
-  var c1=T(.56,.16), c2=T(.12,.3); sliver(c1,c2,-.2,1,.07,.08);
-  // neck and head as one soft outline: arched neck, clear stop, long square muzzle
-  var nd=[Math.cos(r.na),-Math.sin(r.na)], nn=[nd[1],-nd[0]], nm=mid(NB,Hd,.5);
-  var nTopA=at(NB,nn,.2,nd,-.24), nTopM=at(nm,nn,.14,nd,0), sk=at(Hd,f,.0,up,.132), st=at(Hd,f,.16,up,.07), mTop=at(Hd,f,.48,up,.056);
-  blob([nTopA, nTopM, at(Hd,f,-.13,up,.09), sk, at(Hd,f,.09,up,.115), st, at(Hd,f,.3,up,.055), mTop, mTop, at(Hd,f,.512,up,.03), at(Hd,f,.505,up,-.025), at(Hd,f,.505,up,-.025),
-        at(Hd,f,.2,up,-.03), at(Hd,f,-.02,up,-.09), at(nm,nn,-.125,nd,.02), at(NB,nn,-.26,nd,.06), at(NB,nn,-.14,nd,-.3)]);
+  function fl(t,dp){ var q=tp(t,.012); return [q[0]+gx*dp,q[1]+gy*dp]; }
+  var tailPts=[[t0[0]-nx*.035,t0[1]-ny*.035], tp(.3,-.03), tp(.7,-.018), r.tip, r.tip, fl(.9,.03), fl(.72,.085), fl(.52,.125), fl(.33,.14), fl(.17,.105), [t0[0]+nx*.07,t0[1]+ny*.07]];
+  var nd=[Math.cos(r.na),-Math.sin(r.na)], nn=[nd[1],-nd[0]], nm=mid(NB,Hd,.52);
+  var mTop=at(Hd,f,.48,up,.054);
+  // one outline: croup, back, withers, arched neck, skull, stop, long square muzzle, throat, deep chest, tucked loin
+  var body=[T(-.6,-.21), T(-.42,-.255), T(-.12,-.25), T(.18,-.245), T(.4,-.295),
+    at(nm,nn,.135,nd,-.04), at(Hd,f,-.13,up,.088), at(Hd,f,0,up,.132), at(Hd,f,.09,up,.114), at(Hd,f,.16,up,.07), at(Hd,f,.3,up,.054), mTop, mTop,
+    at(Hd,f,.512,up,.028), at(Hd,f,.505,up,-.025), at(Hd,f,.505,up,-.025), at(Hd,f,.2,up,-.03), at(Hd,f,-.02,up,-.092), at(nm,nn,-.125,nd,.03),
+    T(.66,-.03), T(.68,.12), T(.5,.31), T(.2,.34), T(-.08,.22), T(-.3,.1), T(-.5,.17), T(-.71,.1), T(-.77,-.07)];
+  var sh=T(.37,.03), hn=T(-.45,-.01), ang=-p.pitch;
   var jaw=Math.max(p.jaw, d.carry?.3:0), ja=r.ha-jaw*.6, f2=[Math.cos(ja),-Math.sin(ja)], u2=[f2[1],-f2[0]], Hh=at(Hd,f,.03,up,-.02);
-  blob([at(Hh,f2,-.06,u2,.03), at(Hh,f2,.2,u2,.012), at(Hh,f2,.465,u2,.0), at(Hh,f2,.47,u2,-.035), at(Hh,f2,.41,u2,-.075), at(Hh,f2,.3,u2,-.092), at(Hh,f2,.12,u2,-.095), at(Hh,f2,-.08,u2,-.09)]);
-  // long, low-set ear with soft hair
+  var jawPts=[at(Hh,f2,-.06,u2,.03), at(Hh,f2,.2,u2,.012), at(Hh,f2,.465,u2,0), at(Hh,f2,.47,u2,-.035), at(Hh,f2,.41,u2,-.075), at(Hh,f2,.3,u2,-.09), at(Hh,f2,.12,u2,-.092), at(Hh,f2,-.08,u2,-.088)];
   var ea=p.ear+.1, ev=[-Math.sin(ea),Math.cos(ea)], en=[ev[1],-ev[0]], eb=at(Hd,f,-.07,up,.03);
-  blob([at(eb,ev,-.02,en,.07), at(eb,ev,.14,en,.095), at(eb,ev,.3,en,.06), at(eb,ev,.36,en,-.01), at(eb,ev,.27,en,-.075), at(eb,ev,.1,en,-.08), at(eb,ev,-.03,en,-.05)]);
-  // near legs
+  var earPts=[at(eb,ev,-.02,en,.07), at(eb,ev,.14,en,.095), at(eb,ev,.3,en,.06), at(eb,ev,.36,en,-.01), at(eb,ev,.27,en,-.075), at(eb,ev,.1,en,-.08), at(eb,ev,-.03,en,-.05)];
+  function trunk(){
+    blob(tailPts); blob(body);
+    ctx.beginPath(); ctx.ellipse(sh[0],sh[1],.185,.235,ang,0,TAU); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(hn[0],hn[1],.245,.215,ang,0,TAU); ctx.fill();
+  }
+  ctx.save(); ctx.translate(d.x, groundY(d.x)+d.jy); ctx.scale(fs*fa*d.u, d.u); ctx.translate(0,r.shift);
+  // far legs, a shade lighter
+  ctx.fillStyle=INK_FAR; drawLeg(r.fr,0); drawLeg(r.hr,1);
+  // the last light of the sun along the back: the same shape, a hair higher, in a warm tone
+  ctx.save(); ctx.translate(-.004,-.021); ctx.fillStyle=RIM; trunk(); ctx.restore();
+  ctx.fillStyle=INK; trunk(); blob(jawPts); blob(earPts);
   drawLeg(r.fl,0); drawLeg(r.hl,1);
   // the bird, carried: limp, head down
   if(d.carry){
     var m=at(Hd,f,.3,up,-.045), sw=.14*Math.sin(time*7+d.x*.05);
-    ctx.save(); ctx.translate(m[0],m[1]); ctx.rotate(PI*.5-.2+sw); ctx.translate(-.1,0); ctx.fillStyle="#0a0f0b";
-    ctx.beginPath(); ctx.ellipse(.14,0,.19,.092,0,0,TAU); ctx.fill();
-    ctx.beginPath(); ctx.arc(.36,.012,.066,0,TAU); ctx.fill();
-    poly([[.4,-.012],[.66,.035],[.4,.04]]);
-    poly([[.02,.03],[.2,.26],[.36,.3],[.24,.06]]);
-    poly([[-.02,-.05],[-.14,-.07],[-.13,.04]]);
+    ctx.save(); ctx.translate(m[0],m[1]); ctx.rotate(PI*.5-.12+sw); ctx.fillStyle="#0a0f0b";
+    ctx.beginPath(); ctx.ellipse(.06,0,.17,.085,0,0,TAU); ctx.fill();
+    ctx.beginPath(); ctx.arc(.27,.005,.058,0,TAU); ctx.fill();
+    poly([[.31,-.018],[.55,.02],[.31,.03]]);
+    blob([[-.06,.03],[.02,.16],[.16,.23],[.26,.2],[.17,.08],[.08,.02]]);
     ctx.restore();
   }
-  // warm light on the back, from the sun behind
-  ctx.strokeStyle=RIM; ctx.lineWidth=.02; ctx.beginPath();
-  var a=T(-.6,-.19), b=T(-.3,-.262), c=T(.1,-.246), e=T(.36,-.29), q1=tp(.5,-.035);
-  ctx.moveTo(r.tip[0],r.tip[1]); ctx.quadraticCurveTo(q1[0],q1[1],t0[0]-nx*.04,t0[1]-ny*.04); ctx.lineTo(a[0],a[1]); ctx.quadraticCurveTo(b[0],b[1],c[0],c[1]); ctx.quadraticCurveTo(e[0],e[1],nTopA[0],nTopA[1]);
-  ctx.quadraticCurveTo(nTopM[0],nTopM[1],sk[0],sk[1]); ctx.quadraticCurveTo(st[0],st[1]-.02,mTop[0],mTop[1]); ctx.stroke();
   ctx.restore();
 }
-function poly(pts){ ctx.beginPath(); ctx.moveTo(pts[0][0],pts[0][1]); for(var i=1;i<pts.length;i++) ctx.lineTo(pts[i][0],pts[i][1]); ctx.closePath(); ctx.fill(); }
 
 /* ---------------------------------------------------------------
    dog as an actor: a queue of small actions
@@ -383,9 +379,9 @@ function proudPose(t,dog){
    the scene
    --------------------------------------------------------------- */
 function resetScene(){
-  var A=new Dog(home.a,POINT), B=new Dog(home.b,BACK);
-  A.q=[hold(pointPose(POINT),Infinity)]; B.q=[hold(pointPose(BACK),Infinity)];
-  dogs=[A,B]; fb=null; phase="point"; phaseT=0; pointHold=loops?rnd(1.7,2.5):2.3;
+  var A=new Dog(home.a,POINT);
+  A.q=[hold(pointPose(POINT),Infinity)];
+  dogs=[A]; fb=null; phase="point"; phaseT=0; pointHold=loops?rnd(1.7,2.5):2.3;
   feathers=[]; puffs=[]; rings=[]; leaves=[]; drops=[]; reticle.on=false; reticle.a=0;
 }
 function flush(){
@@ -411,41 +407,37 @@ function shoot(x,y,auto){
 /* the shot connected: plan the fall so that it ends in the dog's mouth */
 var apexMouth=null;
 function startRetrieve(){
-  var A=dogs[0], B=dogs[1], b=fb;
+  var A=dogs[0], b=fb;
   if(!apexMouth) apexMouth=rig(leapPose(.5)).mouth;
   b.alive=false; b.fall=true; phase="retrieve"; phaseT=0; reticle.on=false;
   var v=side?6.6:5.4, Tl=side?.62:.58, react=.17;
   var hj=clamp((G-b.y)*.42,.55*U,1.05*U);
-  var cx=clamp(b.x+b.vx*.3, A.x+2.5*U, stage.x1-(side?2.1:1.25)*U);
+  var cx=clamp(b.x+b.vx*.3, A.x+2.5*U, stage.x1-2.1*U);
   var bodyX=cx-apexMouth[0]*U, takeX=bodyX-v*U*Tl*.5;
   if(takeX<A.x+.5*U){ takeX=A.x+.5*U; bodyX=takeX+v*U*Tl*.5; cx=bodyX+apexMouth[0]*U; }
   var Tr=1.6*(takeX-A.x)/(v*U), Tf=react+Tr+Tl*.5;
   var cy=groundY(bodyX)+apexMouth[1]*U-hj;
   if(cy<b.y+6){ hj=Math.max(.3*U, groundY(bodyX)+apexMouth[1]*U-(b.y+6)); cy=groundY(bodyX)+apexMouth[1]*U-hj; }
   b.fx0=b.x; b.fy0=b.y; b.fx1=cx; b.fy1=cy; b.ft=0; b.fT=Tf; b.spin=rnd(5,8); b.vy0=-70*b.k;
-  var landX=takeX+v*U*Tl, stopX=Math.max(landX+.4*U, Math.min(landX+1.5*U, stage.x1-.7*U));
+  var landX=takeX+v*U*Tl, stopX=Math.max(landX+.4*U, Math.min(landX+1.5*U, stage.x1-1.2*U));
   A.q=[hold(CROUCH,react,26), run(takeX,"gallop",v,"in"),
        {k:"leap",d:Tl,h:hj,dx:v*U*Tl,onApex:function(dog){ dog.carry=true; b.gone=true; burst(cx,cy,b.s,7); }},
        run(stopX,"gallop",v,"out"), turn(), run(home.a-.3*U,"trot",3.1,"io"), hold(proudPose,1.25,12),
        call(function(dog){ dog.carry=false; drops.push({x:dog.x-U*1.05,y:groundY(dog.x-U)-U*.06,a:1,s:b.s}); }),
        hold(STAND,.3,8), turn(), run(home.a,"stalk",1.15,"io"), hold(pointPose(POINT),Infinity,5)];
-  var bStop=lerp(B.x,takeX,.72), bD=Math.max(.5,Tf-.34-.12);
-  B.q=[hold(pointPose(BACK),.34), run(bStop,"gallop",5.6,"io",bD),
-       {k:"leap",d:.44,h:.42*U,dx:.25*U}, hold(STAND,.2,12), {k:"leap",d:.4,h:.3*U,dx:.1*U}, hold(STAND,.25,10),
-       turn(), run(home.b-.25*U,"trot",2.9,"io"), hold(STAND,.9,8), turn(), run(home.b,"stalk",1.1,"io"), hold(pointPose(BACK),Infinity,5)];
-  A.cur=null; B.cur=null;
+  A.cur=null;
 }
 function director(dt){
   phaseT+=dt;
   if(phase==="point"){
-    if(!RM && phaseT>pointHold && dogs[0].idleNow() && dogs[1].idleNow()) flush();
+    if(!RM && phaseT>pointHold && dogs[0].idleNow()) flush();
   } else if(phase==="flight"){
     var b=fb, k=b.k;
     b.t+=dt; b.ph+=b.f*dt;
     b.vx=lerp(60,215,sst(b.t/.6))*k*b.kx; b.vy=-lerp(330,64,sst(b.t/1.0))*k;
     if(b.y<skyTop+26) b.vy=Math.max(b.vy,0);
     b.x+=(b.vx+Math.sin(b.t*9)*22*k)*dt; b.y+=b.vy*dt; b.rot=lerp(-.55,-.12,sst(b.t/.9));
-    dogs[0].watch=dogs[1].watch=sst(b.t/.7);
+    dogs[0].watch=sst(b.t/.7);
     if(b.t>.2 && !reticle.on){ reticle.on=true; reticle.t=0; reticle.x=b.x-46*k; reticle.y=b.y+60*k; }
     if(reticle.on){
       reticle.t+=dt; reticle.a=Math.min(1,reticle.a+dt*4);
@@ -454,8 +446,8 @@ function director(dt){
     }
     if(b.x>W+60){ fb=null; phase="point"; phaseT=0; pointHold=1.2; }
   } else if(phase==="retrieve"){
-    var w=Math.max(0,dogs[0].watch-dt*1.2); dogs[0].watch=dogs[1].watch=w;
-    if(phaseT>1.2 && dogs[0].idleNow() && dogs[1].idleNow()){ phase="point"; phaseT=0; loops++; pointHold=rnd(1.7,2.5); fb=null; }
+    dogs[0].watch=Math.max(0,dogs[0].watch-dt*1.2);
+    if(phaseT>1.2 && dogs[0].idleNow()){ phase="point"; phaseT=0; loops++; pointHold=rnd(1.7,2.5); fb=null; }
   }
   if(!reticle.on) reticle.a=Math.max(0,reticle.a-dt*2.5);
   if(fb && fb.fall && !fb.gone){
@@ -517,7 +509,7 @@ function draw(){
   feathers.forEach(function(f){ ctx.save(); ctx.globalAlpha=Math.max(0,f.a); ctx.translate(f.x,f.y); ctx.rotate(f.rot); ctx.fillStyle=f.c; ctx.beginPath(); ctx.ellipse(0,0,f.r*1.8,f.r*.6,0,0,TAU); ctx.fill(); ctx.restore(); });
   ctx.drawImage(hillC,0,0,W,H);
   drops.forEach(function(d){ ctx.save(); ctx.globalAlpha=Math.min(1,d.a*1.6); ctx.translate(d.x,d.y); ctx.fillStyle="#0a0f0b"; ctx.beginPath(); ctx.ellipse(0,0,d.s*1.1,d.s*.45,0,0,TAU); ctx.fill(); ctx.beginPath(); ctx.moveTo(-d.s*1.0,-d.s*.1); ctx.lineTo(-d.s*2.3,d.s*.2); ctx.lineTo(-d.s*1.0,d.s*.15); ctx.closePath(); ctx.fill(); ctx.restore(); });
-  drawDog(dogs[1]); drawDog(dogs[0]);
+  drawDog(dogs[0]);
   leaves.forEach(function(l){ ctx.save(); ctx.globalAlpha=Math.max(0,Math.min(1,l.a*1.5)); ctx.translate(l.x,l.y); ctx.rotate(l.rot); ctx.fillStyle="#0c150e"; ctx.beginPath(); ctx.ellipse(0,0,l.r*1.7,l.r*.7,0,0,TAU); ctx.fill(); ctx.restore(); });
   puffs.forEach(function(p){ ctx.fillStyle="rgba(230,224,210,"+Math.max(0,p.a)+")"; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,TAU); ctx.fill(); });
   rings.forEach(function(r){ ctx.strokeStyle="rgba(255,230,180,"+Math.max(0,r.a)+")"; ctx.lineWidth=1.5; ctx.beginPath(); ctx.arc(r.x,r.y,r.r,0,TAU); ctx.stroke(); });
@@ -530,10 +522,10 @@ function draw(){
   }
   if(flash>0){ ctx.fillStyle="rgba(255,240,210,"+(flash*.22)+")"; ctx.fillRect(0,0,W,H); }
 }
-var raf=0;
+var raf=0, frozen=false;
 function frame(t){
   raf=0;
-  if(!running||!W){ last=0; return; }
+  if(frozen||!running||!W){ last=0; return; }
   var dt=Math.min(.05,last?(t-last)/1000:.016); last=t;
   step(dt); draw();
   if(!RM) raf=requestAnimationFrame(frame);
@@ -558,11 +550,17 @@ resize(); step(.016); draw(); kick();
 
 window.AQHero={
   relayout:relayout,
-  _:{ step:function(sec){ var n=Math.round(sec*60); for(var i=0;i<n;i++) step(1/60); draw(); },
+  _:{ freeze:function(b){ frozen=!!b; if(!b) kick(); },
+      step:function(sec){ frozen=true; var n=Math.round(sec*60); for(var i=0;i<n;i++) step(1/60); draw(); },
       info:function(){ return {W:W,H:H,G:G,U:U,side:side,stage:stage,phase:phase,phaseT:phaseT,loops:loops,dogs:dogs.map(function(d){return {x:d.x,k:d.cur&&d.cur.k,carry:d.carry}})}; },
+      strip:function(n,dt,cols,cw,ch){ frozen=true;
+        var el=document.getElementById('aqstrip'); if(!el){ el=document.createElement('canvas'); el.id='aqstrip'; el.style.cssText='position:fixed;left:0;top:0;z-index:9999;background:#000'; document.body.appendChild(el); }
+        cols=cols||4; cw=cw||U*5.2; ch=ch||U*3.6; var rows=Math.ceil(n/cols), g; el.width=Math.round(cols*cw*DPR); el.height=Math.round(rows*ch*DPR); el.style.width=(cols*cw)+'px'; el.style.height=(rows*ch)+'px'; g=el.getContext('2d');
+        for(var i=0;i<n;i++){ for(var j=0,m=Math.max(1,Math.round(dt*120));j<m;j++) step(dt/m); draw(); var dg=dogs[0], sx=dg.x-cw/2+U*.3, sy=groundY(dg.x)-ch+U*.45; g.drawImage(cv,sx*DPR,sy*DPR,cw*DPR,ch*DPR,(i%cols)*cw*DPR,Math.floor(i/cols)*ch*DPR,cw*DPR,ch*DPR); }
+      },
       poses:function(u,re){ u=u||64;
-        running=false; ctx.fillStyle="#e9b46c"; ctx.fillRect(0,0,W,H);
-        var list=[["stand",STAND],["point",POINT],["back",BACK],["crouch",CROUCH],["proud",PROUD],["turn",TURN]], i;
+        frozen=true; ctx.fillStyle="#e9b46c"; ctx.fillRect(0,0,W,H);
+        var list=[["stand",STAND],["point",POINT],["crouch",CROUCH],["proud",PROUD],["turn",TURN]], i;
         for(i=0;i<8;i++) list.push(["gallop "+i,gallop(i/8*TAU)]);
         for(i=0;i<6;i++) list.push(["trot "+i,trot(i/6*TAU,.42)]);
         for(i=0;i<=6;i++) list.push(["leap "+(i/6).toFixed(2),leapPose(i/6)]);
