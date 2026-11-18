@@ -1,0 +1,1028 @@
+<!doctype html>
+<html lang="lv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>FITOSAN PLUS – rehabilitācija Jelgavā · koncepcija</title>
+<meta name="description" content="Medicīnas centrs FITOSAN PLUS Jelgavā: rehabilitācija, fizioterapija, fizikālā terapija, ergoterapija, audiologopēds, uztura speciālists un mākslas terapija. Sākumlapas koncepcija.">
+<meta property="og:title" content="FITOSAN PLUS – rehabilitācija kustībai, runai un ikdienai">
+<meta property="og:description" content="Medicīnas centra sākumlapas koncepcija. Skici sagatavoja Echo Time.">
+<meta property="og:image" content="https://www.echotime.app/skices/fitosan-k4t9/img/og.jpg">
+<meta property="og:url" content="https://www.echotime.app/skices/fitosan-k4t9/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="lv_LV">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#EEF2F0">
+<script>
+/* Debug hook (verification only): index.html?p=0.45 jumps the story to progress 0.45; ?s=cenas jumps to a section.
+   Headless Chrome screenshots are taken from the document origin and its viewport is never narrower than 500 px,
+   so in debug mode the page shows itself inside an iframe of the requested size (override: &vw=375&vh=812)
+   and the inner copy does the scrolling. Visitors never get here: without ?p= / ?s= nothing happens. */
+(function () {
+  var q = new URLSearchParams(location.search);
+  if (!(q.has('p') || q.has('s')) || q.has('framed') || window.top !== window.self) return;
+  var headless = window.outerWidth === 0 && window.outerHeight === 0;
+  var w = +q.get('vw') || (headless && window.innerWidth === 500 ? 375 : window.innerWidth);
+  var h = +q.get('vh') || (headless ? window.innerHeight + 87 : window.innerHeight);
+  window.__fitHost = true;
+  document.documentElement.className = 'framehost';
+  document.addEventListener('DOMContentLoaded', function () {
+    var f = document.createElement('iframe');
+    f.title = 'Priekšskatījums';
+    f.src = location.pathname + location.search + '&framed=1';
+    f.style.cssText = 'position:fixed;left:0;top:0;border:0;width:' + w + 'px;height:' + h + 'px;background:#EEF2F0';
+    document.body.appendChild(f);
+  });
+})();
+</script>
+<style>html.framehost, html.framehost body { height: 100%; overflow: hidden; background: #8a8a8a; } html.framehost body > :not(iframe) { display: none !important; }</style>
+<link rel="icon" href="img/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/svg+xml" href="img/tree.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400..600&amp;family=Atkinson+Hyperlegible+Next:wght@400..700&amp;family=Radio+Canada+Big:wght@400..700&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400..600&amp;family=Atkinson+Hyperlegible+Next:wght@400..700&amp;family=Radio+Canada+Big:wght@400..700&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400..600&amp;family=Atkinson+Hyperlegible+Next:wght@400..700&amp;family=Radio+Canada+Big:wght@400..700&amp;display=swap"></noscript>
+<style>
+/* Layout: a pinned "movement record" stage (right) carries the patient's path through the centre while
+   copy scrolls (left). Below: quiet, ruled sections (services, rooms, specialists, booking, prices),
+   one dark slate block for the request form, contacts. One loud place (the stage), everything else calm.
+   Recurring motif: measuring ticks (the floor ruler of the stage). */
+:root {
+  color-scheme: light;
+  --paper: #EEF2F0;
+  --paper-2: #E2E9E6;
+  --sheet: #FBFCFB;
+  --ink: #1B2A2C;
+  --ink-soft: #46585A;
+  --slate: #495E60;          /* logo tree */
+  --slate-deep: #1F3134;
+  --red: #C2321F;            /* logo wordmark */
+  --red-deep: #A3281A;
+  --wood: #C9A06A;           /* wall bars in the centre's hall */
+  --mat: #2E8CA3;
+  --line: rgba(27, 42, 44, .16);
+  --line-dark: rgba(238, 242, 240, .18);
+
+  --display: "Radio Canada Big", "Avenir Next", "Segoe UI", Arial, sans-serif;
+  --body: "Atkinson Hyperlegible Next", "Helvetica Neue", Arial, sans-serif;
+  --mono: "Atkinson Hyperlegible Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --step--1: clamp(.88rem, .85rem + .12vw, .95rem);
+  --step-0: clamp(1.02rem, .98rem + .2vw, 1.14rem);
+  --step-1: clamp(1.18rem, 1.08rem + .45vw, 1.42rem);
+  --step-2: clamp(1.45rem, 1.25rem + 1vw, 2.05rem);
+  --step-3: clamp(1.9rem, 1.45rem + 2.2vw, 3.2rem);
+  --step-4: clamp(2.2rem, 1.5rem + 2.9vw, 3.9rem);
+
+  --hh: 68px;
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --gutter-l: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+  --maxw: 1240px;
+}
+html.big { font-size: 118%; }
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--hh); -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 var(--step-0)/1.6 var(--body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--paper); }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.06; letter-spacing: -.022em; text-wrap: balance; margin: 0; }
+p { margin: 0; text-wrap: pretty; }
+a { color: inherit; }
+img { display: block; max-width: 100%; height: auto; }
+:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; border-radius: 4px; }
+.skip { position: absolute; left: 16px; top: -80px; z-index: 100; background: var(--ink); color: #fff; padding: .7em 1em; border-radius: 6px; }
+.skip:focus { top: calc(env(safe-area-inset-top, 0px) + 8px); }
+.wrap { width: 100%; max-width: calc(var(--maxw) + 2 * 16px); margin-inline: auto; padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
+.eyebrow { font: 500 .84rem/1.3 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--slate); }
+.num { font-family: var(--display); font-weight: 600; white-space: nowrap; }
+.nowrap { white-space: nowrap; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  --b-bg: var(--red); --b-fg: #fff;
+  display: inline-flex; align-items: center; justify-content: center; gap: .65em;
+  min-height: 48px; padding: .8em 1.35em; border-radius: 10px; border: 1.5px solid transparent;
+  background: var(--b-bg); color: var(--b-fg);
+  font: 600 var(--step--1)/1.1 var(--body); letter-spacing: .01em; text-decoration: none; white-space: nowrap;
+  cursor: pointer; transition: transform .5s var(--ease-out), background-color .3s, color .3s, border-color .3s;
+}
+.btn:hover { --b-bg: var(--red-deep); transform: translateY(-2px); }
+.btn .arr { transition: transform .5s var(--ease-out); }
+.btn:hover .arr { transform: translateX(4px); }
+.btn-ghost { --b-bg: transparent; --b-fg: var(--ink); border-color: var(--ink-soft); }
+.btn-ghost:hover { --b-bg: var(--sheet); border-color: var(--ink); }
+.btn-light { --b-bg: var(--sheet); --b-fg: var(--ink); }
+.btn-light:hover { --b-bg: #fff; }
+
+/* ---------- Header ---------- */
+.top {
+  position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 50;
+  background: color-mix(in srgb, var(--paper) 86%, transparent);
+  backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  transition: box-shadow .4s;
+}
+.top.solid { box-shadow: 0 1px 0 var(--line); background: color-mix(in srgb, var(--paper) 97%, transparent); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: var(--hh); }
+.logo { display: inline-flex; align-items: center; text-decoration: none; flex: none; }
+.logo img { height: 36px; width: auto; }
+.top nav { display: flex; align-items: center; gap: clamp(10px, 1.8vw, 26px); font-size: var(--step--1); }
+.top nav a.lnk { text-decoration: none; color: var(--ink-soft); padding: .6em 0; }
+.top nav a.lnk:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 5px; }
+.top .tel { font: 600 1rem/1 var(--display); color: var(--ink); text-decoration: none; white-space: nowrap; padding: .6em 0; }
+.top .btn { min-height: 44px; padding: .7em 1.1em; }
+.call { display: none; width: 44px; height: 44px; border-radius: 10px; border: 1.5px solid var(--line); color: var(--ink); place-items: center; flex: none; }
+.call svg { width: 22px; height: 22px; }
+.call:hover { border-color: var(--ink); }
+.aa { appearance: none; min-width: 44px; min-height: 44px; border-radius: 10px; border: 1.5px solid var(--line); background: transparent; color: var(--ink); font: 600 1rem/1 var(--display); cursor: pointer; }
+.aa:hover { border-color: var(--ink); }
+.aa[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+/* ---------- Story (pinned stage) ---------- */
+.story { position: relative; }
+.story-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+.copy { grid-area: 1 / 1; position: relative; z-index: 2; padding-left: max(var(--gutter-l), calc((100vw - var(--maxw)) / 2)); padding-right: clamp(16px, 3vw, 48px); }
+.stage-wrap { grid-area: 1 / 2; align-self: start; position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+.stage { position: absolute; inset: 0; }
+.stage-fallback { position: absolute; inset: var(--hh) 0 0; display: grid; place-items: center; }
+.stage-fallback img { width: min(34%, 220px); opacity: .5; }
+.stage.mounted + .stage-fallback { display: none; }
+.stage-wrap::after { content: ""; position: absolute; inset: 0 auto 0 -1px; width: 10%; background: linear-gradient(90deg, var(--paper), transparent); pointer-events: none; }
+
+.beat { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-start; padding-block: 32px; max-width: 33rem; }
+.beat .stick { position: sticky; top: 22vh; display: grid; gap: 20px; }
+.beat h2 { font-size: var(--step-3); }
+.beat p.lead { font-size: var(--step-1); line-height: 1.45; color: var(--ink-soft); max-width: 31rem; }
+.beat .step { display: flex; align-items: center; gap: 12px; }
+.beat .step::before { content: ""; flex: 0 0 34px; height: 9px; background-image: repeating-linear-gradient(90deg, var(--red) 0 1.5px, transparent 1.5px 8px); transform-origin: left; transform: scaleX(.3); transition: transform .9s var(--ease-out); }
+.beat.on .step::before { transform: scaleX(1); }
+
+.hero { padding-top: clamp(96px, 13vh, 140px); }
+.hero .stick { top: clamp(96px, 13vh, 140px); gap: 22px; }
+.hero h1 { font-size: var(--step-4); }
+.hero h1 em { font-style: normal; color: var(--red-deep); }
+.hero .lead { font-size: var(--step-1); line-height: 1.45; color: var(--ink-soft); max-width: 30rem; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+.jump { display: flex; flex-wrap: wrap; gap: 4px 20px; font-size: var(--step--1); }
+.jump a { color: var(--ink-soft); text-underline-offset: 4px; padding: .5em 0; }
+.jump a:hover { color: var(--ink); }
+@media (min-width: 901px) { .beat.past .stick { opacity: .45; transition: opacity .5s; } }
+.specs { display: flex; flex-wrap: wrap; margin: 4px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); max-width: 31rem; }
+.specs li { flex: 1 1 0; min-width: 7rem; padding: 14px 14px 0 0; display: grid; gap: 4px; align-content: start; }
+.specs b { font: 600 var(--step-1)/1.1 var(--display); white-space: nowrap; letter-spacing: -.01em; color: var(--ink); }
+.specs span { font-size: var(--step--1); color: var(--ink-soft); line-height: 1.35; }
+.scroll-hint { display: inline-flex; align-items: center; gap: 10px; font-size: var(--step--1); color: var(--ink-soft); }
+.scroll-hint i { width: 1.5px; height: 34px; background: linear-gradient(var(--red), transparent); animation: drip 2.4s var(--ease-out) infinite; transform-origin: top; }
+@keyframes drip { 0% { transform: scaleY(0); opacity: 1 } 70% { transform: scaleY(1); opacity: 1 } 100% { transform: scaleY(1); opacity: 0 } }
+
+.fact { padding-top: 14px; border-top: 1px solid var(--line); font-size: var(--step--1); line-height: 1.5; color: var(--ink-soft); max-width: 31rem; }
+.fact b { font-weight: 600; color: var(--ink); }
+.fact a { color: var(--red-deep); font-weight: 600; text-underline-offset: 3px; }
+
+.illus { position: absolute; z-index: 3; top: 84px; left: calc(10% + 8px); margin: 0; padding: 5px 9px; border-radius: 4px; background: color-mix(in srgb, var(--paper) 88%, transparent); border: 1px solid var(--line); font: 500 .72rem/1.2 var(--mono); letter-spacing: .04em; text-transform: uppercase; color: var(--ink-soft); }
+.rail { position: absolute; right: max(24px, env(safe-area-inset-right, 0px)); bottom: 14px; z-index: 3; display: grid; grid-auto-flow: column; gap: 14px; list-style: none; margin: 0; padding: 0; }
+.rail li { display: grid; gap: 6px; font: 500 .72rem/1 var(--mono); letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; color: var(--ink-soft); transition: color .5s; }
+.rail li::before { content: ""; width: 100%; height: 1px; background: currentColor; transition: height .3s; }
+.rail li.on { color: var(--red-deep); }
+.rail li.on::before { height: 2.5px; }
+
+/* ---------- Sections ---------- */
+section.block { padding-block: clamp(72px, 9vw, 136px); position: relative; }
+section.block::before { /* measuring ticks along the top edge */
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 10px;
+  background-image: repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 8px);
+  border-top: 1px solid var(--line);
+}
+.sec-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px 48px; align-items: end; margin-bottom: clamp(32px, 5vw, 60px); }
+.sec-head h2 { font-size: var(--step-3); }
+.sec-head p { color: var(--ink-soft); max-width: 34rem; }
+.sec-head .eyebrow { grid-column: 1 / -1; }
+
+/* services */
+.services { background: var(--sheet); }
+.svc { list-style: none; margin: 0; padding: 0; border-bottom: 1px solid var(--line); }
+.svc li { display: grid; grid-template-columns: 60px minmax(0, 5fr) minmax(0, 7fr) minmax(0, 4fr); gap: 8px 28px; padding: 26px 0; border-top: 1px solid var(--line); align-items: start; }
+.svc svg { width: 52px; height: 52px; color: var(--slate); }
+.svc svg .acc { stroke: var(--red); }
+.svc h3 { font-size: var(--step-2); font-weight: 600; }
+.svc p { color: var(--ink-soft); max-width: 38rem; }
+.svc .meta { display: grid; gap: 6px; font-size: var(--step--1); color: var(--ink-soft); }
+.svc .meta b { font: 500 .8rem/1.3 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--slate); }
+.svc .meta .price { font: 600 var(--step-0)/1.25 var(--display); color: var(--ink); }
+.svc-note { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; color: var(--ink-soft); font-size: var(--step--1); }
+
+/* rooms */
+.rooms-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: clamp(16px, 2.4vw, 32px); align-items: stretch; }
+.rooms figure { margin: 0; position: relative; border-radius: 6px; overflow: hidden; background: var(--paper-2); min-height: 240px; }
+.rooms figure img { width: 100%; height: 100%; object-fit: cover; }
+.rooms figcaption { position: absolute; left: 12px; bottom: 12px; font: 500 .8rem/1.2 var(--mono); letter-spacing: .05em; text-transform: uppercase; color: #fff; background: rgba(27, 42, 44, .78); padding: 6px 9px; border-radius: 4px; }
+.rooms-note { margin-top: 24px; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 16px; align-items: center; max-width: 44rem; }
+.rooms-note svg { width: 40px; height: 40px; color: var(--slate); }
+.rooms-note p { font-size: var(--step-1); line-height: 1.4; }
+
+/* specialists */
+.people { background: var(--sheet); }
+.roster { margin: 0; display: grid; border-bottom: 1px solid var(--line); }
+.roster > div { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 6px 32px; padding: 20px 0; border-top: 1px solid var(--line); align-items: baseline; }
+.roster dt { font: 500 .84rem/1.4 var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--slate); }
+.roster dd { margin: 0; }
+.roster ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 0; }
+.roster li { font: 500 var(--step-1)/1.35 var(--display); letter-spacing: -.01em; white-space: nowrap; }
+.roster li:not(:last-child)::after { content: "·"; color: var(--red); margin: 0 .55em; }
+.roster .none { color: var(--ink-soft); font-size: var(--step--1); }
+
+/* booking steps */
+.how-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(28px, 5vw, 72px); align-items: start; }
+.path { list-style: none; margin: 0; padding: 0; counter-reset: s; display: grid; }
+.path li { counter-increment: s; display: grid; grid-template-columns: 3.2rem minmax(0, 1fr); gap: 4px 16px; padding: 22px 0; border-top: 1px solid var(--line); }
+.path li:last-child { border-bottom: 1px solid var(--line); }
+.path li::before { content: counter(s); grid-row: span 2; font: 600 var(--step-3)/1 var(--display); color: var(--red-deep); }
+.path h3 { font-size: var(--step-1); font-weight: 600; letter-spacing: -.01em; }
+.path p { color: var(--ink-soft); }
+.ask { background: var(--paper-2); border-radius: 6px; padding: clamp(20px, 3vw, 32px); display: grid; gap: 14px; }
+.ask h3 { font-size: var(--step-1); font-weight: 600; }
+.ask ul { margin: 0; padding-left: 1.1em; display: grid; gap: 8px; color: var(--ink-soft); }
+.ask .btn { justify-self: start; }
+
+/* prices */
+.prices { background: var(--sheet); }
+.price-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(20px, 3vw, 40px); align-items: start; }
+.pcard { border: 1px solid var(--line); border-radius: 6px; padding: clamp(20px, 3vw, 32px); display: grid; gap: 14px; background: var(--paper); }
+.pcard.state { background: var(--slate-deep); color: #EEF2F0; border-color: transparent; }
+.pcard h3 { font-size: var(--step-2); }
+.pcard > p { color: var(--ink-soft); font-size: var(--step--1); }
+.pcard.state > p { color: rgba(238, 242, 240, .82); }
+table.tbl { width: 100%; border-collapse: collapse; }
+.tbl th, .tbl td { text-align: left; padding: 13px 12px 13px 0; border-top: 1px solid var(--line); vertical-align: baseline; font-weight: 400; }
+.tbl td.r { text-align: right; padding-right: 0; font: 600 var(--step-0)/1.3 var(--display); white-space: nowrap; }
+.tbl small { display: block; color: var(--ink-soft); font-size: var(--step--1); line-height: 1.45; }
+.state .tbl th, .state .tbl td { border-top-color: var(--line-dark); }
+.state .tbl small { color: rgba(238, 242, 240, .78); }
+.state .tbl td.r { font-size: var(--step-2); }
+.pcard a.more { color: var(--red-deep); font-weight: 600; text-underline-offset: 3px; }
+.state :focus-visible, .desk :focus-visible, footer.site :focus-visible { outline-color: #fff; }
+
+/* ---------- Request desk ---------- */
+.desk { background: var(--slate-deep); color: #EEF2F0; overflow: hidden; }
+.desk::before { background-image: repeating-linear-gradient(90deg, var(--line-dark) 0 1px, transparent 1px 8px); border-top-color: transparent; }
+.desk-grid { position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(36px, 6vw, 96px); align-items: start; }
+.desk h2 { font-size: var(--step-3); }
+.desk .eyebrow { color: #B9CCCB; }
+.desk .intro { display: grid; gap: 22px; }
+.desk .intro p { color: rgba(238, 242, 240, .84); max-width: 30rem; }
+.bigtel { display: grid; gap: 4px; padding: 20px 0; border-block: 1px solid var(--line-dark); }
+.bigtel a { font: 600 var(--step-3)/1.05 var(--display); letter-spacing: -.02em; color: #fff; text-decoration: none; }
+.bigtel a:hover { text-decoration: underline; text-underline-offset: 6px; }
+.bigtel span { font: 500 .84rem/1.4 var(--mono); letter-spacing: .05em; text-transform: uppercase; color: #B9CCCB; }
+
+.panel { background: var(--sheet); color: var(--ink); border-radius: 10px; padding: clamp(20px, 3.4vw, 40px); }
+.tabs { display: grid; grid-template-columns: 1fr 1fr; padding: 4px; background: var(--paper-2); border-radius: 10px; margin-bottom: 26px; }
+.tabs button { appearance: none; border: 0; background: transparent; min-height: 46px; padding: .7em .8em; border-radius: 7px; font: 600 var(--step--1)/1.15 var(--body); color: var(--ink-soft); cursor: pointer; transition: background-color .3s, color .3s; }
+.tabs button[aria-selected="true"] { background: var(--sheet); color: var(--ink); box-shadow: 0 0 0 1px var(--line); }
+form { display: grid; gap: 18px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field label, .legend { font: 600 .95rem/1.3 var(--body); color: var(--ink); }
+legend { padding: 0; }
+.field label i { font-style: normal; font-weight: 400; color: var(--ink-soft); }
+.field input, .field select, .field textarea {
+  width: 100%; min-height: 50px; font: 400 1rem/1.3 var(--body); color: var(--ink);
+  background: #fff; border: 1.5px solid #6F8182; border-radius: 8px; padding: .8em .9em;
+  transition: border-color .2s, box-shadow .2s;
+}
+.field textarea { min-height: 96px; resize: vertical; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 4px rgba(73, 94, 96, .25); }
+.field .hint { font-size: .84rem; color: var(--ink-soft); }
+.field .err { font-size: .88rem; color: var(--red-deep); font-weight: 600; }
+.field.bad input { border-color: var(--red); }
+fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 10px; min-width: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { position: relative; }
+.chip input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; cursor: pointer; margin: 0; }
+.chip span { display: inline-flex; align-items: center; min-height: 44px; padding: .5em 1.05em; border: 1.5px solid #6F8182; border-radius: 999px; font-size: var(--step--1); background: #fff; transition: background-color .2s, color .2s, border-color .2s; }
+.chip input:checked + span { background: var(--slate-deep); color: #fff; border-color: var(--slate-deep); }
+.chip input:focus-visible + span { outline: 3px solid var(--red); outline-offset: 2px; }
+.form-foot { display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: center; justify-content: space-between; margin-top: 4px; }
+.form-foot small { color: var(--ink-soft); font-size: .84rem; max-width: 22rem; }
+.quick-line { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; }
+.field label.check { display: inline-flex; align-items: flex-start; gap: 10px; font: 400 var(--step--1)/1.4 var(--body); color: var(--ink-soft); text-transform: none; letter-spacing: 0; cursor: pointer; }
+.check input { width: 22px; height: 22px; min-height: 0; margin: 0; accent-color: var(--slate-deep); flex: none; }
+.check a { color: var(--red-deep); }
+.consent.bad .check { color: var(--red-deep); }
+.sketch-note { font-size: var(--step--1); line-height: 1.45; color: var(--ink); background: var(--paper-2); border-left: 3px solid var(--red); border-radius: 4px; padding: 10px 14px; margin-bottom: 8px; }
+.done { display: grid; gap: 14px; padding-block: 8px; }
+.done h3 { font-size: var(--step-2); }
+.done p { color: var(--ink-soft); }
+.done .mark { width: 54px; height: 54px; color: var(--slate); }
+.done .mark path { stroke-dasharray: 60; stroke-dashoffset: 60; animation: tick .7s .15s var(--ease-out) forwards; }
+@keyframes tick { to { stroke-dashoffset: 0; } }
+
+/* contacts */
+.contact-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--line); }
+.contact-grid > div { padding: 24px 24px 8px 0; display: grid; gap: 10px; align-content: start; }
+.contact-grid > div + div { border-left: 1px solid var(--line); padding-left: 24px; }
+.contact-grid h3 { font: 500 .84rem/1.4 var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--slate); }
+.contact-grid p, .contact-grid address { font-style: normal; font-size: var(--step-0); line-height: 1.5; overflow-wrap: anywhere; }
+.contact-grid .big { font: 600 var(--step-1)/1.25 var(--display); }
+.contact-grid a { text-underline-offset: 3px; }
+.contact-grid .links { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: var(--step--1); }
+.contact-grid .links a { color: var(--red-deep); font-weight: 600; padding: .7em 0; }
+.contact-grid p.small { font-size: var(--step--1); }
+.hours { width: 100%; border-collapse: collapse; }
+.hours th, .hours td { text-align: left; font-weight: 400; padding: 3px 0; }
+.hours td { text-align: right; white-space: nowrap; font-family: var(--display); font-weight: 500; }
+.small { font-size: var(--step--1); color: var(--ink-soft); }
+
+footer.site { background: var(--slate-deep); color: rgba(238, 242, 240, .82); font-size: var(--step--1); }
+footer.site .wrap { display: flex; flex-wrap: wrap; gap: 12px 32px; justify-content: space-between; padding-block: 28px calc(28px + env(safe-area-inset-bottom, 0px)); }
+footer.site a { color: #fff; text-underline-offset: 3px; }
+
+.mcta { display: none; }
+
+/* ---------- Responsive ---------- */
+@media (min-width: 901px) and (max-height: 800px) {
+  .hero { padding-top: 88px; }
+  .hero .stick { top: 88px; gap: 14px; }
+  .hero h1 { font-size: clamp(2rem, 1.2rem + 2.5vw, 3.2rem); }
+  .hero .lead { font-size: var(--step-0); }
+  .scroll-hint i { height: 22px; }
+}
+@media (max-width: 1180px) {
+  .top .tel { display: none; }
+  .call { display: grid; }
+  .rail { gap: 5px; }
+  .rail li { font-size: 0; gap: 0; width: 18px; transition: width .6s var(--ease-out), color .5s; }
+  .rail li::before { height: 2px; }
+  .rail li.on { width: 36px; }
+}
+@media (max-width: 900px) {
+  :root { --hh: 64px; }
+  .top nav a.lnk { display: none; }
+  .story-grid { grid-template-columns: minmax(0, 1fr); }
+  .stage-wrap { grid-area: 1 / 1; top: var(--hh); height: calc(56vh - var(--hh)); height: calc(56svh - var(--hh)); z-index: 3; background: var(--paper); box-shadow: 0 1px 0 var(--line); }
+  .stage-fallback { inset: 0; }
+  .stage-wrap::after { display: none; }
+  .copy { grid-area: 1 / 1; padding-left: var(--gutter-l); padding-right: var(--gutter-r); padding-top: 56vh; padding-top: 56svh; }
+  .beat { padding-block: 18px 36px; max-width: none; }
+  .hero { padding-top: 18px; }
+  .hero .stick { position: static; gap: 16px; }
+  .hero h1 { font-size: clamp(1.9rem, 1.2rem + 3.6vw, 2.6rem); }
+  .beat .stick { top: calc(56svh + 16px); gap: 12px; }
+  .beat h2 { font-size: var(--step-2); }
+  .beat p.lead, .hero .lead { font-size: var(--step-0); line-height: 1.5; }
+  .scroll-hint { display: none; }
+  .rail { bottom: 10px; right: var(--gutter-r); }
+  .rail li { width: 14px; }
+  .rail li.on { width: 28px; }
+  .illus { top: auto; bottom: 6px; left: var(--gutter-l); font-size: .58rem; padding: 3px 6px; }
+  .illus .long { display: none; }
+  .sec-head, .rooms-grid, .how-grid, .price-grid, .desk-grid { grid-template-columns: minmax(0, 1fr); }
+  .svc li { grid-template-columns: 48px minmax(0, 1fr); gap: 8px 16px; padding: 22px 0; }
+  .svc li > svg { grid-row: span 3; width: 40px; height: 40px; }
+  .svc li > p, .svc li > .meta { grid-column: 2; }
+  .roster > div { grid-template-columns: minmax(0, 1fr); }
+  .roster ul { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 20px; }
+  .roster li { white-space: normal; }
+  .roster li:not(:last-child)::after { content: none; }
+  .desk-grid { gap: 24px; }
+  .contact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .contact-grid > div:nth-child(3) { border-left: 0; padding-left: 0; }
+  .contact-grid > div:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .mcta {
+    display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; position: fixed; z-index: 40; left: 0; right: 0; bottom: 0;
+    padding: 10px var(--gutter-r) calc(10px + env(safe-area-inset-bottom, 0px)) var(--gutter-l);
+    background: color-mix(in srgb, var(--paper) 94%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 -1px 0 var(--line); transform: translateY(110%); transition: transform .5s var(--ease-out); visibility: hidden;
+  }
+  .mcta.show { transform: none; visibility: visible; }
+  footer.site .wrap { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+}
+@media (max-width: 560px) {
+  .logo img { height: 25px; }
+  .top .wrap { gap: 6px; }
+  .top nav { gap: 6px; }
+  .top .btn { padding: .7em .8em; }
+  .hours { max-width: none; }
+  .row, .quick-line { grid-template-columns: minmax(0, 1fr); }
+  .specs li { min-width: 5.6rem; padding-right: 10px; }
+  .specs b { font-size: 1.12rem; }
+  .ctas .btn { flex: 1 1 auto; }
+  .roster ul { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: minmax(0, 1fr); }
+  .contact-grid > div + div { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); }
+  .tbl td.r { padding-left: 8px; }
+}
+@media (max-width: 372px) { .aa { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+  .scroll-hint i { animation: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#saturs">Pāriet uz saturu</a>
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="logo" href="#story" aria-label="Medicīnas centrs FITOSAN PLUS – uz sākumu"><img src="img/logo-h.png" alt="Fitosan Plus, medicīnas centrs" width="408" height="85"></a>
+    <nav aria-label="Galvenā navigācija">
+      <a class="lnk" href="#pakalpojumi">Pakalpojumi</a>
+      <a class="lnk" href="#specialisti">Speciālisti</a>
+      <a class="lnk" href="#cenas">Cenas</a>
+      <a class="lnk" href="#kontakti">Kontakti</a>
+      <a class="tel" href="tel:+37163011748">(+371) 63011748</a>
+      <a class="call" href="tel:+37163011748" aria-label="Zvanīt reģistratūrai (+371) 63011748"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.2 3.5h3l1.600 4.200-2 1.500a12 12 0 0 0 6 6l1.500-2 4.200 1.600v3a2 2 0 0 1-2.200 2A16.5 16.5 0 0 1 4.200 5.700a2 2 0 0 1 2-2.200z"/></svg></a>
+      <button class="aa" id="aa" type="button" aria-pressed="false" aria-label="Lielāks teksts" title="Lielāks teksts">Aa</button>
+      <a class="btn" href="#pieteikums">Pieteikt vizīti</a>
+    </nav>
+  </div>
+</header>
+
+<main id="saturs">
+  <!-- ===== STORY: pinned movement record ===== -->
+  <section class="story" id="story" aria-label="Pacienta ceļš medicīnas centrā">
+    <div class="story-grid">
+      <div class="stage-wrap" aria-hidden="true">
+        <div class="stage" id="stage"></div>
+        <div class="stage-fallback"><img src="img/tree.svg" alt="" width="66" height="100"></div>
+        <p class="illus">Ilustrācija · <span class="long">mērījumu </span>skaitļi ir piemērs</p>
+        <ol class="rail" id="rail">
+          <li>Izvērtējums</li><li>Fizioterapija</li><li>Fizikālā terapija</li><li>Ergoterapija</li><li>Runa · uzturs · māksla</li><li>Pieraksts</li>
+        </ol>
+      </div>
+
+      <div class="copy">
+        <div class="beat hero on" id="b0">
+          <div class="stick">
+            <p class="eyebrow">Medicīnas centrs · Jelgava · kopš 1994. gada</p>
+            <h1>Rehabilitācija <em>kustībai, runai un ikdienai.</em></h1>
+            <p class="lead">Medicīnas centrā „FITOSAN PLUS” vienuviet strādā fizikālās un rehabilitācijas medicīnas ārsti, fizioterapeiti, ergoterapeiti, audiologopēds, uztura speciālisti un mākslas terapeiti.</p>
+            <div class="ctas">
+              <a class="btn" href="#pieteikums">Pieteikt vizīti <span class="arr" aria-hidden="true">→</span></a>
+              <a class="btn btn-ghost" href="tel:+37163011748">Zvanīt <span class="num">(+371) 63011748</span></a>
+            </div>
+            <p class="jump"><a href="#pakalpojumi">Uzreiz uz pakalpojumiem&nbsp;↓</a><a href="#cenas">Cenas&nbsp;↓</a><a href="#kontakti">Kontakti&nbsp;↓</a></p>
+            <ul class="specs" aria-label="Svarīgākais īsumā">
+              <li><b>8:00–19:00</b><span>reģistratūra darbdienās</span></li>
+              <li><b>4,00&nbsp;€</b><span>pacienta iemaksa par rehabilitācijas ārsta konsultāciju; kā maksas pakalpojums 40,00&nbsp;€</span></li>
+              <li><b>1. stāvs</b><span>rehabilitācija pacientiem ar funkcionāliem traucējumiem</span></li>
+            </ul>
+            <span class="scroll-hint"><i></i>Ritiniet un sekojiet pacienta ceļam</span>
+          </div>
+        </div>
+
+        <div class="beat" id="b1">
+          <div class="stick">
+            <p class="step eyebrow">Izvērtējums</p>
+            <h2>Vispirms ārsts izvērtē.</h2>
+            <p class="lead">Fizikālās un rehabilitācijas medicīnas ārsts novērtē veselības stāvokli un ar to saistītos funkcionālos ierobežojumus, rehabilitācijas potenciālu un motivāciju un nosaka piemērotāko pakalpojuma saņemšanas veidu.</p>
+            <p class="fact">Rehabilitāciju sniedz ārsti un funkcionālie speciālisti: konsultācijā, pie viena speciālista vai vairāku speciālistu komandā.</p>
+          </div>
+        </div>
+
+        <div class="beat" id="b2">
+          <div class="stick">
+            <p class="step eyebrow">Fizioterapija</p>
+            <h2>Stāja, gaita, līdzsvars.</h2>
+            <p class="lead">Fizioterapeits analizē stāju un gaitu, mēra kustību apjomu, izvērtē muskuļu spēku un izturību, pārbauda līdzsvaru un koordināciju.</p>
+            <p class="fact">Fizioterapeits var palīdzēt kaulu, locītavu un muskuļu saslimšanu un traumu gadījumos, kā arī nervu, sirds un asinsvadu un elpošanas sistēmas slimību gadījumā.</p>
+          </div>
+        </div>
+
+        <div class="beat" id="b3">
+          <div class="stick">
+            <p class="step eyebrow">Fizikālā terapija</p>
+            <h2>Strāva, magnētiskais lauks, ultraskaņa.</h2>
+            <p class="lead">Fizikālajā terapijā izmanto fizikālos faktorus: elektrisko, gaismas, termisko un mehānisko enerģiju. Procedūras izvēlas fizikālās un rehabilitācijas medicīnas ārsts.</p>
+            <p class="fact">Cenrādī, piemēram: amplipulsterapija, mainīgā magnētiskā lauka terapija, ultraskaņas terapija, elektroforēze. <a href="#cenas">Skatīt cenas&nbsp;→</a></p>
+          </div>
+        </div>
+
+        <div class="beat" id="b4">
+          <div class="stick">
+            <p class="step eyebrow">Ergoterapija</p>
+            <h2>Prasmes ikdienas nodarbēm.</h2>
+            <p class="lead">Ergoterapeits novērtē spēju veikt ikdienas nodarbes un palīdz apgūt vai atgūt prasmes, kas ļauj būt neatkarīgam ikdienas nodarbēs.</p>
+            <p class="fact">Ergoterapeiti arī apmāca lietot tehniskos palīglīdzekļus ikdienas aktivitātēs.</p>
+          </div>
+        </div>
+
+        <div class="beat" id="b5">
+          <div class="stick">
+            <p class="step eyebrow">Audiologopēds · uzturs · māksla</p>
+            <h2>Runa, uzturs un radoša darbošanās.</h2>
+            <p class="lead">Audiologopēds strādā ar runas, valodas, balss un rīšanas traucējumiem jebkurā vecumā. Uztura speciālists konsultē par uzturu dažādos dzīves posmos un saslimšanu gadījumā.</p>
+            <p class="fact">Mākslas terapijā nav jāprot zīmēt: tā nav privātstunda vizuālajā mākslā. Sesijas ilgums ir individuāls: <b class="nowrap">30–60 minūtes</b>.</p>
+          </div>
+        </div>
+
+        <div class="beat" id="b6">
+          <div class="stick">
+            <p class="step eyebrow">Pieraksts</p>
+            <h2>Sāciet ar zvanu reģistratūrai.</h2>
+            <p class="lead">Pieņemšana pie speciālistiem notiek tikai pēc iepriekšēja pieraksta. Reģistratūra strādā darbdienās no 8:00 līdz 19:00.</p>
+            <div class="ctas">
+              <a class="btn" href="#pieteikums">Pieteikt vizīti <span class="arr" aria-hidden="true">→</span></a>
+              <a class="btn btn-ghost" href="tel:+37163011748">Zvanīt <span class="num">(+371) 63011748</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICES ===== -->
+  <section class="block services" id="pakalpojumi">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Pakalpojumi</p>
+        <h2>Rehabilitācijas pakalpojumi vienuviet.</h2>
+        <p>Centrs specializējas rehabilitācijas pakalpojumu sniegšanā: konsultācijā, pie viena speciālista vai vairāku speciālistu komandā.</p>
+      </div>
+      <ul class="svc">
+        <li>
+          <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="5" width="28" height="34" rx="3"/><path d="M14 14h6M14 22h6M14 30h6"/><path class="acc" d="M25 14l2 2 4-4M25 22l2 2 4-4"/></svg>
+          <h3>Rehabilitācija</h3>
+          <p>Medicīniskās rehabilitācijas mērķis ir mazināt vai novērst funkcionālos ierobežojumus, kā arī novērtēt un mazināt komplikāciju risku.</p>
+          <div class="meta"><b>Sniedz</b><span>fizikālās un rehabilitācijas medicīnas ārsti un funkcionālie speciālisti</span></div>
+        </li>
+        <li>
+          <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 36V8M10 36h26"/><path d="M10 36L30 14"/><path class="acc" d="M10 18a18 18 0 0 1 12.7 5.3"/><path class="acc" d="M14.5 19.2l.6-2M18.6 21.4l1.2-1.7"/></svg>
+          <h3>Fizioterapija</h3>
+          <p>Stājas un gaitas analīze, kustību apjoma mērījumi, muskuļu funkciju izvērtējums, līdzsvara un koordinācijas testi. Metodes izmanto stājas un kustību traucējumu, sāpju, tūskas un samazinātas slodzes izturības gadījumā.</p>
+          <div class="meta"><b>Sniedz</b><span>fizioterapeiti</span></div>
+        </li>
+        <li>
+          <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22c3-9 6-9 9 0s6 9 9 0"/><path class="acc" d="M27 16a8.5 8.5 0 0 1 0 12M31.5 12a14.5 14.5 0 0 1 0 20M36 8a20.5 20.5 0 0 1 0 28"/></svg>
+          <h3>Fizikālā terapija</h3>
+          <p>Elektriskā, gaismas, termiskā un mehāniskā enerģija profilaksei un atveseļošanās procesā. Procedūras pēc veselības stāvokļa izvērtējuma izvēlas ārsts.</p>
+          <div class="meta"><b>Maksas procedūra</b><span class="price">4,50–7,00&nbsp;€</span></div>
+        </li>
+        <li>
+          <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14h20v14a7 7 0 0 1-7 7h-6a7 7 0 0 1-7-7z"/><path d="M29 18h3a4 4 0 0 1 0 8h-3"/><path class="acc" d="M14 9c0-2 2-2 2-4M21 9c0-2 2-2 2-4"/></svg>
+          <h3>Ergoterapija</h3>
+          <p>Ikdienas nodarbju, fizisko, izziņas un sazināšanās prasmju novērtēšana. Palīdz apgūt vai atgūt prasmes, pielāgoties jauniem apstākļiem un lietot tehniskos palīglīdzekļus.</p>
+          <div class="meta"><b>Sniedz</b><span>ergoterapeiti</span></div>
+        </li>
+        <li>
+          <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 33l6-20 6 20M8.4 26h7.2"/><path class="acc" d="M25 17a7 7 0 0 1 0 10M30 13a13 13 0 0 1 0 18M35 9a19 19 0 0 1 0 26"/></svg>
+          <h3>Audiologopēds</h3>
+          <p>Komunikācijas, runas, valodas, balss un rīšanas traucējumu novērtēšana, korekcija un rehabilitācija jebkurā vecumā. Arī lasīšanas un rakstīšanas traucējumu diagnostika un korekcija.</p>
+          <div class="meta"><b>Maksas nodarbība</b><span class="price">20,00&nbsp;€</span></div>
+        </li>
+        <li>
+          <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="22" cy="22" r="16"/><circle cx="22" cy="22" r="10.5"/><path class="acc" d="M22 22V11.5M22 22l9 5.4M22 22l-9.2 5"/></svg>
+          <h3>Uztura speciālists</h3>
+          <p>Konsultē par veselīga uztura pamatprincipiem, svara korekciju, uzturu grūtniecības un menopauzes laikā un diētu dažādu saslimšanu gadījumā.</p>
+          <div class="meta"><b>Maksas konsultācija</b><span class="price">25,00&nbsp;€ pirmreizēja<br>20,00&nbsp;€ atkārtota</span></div>
+        </li>
+        <li>
+          <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M37 6L21 24"/><path d="M21 24c-3-1-6 1-6.5 4.5-.3 2.2-1.5 3.5-3.5 4.5 5 1.5 10 .5 12-3 1-2 0-4.5-2-6z"/><path class="acc" d="M6 39c5-3 9 2 14-1s8-1 12 1"/></svg>
+          <h3>Mākslas terapija</h3>
+          <p>Radošs process, kurā var pateikt vairāk nekā ar vārdiem. Piemērota gan pieaugušajiem, gan bērniem; iepriekšējas zināšanas mākslā nav vajadzīgas.</p>
+          <div class="meta"><b>Sesija, individuāli</b><span class="price">30–60 minūtes</span></div>
+        </li>
+      </ul>
+      <div class="svc-note">
+        <span>Cenas no centra maksas pakalpojumu cenrāža. Ar pacienta iemaksu pieejamie pakalpojumi ir sadaļā <a href="#cenas">Cenas</a>.</span>
+        <a class="btn btn-ghost" href="#pieteikums">Pieteikt konsultāciju</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ROOMS ===== -->
+  <section class="block rooms" id="telpas">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Telpas</p>
+        <h2>Vingrošanas zāle un reģistratūra Pērnavas ielā.</h2>
+        <p>Attēlos: centra vingrošanas zāle ar zviedru sienām un vingrošanas bumbām un reģistratūra.</p>
+      </div>
+      <div class="rooms-grid">
+        <figure>
+          <img src="img/zale.jpg" alt="Vingrošanas zāle: zviedru sienas, trenažieris un vingrošanas bumbas" loading="lazy" width="1400" height="452">
+          <figcaption>Vingrošanas zāle</figcaption>
+        </figure>
+        <figure>
+          <img src="img/registratura.jpg" alt="Reģistratūras lodziņš un informācijas stends centra gaitenī" loading="lazy" width="1200" height="783">
+          <figcaption>Reģistratūra</figcaption>
+        </figure>
+      </div>
+      <div class="rooms-note">
+        <svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 36h36"/><path d="M8 36V12h28v24"/><path d="M18 36V24h8v12"/></svg>
+        <p>Pacientiem ar funkcionāliem traucējumiem rehabilitācija tiek nodrošināta pirmajā stāvā.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SPECIALISTS ===== -->
+  <section class="block people" id="specialisti">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Speciālisti</p>
+        <h2>Ārsti, funkcionālie speciālisti un māsas.</h2>
+        <p>Pieņemšana pie speciālistiem notiek tikai pēc iepriekšēja pieraksta.</p>
+      </div>
+      <dl class="roster">
+        <div><dt>Fizikālās un rehabilitācijas medicīnas ārsti</dt><dd><ul><li>Svetlana Sļadza</li><li>Vitālijs Zaharovs</li><li>Svetlana Žukova</li></ul></dd></div>
+        <div><dt>Fizioterapeiti</dt><dd><ul><li>Santa Aļekseičika</li><li>Jūlija Ščerbakova</li><li>Justīne Sproģe</li><li>Anna Kvetkovska</li><li>Agnese Sarkane</li><li>Romans Narels</li></ul></dd></div>
+        <div><dt>Ergoterapeiti</dt><dd><ul><li>Elvīra Smirnova</li><li>Vita Metuma</li><li>Aleksandra Zubova</li></ul></dd></div>
+        <div><dt>Uztura speciālisti</dt><dd><ul><li>Olga Ļubina</li><li>Alīna Kirillova</li><li>Antoņina Osokina</li><li>Valērija Orlova</li></ul></dd></div>
+        <div><dt>Audiologopēds</dt><dd><span class="none">Pieņem pēc pieraksta reģistratūrā.</span></dd></div>
+        <div><dt>Mākslas terapeiti</dt><dd><ul><li>Ieva Tihonova</li><li>Kristīne Kirfa</li></ul></dd></div>
+        <div><dt>Fizikālās terapijas māsas</dt><dd><ul><li>Ina Grietēna</li><li>Mārīte Āboltiņa</li></ul></dd></div>
+        <div><dt>Ambulatorās medicīnas māsas</dt><dd><ul><li>Mārīte Āboltiņa</li><li>Rūta Jūrkalne</li><li>Sņežana Savostjanova</li></ul></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ===== HOW TO BOOK ===== -->
+  <section class="block how" id="ka-pieteikties">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Kā pieteikties</p>
+        <h2>No zvana līdz nodarbībai.</h2>
+        <p>Pie speciālistiem pieņem tikai ar iepriekšēju pierakstu, tāpēc pirmais solis vienmēr ir reģistratūra.</p>
+      </div>
+      <div class="how-grid">
+        <ol class="path">
+          <li><h3>Piesakiet vizīti</h3><p>Zvaniet reģistratūrai <a href="tel:+37163011748" class="num">(+371) 63011748</a> darbdienās no 8:00 līdz 19:00 vai atstājiet pieteikumu šajā lapā.</p></li>
+          <li><h3>Ārsta konsultācija</h3><p>Rehabilitācijas gadījumā fizikālās un rehabilitācijas medicīnas ārsts izvērtē veselības stāvokli un nozīmē piemērotos pakalpojumus. Pieteikumā var izvēlēties arī uztura speciālista vai audiologopēda konsultāciju.</p></li>
+          <li><h3>Nodarbības un procedūras</h3><p>Pēc ārsta nozīmējuma: fizioterapija, ergoterapija, fizikālās terapijas procedūras, uztura speciālista konsultācijas, audiologopēda un mākslas terapeita nodarbības.</p></li>
+        </ol>
+        <aside class="ask" aria-labelledby="ask-h">
+          <h3 id="ask-h">Ko pajautāt reģistratūrai</h3>
+          <ul>
+            <li>Vai jūsu gadījumā vajadzīgs nosūtījums?</li>
+            <li>Kas jāņem līdzi uz pirmo vizīti?</li>
+            <li>Vai jums pienākas atbrīvojums no pacienta iemaksas?</li>
+          </ul>
+          <a class="btn btn-ghost" href="tel:+37163011748">Zvanīt reģistratūrai</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRICES ===== -->
+  <section class="block prices" id="cenas">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Cenas</p>
+        <h2>Ar pacienta iemaksu vai kā maksas pakalpojums.</h2>
+        <p>Centram ir noslēgts līgums ar Nacionālo veselības dienestu. Zemāk ir izvilkums no centra cenrāža.</p>
+      </div>
+      <div class="price-grid">
+        <div class="pcard state">
+          <h3>Pacienta iemaksa</h3>
+          <table class="tbl">
+            <tbody>
+              <tr><th scope="row">Fizikālās un rehabilitācijas medicīnas ārsta konsultācija</th><td class="r">4,00&nbsp;€</td></tr>
+              <tr><th scope="row">Multifunkcionālā rehabilitācija, par katru dienu<small>Pēc ārsta nozīmējuma ietver fizioterapiju, ergoterapiju, fizikālās terapijas procedūras, uztura speciālista konsultācijas, audiologopēda un mākslas terapeita nodarbības, injekcijas.</small></th><td class="r">7,00&nbsp;€</td></tr>
+            </tbody>
+          </table>
+          <p>Par atbrīvojumu no pacienta iemaksas jautājiet reģistratūrā.</p>
+        </div>
+        <div class="pcard">
+          <h3>Maksas pakalpojumi</h3>
+          <table class="tbl">
+            <tbody>
+              <tr><th scope="row">Fizikālās un rehabilitācijas medicīnas ārsta konsultācija</th><td class="r">40,00&nbsp;€</td></tr>
+              <tr><th scope="row">Uztura speciālista konsultācija, pirmreizēja</th><td class="r">25,00&nbsp;€</td></tr>
+              <tr><th scope="row">Uztura speciālista konsultācija, atkārtota</th><td class="r">20,00&nbsp;€</td></tr>
+              <tr><th scope="row">Audiologopēda nodarbība</th><td class="r">20,00&nbsp;€</td></tr>
+              <tr><th scope="row">Ultraskaņas terapija, 1 lauks</th><td class="r">7,00&nbsp;€</td></tr>
+              <tr><th scope="row">Amplipulsterapija (SMS)</th><td class="r">5,50&nbsp;€</td></tr>
+              <tr><th scope="row">Mainīgā magnētiskā lauka terapija</th><td class="r">5,00&nbsp;€</td></tr>
+              <tr><th scope="row">Elektroforēze</th><td class="r">5,00&nbsp;€</td></tr>
+            </tbody>
+          </table>
+          <p>Cenrādī ir arī citas fizikālās terapijas procedūras un injekcijas. <a class="more" href="https://www.fitosan.lv/medicinas-pakalpojumu-cenas" target="_blank" rel="noopener">Pilns cenrādis fitosan.lv&nbsp;↗</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== REQUEST DESK ===== -->
+  <section class="block desk" id="pieteikums">
+    <div class="wrap desk-grid">
+      <div class="intro">
+        <p class="eyebrow">Pieteikt vizīti</p>
+        <h2>Atstājiet tālruņa numuru. Reģistratūra piezvanīs un vienosies par laiku.</h2>
+        <p>Pietiek ar tālruņa numuru. Cilnē „Detalizēti” varat norādīt arī pakalpojumu un sev ērtāko laiku.</p>
+        <div class="bigtel">
+          <span>Vai zvaniet paši · darbdienās 8:00–19:00</span>
+          <a href="tel:+37163011748">(+371) 63011748</a>
+        </div>
+      </div>
+
+      <div class="panel" id="panel">
+        <div class="tabs" role="tablist" aria-label="Pieteikuma veids">
+          <button type="button" role="tab" id="t-quick" aria-selected="true" aria-controls="p-quick">Ātri: atzvaniet man</button>
+          <button type="button" role="tab" id="t-full" aria-selected="false" aria-controls="p-full">Detalizēti</button>
+        </div>
+
+        <div id="p-quick" role="tabpanel" aria-labelledby="t-quick"><form id="f-quick" novalidate>
+          <div class="field">
+            <p class="sketch-note"><b>Šī ir lapas skice:</b> forma pieteikumu pagaidām nekur nenosūta.</p>
+            <label for="q-contact">Tālrunis</label>
+            <div class="quick-line">
+              <input id="q-contact" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+371" required aria-describedby="q-err">
+              <button class="btn" type="submit">Lūgt atzvanīt <span class="arr" aria-hidden="true">→</span></button>
+            </div>
+            <span class="err" id="q-err" role="alert"></span>
+          </div>
+          <div class="consent field">
+            <label class="check"><input type="checkbox" id="q-ok" required aria-describedby="q-ok-err"><span>Piekrītu, ka centrs izmanto manu tālruņa numuru saziņai par vizīti. <a href="https://www.fitosan.lv/privatuma-politika" target="_blank" rel="noopener">Privātuma politika</a></span></label>
+            <span class="err" id="q-ok-err" role="alert"></span>
+          </div>
+        </form></div>
+
+        <div id="p-full" role="tabpanel" aria-labelledby="t-full" hidden><form id="f-full" novalidate>
+          <div class="row">
+            <div class="field"><label for="d-name">Vārds, uzvārds</label><input id="d-name" name="name" autocomplete="name" required aria-describedby="d-name-err"><span class="err" id="d-name-err" role="alert"></span></div>
+            <div class="field"><label for="d-phone">Tālrunis</label><input id="d-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+371" required aria-describedby="d-phone-err"><span class="err" id="d-phone-err" role="alert"></span></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="d-svc">Pakalpojums</label>
+              <select id="d-svc" name="service"><option>Rehabilitologa konsultācija</option><option>Uztura speciālista konsultācija</option><option>Audiologopēda konsultācija</option><option>Cits vai vēl nezinu</option></select></div>
+            <div class="field"><label for="d-email">E-pasts <i>(nav obligāts)</i></label><input id="d-email" name="email" type="email" autocomplete="email" aria-describedby="d-email-err"><span class="err" id="d-email-err" role="alert"></span></div>
+          </div>
+          <fieldset>
+            <legend class="legend">Kad ērtāk</legend>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="when" value="rits"><span>Rīta pusē</span></label>
+              <label class="chip"><input type="checkbox" name="when" value="diena"><span>Dienas vidū</span></label>
+              <label class="chip"><input type="checkbox" name="when" value="vakars"><span>Pēcpusdienā</span></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend class="legend">Apmaksa</legend>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="pay" value="iemaksa"><span>Ar pacienta iemaksu</span></label>
+              <label class="chip"><input type="radio" name="pay" value="maksas"><span>Maksas pakalpojums</span></label>
+              <label class="chip"><input type="radio" name="pay" value="nezinu" checked><span>Nezinu</span></label>
+            </div>
+          </fieldset>
+          <div class="field"><label for="d-msg">Komentārs <i>(nav obligāts)</i></label><textarea id="d-msg" name="msg" aria-describedby="d-msg-hint"></textarea><span class="hint" id="d-msg-hint">Lūdzu, nerakstiet šeit diagnozes un citus veselības datus: par tiem parunāsim pa tālruni vai vizītē.</span></div>
+          <div class="consent field">
+            <label class="check"><input type="checkbox" id="d-ok" required aria-describedby="d-ok-err"><span>Piekrītu, ka centrs izmanto manus datus saziņai par vizīti. <a href="https://www.fitosan.lv/privatuma-politika" target="_blank" rel="noopener">Privātuma politika</a></span></label>
+            <span class="err" id="d-ok-err" role="alert"></span>
+          </div>
+          <p class="sketch-note"><b>Šī ir lapas skice:</b> forma pieteikumu pagaidām nekur nenosūta.</p>
+          <div class="form-foot">
+            <small>Reģistratūra sazināsies, lai vienotos par laiku.</small>
+            <button class="btn" type="submit">Nosūtīt pieteikumu <span class="arr" aria-hidden="true">→</span></button>
+          </div>
+        </form></div>
+
+        <div class="done" id="done" hidden tabindex="-1">
+          <svg class="mark" viewBox="0 0 54 54" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="27" cy="27" r="24" opacity=".35"/><path d="M16 28l8 8 15-17"/></svg>
+          <h3>Paldies, pieteikums ir aizpildīts.</h3>
+          <p id="done-text">Reģistratūra sazināsies ar jums.</p>
+          <p><b>Šī ir skice:</b> šajā versijā pieteikums vēl netiek nosūtīts. Lai pieteiktos tagad, zvaniet <a href="tel:+37163011748" class="num">(+371) 63011748</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACTS ===== -->
+  <section class="block contacts" id="kontakti">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Kontakti</p>
+        <h2>Pērnavas iela&nbsp;4F, Jelgava.</h2>
+        <p>Reģistratūra strādā darbdienās. Sestdienās un svētdienās centrs ir slēgts.</p>
+      </div>
+      <div class="contact-grid">
+        <div>
+          <h3>Adrese</h3>
+          <address>Pērnavas iela&nbsp;4F<br>Jelgava, LV-3004</address>
+          <p class="links"><a href="https://www.google.com/maps/place/Fitosan+Plus+Sia/@56.6685898,23.7582349,15z/data=!4m5!3m4!1s0x0:0x6074ee00e1f86f9b!8m2!3d56.6685898!4d23.7582349" target="_blank" rel="noopener">Google Maps&nbsp;↗</a><a href="https://www.waze.com/ul?ll=56.6685898,23.7582349&amp;navigate=yes" target="_blank" rel="noopener">Waze&nbsp;↗</a></p>
+        </div>
+        <div>
+          <h3>Reģistratūra</h3>
+          <p class="big"><a href="tel:+37163011748">(+371) 63011748</a></p>
+          <p><a href="mailto:fitosanplus@inbox.lv">fitosanplus@inbox.lv</a></p>
+        </div>
+        <div>
+          <h3>Darba laiks</h3>
+          <table class="hours">
+            <tbody>
+              <tr><th scope="row">Darbdienās</th><td>8:00–19:00</td></tr>
+              <tr><th scope="row">Sestdienās</th><td>slēgts</td></tr>
+              <tr><th scope="row">Svētdienās</th><td>slēgts</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h3>Rekvizīti</h3>
+          <p class="small">Medicīnas centrs SIA „FITOSAN PLUS”<br>Reģ. Nr. 50003265661<br>Ārstniecības iestādes kods 090065207</p>
+          <p class="links"><a href="https://www.facebook.com/Medic%C4%ABnas-centrs-Fitosan-Plus-SIA-127040081305002/" target="_blank" rel="noopener">Facebook&nbsp;↗</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>Medicīnas centrs „FITOSAN PLUS” · Koncepciju sagatavoja Echo Time, saturs vēl saskaņojams</span>
+    <a href="https://www.fitosan.lv/privatuma-politika" target="_blank" rel="noopener">Privātuma politika&nbsp;↗</a>
+  </div>
+</footer>
+
+<div class="mcta" id="mcta"><a class="btn btn-ghost" href="tel:+37163011748">Zvanīt</a><a class="btn" href="#pieteikums">Pieteikt vizīti <span class="arr" aria-hidden="true">→</span></a></div>
+
+<script src="stage.js"></script>
+<script>
+(function () {
+  if (window.__fitHost) return;
+  var story = document.getElementById('story');
+  var stageEl = document.getElementById('stage');
+  var top = document.getElementById('top');
+  var mcta = document.getElementById('mcta');
+  var beats = Array.prototype.slice.call(document.querySelectorAll('.beat'));
+  var railItems = Array.prototype.slice.call(document.querySelectorAll('#rail li'));
+  var stage = null;
+
+  try {
+    if (window.FITStage) { stage = window.FITStage.mount(stageEl); stageEl.classList.add('mounted'); }
+  } catch (e) { console.error(e); }
+
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+
+  // text beats switch on the same thresholds as the stage timeline (see stage.js header / PLAN.md)
+  var cuts = (window.FITStage && window.FITStage.CUTS) || [0.10, 0.26, 0.44, 0.58, 0.72, 0.87];
+
+  // Size the beats from the stage cuts: when p reaches cuts[k], beat k+1's heading has just arrived
+  // (desktop: mid-viewport; phones: right below the pinned stage) and then sticks.
+  // The story keeps a fixed total length (STORY_VH), so every scroll pixel maps to the same p.
+  var STORY_VH = 8;
+  var sized = { w: 0, h: 0 };
+  function isPhone() { return window.matchMedia('(max-width: 900px)').matches; }
+  function sizeBeats(force) {
+    var vh = window.innerHeight, w = window.innerWidth;
+    if (!force && w === sized.w && Math.abs(vh - sized.h) < 120) return; // ignore mobile URL-bar jitter
+    sized.w = w; sized.h = vh;
+    beats.forEach(function (b) { b.style.minHeight = '0px'; });
+    var phone = isPhone();
+    var wrap = document.querySelector('.stage-wrap');
+    var stageBottom = wrap.offsetHeight + (phone ? parseFloat(getComputedStyle(wrap).top) || 64 : 0);
+    var storyTop = story.getBoundingClientRect().top;
+    var top0 = beats[0].getBoundingClientRect().top - storyTop;
+    var storyH = top0 + STORY_VH * vh;
+    var range = storyH - vh;
+    var y = top0, heights = [];
+    for (var k = 0; k < beats.length - 1; k++) {
+      var b = beats[k], st = b.querySelector('.stick') || b, bs = getComputedStyle(b);
+      var nextLead = parseFloat(getComputedStyle(beats[k + 1]).paddingTop);
+      var arrive = phone ? stageBottom + (vh - stageBottom) * 0.6   // phones: the new beat is still entering at the cut, so text and stage change together
+        : Math.min(vh * 0.84, Math.max(vh * 0.5, st.offsetHeight + parseFloat(bs.paddingBottom) + nextLead + 60));
+      var nextTop = cuts[k] * range + arrive - nextLead;
+      var h = Math.max(nextTop - y, st.offsetHeight + parseFloat(bs.paddingTop) + parseFloat(bs.paddingBottom));
+      heights.push(h); y += h;
+    }
+    heights.push(Math.max(storyH - y, vh * 0.9));
+    beats.forEach(function (b, i) { b.style.minHeight = Math.round(heights[i]) + 'px'; });
+  }
+
+  function progress() {
+    var vh = window.innerHeight, r = story.getBoundingClientRect();
+    return clamp(-r.top / Math.max(1, r.height - vh), 0, 1);
+  }
+  var ticking = false;
+  var desk = document.getElementById('pieteikums');
+  function update() {
+    ticking = false;
+    var vh = window.innerHeight, r = story.getBoundingClientRect();
+    var p = progress();
+    if (stage) stage.setProgress(p);
+
+    var active = 0;
+    cuts.forEach(function (c, i) { if (p >= c) active = i + 1; });
+    beats.forEach(function (b, i) { b.classList.toggle('on', i === active); b.classList.toggle('past', i < active); });
+    railItems.forEach(function (li, i) { li.classList.toggle('on', i + 1 === active); });
+
+    top.classList.toggle('solid', r.bottom < 70);
+    var d = desk.getBoundingClientRect();
+    mcta.classList.toggle('show', r.bottom < vh * 0.6 && (d.top > vh * 0.75 || d.bottom < vh * 0.25));
+    if (stage && stage.setPaused) stage.setPaused(r.bottom < 0 || r.top > vh);
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function () { sizeBeats(); onScroll(); });
+
+  // Debug hook: index.html?p=0.45 jumps the story to that progress (headless screenshots, reviews).
+  var qp = new URLSearchParams(location.search).get('p');
+  var debugP = qp === null || isNaN(parseFloat(qp)) ? null : clamp(parseFloat(qp), 0, 1);
+  function jump(p) {
+    document.documentElement.style.scrollBehavior = 'auto';
+    var topY = story.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo(0, Math.round(topY + p * (story.offsetHeight - window.innerHeight)));
+    if (stage && stage.seek) stage.seek(p, 3);
+    update();
+  }
+  var qs = new URLSearchParams(location.search).get('s');
+  function jumpSection() {
+    var el = qs && document.getElementById(qs); if (!el) return;
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(0, Math.round(el.getBoundingClientRect().top + window.scrollY + (+new URLSearchParams(location.search).get('dy') || 0)));
+    update();
+  }
+  sizeBeats(true);
+  if (debugP !== null) jump(debugP); else if (qs) jumpSection(); else update();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () {
+    sizeBeats(true);
+    if (debugP !== null) jump(debugP); else if (qs) jumpSection(); else onScroll();
+  });
+
+  // ---------- Larger text ----------
+  var aa = document.getElementById('aa');
+  function setBig(on) {
+    document.documentElement.classList.toggle('big', on);
+    aa.setAttribute('aria-pressed', String(on));
+    try { localStorage.setItem('fit-big', on ? '1' : '0'); } catch (e) {}
+    sizeBeats(true); onScroll();
+  }
+  aa.addEventListener('click', function () { setBig(aa.getAttribute('aria-pressed') !== 'true'); });
+  try { if (localStorage.getItem('fit-big') === '1' && debugP === null) setBig(true); } catch (e) {}
+
+  // ---------- Tabs ----------
+  function tabset(tabs, panels) {
+    function select(i) {
+      tabs.forEach(function (t, j) { t.setAttribute('aria-selected', String(i === j)); t.tabIndex = i === j ? 0 : -1; });
+      panels.forEach(function (p, j) { p.hidden = i !== j; });
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { select(i); });
+      t.addEventListener('keydown', function (e) {
+        var next = (i + 1) % tabs.length, prev = (i + tabs.length - 1) % tabs.length;
+        var n = { ArrowRight: next, ArrowDown: next, ArrowLeft: prev, ArrowUp: prev, Home: 0, End: tabs.length - 1 }[e.key];
+        if (n !== undefined) { e.preventDefault(); select(n); tabs[n].focus(); }
+      });
+    });
+    select(0);
+    return select;
+  }
+  var forms = [document.getElementById('f-quick'), document.getElementById('f-full')];
+  var panels = [document.getElementById('p-quick'), document.getElementById('p-full')];
+  var selectForm = tabset([document.getElementById('t-quick'), document.getElementById('t-full')], panels);
+  if (/[?&]form=full/.test(location.search)) selectForm(1);
+
+  // ---------- Form (sketch: validates, shows the success state, sends nothing) ----------
+  var done = document.getElementById('done');
+  var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  function isPhoneNo(v) { return /^\+?[\d\s()-]+$/.test(v) && v.replace(/\D/g, '').length >= 8; }
+  function consentOk(id) {
+    var box = document.getElementById(id), ok = box.checked;
+    box.closest('.consent').classList.toggle('bad', !ok);
+    box.setAttribute('aria-invalid', String(!ok));
+    document.getElementById(id + '-err').textContent = ok ? '' : 'Lai nosūtītu pieteikumu, atzīmējiet piekrišanu.';
+    if (!ok) box.focus();
+    return ok;
+  }
+  function setErr(input, msg) {
+    input.closest('.field').classList.toggle('bad', !!msg);
+    input.setAttribute('aria-invalid', String(!!msg));
+    document.getElementById(input.getAttribute('aria-describedby')).textContent = msg || '';
+  }
+  function finish(text) {
+    panels.forEach(function (f) { f.hidden = true; });
+    document.querySelector('.tabs').hidden = true;
+    document.getElementById('done-text').textContent = text;
+    done.hidden = false; done.focus();
+  }
+  forms[0].addEventListener('submit', function (e) {
+    e.preventDefault();
+    var input = document.getElementById('q-contact'), v = input.value.trim(), ok = isPhoneNo(v);
+    setErr(input, ok ? '' : 'Ierakstiet tālruņa numuru (vismaz 8 cipari).');
+    if (!ok) { input.focus(); return; }
+    if (!consentOk('q-ok')) return;
+    finish('Reģistratūra zvanītu uz ' + v + ', lai vienotos par vizītes laiku.');
+  });
+  forms[1].addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('d-name'), phone = document.getElementById('d-phone'), email = document.getElementById('d-email');
+    var okN = !!name.value.trim(), okP = isPhoneNo(phone.value.trim()), ev = email.value.trim(), okE = !ev || emailRe.test(ev);
+    setErr(name, okN ? '' : 'Ierakstiet vārdu un uzvārdu.');
+    setErr(phone, okP ? '' : 'Ierakstiet tālruņa numuru (vismaz 8 cipari).');
+    setErr(email, okE ? '' : 'Pārbaudiet e-pasta adresi (vards@piemers.lv).');
+    if (!okN) { name.focus(); return; }
+    if (!okP) { phone.focus(); return; }
+    if (!okE) { email.focus(); return; }
+    if (!consentOk('d-ok')) return;
+    finish('Reģistratūra zvanītu uz ' + phone.value.trim() + ', lai vienotos par vizītes laiku.');
+  });
+})();
+</script>
+</body>
+</html>
