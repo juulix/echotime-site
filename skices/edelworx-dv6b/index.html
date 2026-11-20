@@ -62,8 +62,10 @@ p{margin:0}
 
 /* hero */
 .hero{padding-top:var(--head)}
-.hero figure{margin:0;height:min(46svh,520px);overflow:hidden;position:relative;background:#000}
-.hero figure img{width:100%;height:100%;object-fit:cover;object-position:50% 54%}
+.hero figure{margin:0;height:min(52svh,600px);overflow:hidden;position:relative;background:#000}
+.hero figure::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.28) 50%,transparent 62%);mix-blend-mode:screen;transform:translateX(-90%);animation:sweep 2.6s .3s cubic-bezier(.3,.1,.2,1) forwards}
+@keyframes sweep{to{transform:translateX(90%)}}
+.hero figure img{width:100%;height:112%;object-fit:cover;object-position:50% 54%;will-change:transform}
 .hero figure::after{content:"";position:absolute;inset:auto 0 0 0;height:3px;background:var(--tint)}
 .hero .body{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(24px,5vw,72px);align-items:end;padding-block:clamp(28px,5svh,56px) clamp(36px,6svh,72px)}
 .hero h1{font-size:clamp(2.5rem,6.6vw,5.6rem)}
@@ -82,14 +84,14 @@ html[lang="de"] .hero h1{font-size:clamp(2.1rem,5.2vw,4.4rem)}
 .beat .mats li{font:500 12px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--rule);padding:9px 11px;border-radius:2px;color:var(--ink)}
 .stage{position:relative;overflow:hidden;background:#050505;aspect-ratio:4/3}
 .plate{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:62% 50%;will-change:transform}
-.plate img,.plate svg{position:absolute;inset:0;width:100%;height:100%}
+.plate img,.plate svg,.plate canvas{position:absolute;inset:0;width:100%;height:100%}
+.plate canvas{pointer-events:none;mix-blend-mode:screen}
 .plate .grey{filter:grayscale(1) brightness(var(--gb,.6)) contrast(1.08)}
 .plate .colour{opacity:0}
 .plate svg{overflow:visible}
 .plate svg *{fill:none;stroke:var(--draw);stroke-width:1.6;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round}
 .plate svg .d{stroke-dasharray:1;stroke-dashoffset:1}
 .plate svg .thin{stroke-width:1;opacity:.75}
-.plate svg text{fill:var(--draw);stroke:none;font:500 22px var(--mono);letter-spacing:.06em;opacity:0}
 .arc{position:absolute;width:44%;aspect-ratio:1;translate:-50% -50%;border-radius:50%;pointer-events:none;opacity:0;mix-blend-mode:screen;
   background:radial-gradient(closest-side,#fff 0 3%,#cfe4ff 7%,rgba(120,170,255,.55) 16%,rgba(90,110,230,.18) 38%,transparent 70%)}
 .finale{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:42% 58%;opacity:0;will-change:opacity,transform}
@@ -102,12 +104,44 @@ html[lang="de"] .hero h1{font-size:clamp(2.1rem,5.2vw,4.4rem)}
 
 /* pinned mode: only when JS runs */
 .js .story{height:calc(100svh + 280vh)}
-.js .pin{position:sticky;top:0;height:100svh;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr)}
+.js .pin{position:sticky;top:0;height:100svh;display:grid;grid-template-columns:minmax(0,1fr)}
 .js .beats{display:grid;align-items:center;padding-top:var(--head)}
 .js .beat{grid-area:1/1;opacity:0;transform:translateY(14px);transition:opacity .45s,transform .45s;pointer-events:none;padding-inline:max(24px,calc((100vw - 1240px)/2 + var(--pad))) clamp(24px,4vw,56px)}
 .js .beat.on{opacity:1;transform:none;pointer-events:auto}
 .js .stage{aspect-ratio:auto;height:100%}
 .js .rail{display:block}
+
+@media (min-width:901px){
+  .js .stage,.js .beats{grid-area:1/1}
+  .js .beats{z-index:2;align-items:end;padding:0 0 92px;pointer-events:none;
+    background:linear-gradient(90deg,rgba(7,7,8,.86) 0,rgba(7,7,8,.6) 30%,rgba(7,7,8,0) 58%),linear-gradient(0deg,rgba(7,7,8,.7) 0,rgba(7,7,8,0) 38%)}
+  .js .beat{max-width:none;padding-block:0}
+  .js .beat h2{font-size:clamp(2.2rem,4.3vw,4.1rem);max-width:17ch;margin:16px 0 20px;overflow-wrap:normal}
+  .js .beat p{color:#d8d7d2;font-size:1.15rem;max-width:36ch}
+  .js .beat .mats li{background:rgba(7,7,8,.6)}
+}
+
+/* materials band */
+.band{overflow:hidden;padding:clamp(26px,4.5vw,56px) 0;border-bottom:1px solid var(--rule);background:var(--bg)}
+.band div{display:flex;gap:.45em;white-space:nowrap;font-size:clamp(2.6rem,9vw,8rem);font-stretch:125%;font-weight:700;text-transform:uppercase;line-height:1;will-change:transform}
+.band span{color:transparent;-webkit-text-stroke:1px rgba(237,236,232,.5)}
+.band span.f{color:var(--ink);-webkit-text-stroke:0}
+.band i{font-style:normal;color:var(--straw)}
+
+/* motorsport: a pinned row of real photos that travels sideways */
+.moto{position:relative;background:#070708;border-block:1px solid var(--rule)}
+.mpin{position:relative;padding-block:clamp(48px,8vw,96px);overflow:hidden}
+.mword{position:absolute;left:0;bottom:-3.5vw;font-size:21vw;font-stretch:125%;font-weight:800;line-height:1;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.24);pointer-events:none;will-change:transform}
+.mhead{position:relative;width:100%;display:flex;align-items:baseline;gap:18px;margin-bottom:clamp(18px,3vw,32px)}
+.mhead h2{font-size:clamp(2rem,4.6vw,3.8rem)}
+.mtrack{position:relative;display:flex;gap:14px;overflow-x:auto;padding-inline:max(var(--pad),calc((100vw - 1240px)/2 + var(--pad)));will-change:transform}
+.mtrack .shot{flex:none;height:min(58svh,560px)}
+.js .moto{height:calc(100svh + 150vh)}
+.js .mpin{position:sticky;top:0;height:100svh;display:flex;flex-direction:column;justify-content:center;padding-block:var(--head) 0}
+.js .mtrack{overflow:visible;width:max-content}
+
+.js .rv img{transition:clip-path 1s cubic-bezier(.2,.7,.2,1);clip-path:inset(0)}
+.js .rv:not(.in) img{clip-path:inset(0 0 100% 0)}
 
 /* works */
 section.block{padding-block:clamp(64px,10vw,128px)}
@@ -190,6 +224,8 @@ footer{border-top:1px solid var(--rule);padding:28px var(--pad) 32px;display:fle
   .js .pin{grid-template-columns:minmax(0,1fr);grid-template-rows:46svh minmax(0,1fr);padding:var(--head) 0 68px}
   .js .stage{grid-row:1}
   .js .beats{grid-row:2;padding-top:0;align-items:start}
+  .js .mpin{padding-bottom:68px}
+  .mtrack .shot{height:44svh}
   .js .beat{padding:22px var(--pad) 0}
   .beat h2{margin:10px 0 10px}
   .beat .mats{margin-top:12px}
@@ -214,6 +250,7 @@ footer{border-top:1px solid var(--rule);padding:28px var(--pad) 32px;display:fle
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *{transition-duration:.01ms!important}
+  .hero figure::before{animation:none}
 }
 </style>
 </head>
@@ -282,11 +319,11 @@ footer{border-top:1px solid var(--rule);padding:28px var(--pad) 32px;display:fle
           <path class="d thin" pathLength="1" d="M593 62 L593 258"/>
           <path class="d thin" pathLength="1" d="M352 256 L334 304 M1040 506 L1022 554"/>
           <path class="d" pathLength="1" d="M344 290 L1028 540"/>
-          <path class="d" pathLength="1" d="M640 376 L716 300 L846 300"/>
+          <path class="d" pathLength="1" d="M640 376 L716 300 L880 300"/>
           <path class="d" pathLength="1" d="M640 376 l5 -22 m-5 22 l22 -6"/>
-          <path class="d" pathLength="1" d="M764 300 L764 268 L796 300"/>
-          <text x="858" y="307" data-i="weld">kakta šuve</text>
+          <path class="d" pathLength="1" d="M782 300 L782 268 L814 300"/>
         </svg>
+        <canvas id="fx" aria-hidden="true"></canvas>
         <div class="arc" id="arc"></div>
       </div>
       <img class="finale" id="finale" src="img/seam-b.jpg" width="1380" height="1035" alt="Edelworx metināta šuve tuvplānā ar zilganvioletu un zeltainu karstuma nokrāsu" data-i-alt="altSeamB" loading="lazy">
@@ -298,7 +335,13 @@ footer{border-top:1px solid var(--rule);padding:28px var(--pad) 32px;display:fle
   </div>
 </section>
 
-<section class="block" id="darbi">
+<div class="band" aria-hidden="true"><div id="band">
+  <span data-i="m1">Melnais metāls</span><i>/</i><span class="f" data-i="m2">Nerūsējošais tērauds</span><i>/</i><span data-i="m3">Alumīnijs</span><i>/</i>
+  <span class="f" data-i="m1">Melnais metāls</span><i>/</i><span data-i="m2">Nerūsējošais tērauds</span><i>/</i><span class="f" data-i="m3">Alumīnijs</span><i>/</i>
+  <span data-i="m1">Melnais metāls</span><i>/</i><span class="f" data-i="m2">Nerūsējošais tērauds</span><i>/</i><span data-i="m3">Alumīnijs</span>
+</div></div>
+
+<section class="block" id="darbi" style="padding-bottom:clamp(40px,6vw,72px)">
   <div class="wrap">
     <div class="block-head">
       <h2 data-i="worksH">Mūsu darbi</h2>
@@ -313,13 +356,17 @@ footer{border-top:1px solid var(--rule);padding:28px var(--pad) 32px;display:fle
         <button class="shot" type="button"><img src="img/w-under.jpg" alt="Metināta šuve gar loksnes malu" data-i-alt="altW5" loading="lazy"></button>
       </div>
     </div>
-    <div class="group">
-      <div><h3>Motorsport</h3><span class="mono n">03</span></div>
-      <div class="shots moto">
-        <button class="shot" type="button"><img src="img/m-rs6.jpg" alt="Izpūtēja caurules zem automašīnas" data-i-alt="altM1" loading="lazy"><span>Audi RS6 · 76 mm</span></button>
-        <button class="shot" type="button"><img src="img/m-335.jpg" alt="Izpūtēja sistēma ar četriem uzgaļiem zem automašīnas" data-i-alt="altM2" loading="lazy"><span>BMW 335</span></button>
-        <button class="shot" type="button"><img src="img/m-tips.jpg" alt="Izpūtēja sazarojums ar diviem uzgaļiem" data-i-alt="altM3" loading="lazy"></button>
-      </div>
+  </div>
+</section>
+
+<section class="moto" id="motorsport" aria-label="Motorsport">
+  <div class="mpin">
+    <div class="mword" id="mword" aria-hidden="true">MOTORSPORT</div>
+    <div class="wrap mhead"><h2>Motorsport</h2><span class="mono">03</span></div>
+    <div class="mtrack" id="mtrack">
+      <button class="shot" type="button" style="aspect-ratio:869/1080"><img src="img/m-rs6.jpg" alt="Izpūtēja caurules zem automašīnas" data-i-alt="altM1" loading="lazy"><span>Audi RS6 · 76 mm</span></button>
+      <button class="shot" type="button" style="aspect-ratio:1080/598"><img src="img/m-335.jpg" alt="Izpūtēja sistēma ar četriem uzgaļiem zem automašīnas" data-i-alt="altM2" loading="lazy"><span>BMW 335</span></button>
+      <button class="shot" type="button" style="aspect-ratio:1080/534"><img src="img/m-tips.jpg" alt="Izpūtēja sazarojums ar diviem uzgaļiem" data-i-alt="altM3" loading="lazy"></button>
     </div>
   </div>
 </section>
@@ -335,7 +382,7 @@ footer{border-top:1px solid var(--rule);padding:28px var(--pad) 32px;display:fle
       </dl>
     </div>
     <div class="person">
-      <img src="img/silvestrs.jpg" width="720" height="1080" alt="Silvestrs Krauze" loading="lazy">
+      <img src="img/silvestrs.jpg" width="720" height="1080" alt="Silvestrs Krauze">
       <div>
         <span class="mono" data-i="teamK">Komanda</span>
         <strong>Silvestrs Krauze</strong>
@@ -417,7 +464,7 @@ storyAria:"How the work is made",
 b1h:"Everything starts with an idea",b1p:"We would like to hear your ideas and definitely find the best way to make them real.",
 b2h:"Technical drawings and documentation",b2p:"We will make drawings, calculate and prepare technical documentation to make your ideas come true.",
 b3h:"Assembly and welding",b3p:"Our specialists are qualified in the welding and processing of any metal.",
-m1:"Black metal",m2:"Stainless steel",m3:"Aluminum",m4:"Not sure yet",weld:"fillet weld",r1:"Idea",r2:"Drawing",r3:"Weld",
+m1:"Black metal",m2:"Stainless steel",m3:"Aluminum",m4:"Not sure yet",r1:"Idea",r2:"Drawing",r3:"Weld",
 worksH:"Our work",worksNote:"Photos: edelworx.net",g1:"Welding",
 aboutK:"What is Edelworx?",aboutBig:"EDELWORX is a company with a professional team that has learned and practiced its knowledge in several European countries.",
 goalK:"Our goals",goalP:"The main goal of our company is producing the best quality and most accurate metal products.",
@@ -438,7 +485,7 @@ storyAria:"So entsteht die Arbeit",
 b1h:"Alles beginnt mit einer Idee",b1p:"Wir möchten Ihre Ideen hören und finden bestimmt den besten Weg, sie umzusetzen.",
 b2h:"Technische Zeichnungen und Dokumentation",b2p:"Wir erstellen Zeichnungen, führen Berechnungen durch und erarbeiten die technische Dokumentation, damit Ihre Ideen Wirklichkeit werden.",
 b3h:"Montage und Schweißen",b3p:"Unsere Fachleute sind für das Schweißen und Bearbeiten aller Metalle qualifiziert.",
-m1:"Schwarzstahl",m2:"Edelstahl",m3:"Aluminium",m4:"Noch offen",weld:"Kehlnaht",r1:"Idee",r2:"Zeichnung",r3:"Naht",
+m1:"Schwarzstahl",m2:"Edelstahl",m3:"Aluminium",m4:"Noch offen",r1:"Idee",r2:"Zeichnung",r3:"Naht",
 worksH:"Unsere Arbeiten",worksNote:"Fotos: edelworx.net",g1:"Schweißen",
 aboutK:"Was ist Edelworx?",aboutBig:"EDELWORX ist ein Unternehmen mit einem professionellen Team, das sein Können in mehreren europäischen Ländern erworben und angewendet hat.",
 goalK:"Unsere Ziele",goalP:"Das Hauptziel unseres Unternehmens ist die Herstellung von Metallprodukten in bester Qualität und höchster Genauigkeit.",
@@ -480,7 +527,7 @@ each(".lang button",function(b){b.addEventListener("click",function(){setLang(b.
 var story=document.querySelector(".story"), stage=document.getElementById("stage"), plate=document.getElementById("plate"),
     colour=document.getElementById("colour"), arc=document.getElementById("arc"), finale=document.getElementById("finale"),
     bar=document.getElementById("bar"), beats=document.querySelectorAll(".beat"), rails=document.querySelectorAll(".rail li"),
-    strokes=document.querySelectorAll("#draw .d"), label=document.querySelector("#draw text");
+    strokes=document.querySelectorAll("#draw .d"), fx=document.getElementById("fx");
 var CUTS=[0.30,0.62], A=[345,270], B=[1035,522];
 function seg(p,a,b){return p<=a?0:p>=b?1:(p-a)/(b-a);}
 function ease(t){return t*t*(3-2*t);}
@@ -488,6 +535,34 @@ function fit(){
   var w=stage.clientWidth,h=stage.clientHeight,s=Math.max(w/1080,h/810),pw=1080*s,ph=810*s;
   var l=Math.min(0,Math.max(w-pw,w/2-0.62*pw)), t=Math.min(0,Math.max(h-ph,h/2-0.46*ph));
   plate.style.width=pw+"px"; plate.style.height=ph+"px"; plate.style.left=l+"px"; plate.style.top=t+"px";
+  var k=Math.min(Math.min(devicePixelRatio||1,2),1500/pw);
+  fx.width=Math.round(pw*k); fx.height=Math.round(ph*k);
+}
+/* sparks and a cooling heat trail behind the arc: light only, drawn in photo coordinates */
+var ctx=fx.getContext("2d"), parts=[], arcT=0, arcOn=0, trailA=0;
+function drawFx(){
+  var sc=fx.width/1080; ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,fx.width,fx.height);
+  if(arcT<=0||(trailA<=0&&!parts.length)) return;
+  ctx.setTransform(sc,0,0,sc,0,0); ctx.lineCap="round";
+  if(trailA>0){
+    var t0=Math.max(0,arcT-0.3), n=14;
+    for(var i=0;i<n;i++){
+      var a=t0+(arcT-t0)*i/n, b=t0+(arcT-t0)*(i+1)/n, f=(i+1)/n, al=f*f*trailA*0.9;
+      ctx.strokeStyle="rgba(255,"+Math.round(110+120*f)+","+Math.round(40+150*f*f*f)+","+al.toFixed(3)+")";
+      ctx.shadowColor=ctx.strokeStyle; ctx.shadowBlur=22; ctx.lineWidth=7+5*f;
+      ctx.beginPath(); ctx.moveTo(A[0]+(B[0]-A[0])*a,A[1]+(B[1]-A[1])*a); ctx.lineTo(A[0]+(B[0]-A[0])*b,A[1]+(B[1]-A[1])*b); ctx.stroke();
+    }
+  }
+  ctx.shadowBlur=0;
+  if(arcOn>0.3&&!reduce&&parts.length<170){
+    for(var j=0;j<4;j++){parts.push({x:A[0]+(B[0]-A[0])*arcT,y:A[1]+(B[1]-A[1])*arcT,vx:(Math.random()-0.35)*13,vy:-3-Math.random()*11,l:1,d:0.018+Math.random()*0.03});}
+  }
+  for(var q=parts.length-1;q>=0;q--){
+    var s=parts[q]; s.vy+=0.42; s.x+=s.vx; s.y+=s.vy; s.l-=s.d;
+    if(s.l<=0){parts.splice(q,1); continue;}
+    ctx.strokeStyle="rgba(255,"+Math.round(170+70*s.l)+","+Math.round(90+120*s.l)+","+s.l.toFixed(3)+")"; ctx.lineWidth=1.2+1.6*s.l;
+    ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(s.x-s.vx*1.6,s.y-s.vy*1.6); ctx.stroke();
+  }
 }
 var target=0,cur=-1,flick=1,active=-1,visible=true;
 function measure(){
@@ -507,9 +582,8 @@ function render(p){
   for(var k=0;k<strokes.length;k++){
     var a=0.30+k*0.026, d=ease(seg(p,a,a+0.10));
     strokes[k].style.strokeDashoffset=(1-d).toFixed(4);
-    strokes[k].style.opacity=out.toFixed(3);
+    strokes[k].style.opacity=(d>0.002?out:0).toFixed(3);
   }
-  label.style.opacity=(seg(p,0.53,0.58)*out).toFixed(3);
   var t=seg(p,0.64,0.86), x=A[0]+(B[0]-A[0])*t, y=A[1]+(B[1]-A[1])*t, edge=50+((x-540)*0.94+(y-405)*0.342)/1292*100+2;
   if(t>=1) edge+=24*seg(p,0.86,0.91);
   var m="linear-gradient(110deg,#000 "+(edge-20).toFixed(2)+"%,transparent "+edge.toFixed(2)+"%)";
@@ -517,6 +591,7 @@ function render(p){
   arc.style.left=(x/1080*100).toFixed(2)+"%"; arc.style.top=(y/810*100).toFixed(2)+"%";
   var glow=Math.min(seg(p,0.635,0.66),1-seg(p,0.85,0.875));
   arc.style.opacity=(glow*flick).toFixed(3);
+  arcT=t; arcOn=glow; trailA=Math.min(seg(p,0.64,0.67),1-seg(p,0.86,0.92));
   var f=ease(seg(p,0.88,0.97));
   finale.style.opacity=f.toFixed(3); finale.style.transform="scale("+(1.12-0.12*f).toFixed(4)+")";
 }
@@ -525,12 +600,32 @@ function frame(){
     if(cur<0||reduce) cur=target; else cur+=(target-cur)*0.16;
     if(Math.abs(target-cur)<0.0004) cur=target;
     if(!reduce) flick=0.82+Math.random()*0.18;
-    render(cur);
+    render(cur); drawFx();
   }
   requestAnimationFrame(frame);
 }
-addEventListener("scroll",measure,{passive:true});
-addEventListener("resize",function(){fit();measure();});
+/* secondary scroll motion: hero drift, materials band, motorsport row */
+var heroImg=document.querySelector(".hero figure img"), band=document.getElementById("band"), moto=document.querySelector(".moto"),
+    mtrack=document.getElementById("mtrack"), mword=document.getElementById("mword");
+function side(){
+  var y=scrollY, vh=innerHeight;
+  if(y<vh) heroImg.style.transform="translateY("+(-y*0.1).toFixed(1)+"px)";
+  var br=band.getBoundingClientRect();
+  if(br.top<vh&&br.bottom>0) band.style.transform="translateX("+(-(vh-br.top)*0.45).toFixed(1)+"px)";
+  var mr=moto.getBoundingClientRect(), span=mr.height-vh;
+  if(span>0&&mr.top<vh&&mr.bottom>0){
+    var mp=Math.min(1,Math.max(0,-mr.top/span)), over=Math.max(0,mtrack.scrollWidth-innerWidth);
+    mtrack.style.transform="translateX("+(-mp*over).toFixed(1)+"px)";
+    mword.style.transform="translateX("+(18-mp*70).toFixed(2)+"vw)";
+  }
+}
+addEventListener("scroll",function(){measure();side();},{passive:true});
+addEventListener("resize",function(){fit();measure();side();});
+side();
+if("IntersectionObserver" in window&&!reduce){
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{rootMargin:"0px 0px -8% 0px"});
+  each(".shots.weld .shot,.person",function(el){el.classList.add("rv");io.observe(el);});
+}
 if("IntersectionObserver" in window){new IntersectionObserver(function(e){visible=e[0].isIntersecting;}).observe(story);}
 fit(); measure(); requestAnimationFrame(frame);
 
