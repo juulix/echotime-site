@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="lv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Edelworx — metāla izstrādājumi no idejas līdz šuvei · koncepcija</title>
+<meta name="description" content="Edelworx, Jelgava: tehniskie rasējumi un dokumentācija, montāža un metināšana. Melnais metāls, nerūsējošais tērauds, alumīnijs. Sākumlapas koncepcija.">
+<meta property="og:title" content="Edelworx — no idejas līdz šuvei">
+<meta property="og:description" content="Metāla izstrādājumu uzņēmuma sākumlapas koncepcija. Skici sagatavoja Echo Time.">
+<meta property="og:image" content="https://www.echotime.app/skices/edelworx-dv6b/img/og.jpg">
+<meta property="og:url" content="https://www.echotime.app/skices/edelworx-dv6b/">
+<meta property="og:type" content="website">
+<link rel="icon" href="img/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* One loud place: the pinned stage, where a real Edelworx photo goes from plan (grey) through
+   drawing (weld symbol overlay) to weld (arc pass brings the heat tint back). Everything else is
+   quiet dark steel. Accent colours are sampled from the heat tint of a real Edelworx weld. */
+:root{
+  color-scheme:dark;
+  --bg:#0b0c0d; --steel:#131517; --steel-2:#1b1e21; --rule:#2b2f34;
+  --ink:#edece8; --muted:#a6a8a2; --dim:#8f9294;
+  --straw:#dbba85; --copper:#c0855a; --violet:#7c5092; --blue:#5e73aa; --teal:#7199a5;
+  --tint:linear-gradient(90deg,var(--teal),var(--straw) 28%,var(--copper) 52%,var(--violet) 76%,var(--blue));
+  --draw:#cfe6f5;
+  --pad:max(16px,env(safe-area-inset-left));
+  --wide:"Archivo","Arial Narrow",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --head:60px;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:var(--head)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--wide);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:clip}
+img{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--straw);outline-offset:3px;border-radius:2px}
+h1,h2,h3{margin:0;font-stretch:125%;font-weight:600;line-height:1.02;text-transform:uppercase;text-wrap:balance;letter-spacing:.01em}
+p{margin:0}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.wrap{max-width:1240px;margin-inline:auto;padding-inline:var(--pad)}
+
+/* header */
+.top{position:fixed;inset:0 0 auto 0;z-index:50;height:var(--head);display:flex;align-items:center;gap:24px;padding-inline:max(20px,env(safe-area-inset-left));
+  background:color-mix(in srgb,var(--bg) 78%,transparent);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border-bottom:1px solid color-mix(in srgb,var(--rule) 70%,transparent)}
+.brand{font-stretch:125%;font-weight:500;letter-spacing:.22em;text-decoration:none;font-size:15px;margin-right:auto}
+.top nav{display:flex;gap:26px}
+.top nav a{text-decoration:none;font-size:14px;color:var(--muted);transition:color .2s}
+.top nav a:hover{color:var(--ink)}
+.lang{display:flex;border:1px solid var(--rule);border-radius:999px;padding:2px}
+.lang button{font:500 11px/1 var(--mono);letter-spacing:.08em;color:var(--muted);background:none;border:0;border-radius:999px;padding:7px 9px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 22px;border-radius:2px;font:600 15px/1 var(--wide);font-stretch:110%;letter-spacing:.02em;text-decoration:none;border:1px solid transparent;cursor:pointer;transition:transform .2s,background .2s,border-color .2s}
+.btn.solid{background:var(--straw);color:#14110b}
+.btn.solid:hover{background:#e8cb9b;transform:translateY(-1px)}
+.btn.line{border-color:var(--rule);color:var(--ink);background:transparent}
+.btn.line:hover{border-color:var(--muted)}
+.top .btn{min-height:38px;padding:0 16px;font-size:13px}
+
+/* hero */
+.hero{padding-top:var(--head)}
+.hero figure{margin:0;height:min(46svh,520px);overflow:hidden;position:relative;background:#000}
+.hero figure img{width:100%;height:100%;object-fit:cover;object-position:50% 54%}
+.hero figure::after{content:"";position:absolute;inset:auto 0 0 0;height:3px;background:var(--tint)}
+.hero .body{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(24px,5vw,72px);align-items:end;padding-block:clamp(28px,5svh,56px) clamp(36px,6svh,72px)}
+.hero h1{font-size:clamp(2.5rem,6.6vw,5.6rem)}
+html[lang="de"] .hero h1{font-size:clamp(2.1rem,5.2vw,4.4rem)}
+.hero h1 em{font-style:normal;color:var(--straw)}
+.hero .lede{font-size:clamp(1rem,1.25vw,1.15rem);color:var(--muted);max-width:44ch}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+
+/* story */
+.story{position:relative;background:var(--steel);border-block:1px solid var(--rule)}
+.beat{padding:clamp(40px,8vw,88px) var(--pad);max-width:720px}
+.beat .mono b{color:var(--straw);font-weight:500}
+.beat h2{font-size:clamp(1.55rem,2.9vw,3rem);margin:14px 0 16px;overflow-wrap:break-word}
+.beat p{color:var(--muted);max-width:40ch}
+.beat .mats{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;padding:0;list-style:none}
+.beat .mats li{font:500 12px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--rule);padding:9px 11px;border-radius:2px;color:var(--ink)}
+.stage{position:relative;overflow:hidden;background:#050505;aspect-ratio:4/3}
+.plate{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:62% 50%;will-change:transform}
+.plate img,.plate svg{position:absolute;inset:0;width:100%;height:100%}
+.plate .grey{filter:grayscale(1) brightness(var(--gb,.6)) contrast(1.08)}
+.plate .colour{opacity:0}
+.plate svg{overflow:visible}
+.plate svg *{fill:none;stroke:var(--draw);stroke-width:1.6;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round}
+.plate svg .d{stroke-dasharray:1;stroke-dashoffset:1}
+.plate svg .thin{stroke-width:1;opacity:.75}
+.plate svg text{fill:var(--draw);stroke:none;font:500 22px var(--mono);letter-spacing:.06em;opacity:0}
+.arc{position:absolute;width:44%;aspect-ratio:1;translate:-50% -50%;border-radius:50%;pointer-events:none;opacity:0;mix-blend-mode:screen;
+  background:radial-gradient(closest-side,#fff 0 3%,#cfe4ff 7%,rgba(120,170,255,.55) 16%,rgba(90,110,230,.18) 38%,transparent 70%)}
+.finale{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:42% 58%;opacity:0;will-change:opacity,transform}
+.rail{position:absolute;inset:auto 0 0 0;padding:0 clamp(14px,2vw,24px) 14px;display:none}
+.rail .bar{height:3px;background:rgba(255,255,255,.14);position:relative;overflow:hidden}
+.rail .bar i{position:absolute;inset:0;background:var(--tint);transform-origin:0 50%;transform:scaleX(0)}
+.rail ol{display:grid;grid-template-columns:30fr 32fr 38fr;margin:10px 0 0;padding:0;list-style:none}
+.rail li{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.72);transition:color .3s}
+.rail li.on{color:#fff}
+
+/* pinned mode: only when JS runs */
+.js .story{height:calc(100svh + 280vh)}
+.js .pin{position:sticky;top:0;height:100svh;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr)}
+.js .beats{display:grid;align-items:center;padding-top:var(--head)}
+.js .beat{grid-area:1/1;opacity:0;transform:translateY(14px);transition:opacity .45s,transform .45s;pointer-events:none;padding-inline:max(24px,calc((100vw - 1240px)/2 + var(--pad))) clamp(24px,4vw,56px)}
+.js .beat.on{opacity:1;transform:none;pointer-events:auto}
+.js .stage{aspect-ratio:auto;height:100%}
+.js .rail{display:block}
+
+/* works */
+section.block{padding-block:clamp(64px,10vw,128px)}
+.block-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:16px 40px;margin-bottom:clamp(28px,4vw,48px)}
+.block-head h2{font-size:clamp(2rem,4.6vw,3.8rem)}
+.block-head p{color:var(--muted);max-width:42ch}
+.group{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,10fr);gap:20px 32px;padding-block:28px;border-top:1px solid var(--rule)}
+.group h3{font-size:1.15rem;letter-spacing:.06em}
+.group .n{display:block;margin-top:8px}
+.shots{display:grid;gap:10px;grid-template-columns:repeat(12,minmax(0,1fr))}
+.shot{position:relative;margin:0;overflow:hidden;background:var(--steel-2);cursor:zoom-in;border:0;padding:0;color:inherit;font:inherit;text-align:left}
+.shot img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.shot:hover img{transform:scale(1.04)}
+.shot span{position:absolute;left:10px;bottom:10px;font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;background:rgba(8,8,8,.72);padding:7px 9px;border-radius:2px}
+@media (min-width:901px){
+  .shots.weld .shot:nth-child(1){grid-column:span 7;aspect-ratio:7/5}
+  .shots.weld .shot:nth-child(2){grid-column:span 5}
+  .shots.weld .shot:nth-child(n+3){grid-column:span 6;aspect-ratio:16/9}
+  .shots.moto .shot:nth-child(1){grid-column:span 4;grid-row:span 2}
+  .shots.moto .shot:nth-child(n+2){grid-column:span 8;aspect-ratio:16/8.5}
+}
+dialog.lb{border:0;padding:0;background:transparent;max-width:min(94vw,1400px);max-height:94svh}
+dialog.lb::backdrop{background:rgba(0,0,0,.88)}
+dialog.lb img{max-height:88svh;width:auto;margin-inline:auto}
+dialog.lb form{display:flex;justify-content:flex-end;margin-bottom:8px}
+dialog.lb button{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:var(--bg);border:0;padding:10px 12px;border-radius:2px;cursor:pointer}
+
+/* about */
+.about{background:var(--steel);border-block:1px solid var(--rule)}
+.about .cols{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(32px,6vw,96px)}
+.about .big{font-size:clamp(1.35rem,2.5vw,2.1rem);line-height:1.25;font-stretch:108%;font-weight:500;text-wrap:pretty}
+.about h2.mono{font-weight:400;font-stretch:100%;line-height:1.55;text-wrap:initial}
+.about dl{margin:clamp(28px,4vw,48px) 0 0;display:grid;gap:24px}
+.about dt{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--straw);margin-bottom:10px}
+.about dd{margin:0;color:var(--muted);max-width:52ch}
+.person{display:grid;grid-template-columns:minmax(0,1fr);gap:0;align-self:start;border:1px solid var(--rule);background:var(--bg)}
+.person img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:50% 18%}
+.person div{padding:18px 20px 20px;display:grid;gap:6px}
+.person strong{font-stretch:118%;font-weight:600;font-size:1.2rem;text-transform:uppercase;letter-spacing:.03em}
+.person a{font-family:var(--mono);font-size:13px;color:var(--muted);text-decoration:none;overflow-wrap:anywhere}
+.person a:hover{color:var(--ink)}
+
+/* contact */
+.contact .cols{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,6vw,96px)}
+.contact h2{font-size:clamp(1.8rem,3.6vw,3.2rem);margin-bottom:18px}
+.contact .lede{color:var(--muted);max-width:36ch}
+.contact address{font-style:normal;margin-top:32px;display:grid;gap:14px}
+.contact address a,.contact address span{display:block;text-decoration:none;font-size:1.05rem}
+.contact address small{display:block;font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:6px}
+form.req{display:grid;gap:18px;background:var(--steel);border:1px solid var(--rule);padding:clamp(20px,3vw,36px)}
+form.req .two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+form.req label,form.req legend{display:block;font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;padding:0}
+form.req input[type=text],form.req input[type=email],form.req textarea{width:100%;font:400 16px/1.4 var(--wide);color:var(--ink);background:var(--bg);border:1px solid var(--rule);border-radius:2px;padding:13px 14px}
+form.req textarea{min-height:120px;resize:vertical}
+form.req input:focus-visible,form.req textarea:focus-visible{outline-offset:0;border-color:var(--straw)}
+form.req [aria-invalid="true"]{border-color:#e07a6a}
+form.req .err{color:#f0a093;font-size:13px;margin-top:6px}
+form.req fieldset{border:0;margin:0;padding:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips label{display:block}
+.chips label{margin:0;cursor:pointer}
+.chips input{position:absolute;opacity:0}
+.chips span{display:flex;align-items:center;min-height:44px;border:1px solid var(--rule);padding:11px 13px;border-radius:2px;color:var(--ink);transition:background .2s,color .2s,border-color .2s}
+.chips input:checked+span{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chips input:focus-visible+span{outline:2px solid var(--straw);outline-offset:3px}
+form.req .foot{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px}
+form.req .foot small{color:var(--dim);font-size:13px;max-width:36ch}
+.done{border:1px solid var(--rule);background:var(--steel);padding:clamp(24px,4vw,44px)}
+.done h3{font-size:1.6rem;margin-bottom:12px}
+.done p{color:var(--muted)}
+
+footer{border-top:1px solid var(--rule);padding:28px var(--pad) 32px;display:flex;flex-wrap:wrap;gap:10px 32px;justify-content:space-between;color:var(--dim);font-size:13px}
+.callbar{display:none}
+
+@media (max-width:900px){
+  .top nav,.top .btn{display:none}
+  .hero .body,.about .cols,.contact .cols,.group{grid-template-columns:minmax(0,1fr)}
+  .hero figure{height:auto;aspect-ratio:1400/880}
+  .hero figure img{object-position:50% 50%}
+  .js .pin{grid-template-columns:minmax(0,1fr);grid-template-rows:46svh minmax(0,1fr);padding:var(--head) 0 68px}
+  .js .stage{grid-row:1}
+  .js .beats{grid-row:2;padding-top:0;align-items:start}
+  .js .beat{padding:22px var(--pad) 0}
+  .beat h2{margin:10px 0 10px}
+  .beat .mats{margin-top:12px}
+  .shots{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .shots .shot{aspect-ratio:1}
+  .shots .shot:nth-child(1){grid-column:span 2;aspect-ratio:4/3}
+  .shots.moto .shot:nth-child(n+2){grid-column:span 2;aspect-ratio:16/9}
+  .shots.moto .shot:nth-child(1){aspect-ratio:4/5}
+  .shots.weld .shot:nth-child(4){grid-column:span 2;aspect-ratio:16/9}
+  .person{max-width:420px}
+  .lang button{padding:13px 11px}
+  .lang{padding:0}
+  form.req .two{grid-template-columns:1fr}
+  body{padding-bottom:calc(64px + env(safe-area-inset-bottom))}
+  .callbar{display:grid;grid-template-columns:1fr 1fr;gap:8px;position:fixed;inset:auto 0 0 0;z-index:60;padding:8px var(--pad) calc(8px + env(safe-area-inset-bottom));background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--rule)}
+}
+@media (max-width:900px) and (max-height:700px){
+  .js .pin{grid-template-rows:38svh minmax(0,1fr)}
+  .js .beat{padding-top:14px}
+  .beat .mats li{padding:7px 9px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="#sakums" aria-label="Edelworx">EDELWORX</a>
+  <nav aria-label="Galvenā">
+    <a href="#process" data-i="nav1">Pakalpojumi</a>
+    <a href="#darbi" data-i="nav2">Darbi</a>
+    <a href="#par" data-i="nav3">Par mums</a>
+    <a href="#kontakti" data-i="nav4">Kontakti</a>
+  </nav>
+  <div class="lang" role="group" aria-label="Valoda">
+    <button type="button" data-lang="lv" aria-pressed="true">LV</button>
+    <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    <button type="button" data-lang="de" aria-pressed="false">DE</button>
+  </div>
+  <a class="btn solid" href="#kontakti" data-i="cta">Pastāstiet ideju</a>
+</header>
+
+<main id="sakums">
+<section class="hero">
+  <figure><img src="img/plate.jpg" width="1400" height="880" alt="Slīpēta tērauda plāksne ar uzrakstu EDELWORX — The perfect solution for metalwork" data-i-alt="altPlate" fetchpriority="high"></figure>
+  <div class="wrap body">
+    <h1 data-i="h1">No idejas<br>līdz <em>šuvei.</em></h1>
+    <div>
+      <p class="lede" data-i="lede">Tehniskie rasējumi un dokumentācija, montāža un metināšana. Melnais metāls, nerūsējošais tērauds, alumīnijs.</p>
+      <div class="cta">
+        <a class="btn solid" href="#kontakti" data-i="cta">Pastāstiet ideju</a>
+        <a class="btn line" href="#darbi" data-i="cta2">Skatīt darbus</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="story" id="process" aria-label="Kā top darbs" data-i-aria="storyAria">
+  <div class="pin">
+    <div class="beats">
+      <article class="beat on" data-beat="0">
+        <p class="mono"><b>01</b> / 03</p>
+        <h2 data-i="b1h">Viss sākas ar ideju</h2>
+        <p data-i="b1p">Labprāt uzklausīsim jūsu idejas un noteikti atradīsim labāko veidu, kā tās īstenot.</p>
+      </article>
+      <article class="beat" data-beat="1">
+        <p class="mono"><b>02</b> / 03</p>
+        <h2 data-i="b2h">Tehniskie rasējumi un dokumentācija</h2>
+        <p data-i="b2p">Izstrādāsim rasējumus, veiksim aprēķinus un sagatavosim tehnisko dokumentāciju, lai jūsu idejas īstenotos.</p>
+      </article>
+      <article class="beat" data-beat="2">
+        <p class="mono"><b>03</b> / 03</p>
+        <h2 data-i="b3h">Montāža un metināšana</h2>
+        <p data-i="b3p">Mūsu speciālisti ir kvalificēti jebkura metāla metināšanā un apstrādē.</p>
+        <ul class="mats">
+          <li data-i="m1">Melnais metāls</li><li data-i="m2">Nerūsējošais tērauds</li><li data-i="m3">Alumīnijs</li>
+        </ul>
+      </article>
+    </div>
+    <div class="stage" id="stage">
+      <div class="plate" id="plate">
+        <img class="grey" src="img/seam-a.jpg" width="1080" height="810" alt="Edelworx darbs: plāksne ar urbumiem piemetināta pie taisnstūra profila" data-i-alt="altSeamA">
+        <img class="colour" id="colour" src="img/seam-a.jpg" width="1080" height="810" alt="" aria-hidden="true">
+        <svg id="draw" viewBox="0 0 1080 810" preserveAspectRatio="none" aria-hidden="true">
+          <ellipse class="d" pathLength="1" cx="593" cy="158" rx="48" ry="58"/>
+          <path class="d thin" pathLength="1" d="M448 129 L742 188"/>
+          <path class="d thin" pathLength="1" d="M593 62 L593 258"/>
+          <path class="d thin" pathLength="1" d="M352 256 L334 304 M1040 506 L1022 554"/>
+          <path class="d" pathLength="1" d="M344 290 L1028 540"/>
+          <path class="d" pathLength="1" d="M640 376 L716 300 L846 300"/>
+          <path class="d" pathLength="1" d="M640 376 l5 -22 m-5 22 l22 -6"/>
+          <path class="d" pathLength="1" d="M764 300 L764 268 L796 300"/>
+          <text x="858" y="307" data-i="weld">kakta šuve</text>
+        </svg>
+        <div class="arc" id="arc"></div>
+      </div>
+      <img class="finale" id="finale" src="img/seam-b.jpg" width="1380" height="1035" alt="Edelworx metināta šuve tuvplānā ar zilganvioletu un zeltainu karstuma nokrāsu" data-i-alt="altSeamB" loading="lazy">
+      <div class="rail" aria-hidden="true">
+        <div class="bar"><i id="bar"></i></div>
+        <ol><li class="on" data-i="r1">Ideja</li><li data-i="r2">Rasējums</li><li data-i="r3">Šuve</li></ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="darbi">
+  <div class="wrap">
+    <div class="block-head">
+      <h2 data-i="worksH">Mūsu darbi</h2>
+      <p class="mono" data-i="worksNote">Foto: edelworx.net</p>
+    </div>
+    <div class="group">
+      <div><h3 data-i="g1">Metināšana</h3><span class="mono n">04</span></div>
+      <div class="shots weld">
+        <button class="shot" type="button"><img src="img/w-long.jpg" alt="Gara metināta šuve gar rievotu loksni, fonā metinātāja maska" data-i-alt="altW2" loading="lazy"></button>
+        <button class="shot" type="button"><img src="img/w-bracket.jpg" alt="Plāksne ar urbumu piemetināta pie profila" data-i-alt="altW4" loading="lazy"></button>
+        <button class="shot" type="button"><img src="img/w-nut.jpg" alt="Taisnstūra profila gals ar iemetinātu uzgriezni" data-i-alt="altW3" loading="lazy"><span>Support systems</span></button>
+        <button class="shot" type="button"><img src="img/w-under.jpg" alt="Metināta šuve gar loksnes malu" data-i-alt="altW5" loading="lazy"></button>
+      </div>
+    </div>
+    <div class="group">
+      <div><h3>Motorsport</h3><span class="mono n">03</span></div>
+      <div class="shots moto">
+        <button class="shot" type="button"><img src="img/m-rs6.jpg" alt="Izpūtēja caurules zem automašīnas" data-i-alt="altM1" loading="lazy"><span>Audi RS6 · 76 mm</span></button>
+        <button class="shot" type="button"><img src="img/m-335.jpg" alt="Izpūtēja sistēma ar četriem uzgaļiem zem automašīnas" data-i-alt="altM2" loading="lazy"><span>BMW 335</span></button>
+        <button class="shot" type="button"><img src="img/m-tips.jpg" alt="Izpūtēja sazarojums ar diviem uzgaļiem" data-i-alt="altM3" loading="lazy"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block about" id="par">
+  <div class="wrap cols">
+    <div>
+      <h2 class="mono" data-i="aboutK">Kas ir Edelworx?</h2>
+      <p class="big" style="margin-top:18px" data-i="aboutBig">EDELWORX ir uzņēmums ar profesionālu komandu, kas zināšanas apguvusi un praksē izmantojusi vairākās Eiropas valstīs.</p>
+      <dl>
+        <div><dt data-i="goalK">Mūsu mērķi</dt><dd data-i="goalP">Uzņēmuma galvenais mērķis ir izgatavot augstākās kvalitātes un visprecīzākos metāla izstrādājumus.</dd></div>
+        <div><dt data-i="nothingK">Nekas nav neiespējams</dt><dd data-i="nothingP">Vienmēr esam gatavi pieņemt izaicinājumu un uzņemties augstas sarežģītības darbus – precīzi, kvalitatīvi un ļoti īsos termiņos, katra klienta vēlmes izvērtējot individuāli.</dd></div>
+      </dl>
+    </div>
+    <div class="person">
+      <img src="img/silvestrs.jpg" width="720" height="1080" alt="Silvestrs Krauze" loading="lazy">
+      <div>
+        <span class="mono" data-i="teamK">Komanda</span>
+        <strong>Silvestrs Krauze</strong>
+        <a href="tel:+37126209211">+371 26209211</a>
+        <a href="mailto:krauze.silvestrs@edelworx.net">krauze.silvestrs@edelworx.net</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block contact" id="kontakti">
+  <div class="wrap cols">
+    <div>
+      <h2 data-i="contH">Sazinieties ar mums</h2>
+      <p class="lede" data-i="contP">Nevilcinieties sazināties. Labprāt pārrunāsim jūsu projektu.</p>
+      <address>
+        <div><small data-i="telK">Tālrunis</small><a href="tel:+37126209211">+371 26209211</a></div>
+        <div><small data-i="mailK">E-pasts</small><a href="mailto:info@edelworx.net">info@edelworx.net</a></div>
+        <div><small data-i="addrK">Adrese</small><span data-i="addr">Lietuvas šoseja 27-2, Jelgava, LV-3001</span></div>
+      </address>
+    </div>
+    <div>
+      <form class="req" id="req" novalidate>
+        <div class="two">
+          <div><label for="f-name" data-i="fName">Vārds *</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+          <div><label for="f-mail" data-i="fMail">E-pasts *</label><input id="f-mail" name="email" type="email" autocomplete="email" required></div>
+        </div>
+        <fieldset>
+          <legend data-i="fMat">Materiāls</legend>
+          <div class="chips">
+            <label><input type="radio" name="mat" value="black"><span data-i="m1">Melnais metāls</span></label>
+            <label><input type="radio" name="mat" value="inox"><span data-i="m2">Nerūsējošais tērauds</span></label>
+            <label><input type="radio" name="mat" value="alu"><span data-i="m3">Alumīnijs</span></label>
+            <label><input type="radio" name="mat" value="na"><span data-i="m4">Vēl nezinu</span></label>
+          </div>
+        </fieldset>
+        <div><label for="f-msg" data-i="fMsg">Jūsu ideja *</label><textarea id="f-msg" name="msg" required></textarea></div>
+        <div class="foot">
+          <button class="btn solid" type="submit" data-i="fSend">Nosūtīt</button>
+          <small data-i="fDemo">Šī ir skice: pieteikums vēl netiek nosūtīts.</small>
+        </div>
+      </form>
+      <div class="done" id="done" hidden tabindex="-1" role="status">
+        <h3 data-i="doneH">Paldies!</h3>
+        <p data-i="doneP">Tā izskatīsies apstiprinājums. Šī ir skice, tāpēc pieteikums vēl nav nosūtīts. Lūdzu, zvaniet vai rakstiet uz info@edelworx.net.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <span>Edelworx · Jelgava</span>
+  <span data-i="foot">Koncepciju sagatavoja Echo Time, saturs vēl saskaņojams.</span>
+</footer>
+
+<div class="callbar">
+  <a class="btn line" href="tel:+37126209211" data-i="call">Zvanīt</a>
+  <a class="btn solid" href="#kontakti" data-i="write">Rakstīt</a>
+</div>
+
+<dialog class="lb" id="lb" aria-label="Foto">
+  <form method="dialog"><button data-i="close">Aizvērt</button></form>
+  <img id="lbimg" alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+</dialog>
+
+<script>
+(function(){
+"use strict";
+var root=document.documentElement; root.classList.add("js");
+var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- languages: Latvian is in the markup; EN is the client's own text, lightly edited; DE is a translation ---------- */
+var T={
+en:{title:"Edelworx — metal products from idea to weld · concept",nav1:"Services",nav2:"Work",nav3:"About",nav4:"Contact",cta:"Tell us your idea",cta2:"See our work",
+h1:"From idea<br>to <em>weld.</em>",
+lede:"Technical drawings and documentation, assembly and welding. Black metal, stainless steel, aluminum.",
+storyAria:"How the work is made",
+b1h:"Everything starts with an idea",b1p:"We would like to hear your ideas and definitely find the best way to make them real.",
+b2h:"Technical drawings and documentation",b2p:"We will make drawings, calculate and prepare technical documentation to make your ideas come true.",
+b3h:"Assembly and welding",b3p:"Our specialists are qualified in the welding and processing of any metal.",
+m1:"Black metal",m2:"Stainless steel",m3:"Aluminum",m4:"Not sure yet",weld:"fillet weld",r1:"Idea",r2:"Drawing",r3:"Weld",
+worksH:"Our work",worksNote:"Photos: edelworx.net",g1:"Welding",
+aboutK:"What is Edelworx?",aboutBig:"EDELWORX is a company with a professional team that has learned and practiced its knowledge in several European countries.",
+goalK:"Our goals",goalP:"The main goal of our company is producing the best quality and most accurate metal products.",
+nothingK:"Nothing is impossible",nothingP:"We are always ready to accept the challenge and to undertake work of high complexity – precisely, with quality and in very limited terms, evaluating each client's wishes individually.",
+teamK:"Team",contH:"Contact us",contP:"Don't hesitate to get in touch with us. We would like to discuss your project.",
+telK:"Phone",mailK:"Email",addrK:"Address",addr:"Lietuvas šoseja 27-2, Jelgava, LV-3001, Latvia",
+fName:"Name *",fMail:"Email address *",fMat:"Material",fMsg:"Your idea *",fSend:"Send",fDemo:"This is a concept: the request is not sent yet.",
+doneH:"Thank you!",doneP:"This is how the confirmation will look. This is a concept, so the request has not been sent. Please call or write to info@edelworx.net.",
+foot:"Concept by Echo Time, content to be agreed.",call:"Call",write:"Write",close:"Close",
+errReq:"Please fill in this field.",errMail:"Please enter a valid email address.",
+altPlate:"Brushed steel plate with the lettering EDELWORX — The perfect solution for metalwork",altSeamA:"Edelworx work: a drilled plate welded to a rectangular section",altSeamB:"Close-up of an Edelworx weld seam with blue-violet and golden heat tint",
+altW2:"Long weld seam along a ribbed sheet, welding helmet in the background",altW3:"End of a rectangular section with a welded-in nut",altW4:"Drilled plate welded to a section",altW5:"Weld seam along a sheet edge",
+altM1:"Exhaust pipes under a car",altM2:"Exhaust system with four tips under a car",altM3:"Exhaust Y-pipe with two tips"},
+de:{title:"Edelworx — Metallprodukte von der Idee zur Naht · Konzept",nav1:"Leistungen",nav2:"Arbeiten",nav3:"Über uns",nav4:"Kontakt",cta:"Erzählen Sie uns Ihre Idee",cta2:"Arbeiten ansehen",
+h1:"Von\u00a0der\u00a0Idee<br>zur\u00a0<em>Naht.</em>",
+lede:"Technische Zeichnungen und Dokumentation, Montage und Schweißen. Schwarzstahl, Edelstahl, Aluminium.",
+storyAria:"So entsteht die Arbeit",
+b1h:"Alles beginnt mit einer Idee",b1p:"Wir möchten Ihre Ideen hören und finden bestimmt den besten Weg, sie umzusetzen.",
+b2h:"Technische Zeichnungen und Dokumentation",b2p:"Wir erstellen Zeichnungen, führen Berechnungen durch und erarbeiten die technische Dokumentation, damit Ihre Ideen Wirklichkeit werden.",
+b3h:"Montage und Schweißen",b3p:"Unsere Fachleute sind für das Schweißen und Bearbeiten aller Metalle qualifiziert.",
+m1:"Schwarzstahl",m2:"Edelstahl",m3:"Aluminium",m4:"Noch offen",weld:"Kehlnaht",r1:"Idee",r2:"Zeichnung",r3:"Naht",
+worksH:"Unsere Arbeiten",worksNote:"Fotos: edelworx.net",g1:"Schweißen",
+aboutK:"Was ist Edelworx?",aboutBig:"EDELWORX ist ein Unternehmen mit einem professionellen Team, das sein Können in mehreren europäischen Ländern erworben und angewendet hat.",
+goalK:"Unsere Ziele",goalP:"Das Hauptziel unseres Unternehmens ist die Herstellung von Metallprodukten in bester Qualität und höchster Genauigkeit.",
+nothingK:"Nichts ist unmöglich",nothingP:"Wir sind immer bereit, die Herausforderung anzunehmen und Arbeiten hoher Komplexität zu übernehmen – präzise, hochwertig und innerhalb kürzester Zeit. Auf die Wünsche jedes Kunden gehen wir individuell ein.",
+teamK:"Team",contH:"Kontakt",contP:"Zögern Sie nicht, sich bei uns zu melden. Wir besprechen gern Ihr Projekt.",
+telK:"Telefon",mailK:"E-Mail",addrK:"Adresse",addr:"Lietuvas šoseja 27-2, Jelgava, LV-3001, Lettland",
+fName:"Name *",fMail:"E-Mail-Adresse *",fMat:"Material",fMsg:"Ihre Idee *",fSend:"Senden",fDemo:"Dies ist ein Entwurf: Die Anfrage wird noch nicht gesendet.",
+doneH:"Vielen Dank!",doneP:"So wird die Bestätigung aussehen. Dies ist ein Entwurf, die Anfrage wurde daher nicht gesendet. Bitte rufen Sie an oder schreiben Sie an info@edelworx.net.",
+foot:"Konzept von Echo Time, Inhalte noch abzustimmen.",call:"Anrufen",write:"Schreiben",close:"Schließen",
+errReq:"Bitte füllen Sie dieses Feld aus.",errMail:"Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+altPlate:"Gebürstete Stahlplatte mit dem Schriftzug EDELWORX — The perfect solution for metalwork",altSeamA:"Edelworx-Arbeit: gebohrte Platte, an ein Rechteckprofil geschweißt",altSeamB:"Nahaufnahme einer Edelworx-Schweißnaht mit blau-violetten und goldenen Anlauffarben",
+altW2:"Lange Schweißnaht entlang eines gerippten Blechs, im Hintergrund ein Schweißhelm",altW3:"Ende eines Rechteckprofils mit eingeschweißter Mutter",altW4:"Gebohrte Platte, an ein Profil geschweißt",altW5:"Schweißnaht entlang einer Blechkante",
+altM1:"Abgasrohre unter einem Auto",altM2:"Abgasanlage mit vier Endrohren unter einem Auto",altM3:"Y-Rohr mit zwei Endrohren"}
+};
+T.lv={title:document.title,errReq:"Lūdzu, aizpildiet šo lauku.",errMail:"Lūdzu, ievadiet derīgu e-pasta adresi."};
+var lang="lv";
+function each(sel,fn){Array.prototype.forEach.call(document.querySelectorAll(sel),fn);}
+each("[data-i]",function(el){T.lv[el.getAttribute("data-i")]=el.innerHTML;});
+each("[data-i-alt]",function(el){T.lv[el.getAttribute("data-i-alt")]=el.getAttribute("alt");});
+each("[data-i-aria]",function(el){T.lv[el.getAttribute("data-i-aria")]=el.getAttribute("aria-label");});
+function setLang(l){
+  lang=l; root.lang=l; var d=T[l];
+  each("[data-i]",function(el){var v=d[el.getAttribute("data-i")]; if(v!=null) el.innerHTML=v;});
+  each("[data-i-alt]",function(el){var v=d[el.getAttribute("data-i-alt")]; if(v!=null) el.setAttribute("alt",v);});
+  each("[data-i-aria]",function(el){var v=d[el.getAttribute("data-i-aria")]; if(v!=null) el.setAttribute("aria-label",v);});
+  each(".lang button",function(b){b.setAttribute("aria-pressed",String(b.getAttribute("data-lang")===l));});
+  each(".err",function(e){e.remove();});
+  each("#req [aria-invalid]",function(e){e.removeAttribute("aria-invalid");e.removeAttribute("aria-describedby");});
+  document.title=d.title;
+}
+each(".lang button",function(b){b.addEventListener("click",function(){setLang(b.getAttribute("data-lang"));});});
+
+/* ---------- pinned stage ----------
+   Timeline (p = 0..1 across the story section), shared by the text beats:
+   0.00-0.30 idea     grey photo, slow push-in
+   0.30-0.62 drawing  hole, centre lines, seam line, leader + fillet weld symbol draw in
+   0.62-1.00 weld     arc travels along the seam 0.64-0.86 and colour returns behind it,
+                      drawing fades 0.66-0.80, close-up of a second real seam 0.88-0.97 */
+var story=document.querySelector(".story"), stage=document.getElementById("stage"), plate=document.getElementById("plate"),
+    colour=document.getElementById("colour"), arc=document.getElementById("arc"), finale=document.getElementById("finale"),
+    bar=document.getElementById("bar"), beats=document.querySelectorAll(".beat"), rails=document.querySelectorAll(".rail li"),
+    strokes=document.querySelectorAll("#draw .d"), label=document.querySelector("#draw text");
+var CUTS=[0.30,0.62], A=[345,270], B=[1035,522];
+function seg(p,a,b){return p<=a?0:p>=b?1:(p-a)/(b-a);}
+function ease(t){return t*t*(3-2*t);}
+function fit(){
+  var w=stage.clientWidth,h=stage.clientHeight,s=Math.max(w/1080,h/810),pw=1080*s,ph=810*s;
+  var l=Math.min(0,Math.max(w-pw,w/2-0.62*pw)), t=Math.min(0,Math.max(h-ph,h/2-0.46*ph));
+  plate.style.width=pw+"px"; plate.style.height=ph+"px"; plate.style.left=l+"px"; plate.style.top=t+"px";
+}
+var target=0,cur=-1,flick=1,active=-1,visible=true;
+function measure(){
+  var r=story.getBoundingClientRect(), span=r.height-innerHeight;
+  target=span>0?Math.min(1,Math.max(0,-r.top/span)):0;
+}
+function render(p){
+  var b=p<CUTS[0]?0:p<CUTS[1]?1:2;
+  if(b!==active){active=b;
+    for(var i=0;i<beats.length;i++){beats[i].classList.toggle("on",i===b);}
+    for(var j=0;j<rails.length;j++){rails[j].classList.toggle("on",j<=b);}
+  }
+  bar.style.transform="scaleX("+p.toFixed(4)+")";
+  plate.style.transform="scale("+(1+0.07*p).toFixed(4)+")";
+  plate.style.setProperty("--gb",(0.5+0.16*seg(p,0.22,0.36)).toFixed(3));
+  var out=1-seg(p,0.66,0.80);
+  for(var k=0;k<strokes.length;k++){
+    var a=0.30+k*0.026, d=ease(seg(p,a,a+0.10));
+    strokes[k].style.strokeDashoffset=(1-d).toFixed(4);
+    strokes[k].style.opacity=out.toFixed(3);
+  }
+  label.style.opacity=(seg(p,0.53,0.58)*out).toFixed(3);
+  var t=seg(p,0.64,0.86), x=A[0]+(B[0]-A[0])*t, y=A[1]+(B[1]-A[1])*t, edge=50+((x-540)*0.94+(y-405)*0.342)/1292*100+2;
+  if(t>=1) edge+=24*seg(p,0.86,0.91);
+  var m="linear-gradient(110deg,#000 "+(edge-20).toFixed(2)+"%,transparent "+edge.toFixed(2)+"%)";
+  colour.style.opacity=t>0?1:0; colour.style.webkitMaskImage=m; colour.style.maskImage=m;
+  arc.style.left=(x/1080*100).toFixed(2)+"%"; arc.style.top=(y/810*100).toFixed(2)+"%";
+  var glow=Math.min(seg(p,0.635,0.66),1-seg(p,0.85,0.875));
+  arc.style.opacity=(glow*flick).toFixed(3);
+  var f=ease(seg(p,0.88,0.97));
+  finale.style.opacity=f.toFixed(3); finale.style.transform="scale("+(1.12-0.12*f).toFixed(4)+")";
+}
+function frame(){
+  if(visible){
+    if(cur<0||reduce) cur=target; else cur+=(target-cur)*0.16;
+    if(Math.abs(target-cur)<0.0004) cur=target;
+    if(!reduce) flick=0.82+Math.random()*0.18;
+    render(cur);
+  }
+  requestAnimationFrame(frame);
+}
+addEventListener("scroll",measure,{passive:true});
+addEventListener("resize",function(){fit();measure();});
+if("IntersectionObserver" in window){new IntersectionObserver(function(e){visible=e[0].isIntersecting;}).observe(story);}
+fit(); measure(); requestAnimationFrame(frame);
+
+/* ---------- lightbox ---------- */
+var lb=document.getElementById("lb"), lbimg=document.getElementById("lbimg");
+each(".shot",function(s){s.addEventListener("click",function(){
+  var im=s.querySelector("img"); lbimg.src=im.currentSrc||im.src; lbimg.alt=im.alt;
+  if(lb.showModal){lb.showModal(); root.style.overflow="hidden";}
+});});
+lb.addEventListener("close",function(){root.style.overflow="";});
+lb.addEventListener("click",function(e){if(e.target===lb) lb.close();});
+
+/* ---------- form (demo: nothing is sent) ---------- */
+var form=document.getElementById("req"), done=document.getElementById("done");
+function fail(el,key){
+  el.setAttribute("aria-invalid","true");
+  var e=document.createElement("p"); e.className="err"; e.setAttribute("role","alert"); e.id=el.id+"-err"; e.textContent=T[lang][key];
+  el.setAttribute("aria-describedby",e.id); el.parentNode.appendChild(e);
+}
+form.addEventListener("submit",function(ev){
+  ev.preventDefault(); each(".err",function(e){e.remove();});
+  var first=null;
+  each("#req [required]",function(el){
+    el.removeAttribute("aria-invalid");
+    var v=el.value.trim(), key=!v?"errReq":(el.type==="email"&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))?"errMail":null;
+    if(key){fail(el,key); first=first||el;}
+  });
+  if(first){first.focus(); return;}
+  form.hidden=true; done.hidden=false; done.focus();
+});
+})();
+</script>
+</body>
+</html>
