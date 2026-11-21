@@ -19,7 +19,7 @@
 :root{
   --ink:#101317; --graphite:#181c21; --anthra:#272c32; --anthra-2:#333a41;
   --steel:#5a636d; --mute:#646d77; --line:#d6dade; --zinc:#eceef1; --paper:#f6f7f8; --white:#fff;
-  --brand:#3a2f58; --signal:#d42020; --signal-d:#b51717; --ral7016:#383e42;
+  --brand:#2b1f64; --signal:#d42020; --signal-d:#b51717; --ral7016:#383e42;
   --hdr:72px;
   --pad:max(clamp(20px, 3.5vw, 48px), env(safe-area-inset-left));
   --wrap:1240px;
@@ -65,25 +65,32 @@ button,input,textarea,select{font:inherit; color:inherit}
 .js [data-r].in{opacity:1; transform:none}
 
 /* ——— akcijas josla ——— */
-.promo{background:var(--ink); color:#e9ecef; font-size:.9rem}
-.promo a{display:flex; align-items:center; gap:14px; min-height:44px; padding:8px 0; text-decoration:none}
-.promo .tag{flex:none; background:var(--signal); color:#fff; font-family:var(--f-m); font-size:.7rem; letter-spacing:.14em; padding:4px 9px 3px; text-transform:uppercase}
-.promo .chip{flex:none; align-self:center; width:12px; height:12px; background:var(--ral7016); outline:1px solid rgba(255,255,255,.45)}
-.promo b{font-weight:640; color:#fff}
-.promo .pp{font-family:var(--f-m); font-size:.86rem; color:#fff; white-space:nowrap}
-.promo .go{margin-left:auto; display:inline-flex; align-items:center; gap:8px; white-space:nowrap; color:#fff; font-weight:600}
-.promo .go svg{width:15px; height:15px; transition:transform .25s var(--ease)}
+.promo{background:var(--signal); color:#fff; overflow:hidden}
+.promo a{display:flex; align-items:stretch; height:48px; text-decoration:none; color:#fff}
+.promo .tag{flex:none; display:flex; align-items:center; gap:10px; background:var(--ink); color:#fff; font-family:var(--f-m); font-size:.78rem; font-weight:500; letter-spacing:.16em; text-transform:uppercase; padding:0 20px 0 var(--pad); position:relative; z-index:1}
+.promo .tag::before{content:""; width:9px; height:9px; background:var(--signal); animation:blink 1.6s steps(2,jump-none) infinite}
+.promo .tag::after{content:""; position:absolute; left:100%; top:0; bottom:0; width:16px; background:var(--ink); clip-path:polygon(0 0,100% 0,0 100%)}
+@keyframes blink{50%{opacity:.25}}
+.promo .run{flex:1; min-width:0; overflow:hidden; display:flex; align-items:center}
+.promo .track{display:flex; flex:none; align-items:center; white-space:nowrap; animation:tick 46s linear infinite; will-change:transform}
+.promo a:hover .track,.promo a:focus-visible .track{animation-play-state:paused}
+@keyframes tick{to{transform:translateX(-50%)}}
+.promo .it{display:inline-flex; align-items:center; gap:14px; padding-left:14px; font-size:.98rem; font-weight:560}
+.promo .it b{font-weight:700; font-stretch:112%; letter-spacing:.01em; text-transform:uppercase; font-size:.92rem}
+.promo .chip{width:13px; height:13px; background:var(--ral7016); outline:1.5px solid #fff; flex:none}
+.promo .ral{display:inline-flex; align-items:center; gap:8px; font-family:var(--f-m); font-size:.88rem}
+.promo .pp{font-family:var(--f-m); font-weight:500; font-size:.95rem; background:#fff; color:var(--signal-d); padding:3px 10px 2px}
+.promo .sep{font-family:var(--f-m); letter-spacing:-.12em; opacity:.55; padding-right:4px}
+.promo .go{flex:none; display:flex; align-items:center; gap:10px; background:var(--ink); padding:0 var(--pad) 0 22px; font-weight:620; font-size:.92rem; white-space:nowrap; position:relative; z-index:1}
+.promo .go::before{content:""; position:absolute; right:100%; top:0; bottom:0; width:16px; background:var(--ink); clip-path:polygon(100% 0,100% 100%,0 100%)}
+.promo .go svg{width:16px; height:16px; transition:transform .25s var(--ease)}
 .promo a:hover .go svg{transform:translateX(4px)}
-.promo .txt{display:flex; align-items:baseline; gap:.45em; min-width:0; white-space:nowrap; overflow:hidden; line-height:1.3}
-.promo .txt>*{flex:none}
-.promo .long{display:inline-flex; gap:.45em; align-items:baseline}
-.promo .dot{opacity:.45}
 
 /* ——— galvene ——— */
 .hdr{position:sticky; top:0; z-index:50; background:color-mix(in srgb, var(--white) 90%, transparent); backdrop-filter:saturate(1.4) blur(14px); border-bottom:1px solid var(--line)}
 .hdr-in{display:flex; align-items:center; gap:28px; height:var(--hdr)}
 .logo{display:flex; align-items:center; gap:12px; text-decoration:none; flex:none}
-.logo img{height:34px; width:auto}
+.logo img{height:42px; width:auto}
 .logo span{font-weight:640; font-stretch:112%; letter-spacing:.09em; font-size:.98rem; color:var(--brand); white-space:nowrap}
 .nav{display:flex; align-items:center; gap:2px; margin-left:auto}
 .nav a,.nav button{display:inline-flex; align-items:center; gap:6px; height:44px; padding:0 13px; background:none; border:0; cursor:pointer; text-decoration:none; font-weight:540; font-size:.95rem; color:var(--ink); position:relative; white-space:nowrap}
@@ -122,7 +129,7 @@ button,input,textarea,select{font:inherit; color:inherit}
 @media (max-height:760px){.mnav li a{font-size:1.2rem; padding:10px 0} .mnav ul{margin-top:10px} .mnav .mnav-foot{padding-top:14px; grid-template-columns:1fr 1fr} .mnav .mnav-foot .btn{min-height:48px; padding:0 8px; font-size:.86rem; text-align:center; line-height:1.15; white-space:nowrap}}
 
 /* ——— hero ——— */
-.hero{position:relative; min-height:clamp(560px, calc(100svh - var(--hdr) - 44px), 860px); display:grid; align-items:end; color:#fff; background:var(--graphite); overflow:hidden; isolation:isolate}
+.hero{position:relative; min-height:clamp(560px, calc(100svh - var(--hdr) - 48px), 860px); display:grid; align-items:end; color:#fff; background:var(--graphite); overflow:hidden; isolation:isolate}
 .hero-bg{position:absolute; inset:0; z-index:-2}
 .hero-bg img{width:100%; height:100%; object-fit:cover; object-position:60% 40%; animation:heroIn 2.2s var(--ease) both}
 .hero::before{content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg, rgba(16,19,23,.28) 0%, rgba(16,19,23,0) 28%, rgba(16,19,23,.55) 62%, rgba(16,19,23,.92) 100%), linear-gradient(90deg, rgba(16,19,23,.55), rgba(16,19,23,0) 62%)}
@@ -342,8 +349,13 @@ fieldset{border:0; padding:0; margin:0}
 .where{margin-top:26px; display:grid; grid-template-columns:1fr 1fr; gap:22px}
 .where h3{font-family:var(--f-m); font-weight:400; font-size:.7rem; letter-spacing:.13em; text-transform:uppercase; color:#aab3bc; margin-bottom:8px}
 .where p{font-size:.98rem; line-height:1.55}
-.where .links{display:flex; gap:16px; margin-top:10px; flex-wrap:wrap}
-.where .links a{font-size:.9rem; padding:10px 0 2px}
+.quick{display:grid; grid-template-columns:1fr; gap:10px; margin-top:28px}
+.quick .q{display:flex; align-items:center; gap:12px; min-height:64px; padding:10px 14px; border:1px solid rgba(255,255,255,.22); text-decoration:none; transition:background .2s, border-color .2s, transform .25s var(--ease)}
+.quick .q:hover{background:rgba(255,255,255,.07); border-color:rgba(255,255,255,.5); transform:translateY(-2px)}
+.quick svg{width:28px; height:28px; flex:none}
+.quick .wa svg{color:#25d366} .quick .wz svg{color:#33ccff} .quick .ph svg{color:#ff6b6b; width:24px; height:24px}
+.quick b{display:block; font-weight:640; line-height:1.2}
+.quick small{display:block; font-size:.78rem; color:#aab3bc; line-height:1.3; white-space:nowrap}
 
 .partners{background:var(--zinc)}
 .partners-in{display:flex; flex-wrap:wrap; gap:14px 40px; align-items:center; padding-block:22px; font-size:.92rem; color:var(--steel)}
@@ -352,7 +364,7 @@ fieldset{border:0; padding:0; margin:0}
 
 .ftr{background:var(--ink); color:#b6bec6; font-size:.92rem}
 .ftr-in{display:grid; grid-template-columns:minmax(0,4fr) repeat(3,minmax(0,2.4fr)); gap:30px; padding-block:54px 34px}
-.ftr .logo img{filter:brightness(0) invert(1)}
+.ftr .logo img{filter:brightness(0) invert(1); height:46px}
 .ftr .logo span{color:#fff}
 .ftr h3{font-family:var(--f-m); font-weight:400; font-size:.7rem; letter-spacing:.13em; text-transform:uppercase; color:#8c96a0; margin-bottom:12px}
 .ftr li{padding:3px 0}
@@ -362,24 +374,26 @@ fieldset{border:0; padding:0; margin:0}
 .mbar{display:none}
 
 /* ——— pielāgošana ——— */
-@media (max-width:1260px){
+@media (max-width:1320px){
   .hdr-tel{display:none}
   .hdr-in{gap:20px}
 }
-@media (max-width:1080px){
-  .logo span{display:none}
+@media (max-width:1120px){
+  .logo img{height:34px}
+  .nav a,.nav button{padding:0 9px}
+  .nav a::after,.nav button::after{left:9px; right:9px}
 }
 @media (max-width:980px){
   :root{--hdr:62px}
-  .promo .long{display:none}
   .nav,.hdr-cta .btn{display:none}
   .hdr-cta{margin-left:auto; gap:10px}
-  .logo span{display:inline}
+  .logo img{height:36px}
   .hdr-tel{display:inline-flex; width:44px; height:44px; justify-content:center; border:1px solid var(--line); background:#fff}
   .hdr-tel span{display:none}
   .burger{display:inline-flex}
   .mega{display:none}
   .sec-head,.faq-grid,.elem-txt,.contact-in,.offer-in,.ref,.steel-in{grid-template-columns:1fr}
+  .quick{grid-template-columns:repeat(3,minmax(0,1fr))}
   .facts ul{grid-template-columns:1fr 1fr}
   .facts li{padding:20px 16px 20px 0}
   .facts li:nth-child(3){border-left:0; padding-left:0}
@@ -407,26 +421,29 @@ fieldset{border:0; padding:0; margin:0}
   .ftr-in{grid-template-columns:1fr 1fr}
   .ftr li a{display:inline-block; padding:8px 0}
   .hero .cap{display:none}
-  .mbar{display:grid; grid-template-columns:1fr 1.4fr; position:fixed; left:0; right:0; bottom:0; z-index:40; background:var(--ink); padding:8px var(--pad) calc(8px + env(safe-area-inset-bottom)); gap:8px; transform:translateY(110%); transition:transform .4s var(--ease)}
+  .mbar{display:grid; grid-template-columns:48px 48px 48px 1fr; position:fixed; left:0; right:0; bottom:0; z-index:40; background:var(--ink); padding:8px var(--pad) calc(8px + env(safe-area-inset-bottom)); gap:8px; transform:translateY(110%); transition:transform .4s var(--ease)}
   .mbar.show{transform:none}
-  .mbar .btn{min-height:48px; padding:0 12px; font-size:.95rem}
-  .mbar .btn-ghost{backdrop-filter:none; background:transparent}
+  .mbar .btn{min-height:48px; padding:0 8px; font-size:.9rem; white-space:nowrap}
+  .mbar .mi{display:grid; place-items:center; height:48px; border:1px solid rgba(255,255,255,.28); color:#fff}
+  .mbar .mi svg{width:24px; height:24px}
+  .mbar .wa svg{color:#25d366} .mbar .wz svg{color:#33ccff}
   body{padding-bottom:0}
   .ftr .legal{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
 }
 @media (max-width:640px){
   body{font-size:16px}
-  .promo .go span,.promo .lg{display:none}
-  .promo a{gap:10px}
-  .promo{font-size:.84rem}
-  .promo .txt{gap:.45em}
-  .promo a{gap:8px}
-  .promo .tag{padding:4px 7px 3px; letter-spacing:.1em}
-  .promo .pp{font-size:.82rem}
+  .promo a{height:44px}
+  .promo .go span{display:none}
+  .promo .go{padding-left:14px}
+  .promo .tag{padding-right:12px; font-size:.72rem; letter-spacing:.12em}
+  .promo .it{font-size:.92rem; gap:11px; padding-left:11px}
+  .promo .track{animation-duration:38s}
   .card.a,.card.b,.card.c,.card.d{grid-column:span 12}
   .card.e{grid-template-columns:1fr}
   .card.e figure{aspect-ratio:16/9; min-height:0}
   .row2,.where{grid-template-columns:1fr}
+  .quick{grid-template-columns:1fr}
+  .quick .q{min-height:60px}
   .elem-foot{grid-template-columns:1fr 1fr}
   .elem-foot figure:last-child{display:none}
   .spec div{grid-template-columns:104px 1fr}
@@ -437,16 +454,17 @@ fieldset{border:0; padding:0; margin:0}
   .hero::before{background:linear-gradient(180deg, rgba(16,19,23,.42) 0%, rgba(16,19,23,.5) 40%, rgba(16,19,23,.93) 100%)}
   .hero h1{max-width:none; font-size:clamp(1.8rem, 8.4vw, 2.6rem)}
   .hero .cta .btn{flex:1 1 100%}
-  .logo span{font-size:.86rem; letter-spacing:.07em}
-  .logo img{height:28px}
+  .logo img{height:31px}
 }
-@media (max-width:340px){
-  .logo span{display:none}
+@media (max-width:350px){
+  .logo img{height:23px}
+  .hdr-in{gap:10px}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important; transition:none!important}
   .js [data-r]{opacity:1; transform:none}
+  .promo .track{transform:none}
 }
 </style>
 </head>
@@ -455,21 +473,18 @@ fieldset{border:0; padding:0; margin:0}
 
 <!-- AKCIJAS JOSLA -->
 <div class="promo" role="region" aria-label="Akcija">
-  <div class="wrap">
-    <a href="#akcija">
-      <span class="tag">Akcija</span>
-      <span class="txt"><b>Trapecveida <span class="lg">jumta </span>segums</b><span class="long"><span class="chip" aria-hidden="true"></span><span>RAL 7016</span><span class="dot">·</span><span>arī Jūsu izmēru loksnes</span></span><span class="dot">·</span><span class="pp">5,40 €/m²<span class="lg"> + PVN</span></span></span>
-      <span class="go"><span>Skatīt piedāvājumu</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
-    </a>
-  </div>
+  <a href="#akcija" aria-label="Akcija: trapecveida jumta segums RAL 7016, 5,40 €/m² + PVN, arī Jūsu izmēru loksnes 3 darba dienu laikā. Skatīt piedāvājumu">
+    <span class="tag">Akcija</span>
+    <span class="run" aria-hidden="true"><span class="track"><span class="it"><b>Trapecveida jumta segums</b><span class="pp">5,40 €/m² + PVN</span><span class="ral"><i class="chip"></i>RAL 7016</span><span>arī Jūsu izmēru loksnes</span><span>3 darba dienu laikā</span><span class="sep">///</span></span><span class="it"><b>Trapecveida jumta segums</b><span class="pp">5,40 €/m² + PVN</span><span class="ral"><i class="chip"></i>RAL 7016</span><span>arī Jūsu izmēru loksnes</span><span>3 darba dienu laikā</span><span class="sep">///</span></span><span class="it"><b>Trapecveida jumta segums</b><span class="pp">5,40 €/m² + PVN</span><span class="ral"><i class="chip"></i>RAL 7016</span><span>arī Jūsu izmēru loksnes</span><span>3 darba dienu laikā</span><span class="sep">///</span></span><span class="it"><b>Trapecveida jumta segums</b><span class="pp">5,40 €/m² + PVN</span><span class="ral"><i class="chip"></i>RAL 7016</span><span>arī Jūsu izmēru loksnes</span><span>3 darba dienu laikā</span><span class="sep">///</span></span><span class="it"><b>Trapecveida jumta segums</b><span class="pp">5,40 €/m² + PVN</span><span class="ral"><i class="chip"></i>RAL 7016</span><span>arī Jūsu izmēru loksnes</span><span>3 darba dienu laikā</span><span class="sep">///</span></span><span class="it"><b>Trapecveida jumta segums</b><span class="pp">5,40 €/m² + PVN</span><span class="ral"><i class="chip"></i>RAL 7016</span><span>arī Jūsu izmēru loksnes</span><span>3 darba dienu laikā</span><span class="sep">///</span></span><span class="it"><b>Trapecveida jumta segums</b><span class="pp">5,40 €/m² + PVN</span><span class="ral"><i class="chip"></i>RAL 7016</span><span>arī Jūsu izmēru loksnes</span><span>3 darba dienu laikā</span><span class="sep">///</span></span><span class="it"><b>Trapecveida jumta segums</b><span class="pp">5,40 €/m² + PVN</span><span class="ral"><i class="chip"></i>RAL 7016</span><span>arī Jūsu izmēru loksnes</span><span>3 darba dienu laikā</span><span class="sep">///</span></span><span class="it"><b>Trapecveida jumta segums</b><span class="pp">5,40 €/m² + PVN</span><span class="ral"><i class="chip"></i>RAL 7016</span><span>arī Jūsu izmēru loksnes</span><span>3 darba dienu laikā</span><span class="sep">///</span></span><span class="it"><b>Trapecveida jumta segums</b><span class="pp">5,40 €/m² + PVN</span><span class="ral"><i class="chip"></i>RAL 7016</span><span>arī Jūsu izmēru loksnes</span><span>3 darba dienu laikā</span><span class="sep">///</span></span></span></span>
+    <span class="go"><span>Skatīt piedāvājumu</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
+  </a>
 </div>
 
 <!-- GALVENE -->
 <header class="hdr" id="top">
   <div class="wrap hdr-in">
     <a class="logo" href="#top" aria-label="Ādažu Metāls – sākums">
-      <img src="img/am.png" alt="" width="362" height="200">
-      <span>ĀDAŽU METĀLS</span>
+      <img src="img/logo.png" alt="Ādažu Metāls" width="900" height="139">
     </a>
     <nav class="nav" aria-label="Galvenā izvēlne">
       <button type="button" id="megaBtn" aria-expanded="false" aria-controls="mega">Segumi <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 4l4 4 4-4"/></svg></button>
@@ -793,8 +808,13 @@ fieldset{border:0; padding:0; margin:0}
       </ul>
       <div class="where">
         <div><h3>Adrese</h3><p>Muižas iela 29, Ādaži,<br>Ādažu novads, LV-2164</p>
-          <p class="links"><a class="txtlink" href="https://waze.com/ul?q=Mui%C5%BEas%20iela%2029%2C%20%C4%80da%C5%BEi&navigate=yes" rel="noopener">Waze</a><a class="txtlink" href="https://api.whatsapp.com/send?phone=37129242101" rel="noopener">WhatsApp</a></p></div>
+          </div>
         <div><h3>Darba laiks</h3><p class="mono" style="font-size:.9rem">Darbdienās 9:00–17:00<br>Sestdienās 9:00–15:00<br>Svētdienās slēgts</p></div>
+      </div>
+      <div class="quick">
+        <a class="q wa" href="https://api.whatsapp.com/send?phone=37129242101" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg><span><b>WhatsApp</b><small>Rakstīt ziņu</small></span></a>
+        <a class="q wz" href="https://waze.com/ul?q=Mui%C5%BEas%20iela%2029%2C%20%C4%80da%C5%BEi&navigate=yes" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.218 0C9.915 0 6.835 1.49 4.723 4.148c-1.515 1.913-2.31 4.272-2.31 6.706v1.739c0 .894-.62 1.738-1.862 1.813-.298.025-.547.224-.547.522-.05.82.82 2.31 2.012 3.502.82.844 1.788 1.515 2.832 2.036a3 3 0 0 0 2.955 3.528 2.966 2.966 0 0 0 2.931-2.385h2.509c.323 1.689 2.086 2.856 3.974 2.21 1.64-.546 2.36-2.409 1.763-3.924a12.84 12.84 0 0 0 1.838-1.465 10.73 10.73 0 0 0 3.18-7.65c0-2.882-1.118-5.589-3.155-7.625A10.899 10.899 0 0 0 13.218 0zm0 1.217c2.558 0 4.967.994 6.78 2.807a9.525 9.525 0 0 1 2.807 6.78A9.526 9.526 0 0 1 20 17.585a9.647 9.647 0 0 1-6.78 2.807h-2.46a3.008 3.008 0 0 0-2.93-2.41 3.03 3.03 0 0 0-2.534 1.367v.024a8.945 8.945 0 0 1-2.41-1.788c-.844-.844-1.316-1.614-1.515-2.11a2.858 2.858 0 0 0 1.441-.846 2.959 2.959 0 0 0 .795-2.036v-1.789c0-2.11.696-4.197 2.012-5.861 1.863-2.385 4.62-3.726 7.6-3.726zm-2.41 5.986a1.192 1.192 0 0 0-1.191 1.192 1.192 1.192 0 0 0 1.192 1.193A1.192 1.192 0 0 0 12 8.395a1.192 1.192 0 0 0-1.192-1.192zm7.204 0a1.192 1.192 0 0 0-1.192 1.192 1.192 1.192 0 0 0 1.192 1.193 1.192 1.192 0 0 0 1.192-1.193 1.192 1.192 0 0 0-1.192-1.192zm-7.377 4.769a.596.596 0 0 0-.546.845 4.813 4.813 0 0 0 4.346 2.757 4.77 4.77 0 0 0 4.347-2.757.596.596 0 0 0-.547-.845h-.025a.561.561 0 0 0-.521.348 3.59 3.59 0 0 1-3.254 2.061 3.591 3.591 0 0 1-3.254-2.061.64.64 0 0 0-.546-.348z"/></svg><span><b>Waze</b><small>Braukt uz Ādažiem</small></span></a>
+        <a class="q ph" href="tel:+37129242101"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg><span><b>Zvanīt</b><small class="mono">+371 29242101</small></span></a>
       </div>
     </div>
   </div>
@@ -812,7 +832,7 @@ fieldset{border:0; padding:0; margin:0}
 <footer class="ftr">
   <div class="wrap ftr-in">
     <div>
-      <a class="logo" href="#top"><img src="img/am.png" alt="" width="362" height="200"><span>ĀDAŽU METĀLS</span></a>
+      <a class="logo" href="#top" aria-label="Ādažu Metāls – sākums"><img src="img/logo.png" alt="Ādažu Metāls" width="900" height="139"></a>
       <p style="margin-top:16px; max-width:34ch">Metāla jumtu un sienu segumi, skārda elementi un noteksistēmas. Uzņēmums dibināts 2007. gadā.</p>
     </div>
     <div><h3>Segumi</h3><ul><li><a href="#segumi">Trapecveida profils</a></li><li><a href="#segumi">Dakstiņveida profils</a></li><li><a href="#segumi">Valcprofils Klasika Klik</a></li><li><a href="#segumi">Valcprofils ar stāvfalci</a></li><li><a href="#segumi">Sienu segumi</a></li><li><a href="#segumi">Noteksistēmas</a></li></ul></div>
@@ -823,7 +843,9 @@ fieldset{border:0; padding:0; margin:0}
 </footer>
 
 <div class="mbar" id="mbar">
-  <a class="btn btn-ghost" href="tel:+37129242101">Zvanīt</a>
+  <a class="mi ph" href="tel:+37129242101" aria-label="Zvanīt +371 29242101"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg></a>
+  <a class="mi wa" href="https://api.whatsapp.com/send?phone=37129242101" rel="noopener" aria-label="Rakstīt WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
+  <a class="mi wz" href="https://waze.com/ul?q=Mui%C5%BEas%20iela%2029%2C%20%C4%80da%C5%BEi&navigate=yes" rel="noopener" aria-label="Atvērt Waze"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.218 0C9.915 0 6.835 1.49 4.723 4.148c-1.515 1.913-2.31 4.272-2.31 6.706v1.739c0 .894-.62 1.738-1.862 1.813-.298.025-.547.224-.547.522-.05.82.82 2.31 2.012 3.502.82.844 1.788 1.515 2.832 2.036a3 3 0 0 0 2.955 3.528 2.966 2.966 0 0 0 2.931-2.385h2.509c.323 1.689 2.086 2.856 3.974 2.21 1.64-.546 2.36-2.409 1.763-3.924a12.84 12.84 0 0 0 1.838-1.465 10.73 10.73 0 0 0 3.18-7.65c0-2.882-1.118-5.589-3.155-7.625A10.899 10.899 0 0 0 13.218 0zm0 1.217c2.558 0 4.967.994 6.78 2.807a9.525 9.525 0 0 1 2.807 6.78A9.526 9.526 0 0 1 20 17.585a9.647 9.647 0 0 1-6.78 2.807h-2.46a3.008 3.008 0 0 0-2.93-2.41 3.03 3.03 0 0 0-2.534 1.367v.024a8.945 8.945 0 0 1-2.41-1.788c-.844-.844-1.316-1.614-1.515-2.11a2.858 2.858 0 0 0 1.441-.846 2.959 2.959 0 0 0 .795-2.036v-1.789c0-2.11.696-4.197 2.012-5.861 1.863-2.385 4.62-3.726 7.6-3.726zm-2.41 5.986a1.192 1.192 0 0 0-1.191 1.192 1.192 1.192 0 0 0 1.192 1.193A1.192 1.192 0 0 0 12 8.395a1.192 1.192 0 0 0-1.192-1.192zm7.204 0a1.192 1.192 0 0 0-1.192 1.192 1.192 1.192 0 0 0 1.192 1.193 1.192 1.192 0 0 0 1.192-1.193 1.192 1.192 0 0 0-1.192-1.192zm-7.377 4.769a.596.596 0 0 0-.546.845 4.813 4.813 0 0 0 4.346 2.757 4.77 4.77 0 0 0 4.347-2.757.596.596 0 0 0-.547-.845h-.025a.561.561 0 0 0-.521.348 3.59 3.59 0 0 1-3.254 2.061 3.591 3.591 0 0 1-3.254-2.061.64.64 0 0 0-.546-.348z"/></svg></a>
   <a class="btn btn-red" href="#kontakti">Saņemt piedāvājumu</a>
 </div>
 
