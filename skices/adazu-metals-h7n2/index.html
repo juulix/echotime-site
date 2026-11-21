@@ -131,8 +131,8 @@ button,input,textarea,select{font:inherit; color:inherit}
 /* ——— hero ——— */
 .hero{position:relative; min-height:clamp(560px, calc(100svh - var(--hdr) - 48px), 860px); display:grid; align-items:end; color:#fff; background:var(--graphite); overflow:hidden; isolation:isolate}
 .hero-bg{position:absolute; inset:0; z-index:-2}
-.hero-bg img{width:100%; height:100%; object-fit:cover; object-position:60% 40%; animation:heroIn 2.2s var(--ease) both}
-.hero::before{content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg, rgba(16,19,23,.28) 0%, rgba(16,19,23,0) 28%, rgba(16,19,23,.55) 62%, rgba(16,19,23,.92) 100%), linear-gradient(90deg, rgba(16,19,23,.55), rgba(16,19,23,0) 62%)}
+.hero-bg img{width:100%; height:100%; object-fit:cover; object-position:78% 50%; animation:heroIn 2.2s var(--ease) both}
+.hero::before{content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg, rgba(16,19,23,.2) 0%, rgba(16,19,23,0) 26%, rgba(16,19,23,.5) 60%, rgba(16,19,23,.92) 100%), linear-gradient(90deg, rgba(16,19,23,.82) 0%, rgba(16,19,23,.6) 34%, rgba(16,19,23,0) 68%)}
 @keyframes heroIn{from{transform:scale(1.09)} to{transform:scale(1)}}
 .hero-in{padding:clamp(40px,7vw,90px) 0 clamp(34px,5vw,60px); display:grid; gap:22px}
 .hero .eyebrow{display:flex; align-items:center; gap:14px; font-family:var(--f-m); font-size:.78rem; letter-spacing:.16em; text-transform:uppercase; color:#dfe4e8}
@@ -201,11 +201,15 @@ button,input,textarea,select{font:inherit; color:inherit}
 .card .more{margin-top:6px; display:inline-flex; align-items:center; gap:8px; font-weight:620; font-size:.95rem}
 .card .more svg{width:16px; height:16px; color:var(--signal); transition:transform .25s var(--ease)}
 .card:hover .more svg{transform:translateX(5px)}
-.card.a,.card.d{grid-column:span 7} .card.b,.card.c{grid-column:span 5}
-.card.a figure,.card.b figure,.card.c figure,.card.d figure{height:clamp(240px, 31vw, 400px)}
+.card.a,.card.b,.card.c,.card.d{grid-column:span 3}
+.card.a figure,.card.b figure,.card.c figure,.card.d figure{aspect-ratio:1/1.04}
+.card.a .body,.card.b .body,.card.c .body,.card.d .body{padding:18px 20px 22px}
+.card.a h3,.card.b h3,.card.c h3,.card.d h3{font-size:clamp(1.1rem, .9rem + .55vw, 1.32rem)}
+.card.a p,.card.b p,.card.c p,.card.d p{font-size:.92rem}
+.card.a img{object-position:50% 100%}
 .card.e{grid-column:span 6; grid-template-columns:42% 1fr; align-items:stretch; background:var(--zinc)}
 .card.e figure{position:relative; height:auto; min-height:200px; align-self:stretch}
-.card.e img{position:absolute; inset:0; object-position:70% 100%}
+.card.e img{position:absolute; inset:0}
 .card.e .body{align-content:center}
 .card.e ul{display:flex; flex-wrap:wrap; gap:6px; margin-top:4px}
 .card.e ul li{font-size:.84rem; padding:5px 10px; border:1px solid #c5cad0; color:var(--anthra)}
@@ -415,7 +419,7 @@ fieldset{border:0; padding:0; margin:0}
   .js .proc.pinned .steps h3{font-size:1.6rem}
   .proc:not(.pinned) .stage{margin-top:26px}
   .card.a,.card.b,.card.c,.card.d{grid-column:span 6}
-  .card.a figure,.card.b figure,.card.c figure,.card.d figure{height:auto; aspect-ratio:4/3}
+  .card.a figure,.card.b figure,.card.c figure,.card.d figure{aspect-ratio:1/.92}
   .card.e{grid-column:span 12}
   .offer-pic{max-height:420px; aspect-ratio:16/11; order:-1}
   .ba-wrap{grid-template-columns:1fr}
@@ -536,7 +540,7 @@ fieldset{border:0; padding:0; margin:0}
 <main>
 <!-- HERO -->
 <section class="hero" aria-labelledby="h1">
-  <div class="hero-bg"><img src="img/hero.jpg" alt="Tumši pelēks trapecveida metāla jumts uz koka mājas" fetchpriority="high" width="2000" height="1258"></div>
+  <div class="hero-bg"><img src="img/hero.jpg" alt="Mūsdienīgas ēkas ar tumšu metāla jumta un fasādes segumu" fetchpriority="high" width="2400" height="1063"></div>
   <div class="wrap hero-in">
     <p class="eyebrow"><i></i>Ražotne Ādažos</p>
     <h1 id="h1"><span><b style="--i:0">Metāla jumtu segumi</b></span><span><b style="--i:1">no ražotāja</b></span></h1>
@@ -548,7 +552,6 @@ fieldset{border:0; padding:0; margin:0}
       <a class="hero-tel mono" href="tel:+37129242101"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg>+371 29242101</a>
     </div>
   </div>
-  <p class="cap" aria-hidden="true">Trapecveida jumta segums · objekta foto</p>
 </section>
 
 <div class="facts">
@@ -598,10 +601,10 @@ fieldset{border:0; padding:0; margin:0}
     </div>
     <div class="prof">
       <a class="card a" href="#kontakti" data-r><figure><img src="img/pr-trapece.jpg" alt="Trapecveida profila jumts" loading="lazy"></figure><div class="body"><span class="tag">Jumtam</span><h3>Trapecveida profils</h3><p>Cinkotas tērauda loksnes, kas izlocītas ar trapecveida virsotnēm garenvirzienā, ir viens no metāla jumta seguma ekonomiskākajiem veidiem.</p><span class="more">Jautāt cenu <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span></div></a>
-      <a class="card b" href="#kontakti" data-r style="--d:.08s"><figure><img src="img/pr-dakstins.jpg" alt="Metāldakstiņa jumts uz guļbūves" loading="lazy"></figure><div class="body"><span class="tag">Jumtam</span><h3>Dakstiņveida profils</h3><p>Dakstiņprofils (metāldakstiņš) ir plaši pielietojams individuālo dzīvojamo māju un citu objektu jumtu izbūvēs.</p><span class="more">Jautāt cenu <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span></div></a>
-      <a class="card c" href="#kontakti" data-r><figure><img src="img/pr-klik.jpg" alt="Valcprofila Klasika Klik jumts uz ķieģeļu mājas" loading="lazy"></figure><div class="body"><span class="tag">Jumtam · sienām</span><h3>Valcprofils Klasika Klik</h3><p>Valcprofila veids ar „klik” sistēmas lokšņu savienošanas atslēgu.</p><span class="more">Jautāt cenu <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span></div></a>
-      <a class="card d" href="#kontakti" data-r style="--d:.08s"><figure><img src="img/pr-stavfalcis.jpg" alt="Valcprofila jumts ar stāvfalci" loading="lazy"></figure><div class="body"><span class="tag">Jumtam · sienām</span><h3>Valcprofils ar stāvfalci</h3><p>Klasiskā un nemainīgā vērtība. Jumta seguma veids, kas piemērots arī ļoti sarežģītu jumtu izbūvē.</p><span class="more">Jautāt cenu <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span></div></a>
-      <a class="card e" href="#kontakti" data-r><figure><img src="img/pr-siena.jpg" alt="Ēkas siena ar trapecveida profilu" loading="lazy"></figure><div class="body"><span class="tag">Sienām</span><h3>Sienu segumi</h3><ul><li>Trapecveida profils</li><li>Klasika Klik</li><li>Ar stāvfalci</li></ul><span class="more">Jautāt cenu <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span></div></a>
+      <a class="card b" href="#kontakti" data-r style="--d:.08s"><figure><img src="img/pr-dakstins.jpg" alt="Rindu mājas ar metāldakstiņa jumtu" loading="lazy"></figure><div class="body"><span class="tag">Jumtam</span><h3>Dakstiņveida profils</h3><p>Dakstiņprofils (metāldakstiņš) ir plaši pielietojams individuālo dzīvojamo māju un citu objektu jumtu izbūvēs.</p><span class="more">Jautāt cenu <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span></div></a>
+      <a class="card c" href="#kontakti" data-r><figure><img src="img/pr-klik.jpg" alt="Tumšs valcprofila Klasika Klik jumts ar jumta logiem" loading="lazy"></figure><div class="body"><span class="tag">Jumtam · sienām</span><h3>Valcprofils Klasika Klik</h3><p>Valcprofila veids ar „klik” sistēmas lokšņu savienošanas atslēgu.</p><span class="more">Jautāt cenu <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span></div></a>
+      <a class="card d" href="#kontakti" data-r style="--d:.08s"><figure><img src="img/pr-stavfalcis.jpg" alt="Daudzdzīvokļu māja ar valcprofila jumtu" loading="lazy"></figure><div class="body"><span class="tag">Jumtam · sienām</span><h3>Valcprofils ar stāvfalci</h3><p>Klasiskā un nemainīgā vērtība. Jumta seguma veids, kas piemērots arī ļoti sarežģītu jumtu izbūvē.</p><span class="more">Jautāt cenu <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span></div></a>
+      <a class="card e" href="#kontakti" data-r><figure><img src="img/pr-siena.jpg" alt="Ēkas siena ar metāla profila apdari" loading="lazy"></figure><div class="body"><span class="tag">Sienām</span><h3>Sienu segumi</h3><ul><li>Trapecveida profils</li><li>Klasika Klik</li><li>Ar stāvfalci</li></ul><span class="more">Jautāt cenu <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span></div></a>
       <a class="card e" href="#kontakti" data-r style="--d:.08s"><figure><img src="img/pr-notekas.jpg" alt="Noteksistēma pie jumta malas" loading="lazy"></figure><div class="body"><span class="tag">Lietus ūdenim</span><h3>Noteksistēmas</h3><p>Visu veidu jumtiem.</p><span class="more">Jautāt cenu <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span></div></a>
     </div>
   </div>
